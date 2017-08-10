@@ -179,7 +179,7 @@ __Note:__ Mandatory parameters are highlighted bold.
 |__country__     				| String  |3   |Possible countries: <br/> ⦁ [ISO 3166-1 alpha-3](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-3) country code <br/> ⦁	XKX (Kosovo) |
 |__type__     					| String  |    |Possible types: <br/>⦁	BS (Bank statement, front side) <br/>⦁	IC (Insurance card, front side) <br/>⦁	UB (Utility bill, front side) <br/>⦁	CAAP (Cash advance application, front and back side) <br/>⦁	CRC (Corporate resolution certificate, front and back side) <br/>⦁	CCS (Credit card statement, front and back side) <br/>⦁	LAG (Lease agreement, front and back side) <br/>⦁	LOAP (Loan application, front and back side) <br/>⦁	MOAP (Mortgage application, front and back side) <br/>⦁	TR (Tax return, front and back side) <br/>⦁	VT (Vehicle title, front side) <br/>⦁	VC (Voided check, front side) <br/>⦁	STUC (Student card, front side) <br/>⦁	HCC (Health care card, front side) <br/>⦁	CB (Council bill, front side) <br/>⦁	SENC (Seniors card, front side) <br/>⦁	MEDC (Medicare card, front side) <br/>⦁	BC (Birth certificate, front side) <br/>⦁	WWCC (Working with children check, front side) <br/>⦁	SS (Superannuation statement, front side) <br/>⦁	TAC (Trade association card, front side) <br/>⦁	SEL (School enrolment letter, front side) <br/>⦁	PB (Phone bill, front side) <br/>⦁	USSS (US social security card, front side) <br/>⦁	SSC (Social security card, front side) <br/>⦁	CUSTOM (Custom document type)|
 |__images__							| JSON array  |  |URLs to the images of the scan (JPEG or PNG) To access an image, use the HTTP GET method and HTTP Basic Authentication with your merchant API token as the "userid" and your API secret as the "password". Set "User-Agent: YOURCOMPANYNAME YOURAPPLICATIONNAME/VERSION" (e.g. MyCompany MyApp/1.0.0) in the "header" section of your request. The TLS protocol is required during the TLS handshake (see Supported cipher suites chapter) and we strongly recommend using the latest version |
-|__customDocumentCode__ | String  |100 |Your custom document code (maintained in your Jumio merchant backend) if type = CUSTOM |
+|__customDocumentCode__ | String  |100 |Your custom document code (maintained in your Jumio customer portal) if type = CUSTOM |
 |__extractedData__      | JSON object  | |Extracted data if status = EXTRACTED, see Supported documents for data extraction|
 
 |Parameter "extractedData"      | Type    | Max. length|  Description|
@@ -258,7 +258,7 @@ https://www.jumio.com/implementation-guides/netverify-delete-api/
 ---
 
 ## Global Netverify settings
-In your Jumio merchant settings, you can configure the ID verification as follows.
+In your Jumio customer portal settings, you can configure the ID verification as follows.
 
 ### Application settings
 
@@ -271,9 +271,11 @@ Provide a URL which meets the following constraints:
 
 Whitelist the following IP addresses for callbacks, and use these to verify that the callback originated from Jumio:
 
-* US data center: 184.106.91.66, 184.106.91.67, 104.130.61.196, 146.20.77.156. </br>
+* US data center: </br>
+184.106.91.66, 184.106.91.67, 104.130.61.196, 146.20.77.156, 34.202.241.227, 34.226.103.119, 34.226.254.127, 52.53.95.123, 52.52.51.178, 54.67.101.173.  </br>
 You can look up the IP addresses with the host name "callback.jumio.com".
-* EU data center: 162.13.228.132, 162.13.228.134, 162.13.229.103, 162.13.229.104. <br/>
+* EU data center:</br>
+162.13.228.132, 162.13.228.134, 162.13.229.103, 162.13.229.104, 34.253.41.236, 52.209.180.134, 52.48.0.25, 35.157.27.193, 52.57.194.92, 52.58.113.86. <br/>
 You can look up the IP addresses with the host name "callback.lon.jumio.com".
 
 Jumio will post callbacks to your HTTPS URL if you are using a valid certificate to ensure a successful TLS handshake. If you are not receiving callbacks, please check the following [article](https://support.jumio.com/hc/en-us/articles/200275338-I-am-not-receiving-callbacks-What-can-I-do).
@@ -311,7 +313,7 @@ Select a time interval for permanent purge of sensitive data (5 years by default
 
 #### Custom
 
-In your Jumio merchant settings, you can create your own custom document types. After submitting a new custom document type it takes up to five minutes until it is applied.
+In your Jumio customer portal settings, you can create your own custom document types. After submitting a new custom document type it takes up to five minutes until it is applied.
 
 Specify
 * a unique document code (constraint: Blanks are not allowed),
@@ -343,7 +345,7 @@ The following cipher suites (listed in server-preferred order) are supported by 
 ---
 
 ## Two-factor authentication
-If you want to enable two-factor authentication for your Jumio merchant backend please contact us at https://support.jumio.com. Once enabled, users will be guided through the setup upon their first login to obtain a security code using the *"Google Authenticator"* app.
+If you want to enable two-factor authentication for your Jumio customer portal please contact us at https://support.jumio.com. Once enabled, users will be guided through the setup upon their first login to obtain a security code using the *"Google Authenticator"* app.
 
 ## Copyright
 
