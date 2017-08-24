@@ -68,12 +68,13 @@ __Note:__ Mandatory parameters are highlighted bold.
 |dni   |255  |DNI as available on the ID if idCountry = ESP and idSubtype = NATIONAL\_ID  |
 |gender   |2  |Possible values if idCountry = FRA and idSubtype = NATIONAL\_ID (MRZ type CNIS)<br/>•	M<br/>•	F |
 |idFaceLiveness   |   |only available for SDK<br/>Possible values:<br/>•	TRUE (if face match enabled for ID verification and liveness detected successfully during scanning)<br/>•	FALSE |
+|identityVerification   |   |Identity verification as JSON object if verificationStatus = APPROVED_VERIFIED, see table below|
 
 (`*1`) Scan is declined as unsupported if the provided ID is not supported by Jumio or not accepted in your Netverify settings.<br/>
 (`*2`) Face match is performed if enabled.<br/>
 (`*3`) For ID types that are configured to support a separate scan of front side and back side, there is a separated image of the front side (idScanImage) and the back side (idScanImageBackside). If face match is enabled, there is also picture of the face (idScanImageFace).
-To access the image, use the HTTP GET method and HTTP Basic Authentication with your merchant API token as the "userid" and your API secret as the "password". Set "User-Agent: YOURCOMPANYNAME YOURAPPLICATIONNAME/VERSION" (e.g. MyCompany MyApp/1.0.0) in the "header" section of your request. The TLS protocol is required during the TLS handshake (see Supported cipher suitesSupported cipher suites chapter) and we strongly recommend using the latest version.<br/>
-(`*4`) Address recognition is performed for supported IDs if enabled. There are three different address formats. You can see which format applies to specific IDs under "Data settings" in your Jumio merchant settings. Different address parameters are part of the JSON object if they are available on the ID.
+To access the image, use the HTTP GET method and HTTP Basic Authentication with your API token as the "userid" and your API secret as the "password". Set "User-Agent: YOURCOMPANYNAME YOURAPPLICATIONNAME/VERSION" (e.g. MyCompany MyApp/1.0.0) in the "header" section of your request. The TLS protocol is required during the TLS handshake (see Supported cipher suitesSupported cipher suites chapter) and we strongly recommend using the latest version.<br/>
+(`*4`) Address recognition is performed for supported IDs if enabled. There are three different address formats. You can see which format applies to specific IDs under "Data settings" in your Jumio portal settings. Different address parameters are part of the JSON object if they are available on the ID.
 
 ### US address format
 
@@ -131,6 +132,14 @@ To access the image, use the HTTP GET method and HTTP Basic Authentication with 
 |:---------------|:--------|:------------|
 |detailsCode   |5  |Possible codes and descriptions if rejectReasonCode = 100:<br/>1001	PHOTO<br/>1002	DOCUMENT\_NUMBER<br/>1003	EXPIRY<br/>1004	DOB<br/>1005	NAME<br/>1006	ADDRESS<br/>1007	SECURITY\_CHECKS<br/>1008	SIGNATURE<br/>1009	PERSONAL\_NUMBER<br/>Possible codes and descriptions if<br/><br/>rejectReasonCode = 200:<br/>2001	BLURRED<br/>2002	BAD\_QUALITY<br/>2003	MISSING\_PART\_DOCUMENT<br/>2004	HIDDEN\_PART\_DOCUMENT<br/>2005	DAMAGED\_DOCUMENT |
 
+### Identity verification
+
+|Parameter "identityVerification"       | Max. length    | Description|
+|:---------------|:--------|:------------|
+|__similarity__   |  |Possible values:<br/> •	MATCH<br />•	NO_MATCH<br />•	NOT_POSSIBLE|
+|__validity__   |  |Possible values:<br/> •	TRUE<br />•	FALSE |
+|reason   |  |•	Provided if validity = FALSE<br/>•	Possible values:<br />- SELFIE_CROPPED_FROM_ID<br />-	ENTIRE_ID_USED_AS_SELFIE<br />-	MULTIPLE_PEOPLE<br />-	SELFIE_IS_SCREEN_PAPER_VIDEO<br />-	SELFIE_MANIPULATED<br />- AGE_DIFFERENCE_TOO_BIG<br />-	NO_FACE_PRESENT<br />-	FACE_NOT_FULLY_VISIBLE<br />-	BAD_QUALITY|
+
 ### Sample callbacks
 
 #### Sample callback (URL-encoded POST): Approved and verified
@@ -178,7 +187,7 @@ __Note:__ Mandatory parameters are highlighted bold.
 |__status__   					| String  |    |Possible states: <br/> ⦁ UPLOADED (default) <br/> ⦁	EXTRACTED if type = SSC, country = USA and US social security card provided <br/> ⦁	DISCARDED if type = SSC, country = USA and no US social security card provided |
 |__country__     				| String  |3   |Possible countries: <br/> ⦁ [ISO 3166-1 alpha-3](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-3) country code <br/> ⦁	XKX (Kosovo) |
 |__type__     					| String  |    |Possible types: <br/>⦁	BS (Bank statement, front side) <br/>⦁	IC (Insurance card, front side) <br/>⦁	UB (Utility bill, front side) <br/>⦁	CAAP (Cash advance application, front and back side) <br/>⦁	CRC (Corporate resolution certificate, front and back side) <br/>⦁	CCS (Credit card statement, front and back side) <br/>⦁	LAG (Lease agreement, front and back side) <br/>⦁	LOAP (Loan application, front and back side) <br/>⦁	MOAP (Mortgage application, front and back side) <br/>⦁	TR (Tax return, front and back side) <br/>⦁	VT (Vehicle title, front side) <br/>⦁	VC (Voided check, front side) <br/>⦁	STUC (Student card, front side) <br/>⦁	HCC (Health care card, front side) <br/>⦁	CB (Council bill, front side) <br/>⦁	SENC (Seniors card, front side) <br/>⦁	MEDC (Medicare card, front side) <br/>⦁	BC (Birth certificate, front side) <br/>⦁	WWCC (Working with children check, front side) <br/>⦁	SS (Superannuation statement, front side) <br/>⦁	TAC (Trade association card, front side) <br/>⦁	SEL (School enrolment letter, front side) <br/>⦁	PB (Phone bill, front side) <br/>⦁	USSS (US social security card, front side) <br/>⦁	SSC (Social security card, front side) <br/>⦁	CUSTOM (Custom document type)|
-|__images__							| JSON array  |  |URLs to the images of the scan (JPEG or PNG) To access an image, use the HTTP GET method and HTTP Basic Authentication with your merchant API token as the "userid" and your API secret as the "password". Set "User-Agent: YOURCOMPANYNAME YOURAPPLICATIONNAME/VERSION" (e.g. MyCompany MyApp/1.0.0) in the "header" section of your request. The TLS protocol is required during the TLS handshake (see Supported cipher suites chapter) and we strongly recommend using the latest version |
+|__images__							| JSON array  |  |URLs to the images of the scan (JPEG or PNG) To access an image, use the HTTP GET method and HTTP Basic Authentication with your API token as the "userid" and your API secret as the "password". Set "User-Agent: YOURCOMPANYNAME YOURAPPLICATIONNAME/VERSION" (e.g. MyCompany MyApp/1.0.0) in the "header" section of your request. The TLS protocol is required during the TLS handshake (see Supported cipher suites chapter) and we strongly recommend using the latest version |
 |__customDocumentCode__ | String  |100 |Your custom document code (maintained in your Jumio customer portal) if type = CUSTOM |
 |__extractedData__      | JSON object  | |Extracted data if status = EXTRACTED, see Supported documents for data extraction|
 
