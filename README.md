@@ -1,25 +1,28 @@
 ![Jumio](/images/jumio_feature_graphic.png)
 
-## Implementation guides
+# Implementation guides
 
-### Netverify
+Please find here a list of all product implementation guides.
+
+## Netverify
 
 - [Netverify Web](https://www.jumio.com/implementation-guides/netverify-web/)
-- [Fastfill API](https://www.jumio.com/implementation-guides/fastfill-api/)
+- [Fastfill API](/netverify/fastfill-api.md)
 - [Netverify Retrieval API](http://www.jumio.com/implementation-guides/netverify-retrieval-api/)
-- [Netverify Delete API](https://www.jumio.com/implementation-guides/netverify-delete-api/)
+- [Netverify Delete API](/netverify/netverify-delete-api.md)
 - [Fastfill & Netverify Mobile iOS](https://github.com/Jumio/mobile-sdk-ios)
 - [Fastfill & Netverify Mobile Android](https://github.com/Jumio/mobile-sdk-android)
 - [Document Verification Mobile iOS](https://github.com/Jumio/mobile-sdk-ios)
 - [Document Verification Mobile Android](https://github.com/Jumio/mobile-sdk-android)
 
 
-### BAM Checkout
+## BAM Checkout
 
 - [BAM Checkout Mobile iOS](https://github.com/Jumio/mobile-sdk-ios)
 - [BAM Checkout Mobile Android](https://github.com/Jumio/mobile-sdk-android)
 - [BAM Checkout Mobile Web](https://www.jumio.com/implementation-guides/bam-checkout-mobile-web/)
 - [Credit Card Retrieval API](https://www.jumio.com/implementation-guides/credit-card-retrieval-api/)
+
 
 ## Contact
 
