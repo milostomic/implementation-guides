@@ -60,7 +60,6 @@ __Note:__ Mandatory parameters are highlighted bold.
 |merchantIdScanReference   |100  |Your reference for each scan |
 |merchantReportingCriteria   |100  |Your reporting criteria for each scan |
 |customerId   |100  |ID of the customer as provided |
-|additionalInformation   |100  |Additional information as provided |
 |clientIp   |   |IP address of the client in the format xxx.xxx.xxx.xxx |
 |firstAttemptDate   |  |Timestamp of the first scan attempt in the format YYYY-MM-DDThh:mm:ss.SSSZ |
 |optionalData1   |255  |Optional field of MRZ line 1 |
@@ -136,9 +135,9 @@ To access the image, use the HTTP GET method and HTTP Basic Authentication with 
 
 |Parameter "identityVerification"       | Max. length    | Description|
 |:---------------|:--------|:------------|
-|__similarity__   |  |Possible values:<br/> •	MATCH<br />•	NO_MATCH<br />•	NOT_POSSIBLE|
+|__similarity__   |  |Possible values:<br/> •	MATCH<br />•	NO\_MATCH<br />•	NOT\_POSSIBLE|
 |__validity__   |  |Possible values:<br/> •	TRUE<br />•	FALSE |
-|reason   |  |•	Provided if validity = FALSE<br/>•	Possible values:<br />- SELFIE_CROPPED_FROM_ID<br />-	ENTIRE_ID_USED_AS_SELFIE<br />-	MULTIPLE_PEOPLE<br />-	SELFIE_IS_SCREEN_PAPER_VIDEO<br />-	SELFIE_MANIPULATED<br />- AGE_DIFFERENCE_TOO_BIG<br />-	NO_FACE_PRESENT<br />-	FACE_NOT_FULLY_VISIBLE<br />-	BAD_QUALITY|
+|reason   |  |•	Provided if validity = FALSE<br/>•	Possible values:<br />- SELFIE\_CROPPED\_FROM\_ID<br />-	ENTIRE\_ID\_USED\_AS\_SELFIE<br />-	MULTIPLE\_PEOPLE<br />-	SELFIE\_IS\_SCREEN\_PAPER\_VIDEO<br />-	SELFIE\_MANIPULATED<br />- AGE\_DIFFERENCE\_TOO\_BIG<br />-	NO\_FACE\_PRESENT<br />-	FACE\_NOT\_FULLY\_VISIBLE<br />-	BAD\_QUALITY|
 
 ### Sample callbacks
 
@@ -178,7 +177,6 @@ __Note:__ Mandatory parameters are highlighted bold.
 |__source__     							| String  |    |DOC_SDK|
 |__merchantScanReference__		| String  |255 |Your reference for each scan |
 |__customerId__       				| String  |255 |ID of the customer|
-|__additionalInformation__        | String  |255 |Additional information|
 |__merchantReportingCriteria__    | String  |255 |Your reporting criteria for each scan|
 |__clientIp__       					    | String  |100  |IP address of the client if provided for the Document Verification API (Netverify Multi Document API) |
 

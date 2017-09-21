@@ -21,7 +21,7 @@ Please find here a list of all product implementation guides.
 - [BAM Checkout Mobile iOS](https://github.com/Jumio/mobile-sdk-ios)
 - [BAM Checkout Mobile Android](https://github.com/Jumio/mobile-sdk-android)
 - [BAM Checkout Mobile Web](https://www.jumio.com/implementation-guides/bam-checkout-mobile-web/)
-- [Credit Card Retrieval API](https://www.jumio.com/implementation-guides/credit-card-retrieval-api/)
+- [Credit Card Retrieval API](/bam-checkout/credit-card-retrieval-api.md)
 
 
 ## Contact
