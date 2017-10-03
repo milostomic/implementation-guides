@@ -68,6 +68,8 @@ __Note:__ Mandatory parameters are highlighted bold.
 |gender   |2  |Possible values if idCountry = FRA and idSubtype = NATIONAL\_ID (MRZ type CNIS)<br/>•	M<br/>•	F |
 |idFaceLiveness **(deprecated)**  |   |only available for SDK<br/>Possible values:<br/>•	TRUE (if face match enabled for ID verification and liveness detected successfully during scanning)<br/>•	FALSE |
 |identityVerification   |   |Identity verification as JSON object if verificationStatus = APPROVED_VERIFIED, see table below|
+|dlCategories   |   |Driver license categories as JSON object if verificationStatus = APPROVED_VERIFIED, see table below<br />(only supported for country FRA and BEL)|
+
 
 (`*1`) Scan is declined as unsupported if the provided ID is not supported by Jumio or not accepted in your Netverify settings.<br/>
 (`*2`) Face match is performed if enabled.<br/>
@@ -118,18 +120,20 @@ To access the image, use the HTTP GET method and HTTP Basic Authentication with 
 
 ### Reject reason
 
-|Parameter "rejectReason"       | Max. length    | Description|
-|:---------------|:--------|:------------|
-|__rejectReasonCode__   |5  |see below |
-|__rejectReasonDescription__   |64  |100	MANIPULATED\_DOCUMENT<br/>105	FRAUDSTER<br/>106	FAKE<br/>107	PHOTO\_MISMATCH<br/>108	MRZ\_CHECK\_FAILED<br/>109	PUNCHED\_DOCUMENT<br/>110	CHIP\_DATA\_MANIPULATED (only available for ePassport)<br/>111	MISMATCH\_PRINTED\_BARCODE_DATA<br/><br/>Possible codes and descriptions if verificationStatus = ERROR\_NOT\_READABLE\_ID:<br/>102	PHOTOCOPY\_BLACK\_WHITE<br/>103	PHOTOCOPY\_COLOR<br/>104	DIGITAL\_COPY<br/>200	NOT\_READABLE\_DOCUMENT<br/>201	NO\_DOCUMENT<br/>202	SAMPLE\_DOCUMENT<br/>206	MISSING\_BACK<br/>207	WRONG\_DOCUMENT\_PAGE<br/>209	MISSING\_SIGNATURE<br/>210	CAMERA\_BLACK\_WHITE<br/>211	DIFFERENT\_PERSONS\_SHOWN<br/>212	IMAGE\_NOT\_MATCHING\_DATA (only available for ePassport)<br/>300	MANUAL\_REJECTION|
-|rejectReasonDetails   |   |Reject reason details as JSON array containing JSON objects if rejectReasonCode = 100 or 200, see table below |
-|rejectReasonDetails   |   |Reject reason details as JSON array containing JSON objects if rejectReasonCode = 100 or 200, see table below |
+|Parameter "rejectReason" | Type   | Max. length    | Description|
+|:------------------------|:--------|:--------|:------------|
+|rejectReasonCode |String| 5  |see below |
+|rejectReasonDescription |String |64  |Possible codes and descriptions for verification status DENIED_FRAUD:<br>100	MANIPULATED\_DOCUMENT<br/>105	FRAUDSTER<br/>106	FAKE<br/>107	PHOTO\_MISMATCH<br/>108	MRZ\_CHECK\_FAILED<br/>109	PUNCHED\_DOCUMENT<br/>110	CHIP\_DATA\_MANIPULATED (only available for ePassport)<br/>111	MISMATCH\_PRINTED\_BARCODE_DATA<br><br>Possible codes and descriptions for verificationStatus = ERROR\_NOT\_READABLE\_ID:<br/>102	PHOTOCOPY\_BLACK\_WHITE<br/>103	PHOTOCOPY\_COLOR<br/>104	DIGITAL\_COPY<br/>200	NOT\_READABLE\_DOCUMENT<br/>201	NO\_DOCUMENT<br/>202	SAMPLE\_DOCUMENT<br/>206	MISSING\_BACK<br/>207	WRONG\_DOCUMENT\_PAGE<br/>209	MISSING\_SIGNATURE<br/>210	CAMERA\_BLACK\_WHITE<br/>211	DIFFERENT\_PERSONS\_SHOWN<br/>300	MANUAL\_REJECTION|
+|rejectReasonDetails |Object  |   |Reject reason details as JSON array containing JSON objects if rejectReasonCode = 100 or 200, see table below |
+
 
 ### Reject reason details
 
-|Parameter "rejectReasonDetails"       | Max. length    | Description|
-|:---------------|:--------|:------------|
-|detailsCode   |5  |Possible codes and descriptions if rejectReasonCode = 100:<br/>1001	PHOTO<br/>1002	DOCUMENT\_NUMBER<br/>1003	EXPIRY<br/>1004	DOB<br/>1005	NAME<br/>1006	ADDRESS<br/>1007	SECURITY\_CHECKS<br/>1008	SIGNATURE<br/>1009	PERSONAL\_NUMBER<br/>Possible codes and descriptions if<br/><br/>rejectReasonCode = 200:<br/>2001	BLURRED<br/>2002	BAD\_QUALITY<br/>2003	MISSING\_PART\_DOCUMENT<br/>2004	HIDDEN\_PART\_DOCUMENT<br/>2005	DAMAGED\_DOCUMENT |
+|Parameter "rejectReasonDetails" |  Type    | Max. length    | Description|
+|:-------------------------------|:---------|:---------------|:------------|
+|detailsCode   |String | 5 | see below |
+|detailsDescription|String|32| Possible codes and descriptions for rejectReasonCode = 100:<br/>1001	PHOTO<br/>1002	DOCUMENT\_NUMBER<br>1003	EXPIRY<br/>1004	DOB<br/>1005	NAME<br/>1006	ADDRESS<br/>1007	SECURITY\_CHECKS<br/>1008	SIGNATURE<br>1009	PERSONAL\_NUMBER<br><br>Possible codes and descriptions for rejectReasonCode = 200:<br/>2001	BLURRED<br/>2002	BAD\_QUALITY<br/>2003	MISSING\_PART\_DOCUMENT<br/>2004	HIDDEN\_PART\_DOCUMENT<br/>2005	DAMAGED\_DOCUMENT |
+
 
 ### Identity verification
 
@@ -137,7 +141,17 @@ To access the image, use the HTTP GET method and HTTP Basic Authentication with 
 |:---------------|:--------|:------------|
 |__similarity__   |  |Possible values:<br/> •	MATCH<br />•	NO\_MATCH<br />•	NOT\_POSSIBLE|
 |__validity__   |  |Possible values:<br/> •	TRUE<br />•	FALSE |
-|reason   |  |•	Provided if validity = FALSE<br/>•	Possible values:<br />- SELFIE\_CROPPED\_FROM\_ID<br />-	ENTIRE\_ID\_USED\_AS\_SELFIE<br />-	MULTIPLE\_PEOPLE<br />-	SELFIE\_IS\_SCREEN\_PAPER\_VIDEO<br />-	SELFIE\_MANIPULATED<br />- AGE\_DIFFERENCE\_TOO\_BIG<br />-	NO\_FACE\_PRESENT<br />-	FACE\_NOT\_FULLY\_VISIBLE<br />-	BAD\_QUALITY|
+|reason   |  |Provided if validity = FALSE<br/>Possible values:<br />• SELFIE\_CROPPED\_FROM\_ID<br />•	ENTIRE\_ID\_USED\_AS\_SELFIE<br />•	MULTIPLE\_PEOPLE<br />•	SELFIE\_IS\_SCREEN\_PAPER\_VIDEO<br />•	SELFIE\_MANIPULATED<br />• AGE\_DIFFERENCE\_TOO\_BIG<br />•	NO\_FACE\_PRESENT<br />•	FACE\_NOT\_FULLY\_VISIBLE<br />•	BAD\_QUALITY|
+
+### Driver license categories
+
+|Parameter "dlCategories"       | Max. length    | Description|
+|:---------------|:--------|:------------|
+|__category__   |  |Possible values:<br/> •	B1<br />•	B<br />•	BE|
+|issueDate   |  |Issue date in the format YYYY-MM-DD|
+|expiryDate   |  |Date of expiry in the format YYYY-MM-DD as available on the driver license|
+|isReadable   |  |Possible value:<br>• FALSE |
+
 
 ### Sample callbacks
 
@@ -274,7 +288,7 @@ In your Jumio customer portal settings, you can configure the ID verification as
 Provide a URL which meets the following constraints:
 * HTTPS using the TLS protocol (we strongly recommend using the latest version)
 * Valid URL (RFC-2396) using ASCII characters or IDNA Punycode
-* IPs, ports, query parameters and fragment identifiers are not allowed
+* IP addresses, ports, query parameters and fragment identifiers are not allowed
 
 Whitelist the following IP addresses for callbacks, and use these to verify that the callback originated from Jumio:
 

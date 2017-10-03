@@ -8,7 +8,7 @@ Please find here a list of all product implementation guides.
 
 - [Netverify Web](https://www.jumio.com/implementation-guides/netverify-web/)
 - [Fastfill API](/netverify/fastfill-api.md)
-- [Netverify Retrieval API](http://www.jumio.com/implementation-guides/netverify-retrieval-api/)
+- [Netverify Retrieval API](/netverify/netverify-retrieval-api/)
 - [Netverify Delete API](/netverify/netverify-delete-api.md)
 - [Fastfill & Netverify Mobile iOS](https://github.com/Jumio/mobile-sdk-ios)
 - [Fastfill & Netverify Mobile Android](https://github.com/Jumio/mobile-sdk-android)
