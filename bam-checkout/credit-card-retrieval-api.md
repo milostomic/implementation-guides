@@ -5,33 +5,32 @@
 
 This guide illustrates how to implement the Credit Card Retrieval API.
 
-## Contact
 
-If you have any questions regarding our implementation guide please contact Jumio Customer Service at <support@jumio.com> or https://support.jumio.com. The Jumio online helpdesk contains a wealth of information regarding our service including demo videos, product descriptions, FAQs and other things that may help to get you started with Jumio. Check it out at: https://support.jumio.com.
-
-## Table of Content
+## Table of Contents
 
 - [Retrieving credit card image](#retrieving-credit-card-image)
 - [Retrieving credit card details](#retrieving-credit-card-details)
 - [Supported cipher suites](#supported-cipher-suites)
 
-## Release notes
+---
+# Release Notes
 
-|Version       | Date    | Description|
-|:-------------|:--------|:------------|
-|1.2.1  |2017-05-23|Added response parameter "merchantReportingCriteria" for retrieving <br>credit card details  |
-|1.2.0  |2016-07-19|Updated endpoint URLs  |
-|1.1.2  |2016-05-18|Removed TLS_DHE ciphers  |
-|1.1.1  |2015-10-21|Added ECDHE ciphers to supported cipher suites  |
-|1.1.0  |2015-06-30|Introduced EU data center  |
-|1.0.5  |2015-03-24|Removed cipher TLS_RSA_WITH_RC4_128_SHA due to RC4 deprecation |
-|1.0.4  |2014-10-07|Added unmasked retrieval of cardAccountNumber  |
-|1.0.3  |2014-06-10|Updated supported cipher suites during SSL handshake  |
-|1.0.2  |2014-04-23|Added supported cipher suites during SSL handshake (TLS required)  |
-|1.0.1  |2014-01-14|Changed location of API credentials due to redesigned customer portal  |
-|1.0.0  |2013-12-17| Initial release |
+Date    | Description
+:-------|:------------
+2017-05-23|Added response parameter "merchantReportingCriteria" for retrieving <br>credit card details  
+2016-07-19|Updated endpoint URLs  
+2016-05-18|Removed TLS_DHE ciphers  
+2015-10-21|Added ECDHE ciphers to supported cipher suites  
+2015-06-30|Introduced EU data center  
+2015-03-24|Removed cipher TLS_RSA_WITH_RC4_128_SHA due to RC4 deprecation
+2014-10-07|Added unmasked retrieval of cardAccountNumber  
+2014-06-10|Updated supported cipher suites during SSL handshake  
+2014-04-23|Added supported cipher suites during SSL handshake (TLS required)  
+2014-01-14|Changed location of API credentials due to redesigned customer portal  
+2013-12-17| Initial release |
 
-# Retrieving credit card image
+---
+# Retrieving Credit Card Image
 
 By calling the RESTful HTTP GET API below you receive the masked credit card image of a successful scan by specifying the Jumio scan reference as a path parameter.
 
@@ -49,12 +48,12 @@ If your customer account is in the EU data center, use `lon.jumio.com` instead o
 - `User-Agent: YOURCOMPANYNAME YOURAPPLICATIONNAME/VERSION`<br>
 (e.g. MyCompany MyApp/1.0.0, change this to reflect your company)
 
-**TLS handshake:** The TLS protocol is required (see [Supported cipher suites](#supported-cipher-suites) chapter) and we strongly recommend using the latest version.
+**TLS handshake:** The TLS protocol is required (see [Supported Cipher Suites](/netverify/supported-cipher-suites.md) chapter) and we strongly recommend using the latest version.
 
 **Note:** Calls with missing or suspicious headers, suspicious parameter values, or without HTTP Basic Authentication will result in HTTP status code **403 Forbidden**.
 
 
-### Request parameters
+### Request Parameters
 
 **Note:** Mandatory parameters are highlighted bold.
 
@@ -67,7 +66,7 @@ If your customer account is in the EU data center, use `lon.jumio.com` instead o
 
 You receive a JPEG image in case of success, or HTTP status code **404 Not Found** if the scan or the image is not available, which may take up to 5 minutes.
 
-### Sample request
+### Sample Request
 
 ```
 GET https://bam-retrieval.jumio.com/api/netswipe/v1/scans/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/images/front HTTP/1.1
@@ -76,7 +75,7 @@ Authorization: Basic
 ```
 ---
 
-# Retrieving credit card details
+# Retrieving Credit Card Details
 
 By calling the RESTful HTTP GET API below you receive the credit card data of successful scans by specifying the Jumio scan reference as a path parameter.
 
@@ -95,11 +94,11 @@ If your customer account is in the EU data center, use `lon.jumio.com` instead o
 -	`User-Agent: YOURCOMPANYNAME YOURAPPLICATIONNAME/VERSION`
 (e.g. MyCompany MyApp/1.0.0, change this to reflect your company)
 
-**TLS handshake:** The TLS protocol is required (see [Supported cipher suites](#supported-cipher-suites) chapter) and we strongly recommend using the latest version.
+**TLS handshake:** The TLS protocol is required (see [Supported Cipher Suites](/netverify/supported-cipher-suites.md)) and we strongly recommend using the latest version.
 
 **Note:** Calls with missing or suspicious headers, suspicious parameter values, or without HTTP Basic Authentication result in HTTP status code **403 Forbidden**.
 
-## Request parameters
+## Request Parameters
 
 **Note:** Mandatory parameters are highlighted bold.
 
@@ -108,7 +107,7 @@ If your customer account is in the EU data center, use `lon.jumio.com` instead o
 |**scanReference (path parameter)**| String|36|Jumio’s reference number of an existing scan from your account|
 |maskint (query parameter) |String||Possible values:<br>• masked (default)<br>• unmasked|
 
-## Response parameters
+## Response Parameters
 
 You receive a JSON response in case of success, or HTTP status code **404 Not Found** if the scan or the credit card data is not available, which may take up to 5 minutes. <br>
 **Note:** Mandatory JSON parameters are highlighted bold.
@@ -125,7 +124,7 @@ You receive a JSON response in case of success, or HTTP status code **404 Not Fo
 |cardAccountNumber|String|8|If maskhint = masked (default):<br>•	Last two digits of the account number, other digits masked with "x"<br>If maskhint = unmasked:<br>•	Full account number|
 |merchantReportingCriteria|String|100|Your reporting criteria for each scan|
 
-### Sample request
+### Sample Request
 
 ```
 GET https://bam-retrieval.jumio.com/api/netswipe/v1/scans/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/creditCard HTTP/1.1
@@ -134,7 +133,7 @@ User-Agent: YOURCOMPANYNAME YOURAPPLICATIONNAME/x.x.x
 Authorization: Basic
 ```
 
-### Sample response
+### Sample Response
 ```
 {
 "cardExpiryMonth":"1",
@@ -146,21 +145,9 @@ Authorization: Basic
 
 ---
 
-## Supported cipher suites
-The following cipher suites (listed in server-preferred order) are supported by Jumio during the TLS handshake:
+# Supported Cipher Suites
+Jumio supported cipher suites during the TLS handshake.<p>
+[View supported cipher suites](/netverify/supported-cipher-suites.md)
 
-* TLS\_ECDHE\_RSA\_WITH\_AES\_128\_GCM\_SHA256
-* TLS\_ECDHE\_RSA\_WITH\_AES\_128\_CBC\_SHA256
-* TLS\_ECDHE\_RSA\_WITH\_AES\_256\_GCM\_SHA384
-* TLS\_ECDHE\_RSA\_WITH\_AES\_256\_CBC\_SHA384
-* TLS\_RSA\_WITH\_AES\_256\_GCM\_SHA384
-* TLS\_RSA\_WITH\_AES\_256\_CBC\_SHA256
-* TLS\_RSA\_WITH\_AES\_128\_GCM\_SHA256
-* TLS\_RSA\_WITH\_AES\_128\_CBC\_SHA256
-* TLS\_ECDHE\_RSA\_WITH\_AES\_128\_CBC\_SHA
-* TLS\_ECDHE\_RSA\_WITH\_AES\_256\_CBC\_SHA
-* TLS\_RSA\_WITH\_AES\_128\_CBC\_SHA
-* TLS\_RSA\_WITH\_AES\_256\_CBC\_SHA
-
-## Copyright
+---
 &copy; Jumio Corp. 268 Lambert Avenue, Palo Alto, CA 94306

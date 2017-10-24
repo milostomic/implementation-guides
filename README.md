@@ -1,33 +1,51 @@
 ![Jumio](/images/jumio_feature_graphic.png)
 
-# Implementation guides
+# Implementation Guides
 
-Please find here a list of all product implementation guides.
+The implementation guides below will assist you with integrating Jumio products.<p>
+The Jumio Knowledge Base contains a wealth of information regarding our services including FAQs, best practices, demo videos, product descriptions and additional information which will be helpful to get you started with Jumio.<p>
 
-## Netverify
-
-- [Netverify Web](https://www.jumio.com/implementation-guides/netverify-web/)
-- [Fastfill API](/netverify/fastfill-api.md)
-- [Netverify Retrieval API](/netverify/netverify-retrieval-api/)
-- [Netverify Delete API](/netverify/netverify-delete-api.md)
-- [Fastfill & Netverify Mobile iOS](https://github.com/Jumio/mobile-sdk-ios)
-- [Fastfill & Netverify Mobile Android](https://github.com/Jumio/mobile-sdk-android)
-- [Document Verification Mobile iOS](https://github.com/Jumio/mobile-sdk-ios)
-- [Document Verification Mobile Android](https://github.com/Jumio/mobile-sdk-android)
-
-
-## BAM Checkout
-
-- [BAM Checkout Mobile iOS](https://github.com/Jumio/mobile-sdk-ios)
-- [BAM Checkout Mobile Android](https://github.com/Jumio/mobile-sdk-android)
-- [BAM Checkout Mobile Web](https://www.jumio.com/implementation-guides/bam-checkout-mobile-web/)
-- [Credit Card Retrieval API](/bam-checkout/credit-card-retrieval-api.md)
-
+[Jumio Knowledge Base](https://support.jumio.com)
 
 ## Contact
 
-If you have any questions regarding our implementation guide please contact Jumio Support at support@jumio.com or https://support.jumio.com. The Jumio online helpdesk contains a wealth of information regarding our service including demo videos, product descriptions, FAQs and other things that may help to get you started with Jumio. Check it out at: https://support.jumio.com.
+If you have any questions regarding our implementation guides please contact Jumio Support at support@jumio.com.
 
-## Copyright
+---
+## Netverify
 
+Jumio's Netverify ID Verification, lets customers easily and securely capture and submit their government-issued ID documents, performs real-time ID verification using machine learning and helps deter fraud and meet regulatory requirements.
+
+- [Netverify Web](/netverify/netverify-web.md)
+- [Netverify Retrieval API](/netverify/netverify-retrieval-api.md)
+- [Netverify Delete API](/netverify/netverify-delete-api.md)
+
+## Document Verification
+
+Transform the way you extract and verify data from customer documents with Jumio’s Netverify Document Verification (formerly Netverify Multi Document).
+
+- [Document Verification](/netverify/document-verification.md)
+- [Document Verification Mobile iOS](https://github.com/Jumio/mobile-sdk-ios)
+- [Document Verification Mobile Android](https://github.com/Jumio/mobile-sdk-android)
+
+## Fastfill
+
+With Fastfill your customers no longer need to laboriously key enter their personal data.<br>
+Fastfill turns your customers mobile device into a ID data extraction and population tool.
+
+- [Fastfill API](/netverify/fastfill-api.md)
+- [Fastfill & Netverify Mobile iOS](https://github.com/Jumio/mobile-sdk-ios)
+- [Fastfill & Netverify Mobile Android](https://github.com/Jumio/mobile-sdk-android)
+
+## BAM Checkout
+
+BAM Checkout enables your mobile customers with the easiest and most friction-free way to make purchases in your mobile app.
+
+- [BAM Checkout Mobile iOS](https://github.com/Jumio/mobile-sdk-ios)
+- [BAM Checkout Mobile Android](https://github.com/Jumio/mobile-sdk-android)
+- [BAM Checkout Mobile Web](/bam-checkout/bam-checkout-mobile-web.md)
+- [Credit Card Retrieval API](/bam-checkout/credit-card-retrieval-api.md)
+
+
+---
 &copy; Jumio Corp. 268 Lambert Avenue, Palo Alto, CA 94306

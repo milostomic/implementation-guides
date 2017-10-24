@@ -4,38 +4,47 @@
 
 This is a reference manual and configuration guide for the BAM Checkout Mobile Web product. It illustrates how to embed a client into your mobile web page, and implement the BAM Checkout Mobile Web API.
 
-## Table of contents
+
+## Table of Contents
 
 - [Release notes](#release-notes)
 - [Embedding BAM Checkout into your page](#embedding-bam-checkout-into-your-page)
+    - [Initiating the transaction](#InitiatingTheTransaction)
+    - [Displaying and configuring your BAM Checkout client](#displaying-and-configuring-your-bam-checkout-client)
+    - [Retrieving information](#retrieving-information)
+- [Using the BAM Checkout Mobile Web API](#using-the-bam-checkout-mobile-web-api)
 - [Global BAM Checkout settings](#global-bam-checkout-settings)
 - [Supported environments and credit cards](#supported-environments-and-credit-cards)
+- [Two-factor-authentication](#two-factor-authentication)
+- [BAM Checkout Mobile Web code samples](#bam-checkout-mobile-web-code-samples)
 
-## Release notes
+---
+# Release Notes
 
-**Version**|**Date**|**Description**
-:---|:---|:---
-1.8.0|2016-01-26|Updated static endpoint URLs
-1.7.1|2015-08-11|Added error code 120 "Server connection timed out"
-1.7.0|2015-06-30|Introduced EU data center
-1.6.0|2015-06-16|Introduced BAM Checkout Mobile Web code samples
-1.5.0|2015-05-21|Introduced account number and sort code recognition for card scanner and API
-1.4.3|2015-03-24|Added WebView as supported "browser" on iOS
-1.4.2|2015-01-27|Changed supported environments from iOS 6 to 7 and from Android 4 to 4.1.2
-1.4.1|2014-12-02|Added embed code to show the client after initial page load
-1.4.0|2014-11-20|Introduced card type recognition
-1.3.0|2014-10-21|Introduced card scanner without manual entry <br>Added warning event and function<br>Renamed parameter "errorCode" to "code" and "errorMessage" to "message"
-1.2.1|2014-09-25|Added code samples for authorization token creation
-1.2.0|2014-09-03|Introduced BAM Checkout Mobile Web API<br>Added error event<br>Added Android Browser support
-1.1.0|2014-08-19|Introduced card holder recognition
-1.0.2|2014-07-08|Added two-factor authentication<br>Added embed code for AngularJS applications
-1.0.1|2014-06-24|Removed "baseUrl" setting from embed code
-1.0.0|2014-06-12|Initial release
+**Date**|**Description**
+:---|:---
+2016-01-26|Updated static endpoint URLs
+2015-08-11|Added error code 120 "Server connection timed out"
+2015-06-30|Introduced EU data center
+2015-06-16|Introduced BAM Checkout Mobile Web code samples
+2015-05-21|Introduced account number and sort code recognition for card scanner and API
+2015-03-24|Added WebView as supported "browser" on iOS
+2015-01-27|Changed supported environments from iOS 6 to 7 and from Android 4 to 4.1.2
+2014-12-02|Added embed code to show the client after initial page load
+2014-11-20|Introduced card type recognition
+2014-10-21|Introduced card scanner without manual entry <br>Added warning event and function<br>Renamed parameter "errorCode" to "code" and "errorMessage" to "message"
+2014-09-25|Added code samples for authorization token creation
+2014-09-03|Introduced BAM Checkout Mobile Web API<br>Added error event<br>Added Android Browser support
+2014-08-19|Introduced card holder recognition
+2014-07-08|Added two-factor authentication<br>Added embed code for AngularJS applications
+2014-06-24|Removed "baseUrl" setting from embed code
+2014-06-12|Initial release
 
-## Embedding BAM Checkout into your page
+---
+# Embedding BAM Checkout into your page
 
 <a name="InitiatingTheTransaction"></a>
-### Initiating the transaction
+### Initiating the Transaction
 
 Before BAM Checkout Mobile Web can process a user's credit card, you need to create a transaction-specific authorization token which is valid for 5 minutes.
 
@@ -68,7 +77,7 @@ To create an authorization token, perform these 4 steps on the server-side to no
 
 **The following code samples are illustrative and are therefore not containing official implementation guidelines.**
 
-##### Java sample (using Java Cryptography Extension framework)
+##### Java Sample (using Java Cryptography Extension framework)
 
 ```
 /* Note: This sample requires
@@ -116,7 +125,7 @@ System.arraycopy(hmac, 0, finalByteArray, encryptedMessage.length + iv.length, h
 String authorizationToken = Base64.encodeBase64String(finalByteArray);
 ```
 
-##### Java sample (using Bouncy Castle library)
+##### Java Sample (using Bouncy Castle library)
 
 ```
 /* Note: This sample requires
@@ -167,7 +176,7 @@ System.arraycopy(hmac, 0, finalByteArray, encryptedMessage.length + iv.length, h
 String authorizationToken = Base64.encodeBase64String(finalByteArray);
 ```
 
-##### PHP sample
+##### PHP Sample
 
 ```
 $encryptionKey = base64_decode("YOURENCRYPTIONKEY");
@@ -198,7 +207,7 @@ $hmac = hash_hmac("sha1", $encryptedMessage.$iv, $checksumKey, true);
 $authorizationToken = base64_encode($encryptedMessage.$iv.$hmac);
 ```
 
-##### C\# sample
+##### C\# Sample
 
 ```
 byte[] encryptionKey = Convert.FromBase64String("YOURENCRYPTIONKEY");
@@ -234,7 +243,7 @@ hmac.CopyTo(finalByteArray, hmacByteArray.Length);
 string authorizationToken = Convert.ToBase64String(finalByteArray);
 ```
 
-##### JavaScript sample
+##### JavaScript Sample
 
 **Note:** Must be used on the server-side.
 
@@ -270,7 +279,7 @@ var hmac = hmacSha1.finalize();
 var authorizationToken = CryptoJS.enc.Base64.stringify(encryptedMessage.ciphertext.concat(iv).concat(hmac));
 ```
 
-### Displaying and configuring your BAM Checkout client
+### Displaying and Configuring Your BAM Checkout Client
 
 **Step 1:** Copy and paste the following script into your page's `<head>` section right before the `</head>` tag. If your customer account is in the EU data center, use _static-bcmw.lon.jumio.com_ instead of _static-bcmw.jumio.com_.
 
@@ -321,14 +330,14 @@ If you add the above "div" tag after your initial page has been rendered, you ne
 angular.bootstrap(document, ['nshtml5sdk']);
 ```
 
-##### Embed code parameters
+##### Embed Code Parameters
 
 **Parameter**|**Type**|**Description**
 :---|:---|:---
 data-ns-bootstrapper<br>data-ns-card-scanner|String|Your generated, transaction-specific authorization token (see [Initiating the transaction](#InitiatingTheTransaction))
 data-public-identifier|String|Log into your Jumio customer portal and you can find your public identifier on the "Settings" page under "API credentials".
 
-### Retrieving information
+### Retrieving Information
 
 Implement the following event listeners for submit, warning and error notifications by specifying the names of `yourEventListener` and `yourEvent`. The parameter `detail` contains card, warning or error information. Make sure the event listeners are bound before displaying the client.
 
@@ -361,7 +370,7 @@ document.addEventListener('ns.error', function yourEventListener(yourEvent) {
 });
 ```
 
-##### Submit object `detail`
+##### Submit Object `detail`
 
 **Parameter**|**Type**|**Max. length**|**Description**
 :---|:---|:---|:---
@@ -375,21 +384,22 @@ cardSortCode|String|8|For card scanner only: <br> Sort code in the format xx-xx-
 
 Using `data-ns-card-scanner`, card details except CVV will be returned if/as readable.
 
-##### Warning object `detail`
+##### Warning Object `detail`
 
 **Parameter**|**Type**|**Max. length**|**Description**
 :---|:---|:---|:---
 code|String|3|See possible codes and messages below
 message|String|100|Possible codes and messages: <br>320 - Card not detected<br>330 - Data not extracted
 
-##### Error object `detail`
+##### Error Object `detail`
 
 **Parameter**|**Type**|**Max. length**|**Description**
 :---|:---|:---|:---
 code|String|3|See possible codes and messages below
 message|String|100|Possible codes and messages:<br>110 - Network communication problem<br>120 - Server connection timed out<br>210 - Authentication failed<br>220 - Unsupported SDK version<br>310 - Public identifier missing<br>310 - Authorization token missing
 
-## Using the BAM Checkout Mobile Web API
+---
+# Using the BAM Checkout Mobile Web API
 
 The BAM Checkout Mobile Web API offers card scanning without a Jumio-hosted user interface. Simply dispatch a custom JavaScript event containing the customer's credit card image and implement functions for successful scans and error notifications.
 
@@ -504,7 +514,7 @@ document.getElementById('YOURID').dispatchEvent(yourCustomEvent);
 
 Make sure your tag is loaded (see step 2) and your functions are defined (see step 3) before submitting the image.
 
-##### Event object `detail`
+##### Event Object `detail`
 
 **Parameter**|**Type**|**Description**
 :---|:---|:---
@@ -517,17 +527,19 @@ onError|Function|Invoked function for error notifications
 
 <a name="GlobalBAMcheckoutSettings"></a>
 
-## Global BAM Checkout settings
+---
+## Global BAM Checkout Settings
 
 In your Jumio portal settings you can configure the following value.
 
-##### API credentials
+##### API Credentials
 
 Generate, activate and save your keys used for [Initiating the transaction](#InitiatingTheTransaction).
 
 **Note:** Keys are shown Base64-encoded.
 
-## Supported environments and credit cards
+---
+## Supported Environments and Credit Cards
 
 BAM Checkout Mobile Web is supported since iOS 7, Android 4.1.2 and Windows Phone 8.1 within the following browsers:
 
@@ -537,16 +549,18 @@ BAM Checkout Mobile Web is supported since iOS 7, Android 4.1.2 and Windows Phon
 
 BAM Checkout supports AMEX, CUP, DINERS, DISCOVER, JCB, MasterCard and VISA.
 
-## Two-factor authentication
+---
+## Two-factor Authentication
 
 If you want to enable two-factor authentication for your Jumio customer portal please contact [support@jumio.com](mailto:support@jumio.com?subject=Two-factor-authentication). Once enabled, users will be guided through the setup upon their first login to obtain a security code using the "Google Authenticator" app.
 
-## BAM Checkout Mobile Web code samples
+---
+## BAM Checkout Mobile Web Code Samples
 
 BAM Checkout Mobile Web Samples for all implementation types are published on the below link. Each code sample contains setup instructions within its README file, and can be downloaded via ZIP file or HTTPS clone URL.
 
-[BAM Checkout Mobile Web Samples](https://github.com/Jumio/BC-Samples/releases)
+[Download > BAM Checkout Mobile Web samples](https://github.com/Jumio/BC-Samples/releases)
 
-## Copyright
 
+---
 &copy; Jumio Corp. 268 Lambert Avenue, Palo Alto, CA 94306
