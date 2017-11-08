@@ -63,8 +63,8 @@ Note: If your customer account is in the EU data center, use `lon.netverify.com`
 
 |Parameter       | Type    | Max. Length| Description|
 |:---------------|:--------|:------------|:------------|
-|**type**|String||Possible codes:<br>See [Supported documents](#supported-documents) chapter, except "CC" (credit card)|
-|**country**|String|3|Possible countries:<br>• [ISO 3166-1 alpha-3](http://en.wikipedia.org/wiki/ISO_3166-1_alpha-3) country code<br>•	XKX (Kosovo)|
+|**type**|String||Possible codes:<br>See [Supported documents](#supported-documents) chapter|
+|**country**<br>Not mandatory for type=CC|String|3|Possible countries:<br>• [ISO 3166-1 alpha-3](http://en.wikipedia.org/wiki/ISO_3166-1_alpha-3) country code<br>•	XKX (Kosovo)|
 |**merchantScanReference**|String|100|Your reference for each scan must not contain sensitive data like PII (Personally Identifiable Information) or account login|
 |**customerId**|String|100|Identification of the customer should not contain sensitive data like PII (Personally Identifiable Information) or account login|
 |callbackUrl|String|255|Callback URL for the confirmation after the user journey is completed (constraints see [Callback URL](/netverify/portal-settings.md#callback-url) chapter). This setting overrides your Jumio portal settings.|
@@ -200,7 +200,7 @@ If your customer account is in the EU data center, use `acquisition.lon.netverif
 
 |Parameter       | Type    | Max. Length| Description|
 |:---------------|:--------|:------------|:------------|
-|**type**|String||Possible codes:<br>See [Supported documents](#supported-documents) chapter, except "CC" (credit card) |
+|**country**<br>Not mandatory for type=CC|String||Possible codes:<br>See [Supported documents](#supported-documents) chapter |
 |**country**|String|3|Possible countries:<br>•	[ISO 3166-1 alpha-3](http://en.wikipedia.org/wiki/ISO_3166-1_alpha-3) country code<br>•	XKX (Kosovo)|
 |**merchantScanReference**|String|100|Your reference for each scan must not contain sensitive data like PII (Personally Identifiable Information) or account login|
 |**customerId**|String|100|Identification of the customer should not contain sensitive data like PII (Personally Identifiable Information) or account login|
@@ -417,7 +417,7 @@ If your customer account is in the EU data center, use `acquisition.lon.netverif
 
 |Parameter "metadata"  | Type    | Max. Length| Description|
 |:---------------|:--------|:------------|:------------|
-|**type**|String||Possible codes:<br>See [Supported documents](#supported-documents) chapter, except "CC" (credit card) |
+|**country**<br>Not mandatory for type=CC|String||Possible codes:<br>See [Supported documents](#supported-documents) chapter |
 |**country**|String|3|Possible countries:<br>•	[ISO 3166-1 alpha-3](http://en.wikipedia.org/wiki/ISO_3166-1_alpha-3) country code<br>•	XKX (Kosovo)|
 |**merchantScanReference**|String|100|Your reference for each scan must not contain sensitive data like PII (Personally Identifiable Information) or account login|
 |**customerId**|String|100|Identification of the customer should not contain sensitive data like PII (Personally Identifiable Information) or account login|
