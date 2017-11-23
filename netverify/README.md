@@ -32,16 +32,18 @@ If you have any questions regarding our implementation guides please contact Jum
 ---
 ## Netverify Web and Document Verification
 (formerly Netverify Multi Document)
+
 ### Release Notes
 
 | Date           | Description |
 |:---------------|:------------|
+| 2017-11-23  |Added "Visa" to request parameter "idType" for performNetverify<br>Added "Visa" to callback parameter "idType"<br>Added credit card to supported documents for data extraction<br>Added callback parameters "pan" and "expiryDate" to extractedData for Document Verification|
 | 2017-11-08  |Added credit card support for Document Verification and Document Verification API|
 | 2017-10-30  |Added callback parameters "presetCountry" and "presetIdType"|
 | 2017-10-03  |Added callback parameter "dlCategories"<br>Added embed code parameter "clientWidth" and "clientHeight" for Netverify Web|
 | 2017-09-21  |Removed API and callback parameter "additionalInformation"|
 | 2017-09-05  |Added request parameters "presetCountry" and "presetIdType" for Netverify embedded and<br> Netverify redirect<br>Changed default value of "authorizationTokenLifetime" request parameter|
-| 2017-08-24  |Added callback parameter “identityVerification”<br>Added callback IP addresses<br>Added Estonian and Spanish Mexican localizations|
+| 2017-08-24  |Added callback parameter "identityVerification"<br>Added callback IP addresses<br>Added Estonian and Spanish Mexican localizations|
 | 2017-06-28  |Added iFrame logging (optional) for Netverify embedded|
 | 2017-05-23  |Added some callback parameters to extracted data for Netverify Multi Document<br>Removed some callback IP addresses for the US data center|
 | 2017-05-09  |Updated max. length of request and callback parameter "clientIp"|
@@ -133,6 +135,7 @@ If you have any questions regarding our implementation guides please contact Jum
 
 | Date    | Description|
 |:--------|:------------|
+| 2017-11-23   |Added value "Visa" to response parameter "type" for Netverify Retrieval - Retrieving Document Data only|
 | 2017-09-21   |Removed response parameter "additionalInformation"|
 | 2017-08-24   |Added response parameter "identityVerification"|
 | 2017-05-23   |Added response parameter "issuingDate" for retrieving scan details and<br />document data only|

@@ -9,6 +9,7 @@ The callback is the authoritative answer from Jumio. Specify a callback URL (for
 
 - [Callback for Netverify](#callback-for-netverify)
 - [Callback for Document Verification](#callback-for-document-verification)
+    - [Supported Documents for Data Extraction](#supported-documents-for-data-extraction)
 - [Netverify Retrieval API](#netverify-retrieval-api)
 - [Supported cipher suites](#supported-cipher-suites)
 
@@ -58,7 +59,7 @@ The following parameters are posted to your callback URL for Netverify Web embed
 |**idCheckSignature**   |   |"OK" if verificationStatus = APPROVED\_VERIFIED, otherwise "N/A" |
 |**transactionDate**   |   |Timestamp of the scan creation in the format YYYY-MM-DDThh:mm:ss.SSSZ |
 |**callbackDate**   |   |Timestamp of the callback creation in the format YYYY-MM-DDThh:mm:ss.SSSZ |
-|idType   |   |Possible types:<br/>•	PASSPORT<br/>•	DRIVING\_LICENSE<br/>•	ID\_CARD |
+|idType   |   |Possible types:<br/>•	PASSPORT<br/>•	DRIVING\_LICENSE<br/>•	ID\_CARD<br>•	VISA (only supported for country = CHN or USA) |
 |idSubtype   |255  |Possible subtypes if idType = ID\_CARD<br/>•	NATIONAL\_ID<br/>•	CONSULAR\_ID<br/>•	ELECTORAL\_ID<br/>•	RESIDENT\_PERMIT\_ID<br/>•	TAX\_ID (only supported for PHL)<br/>•	STUDENT\_ID (only supported for POL)<br/>•	PASSPORT\_CARD\_ID (only supported for IRL, RUS and USA)<br/>•	MILITARY\_ID (only supported for GRC)<br/>•	OTHER\_ID<br/>•	VISA (only supported for USA)<br/>•	UNKNOWN<br/><br/>Possible subtypes if idType = DRIVING\_LICENSE<br/>•	LEARNING\_DRIVING\_LICENSE (only supported for GBR, IRL, BEL and CAN)<br/><br/>Possible subtypes if idType = PASSPORT<br/>•	E\_PASSPORT (only for mobile) |
 |idCountry   |3  |Possible countries:<br/>•	[ISO 3166-1 alpha-3](http://en.wikipedia.org/wiki/ISO_3166-1_alpha-3) country code<br/>•	XKX (Kosovo)|
 |rejectReason   |   |Reject reason as JSON object if verificationStatus = DENIED\_FRAUD or ERROR\_NOT\_READABLE\_ID, see tables below  |
@@ -82,12 +83,18 @@ The following parameters are posted to your callback URL for Netverify Web embed
 |optionalData1   |255  |Optional field of MRZ line 1 |
 |optionalData2   |255  |Optional field of MRZ line 2 |
 |dni   |255  |DNI as available on the ID if idCountry = ESP and idSubtype = NATIONAL\_ID  |
-|gender   |2  |Possible values if idCountry = FRA and idSubtype = NATIONAL\_ID (MRZ type CNIS)<br/>•	M<br/>•	F |
+|gender   |2  |Possible values: M, F<br>• if idCountry = FRA and idSubtype = NATIONAL\_ID (MRZ type CNIS)<br/>•	if idType = VISA and additional extraction for Visa enabled |
 |idFaceLiveness **(deprecated)**  |   |only available for SDK<br/>Possible values:<br/>•	TRUE (if face match enabled for ID verification and liveness detected successfully during scanning)<br/>•	FALSE |
 |identityVerification   |   |Identity verification as JSON object if verificationStatus = APPROVED\_VERIFIED, see table below|
 |presetCountry   | 3  |Possible countries:<br />•	[ISO 3166-1 alpha-3](http://en.wikipedia.org/wiki/ISO_3166-1_alpha-3) country code <br /> • XKX (Kosovo)|
 |presetIdType   |    |Possible ID types: PASSPORT, DRIVING_LICENSE, ID_CARD|
 |dlCategories   | JSON object  |Driver license categories as JSON object if verificationStatus = APPROVED\_VERIFIED, see table below<br />(only supported for country FRA and BEL)|
+|nationality |3|Nationality if idType = VISA and additional extraction for Visa enabled. Possible countries: <br>• [ISO 3166-1 alpha-3](http://en.wikipedia.org/wiki/ISO_3166-1_alpha-3) country code <br />• XKX (Kosovo)|
+|passportNumber|255|Passport number if idType = VISA and additional extraction for Visa enabled|
+|durationOfStay|255|Duration of stay if idType = VISA and additional extraction for Visa enabled|
+|numberOfEntries|255|Number of entries if idType = VISA and additional extraction for Visa enabled|
+|visaCategory|255|Visa category if idType = VISA and additional extraction for Visa enabled|
+
 
 
 (`*1`) Scan is declined as unsupported if the provided ID is not supported by Jumio, or not accepted in your Netverify settings.<br/>
@@ -216,7 +223,7 @@ The following parameters are posted to your callback URL for Document Verificati
 
 |Parameter "document"      | Type    | Max. Length|  Description|
 |:-------------------------|:--------|:----------:|:------------|
-|**status**   					| String  |    |Possible states: <br/> ⦁ UPLOADED (default) <br/> ⦁	EXTRACTED if type = SSC, country = USA and US social security card provided <br/> ⦁	DISCARDED if type = SSC, country = USA and no US social security card provided |
+|**status**   					| String  |    |Possible states: <br/> ⦁ UPLOADED (default) <br/> ⦁	EXTRACTED if supported document for data extraction provided <br/> ⦁	DISCARDED if no supported document for data extraction provided |
 |**country**     				| String  |3   |Possible countries: <br/> ⦁ [ISO 3166-1 alpha-3](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-3) country code <br/> ⦁	XKX (Kosovo) |
 |**type**     					| String  |    |Possible types: <br>⦁ CC (Credit card, front and back side)<br/>⦁	BS (Bank statement, front side) <br/>⦁	IC (Insurance card, front side) <br/>⦁	UB (Utility bill, front side) <br/>⦁	CAAP (Cash advance application, front and back side) <br/>⦁	CRC (Corporate resolution certificate, front and back side) <br/>⦁	CCS (Credit card statement, front and back side) <br/>⦁	LAG (Lease agreement, front and back side) <br/>⦁	LOAP (Loan application, front and back side) <br/>⦁	MOAP (Mortgage application, front and back side) <br/>⦁	TR (Tax return, front and back side) <br/>⦁	VT (Vehicle title, front side) <br/>⦁	VC (Voided check, front side) <br/>⦁	STUC (Student card, front side) <br/>⦁	HCC (Health care card, front side) <br/>⦁	CB (Council bill, front side) <br/>⦁	SENC (Seniors card, front side) <br/>⦁	MEDC (Medicare card, front side) <br/>⦁	BC (Birth certificate, front side) <br/>⦁	WWCC (Working with children check, front side) <br/>⦁	SS (Superannuation statement, front side) <br/>⦁	TAC (Trade association card, front side) <br/>⦁	SEL (School enrolment letter, front side) <br/>⦁	PB (Phone bill, front side) <br/>⦁	USSS (US social security card, front side) <br/>⦁	SSC (Social security card, front side) <br/>⦁	CUSTOM (Custom document type)|
 |**images**							| JSON array  |  |URLs to the images of the scan (JPEG or PNG)<br><br> To access an image, use the HTTP GET method and HTTP Basic Authentication with your API token as the "userid" and your API secret as the "password". Set "User-Agent: YOURCOMPANYNAME YOURAPPLICATIONNAME/VERSION" (e.g. MyCompany MyApp/1.0.0) in the "header" section of your request. The TLS protocol is required during the TLS handshake (see [Supported cipher suites](/netverify/supported-cipher-suites.md)) and we strongly recommend using the latest version. |
@@ -226,13 +233,15 @@ The following parameters are posted to your callback URL for Document Verificati
 |Parameter "extractedData"      | Type    | Max. Length|  Description|
 |:---------------|:--------|:----------:|:------------|
 |firstName  | String  |255    |First name if readable|
-|lastName|String|255|Last name if readable|
-|name|String| 100| Full name if readable|
-|ssn     							| String  |255 |Social security number if readable|
+|lastName |String |255 |Last name if readable|
+|name |String | 100 | Full name if readable|
+|accountNumber |String |28|Bank account number of the customer from a bank statement|
+|pan |String |20 |Personal account number of credit card|
+|issueDate  | String  |  |Issue date in the format YYYY-MM-DD|
+|expiryDate |String | |Date of expiry in the format YYYY-MM-DD|
+|ssn   | String  |255 |Social security number if readable|
 |signatureAvailable  | String  |   |"true" if signature available, otherwise "false"|
-|accountNumber|String|28|Bank account number of the customer from a bank statement|
-|issueDate     				| String  |  |Issue date in the format YYYY-MM-DD|
-|address							| JSON object  |  |Address as JSON object in raw format if status = EXTRACTED, see table below |
+|address	| JSON object  |  |Address as JSON object in raw format if status = EXTRACTED, see table below |
 
 #### Raw Address Format
 
@@ -251,7 +260,7 @@ The following parameters are posted to your callback URL for Document Verificati
 #### Supported Documents for Data Extraction
 
 |Country      | Type | Extracted data |
-|:---------------|:----------|:------------|
+|:------------|:-----|:---------------|
 |AUS |UB |name, issueDate, address, dueDate |
 |AUS |BS |name, issueDate, address, accountNumber |
 |AUS |CCS |name, issueDate, address, cardNumberLastFourDigits |
@@ -266,6 +275,18 @@ The following parameters are posted to your callback URL for Document Verificati
 |USA |BS |name, issueDate, address, accountNumber |
 |USA |CCS |name, issueDate, address, cardNumberLastFourDigits |
 |USA |SSC |firstName, lastName, ssn, signatureAvailable  |
+|all |CC |name, pan, expiryDate |
+
+<!-- Prepared table  for Release 146
+|Country ([ISO 3166-1 alpha-3](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-3) country code ) | Type | Extracted data |
+|:---------------|:----------|:------------|
+|ALB, AND, AGO, ATG, ARG, AUS, AUT, AZE, BHS, BRB, BEL, BLZ, BEN, BOL, BIH, BWA, BRA, BFA, BDI, CMR, CAN, CPV, CAF, TCD, CHL, COL, COM, CRI, CIV, HRV, CUB, CYP, CZE, DNK, DJI, DMA, DOM, ECU, SLV, GNQ, ERI, EST, FJI, FIN, FRA, GAB, GMB, DEU, GHA, GRD, GTM, GIN, GNB, GUY, HTI, HND, HUN, ISL, IND, IDN, IRL, ITA, JAM, JPN, KEN, KIR, LVA, LSO, LBR, LIE, LTU, LUX, MDG, MWI, MYS, MLI, MLT, MHL, MRT, MUS, MEX, MDA, MCO, MNE, MOZ, NAM, NRU, NLD, NZL, NIC, NER, NGA, NOR, PAK, PLW, PAN, PNG, PRY, PER, PHL, POL, PRT, ROU, RWA, KNA, LCA, VCT, WSM, SMR, STP, SEN, SRB, SYC, SLE, SGP, SVK, SVN, SLB, SOM, ZAF, SSD, ESP, SDN, SUR, SWZ, SWE, CHE, TGO, TON, TTO, TUR, TKM, TUV, UGA, ARE, GBR, USA, URY, UZB, VUT, VAT, VEN, VNM, ZMB, ZWE |BS (Bank statement) |name, issueDate, address, accountNumber |
+|all |CC (Credit card) |name, pan, expiryDate |
+|ALB, AND, AGO, ATG, ARG, AUS, AUT, AZE, BHS, BRB, BEL, BLZ, BEN, BOL, BIH, BWA, BRA, BFA, BDI, CMR, CAN, CPV, CAF, TCD, CHL, COL, COM, CRI, CIV, HRV, CUB, CYP, CZE, DNK, DJI, DMA, DOM, ECU, SLV, GNQ, ERI, EST, FJI, FIN, FRA, GAB, GMB, DEU, GHA, GRD, GTM, GIN, GNB, GUY, HTI, HND, HUN, ISL, IND, IDN, IRL, ITA, JAM, JPN, KEN, KIR, LVA, LSO, LBR, LIE, LTU, LUX, MDG, MWI, MYS, MLI, MLT, MHL, MRT, MUS, MEX, MDA, MCO, MNE, MOZ, NAM, NRU, NLD, NZL, NIC, NER, NGA, NOR, PAK, PLW, PAN, PNG, PRY, PER, PHL, POL, PRT, ROU, RWA, KNA, LCA, VCT, WSM, SMR, STP, SEN, SRB, SYC, SLE, SGP, SVK, SVN, SLB, SOM, ZAF, SSD, ESP, SDN, SUR, SWZ, SWE, CHE, TGO, TON, TTO, TUR, TKM, TUV, UGA, ARE, GBR, USA, URY, UZB, VUT, VAT, VEN, VNM, ZMB, ZWE |UB (Utility Bill) |name, issueDate, address, dueDate |
+|AUS, CAN, GBR, USA |CCS (Credit card statement) |name, issueDate, address, cardNumberLastFourDigits |
+|USA |SSC (Social security card) |firstName, lastName, ssn, signatureAvailable  |
+-->
+
 
 ### Sample Callbacks
 

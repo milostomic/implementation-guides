@@ -200,7 +200,7 @@ If your customer account is in the EU data center, use `acquisition.lon.netverif
 
 |Parameter       | Type    | Max. Length| Description|
 |:---------------|:--------|:------------|:------------|
-|**country**<br>Not mandatory for type=CC|String||Possible codes:<br>See [Supported documents](#supported-documents) chapter |
+|**type**<br>Not mandatory for type=CC|String||Possible codes:<br>See [Supported documents](#supported-documents) chapter |
 |**country**|String|3|Possible countries:<br>•	[ISO 3166-1 alpha-3](http://en.wikipedia.org/wiki/ISO_3166-1_alpha-3) country code<br>•	XKX (Kosovo)|
 |**merchantScanReference**|String|100|Your reference for each scan must not contain sensitive data like PII (Personally Identifiable Information) or account login|
 |**customerId**|String|100|Identification of the customer should not contain sensitive data like PII (Personally Identifiable Information) or account login|
@@ -417,7 +417,7 @@ If your customer account is in the EU data center, use `acquisition.lon.netverif
 
 |Parameter "metadata"  | Type    | Max. Length| Description|
 |:---------------|:--------|:------------|:------------|
-|**country**<br>Not mandatory for type=CC|String||Possible codes:<br>See [Supported documents](#supported-documents) chapter |
+|**type**<br>Not mandatory for type=CC|String||Possible codes:<br>See [Supported documents](#supported-documents) chapter |
 |**country**|String|3|Possible countries:<br>•	[ISO 3166-1 alpha-3](http://en.wikipedia.org/wiki/ISO_3166-1_alpha-3) country code<br>•	XKX (Kosovo)|
 |**merchantScanReference**|String|100|Your reference for each scan must not contain sensitive data like PII (Personally Identifiable Information) or account login|
 |**customerId**|String|100|Identification of the customer should not contain sensitive data like PII (Personally Identifiable Information) or account login|

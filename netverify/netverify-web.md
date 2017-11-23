@@ -102,8 +102,7 @@ POST https://netverify.com/api/netverify/v2/initiateNetverify HTTP/1.1Accept: a
 
 ```
 {"timestamp": "2017-08-16T10:27:29.494Z",
-"authorizationToken": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
-"jumioIdScanReference": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"}
+"authorizationToken": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx","jumioIdScanReference": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"}
 ```
 
 
@@ -115,8 +114,12 @@ If you are using jQuery, include the jQuery JavaScript library beforehand.
 
 ```
 <script type="text/javascript" src="https://netverify.com/widget/jumio-verify/2.0/iframe-script.js">
-</script><script type="text/javascript">/*<![CDATA[*/JumioClient.setVars({authorizationToken: "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
-}).initVerify("JUMIOIFRAME");/*]]>*/<br></script>
+</script><script type="text/javascript">
+/*<![CDATA[*/JumioClient.setVars({
+  authorizationToken: "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+}).initVerify("JUMIOIFRAME");
+/*]]>*/
+</script>
 ```
 
 To display Netverify, paste
@@ -139,13 +142,9 @@ in your HTML code where you want the client to appear.
 ### Sample: Responsive Layout
 
 ```
-<script type="text/javascript" src="https://netverify.com/widget/jumio-verify/2.0/iframe-script.js"> </script>
+<script type="text/javascript" src="https://netverify.com/widget/jumio-verify/2.0/iframe-script.js"></script>
 <script type="text/javascript">
-/*<![CDATA[*/JumioClient.setVars({
-authorizationToken: "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
-clientHeight: "medium",
-clientWidth: "medium"
-}).initVerify("JUMIOIFRAME");
+/*<![CDATA[*/JumioClient.setVars({authorizationToken: "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",clientHeight: "responsive",clientWidth: "responsive"}).initVerify("JUMIOIFRAME");
 /*]]>*/
 </script>
 ```
@@ -416,7 +415,7 @@ Any values within the API call parameters override settings configured within yo
 |**frontsideImage**|String|Max. 5MB & <8000 pixels per side|Base64 encoded image of ID front side|
 |**faceImage** *|String|Max. 5MB & <8000 pixels per side|Base64 encoded image of face<br> ***Mandatory if Face match enabled**|
 |**country**|String|3|Possible countries:<br>• [ISO 3166-1 alpha-3](http://en.wikipedia.org/wiki/ISO_3166-1_alpha-3) country code<br>• XKX (Kosovo)|
-|**idType**|String|255|PASSPORT, DRIVING\_LICENSE, ID\_CARD|
+|**idType**|String|255|PASSPORT, DRIVING\_LICENSE, ID\_CARD, VISA|
 |frontsideImageMimeType|String||Mime type of front side image<br>Possible values: image/jpeg (default), image/png|
 |faceImageMimeType|String||Mime type of face image<br>Possible values: image/jpeg (default), image/png|
 |backsideImage|String|Max. 5MB & <8000 pixels per side|Base64 encoded image of face|
