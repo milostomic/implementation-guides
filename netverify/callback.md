@@ -34,7 +34,7 @@ For mobile: ID verification must be enabled to receive the callback.
 |User journey state       | Scan state    | Callback|
 |:---------------|:--------|:------------|
 |Drop off   | Pending => Failed  |Transaction will be cleaned-up from pending to failed 15 minutes after last update<br/>Callback: verification status NO\_ID\_UPLOADED|
-|Finished       | Done  |ID verification will be performed<br/>Callback: verification status depends on the result (see table below)|
+|Finished   | Done  |ID verification will be performed<br/>Callback: verification status depends on the result (see table below)|
 
 
 ### Parameters
@@ -43,57 +43,57 @@ The following parameters are posted to your callback URL for Netverify Web embed
 
 **Note:** Mandatory parameters are highlighted bold.
 
-|Parameter       | Max. Length    | Description|
-|:---------------|:--------|:------------|
-|**callBackType**   |   |NETVERIFYID |
-|**jumioIdScanReference**   |36  |Jumio’s reference number for each scan |
-|**verificationStatus**   |   |Possible states:<br/>•	APPROVED\_VERIFIED<br/> •	DENIED\_FRAUD<br/>•	DENIED\_UNSUPPORTED\_ID\_TYPE (`*1`)<br/> •	DENIED\_UNSUPPORTED\_ID\_COUNTRY (`*1`)<br/>•	ERROR\_NOT\_READABLE\_ID<br/> •	NO\_ID\_UPLOADED |
-|**idScanStatus**   |   |SUCCESS if verificationStatus = APPROVED\_VERIFIED, otherwise ERROR |
-|**idScanSource**   |   |Possible values:<br>•	WEB (if Netverify Web embedded and no camera or upload started)<br>•	WEB\_CAM (if Netverify Web embedded via camera)<br>•	WEB\_UPLOAD (if Netverify Web embedded via upload)<br>•	REDIRECT (if Netverify Web redirect and no camera or upload started)<br>•	REDIRECT\_CAM (if Netverify Web redirect via camera)<br>•	REDIRECT\_UPLOAD (if Netverify Web redirect via upload)<br>•	API (if performNetverify)<br>• SDK (if mobile) |
-|**idCheckDataPositions**   |   |"OK" if verificationStatus = APPROVED\_VERIFIED, otherwise "N/A" |
-|**idCheckDocumentValidation**   |   |"OK" if verificationStatus = APPROVED\_VERIFIED, otherwise "N/A" |
-|**idCheckHologram**   |   |"OK" if verificationStatus = APPROVED\_VERIFIED, otherwise "N/A" |
-|**idCheckMRZcode**   |   |"OK" for passports and supported ID cards if verificationStatus = APPROVED\_VERIFIED and MRZ check is enabled, otherwise "N/A" |
-|**idCheckMicroprint**   |   |"OK" if verificationStatus = APPROVED\_VERIFIED, otherwise "N/A" |
-|**idCheckSecurityFeatures**   |   |"OK" if verificationStatus = APPROVED\_VERIFIED, otherwise "N/A" |
-|**idCheckSignature**   |   |"OK" if verificationStatus = APPROVED\_VERIFIED, otherwise "N/A" |
-|**transactionDate**   |   |Timestamp of the scan creation in the format YYYY-MM-DDThh:mm:ss.SSSZ |
-|**callbackDate**   |   |Timestamp of the callback creation in the format YYYY-MM-DDThh:mm:ss.SSSZ |
-|idType   |   |Possible types:<br/>•	PASSPORT<br/>•	DRIVING\_LICENSE<br/>•	ID\_CARD<br>•	VISA (only supported for country = CHN or USA) |
-|idSubtype   |255  |Possible subtypes if idType = ID\_CARD<br/>•	NATIONAL\_ID<br/>•	CONSULAR\_ID<br/>•	ELECTORAL\_ID<br/>•	RESIDENT\_PERMIT\_ID<br/>•	TAX\_ID (only supported for PHL)<br/>•	STUDENT\_ID (only supported for POL)<br/>•	PASSPORT\_CARD\_ID (only supported for IRL, RUS and USA)<br/>•	MILITARY\_ID (only supported for GRC)<br/>•	OTHER\_ID<br/>•	VISA (only supported for USA)<br/>•	UNKNOWN<br/><br/>Possible subtypes if idType = DRIVING\_LICENSE<br/>•	LEARNING\_DRIVING\_LICENSE (only supported for GBR, IRL, BEL and CAN)<br/><br/>Possible subtypes if idType = PASSPORT<br/>•	E\_PASSPORT (only for mobile) |
-|idCountry   |3  |Possible countries:<br/>•	[ISO 3166-1 alpha-3](http://en.wikipedia.org/wiki/ISO_3166-1_alpha-3) country code<br/>•	XKX (Kosovo)|
-|rejectReason   |   |Reject reason as JSON object if verificationStatus = DENIED\_FRAUD or ERROR\_NOT\_READABLE\_ID, see tables below  |
-|idFaceMatch **(deprecated)**   |   |Face match percentage 0-100 if verificationStatus = APPROVED\_VERIFIED (`*2`) |
-|idScanImage   |255  |URL to the image of the scan (JPEG or PNG) if available (`*3`) |
-|idScanImageFace   |255  |URL to the face image of the scan (JPEG or PNG) if available (`*3`)|
-|idScanImageBackside   |255  |URL to the back side image of the scan (JPEG or PNG) if available (`*3`)|
-|idNumber   |200  |Identification number of the document as available on the ID if verificationStatus = APPROVED\_VERIFIED and enabled, otherwise if provided |
-|idFirstName   |200  |•	First name of the customer as available on the ID if verificationStatus = APPROVED\_VERIFIED and enabled, otherwise if provided<br/><br>•	N/A (for non-Latin characters)<br />o	if idCountry = CHN and idType = DRIVING\_LICENSE or ID\_CARD<br>o	if idCountry = KOR and idType = DRIVING\_LICENSE or ID\_CARD<br>o	if idCountry = JPN and idType = DRIVING\_LICENSE<br>o	if idCountry = RUS and idType = ID\_CARD|
-|idLastName   |200  |•	Last name of the customer as available on the ID if verificationStatus = APPROVED\_VERIFIED and enabled, otherwise if provided<br/><br>•	Only if full name is printed in Latin characters<br />o if idCountry = KOR and idType = DRIVING\_LICENSE (first name and last name)<br /><br> •	N/A (for non-Latin characters)<br />o	if idCountry = CHN and idType = DRIVING\_LICENSE or ID\_CARD<br>o	if idCountry = KOR and idType = DRIVING\_LICENSE or ID\_CARD<br>o	if idCountry = JPN and idType = DRIVING\_LICENSE<br>o	if idCountry = RUS and idType = ID\_CARD |
-|idDob   |10  |Date of birth in the format YYYY-MM-DD as available on the ID if verificationStatus = APPROVED\_VERIFIED and enabled, otherwise if provided |
-|idExpiry   |10  |Date of expiry in the format YYYY-MM-DD as available on the ID if verificationStatus = APPROVED\_VERIFIED and enabled, otherwise if provided |
-|idUsState   |100  |Possible values if idType = PASSPORT or ID\_CARD:<br/>•	Last two characters of [ISO 3166-2:US](http://en.wikipedia.org/wiki/ISO_3166-2:US) state code<br/>•	[ISO 3166-1](http://en.wikipedia.org/wiki/ISO_3166-1) country name<br/>•	Kosovo<br/><br/>If idType = DRIVING\_LICENSE:<br/>•	Last two characters of [ISO 3166-2:US](http://en.wikipedia.org/wiki/ISO_3166-2:US) state code|
-|personalNumber   |14  |Personal number of the document <br />• if verificationStatus = APPROVED\_VERIFIED and <br />• if idType = PASSPORT and if data available on the document |
-|idAddress   |   |Address as JSON object in US, EU or raw format if verificationStatus = APPROVED, see tables below (`*4`) |
-|merchantIdScanReference   |100  |Your reference for each scan |
-|merchantReportingCriteria   |100  |Your reporting criteria for each scan |
-|customerId   |100  |ID of the customer as provided |
-|clientIp   |   |IP address of the client in the format xxx.xxx.xxx.xxx |
-|firstAttemptDate   |  |Timestamp of the first scan attempt in the format YYYY-MM-DDThh:mm:ss.SSSZ |
-|optionalData1   |255  |Optional field of MRZ line 1 |
-|optionalData2   |255  |Optional field of MRZ line 2 |
-|dni   |255  |DNI as available on the ID if idCountry = ESP and idSubtype = NATIONAL\_ID  |
-|gender   |2  |Possible values: M, F<br>• if idCountry = FRA and idSubtype = NATIONAL\_ID (MRZ type CNIS)<br/>•	if idType = VISA and additional extraction for Visa enabled |
-|idFaceLiveness **(deprecated)**  |   |only available for SDK<br/>Possible values:<br/>•	TRUE (if face match enabled for ID verification and liveness detected successfully during scanning)<br/>•	FALSE |
-|identityVerification   |   |Identity verification as JSON object if verificationStatus = APPROVED\_VERIFIED, see table below|
-|presetCountry   | 3  |Possible countries:<br />•	[ISO 3166-1 alpha-3](http://en.wikipedia.org/wiki/ISO_3166-1_alpha-3) country code <br /> • XKX (Kosovo)|
-|presetIdType   |    |Possible ID types: PASSPORT, DRIVING_LICENSE, ID_CARD|
-|dlCategories   | JSON object  |Driver license categories as JSON object if verificationStatus = APPROVED\_VERIFIED, see table below<br />(only supported for country FRA and BEL)|
-|nationality |3|Nationality if idType = VISA and additional extraction for Visa enabled. Possible countries: <br>• [ISO 3166-1 alpha-3](http://en.wikipedia.org/wiki/ISO_3166-1_alpha-3) country code <br />• XKX (Kosovo)|
-|passportNumber|255|Passport number if idType = VISA and additional extraction for Visa enabled|
-|durationOfStay|255|Duration of stay if idType = VISA and additional extraction for Visa enabled|
-|numberOfEntries|255|Number of entries if idType = VISA and additional extraction for Visa enabled|
-|visaCategory|255|Visa category if idType = VISA and additional extraction for Visa enabled|
+|Parameter       | Max. Length    | Description| Activation needed |
+|:---------------|:--------|:------------| ------ |
+|**callBackType**   |   |NETVERIFYID | |
+|**jumioIdScanReference**   |36  |Jumio’s reference number for each scan | |
+|**verificationStatus**   |   |Possible states:<br/>•	APPROVED\_VERIFIED<br/> •	DENIED\_FRAUD<br/>•	DENIED\_UNSUPPORTED\_ID\_TYPE (`*1`)<br/> •	DENIED\_UNSUPPORTED\_ID\_COUNTRY (`*1`)<br/>•	ERROR\_NOT\_READABLE\_ID<br/> •	NO\_ID\_UPLOADED | |
+|**idScanStatus**   |   |SUCCESS if verificationStatus = APPROVED\_VERIFIED, otherwise ERROR | |
+|**idScanSource**   |   |Possible values:<br>•	WEB (if Netverify Web embedded and no camera or upload started)<br>•	WEB\_CAM (if Netverify Web embedded via camera)<br>•	WEB\_UPLOAD (if Netverify Web embedded via upload)<br>•	REDIRECT (if Netverify Web redirect and no camera or upload started)<br>•	REDIRECT\_CAM (if Netverify Web redirect via camera)<br>•	REDIRECT\_UPLOAD (if Netverify Web redirect via upload)<br>•	API (if performNetverify)<br>• SDK (if mobile) | |
+|**idCheckDataPositions**   |   |"OK" if verificationStatus = APPROVED\_VERIFIED, otherwise "N/A" | |
+|**idCheckDocumentValidation**   |   |"OK" if verificationStatus = APPROVED\_VERIFIED, otherwise "N/A" | |
+|**idCheckHologram**   |   |"OK" if verificationStatus = APPROVED\_VERIFIED, otherwise "N/A" | |
+|**idCheckMRZcode**   |   |"OK" for passports and supported ID cards if verificationStatus = APPROVED\_VERIFIED and MRZ check is enabled, otherwise "N/A" | |
+|**idCheckMicroprint**   |   |"OK" if verificationStatus = APPROVED\_VERIFIED, otherwise "N/A" | |
+|**idCheckSecurityFeatures**   |   |"OK" if verificationStatus = APPROVED\_VERIFIED, otherwise "N/A" | |
+|**idCheckSignature**   |   |"OK" if verificationStatus = APPROVED\_VERIFIED, otherwise "N/A" | |
+|**transactionDate**   |   |Timestamp of the scan creation in the format YYYY-MM-DDThh:mm:ss.SSSZ | |
+|**callbackDate**   |   |Timestamp of the callback creation in the format YYYY-MM-DDThh:mm:ss.SSSZ | |
+|idType   |   |Possible types:<br/>•	PASSPORT<br/>•	DRIVING\_LICENSE<br/>•	ID\_CARD<br>•	VISA (only supported for country = CHN or USA) | |
+|idSubtype   |255  |Possible subtypes if idType = ID\_CARD<br/>•	NATIONAL\_ID<br/>•	CONSULAR\_ID<br/>•	ELECTORAL\_ID<br/>•	RESIDENT\_PERMIT\_ID<br/>•	TAX\_ID (only supported for PHL)<br/>•	STUDENT\_ID (only supported for POL)<br/>•	PASSPORT\_CARD\_ID (only supported for IRL, RUS and USA)<br/>•	MILITARY\_ID (only supported for GRC)<br/>•	OTHER\_ID<br/>•	VISA (only supported for USA)<br/>•	UNKNOWN<br/><br/>Possible subtypes if idType = DRIVING\_LICENSE<br/>•	LEARNING\_DRIVING\_LICENSE (only supported for USA, CAN, AUS, GBR, IRL, DEU)<br/><br/>Possible subtypes if idType = PASSPORT<br/>•	E\_PASSPORT (only for mobile) | |
+|idCountry   |3  |Possible countries:<br/>•	[ISO 3166-1 alpha-3](http://en.wikipedia.org/wiki/ISO_3166-1_alpha-3) country code<br/>•	XKX (Kosovo)| |
+|rejectReason   |   |Reject reason as JSON object if verificationStatus = DENIED\_FRAUD or ERROR\_NOT\_READABLE\_ID, see tables below  | |
+|idFaceMatch **(deprecated)**   |   |Face match percentage 0-100 if verificationStatus = APPROVED\_VERIFIED (`*2`) |X |
+|idScanImage   |255  |URL to the image of the scan (JPEG or PNG) if available (`*3`) | |
+|idScanImageFace   |255  |URL to the face image of the scan (JPEG or PNG) if available (`*3`)| |
+|idScanImageBackside   |255  |URL to the back side image of the scan (JPEG or PNG) if available (`*3`)| |
+|idNumber   |200  |Identification number of the document as available on the ID if verificationStatus = APPROVED\_VERIFIED and enabled, otherwise if provided | |
+|idFirstName   |200  |•	First name of the customer as available on the ID if verificationStatus = APPROVED\_VERIFIED and enabled, otherwise if provided<br/><br>•	N/A (for non-Latin characters)<br />o	if idCountry = CHN and idType = DRIVING\_LICENSE or ID\_CARD<br>o	if idCountry = KOR and idType = DRIVING\_LICENSE or ID\_CARD<br>o	if idCountry = JPN and idType = DRIVING\_LICENSE<br>o	if idCountry = RUS and idType = ID\_CARD| |
+|idLastName   |200  |•	Last name of the customer as available on the ID if verificationStatus = APPROVED\_VERIFIED and enabled, otherwise if provided<br/><br>•	Only if full name is printed in Latin characters<br />o if idCountry = KOR and idType = DRIVING\_LICENSE (first name and last name)<br /><br> •	N/A (for non-Latin characters)<br />o	if idCountry = CHN and idType = DRIVING\_LICENSE or ID\_CARD<br>o	if idCountry = KOR and idType = DRIVING\_LICENSE or ID\_CARD<br>o	if idCountry = JPN and idType = DRIVING\_LICENSE<br>o	if idCountry = RUS and idType = ID\_CARD | |
+|idDob   |10  |Date of birth in the format YYYY-MM-DD as available on the ID if verificationStatus = APPROVED\_VERIFIED and enabled, otherwise if provided | |
+|idExpiry   |10  |Date of expiry in the format YYYY-MM-DD as available on the ID if verificationStatus = APPROVED\_VERIFIED and enabled, otherwise if provided | |
+|idUsState   |100  |Possible values if idType = PASSPORT or ID\_CARD:<br/>•	Last two characters of [ISO 3166-2:US](http://en.wikipedia.org/wiki/ISO_3166-2:US) state code<br/>•	[ISO 3166-1](http://en.wikipedia.org/wiki/ISO_3166-1) country name<br/>•	Kosovo<br/><br/>If idType = DRIVING\_LICENSE:<br/>•	Last two characters of [ISO 3166-2:US](http://en.wikipedia.org/wiki/ISO_3166-2:US) state code| |
+|personalNumber   |14  |Personal number of the document <br />• if verificationStatus = APPROVED\_VERIFIED and <br />• if idType = PASSPORT and if data available on the document | |
+|idAddress   |   |Address as JSON object in US, EU or raw format if verificationStatus = APPROVED, see tables below (`*4`) |X |
+|merchantIdScanReference   |100  |Your reference for each scan | |
+|merchantReportingCriteria   |100  |Your reporting criteria for each scan | |
+|customerId   |100  |ID of the customer as provided | |
+|clientIp   |   |IP address of the client in the format xxx.xxx.xxx.xxx | |
+|firstAttemptDate   |  |Timestamp of the first scan attempt in the format YYYY-MM-DDThh:mm:ss.SSSZ | |
+|optionalData1   |255  |Optional field of MRZ line 1 | |
+|optionalData2   |255  |Optional field of MRZ line 2 | |
+|dni   |255  |DNI as available on the ID if idCountry = ESP and idSubtype = NATIONAL\_ID  | |
+|gender   |2  |Possible values: M, F<br>• if idCountry = FRA and idSubtype = NATIONAL\_ID (MRZ type CNIS)<br/>•	if idType = VISA and additional extraction for Visa enabled | |
+|idFaceLiveness **(deprecated)**  |   |only available for SDK<br/>Possible values:<br/>•	TRUE (if face match enabled for ID verification and liveness detected successfully during scanning)<br/>•	FALSE |X |
+|identityVerification   |   |Identity verification as JSON object if verificationStatus = APPROVED\_VERIFIED, see table below|X |
+|presetCountry   | 3  |Possible countries:<br />•	[ISO 3166-1 alpha-3](http://en.wikipedia.org/wiki/ISO_3166-1_alpha-3) country code <br /> • XKX (Kosovo)| |
+|presetIdType   |    |Possible ID types: PASSPORT, DRIVING_LICENSE, ID_CARD| |
+|dlCategories   | JSON object  |Driver license categories as JSON object if verificationStatus = APPROVED\_VERIFIED, see table below<br />(only supported for country FRA and BEL)|X |
+|nationality |3|Nationality if idType = VISA and additional extraction for Visa enabled. Possible countries: <br>• [ISO 3166-1 alpha-3](http://en.wikipedia.org/wiki/ISO_3166-1_alpha-3) country code <br />• XKX (Kosovo)|X |
+|passportNumber|255|Passport number if idType = VISA and additional extraction for Visa enabled|X |
+|durationOfStay|255|Duration of stay if idType = VISA and additional extraction for Visa enabled|X |
+|numberOfEntries|255|Number of entries if idType = VISA and additional extraction for Visa enabled|X |
+|visaCategory|255|Visa category if idType = VISA and additional extraction for Visa enabled|X |
 
 
 
@@ -149,7 +149,7 @@ To access the image, use the HTTP GET method and HTTP Basic Authentication with 
 |Parameter "rejectReason" | Type   | Max. Length    | Description|
 |:------------------------|:--------|:--------|:------------|
 |rejectReasonCode |String| 5  |see below |
-|rejectReasonDescription |String |64  |Possible codes and descriptions for verification status DENIED\_FRAUD:<br>100	MANIPULATED\_DOCUMENT<br/>105	FRAUDSTER<br/>106	FAKE<br/>107	PHOTO\_MISMATCH<br/>108	MRZ\_CHECK\_FAILED<br/>109	PUNCHED\_DOCUMENT<br/>110	CHIP\_DATA\_MANIPULATED (only available for ePassport)<br/>111	MISMATCH\_PRINTED\_BARCODE_DATA<br><br>Possible codes and descriptions for verificationStatus = ERROR\_NOT\_READABLE\_ID:<br/>102	PHOTOCOPY\_BLACK\_WHITE<br/>103	PHOTOCOPY\_COLOR (for sources WEB\_CAM and REDIRECT\_CAM)<br/>104	DIGITAL\_COPY<br/>200	NOT\_READABLE\_DOCUMENT<br/>201	NO\_DOCUMENT<br/>202	SAMPLE\_DOCUMENT<br/>206	MISSING\_BACK<br/>207	WRONG\_DOCUMENT\_PAGE<br/>209	MISSING\_SIGNATURE<br/>210	CAMERA\_BLACK\_WHITE<br/>211	DIFFERENT\_PERSONS\_SHOWN<br/>300	MANUAL\_REJECTION|
+|rejectReasonDescription |String |64  |Possible codes and descriptions for verification status DENIED\_FRAUD:<br>100	MANIPULATED\_DOCUMENT<br/>105	FRAUDSTER<br/>106	FAKE<br/>107	PHOTO\_MISMATCH<br/>108	MRZ\_CHECK\_FAILED<br/>109	PUNCHED\_DOCUMENT<br/>110	CHIP\_DATA\_MANIPULATED (only available for ePassport)<br/>111	MISMATCH\_PRINTED\_BARCODE_DATA<br><br>Possible codes and descriptions for verificationStatus = ERROR\_NOT\_READABLE\_ID:<br/>102	PHOTOCOPY\_BLACK\_WHITE<br/>103	PHOTOCOPY\_COLOR (for sources WEB\_CAM and REDIRECT\_CAM)<br/>104	DIGITAL\_COPY<br/>200	NOT\_READABLE\_DOCUMENT<br/>201	NO\_DOCUMENT<br/>202	SAMPLE\_DOCUMENT<br/>206	MISSING\_BACK<br/>207	WRONG\_DOCUMENT\_PAGE<br/>209	MISSING\_SIGNATURE<br/>210	CAMERA\_BLACK\_WHITE<br/>211	DIFFERENT\_PERSONS\_SHOWN (documents of multiple people in one image)<br/>300	MANUAL\_REJECTION|
 |rejectReasonDetails |Object  |   |Reject reason details as JSON array containing JSON objects if rejectReasonCode = 100 or 200, see table below |
 
 
@@ -167,7 +167,7 @@ To access the image, use the HTTP GET method and HTTP Basic Authentication with 
 |:---------------|:--------|:------------|
 |**similarity**  |  |Possible values:<br/> •	MATCH<br />•	NO\_MATCH<br />•	NOT\_POSSIBLE|
 |**validity**  |  |Possible values:<br/> •	TRUE<br />•	FALSE |
-|reason   |  |Provided if validity = FALSE<br/>Possible values:<br />• SELFIE\_CROPPED\_FROM\_ID<br />•	ENTIRE\_ID\_USED\_AS\_SELFIE<br />•	MULTIPLE\_PEOPLE<br />•	SELFIE\_IS\_SCREEN\_PAPER\_VIDEO<br />•	SELFIE\_MANIPULATED<br />• AGE\_DIFFERENCE\_TOO\_BIG<br />•	NO\_FACE\_PRESENT<br />•	FACE\_NOT\_FULLY\_VISIBLE<br />•	BAD\_QUALITY|
+|reason   |  |Provided if validity = FALSE<br/>Possible values:<br />• SELFIE\_CROPPED\_FROM\_ID<br />•	ENTIRE\_ID\_USED\_AS\_SELFIE<br />•	MULTIPLE\_PEOPLE<br />•	SELFIE\_IS\_SCREEN\_PAPER\_VIDEO<br />•	SELFIE\_MANIPULATED<br />• AGE\_DIFFERENCE\_TOO\_BIG<br />•	NO\_FACE\_PRESENT<br />•	FACE\_NOT\_FULLY\_VISIBLE<br />•	BAD\_QUALITY<br />•	BLACK\_AND\_WHITE|
 
 ### Driver License Categories
 

@@ -35,8 +35,9 @@ If you have any questions regarding our implementation guides please contact Jum
 
 ### Release Notes
 
-| Date           | Description |
-|:---------------|:------------|
+| Date           | Description       |
+|:---------------|:------------------|
+| 2018-01-17  |Added new validity reason BLACK_AND_WHITE<br>Updated supported countries for idSubtype LEARNING_DRIVING_LICENSE|
 | 2017-11-23  |Added "Visa" to request parameter "idType" for performNetverify<br>Added "Visa" to callback parameter "idType"<br>Added credit card to supported documents for data extraction<br>Added callback parameters "pan" and "expiryDate" to extractedData for Document Verification|
 | 2017-11-08  |Added credit card support for Document Verification and Document Verification API|
 | 2017-10-30  |Added callback parameters "presetCountry" and "presetIdType"|
@@ -135,6 +136,7 @@ If you have any questions regarding our implementation guides please contact Jum
 
 | Date    | Description|
 |:--------|:------------|
+| 2018-01-17   | Added new validity reason BLACK_AND_WHITE<br> Updated supported countries for idSubtype LEARNING_DRIVING_LICENSE|
 | 2017-11-23   |Added value "Visa" to response parameter "type" for Netverify Retrieval - Retrieving Document Data only|
 | 2017-09-21   |Removed response parameter "additionalInformation"|
 | 2017-08-24   |Added response parameter "identityVerification"|

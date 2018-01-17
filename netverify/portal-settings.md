@@ -29,6 +29,7 @@ Provide a URL which meets the following constraints:
 * HTTPS using the TLS protocol (we strongly recommend using the latest version)
 * Valid URL (RFC-2396) using ASCII characters or IDNA Punycode
 * IP addresses, ports, query parameters and fragment identifiers are not allowed
+* Personally identifiable information (PII) is not allowed in any form
 
 Whitelist the following IP addresses for callbacks, and use these to verify that the callback originated from Jumio:
 
@@ -45,9 +46,11 @@ Jumio will post callbacks to your HTTPS URL if you are using a valid certificate
 ## Success and Error URLs
 
 Provide redirect URLs which meet the following constraints:
-- Valid URL (RFC-2396) using ASCII characters or IDNA Punycode
--	IP addresses, ports, query parameters and fragment identifiers are not allowed
--	HTTPS is strongly recommend, using the TLS protocol
+* Valid URL (RFC-2396) using ASCII characters or IDNA Punycode
+*	IP addresses, ports, query parameters and fragment identifiers are not allowed
+*	Netverify: HTTPS is strongly recommend, using the TLS protocol
+*	Document Verification: HTTPS using the TLS protocol
+* Personally identifiable information (PII) is not allowed in any form
 
 ## ID Scan Capture Method
 
