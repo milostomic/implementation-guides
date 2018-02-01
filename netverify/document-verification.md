@@ -32,9 +32,11 @@ The release information for Document Verification can be found via the link belo
 
 ----
 
-# Using Document Verification
+# Using Document Verification client
 
 Netverify Document Verification offers document upload and extraction (see [Supported documents for data extraction](#supported-documents)) with a Jumio-hosted user interface. Simply use the following RESTful API and you will receive a callback after completion (see [Callback](/netverify/callback.md)).
+
+Uploads are restricted to a total of 10MB in size and can only include JPEG, PNG or PDF file types. Credit card uploads are limited to 2 images or PDF pages, and all other document types are limited to 30 images or PDF pages.
 
 ## Initiating the Transaction
 

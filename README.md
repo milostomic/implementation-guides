@@ -17,6 +17,8 @@ If you have any questions regarding our implementation guides please contact Jum
 Jumio's Netverify ID Verification, lets customers easily and securely capture and submit their government-issued ID documents, performs real-time ID verification using machine learning and helps deter fraud and meet regulatory requirements.
 
 - [Netverify Web](/netverify/netverify-web.md)
+- [Netverify Mobile iOS](https://github.com/Jumio/mobile-sdk-ios)
+- [Netverify Mobile Android](https://github.com/Jumio/mobile-sdk-android)
 - [Netverify Retrieval API](/netverify/netverify-retrieval-api.md)
 - [Netverify Delete API](/netverify/netverify-delete-api.md)
 
@@ -34,8 +36,8 @@ With Fastfill your customers no longer need to laboriously key enter their perso
 Fastfill turns your customers mobile device into a ID data extraction and population tool.
 
 - [Fastfill API](/netverify/fastfill-api.md)
-- [Fastfill & Netverify Mobile iOS](https://github.com/Jumio/mobile-sdk-ios)
-- [Fastfill & Netverify Mobile Android](https://github.com/Jumio/mobile-sdk-android)
+- [Fastfill Mobile iOS](https://github.com/Jumio/mobile-sdk-ios)
+- [Fastfill Mobile Android](https://github.com/Jumio/mobile-sdk-android)
 
 ## BAM Checkout
 

@@ -630,7 +630,7 @@ Capture methods:
 |Browser name|Major browser version|Operating system |Image upload |HTML<br>video stream | Flash \*<br>video stream|
 |:---|:---|:---|:---|:---|:---|
 |Google Chrome |Current |Android|X|X|N|
-|Apple Safari |Current |iOS|X|N |N |
+|Apple Safari |Current |iOS|X|N|N|
 
 \* Fallback method for HTML5 video streaming
 

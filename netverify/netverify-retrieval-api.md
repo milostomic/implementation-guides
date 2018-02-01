@@ -207,7 +207,7 @@ You receive a JSON response in case of success, or HTTP status code **404 Not Fo
 |expiry|String||Date of expiry in the format YYYY-MM-DD|
 |issuingDate|String|255|Issue date in the format YYYY-MM-DD|
 |number|String|255|Identification number of the document|
-|usState|String|255|Possible values if idType = PASSPORT or ID\_CARD:<br>• Last two characters ofd [ISO 3166-2:US](http://en.wikipedia.org/wiki/ISO_3166-2:US) state code<br>• [ISO 3166-1](http://en.wikipedia.org/wiki/ISO_3166-1) country name<br>• Kosovo<br><br>If idType = DRIVING\_LICENSE:<br>• Last two characters of [ISO 3166-2:US](http://en.wikipedia.org/wiki/ISO_3166-2:US) state code |
+|usState|String|255|Possible values if idType = PASSPORT or ID\_CARD:<br/>•	Last two characters of [ISO 3166-2:US](http://en.wikipedia.org/wiki/ISO_3166-2:US) state code<br/>•	Last 2-3 characters of [ISO 3166-2:AU](http://en.wikipedia.org/wiki/ISO_3166-2:AU) state code<br/>•	Last two characters of [ISO 3166-2:CA](http://en.wikipedia.org/wiki/ISO_3166-2:CA) state code<br/>• [ISO 3166-1](http://en.wikipedia.org/wiki/ISO_3166-1_alpha-3) country name<br/>• XKX (Kosovo)<br/><br/>If idType = DRIVING\_LICENSE:<br/>•	Last two characters of [ISO 3166-2:US](http://en.wikipedia.org/wiki/ISO_3166-2:US) state code<br/>•	Last 2-3 characters of [ISO 3166-2:AU](http://en.wikipedia.org/wiki/ISO_3166-2:AU) state code<br/>•	Last two characters of [ISO 3166-2:CA](http://en.wikipedia.org/wiki/ISO_3166-2:CA) state code|
 |personalNumber|String|255|Personal number of the document|
 |optionalData1|String|255|Optional field of MRZ line 1|
 |optionalData2|String|255|Optional field of MRZ line 2|
@@ -643,15 +643,18 @@ You receive a JSON response in case of success, or HTTP status code **404 Not Fo
 |**status**|String||Possible states:<br>•	UPLOADED (default)<br>•	EXTRACTED if supported document for data extraction provided<br>•	DISCARDED if no supported document for data extraction provided |
 |type|String||Possible types:<br>• CC (Credit card, front and back side)<br>• BS (Bank statement, front side)<br>•	IC (Insurance card, front side)<br>•	UB (Utility bill, front side)<br>•	CAAP (Cash advance application, front and back side)<br>•	CRC (Corporate resolution certificate, front and back side)<br>•	CCS (Credit card statement, front and back side)<br>•	LAG (Lease agreement, front and back side)<br>•	LOAP (Loan application, front and back side)<br>•	MOAP (Mortgage application, front and back side)<br>•	TR (Tax return, front and back side)<br>•	VT (Vehicle title, front side)<br>•	VC (Voided check, front side)<br>•	STUC (Student card, front side)<br>•	HCC (Health care card, front side)<br>•	CB (Council bill, front side)<br>•	SENC (Seniors card, front side)<br>•	MEDC (Medicare card, front side)<br>•	BC (Birth certificate, front side)<br>•	WWCC (Working with children check, front side)<br>•	SS (Superannuation statement, front side)<br>•	TAC (Trade association card, front side)<br>•	SEL (School enrolment letter, front side)<br>•	PB (Phone bill, front side)<br>•	USSS (US social security card, front side)<br>•	SSC (Social security card, front side)<br>•	CUSTOM (Custom document type) |
 |country|String|3|Possible countries:<br>• [ISO 3166-1 alpha-3](http://en.wikipedia.org/wiki/ISO_3166-1_alpha-3) country code<br>•	XKX (Kosovo)|
+|originalDocument|String|255|URL to the originally submitted document of the scan (PDF) if available |
 |customDocumentCode|String|100|Your custom document code (maintained in your Jumio customer portal) if type = CUSTOM|
 |extractedData|Object||Extracted data if supported document for data extraction provided, see table below|
 
+
 |Parameter "extractedData" | Type    | Max. Length| Description|
 |:-------------------------|:--------|:------------|:------------|
-|signatureAvailable|String||"true" if signature available, otherwise "false"|
-|ssn|String|255|Social security number if readable|
-|firstName|String|255|First name if readable|
-|lastName|String|255|Last name if readable|
+|signatureAvailable |String ||"true" if signature available, otherwise "false"|
+|ssn |String |255|Social security number if readable|
+|firstName |String |255|First name if readable|
+|lastName |String |255|Last name if readable|
+
 
 ### Sample Request
 ```
