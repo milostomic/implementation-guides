@@ -36,8 +36,8 @@ If your customer account is in the EU data center, use `lon.netverify.com` inste
 **Note:** You have the opportunity to generate a second set of API credentials for deleting scans. To do so, log into your Jumio customer portal and navigate to "API credentials - Transaction administration APIs".
 
 **Header:** The following parameters are mandatory in the "header" section of your request.<br>
--	`Accept: application/json`
--	`User-Agent: YOURCOMPANYNAME YOURAPPLICATIONNAME/VERSION`
+-	`Accept: application/json`<br />
+-	`User-Agent: YOURCOMPANYNAME YOURAPPLICATIONNAME/VERSION`<br />
 (e.g. MyCompany MyApp/1.0.0, change this to reflect your company)
 
 **TLS handshake:** The TLS protocol is required (see [Supported cipher suites](/netverify/supported-cipher-suites.md)) and we strongly recommend using the latest version.

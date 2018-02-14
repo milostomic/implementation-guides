@@ -19,7 +19,7 @@ The release notes for the Fastfill API can be viewed via the link below.<p>
 ---
 # Using the Fastfill API
 
-Call the RESTful HTTP POST API **fastfill** from your server with the below parameters to create a transaction for each user. Simply submit front and/or back side image(s) of the user's document with a maximum file size of 5 MB and you will immediately receive the ID information as a JSON response .
+Call the RESTful HTTP POST API **fastfill** from your server with the below parameters to create a transaction for each user. Simply submit front and/or back side image(s) of the user's document with a maximum file size of 5 MB and you will immediately receive the ID information as a JSON response.<br />
 **Note:** Requests originating from the client are not supported (CORS is disabled) and the API credentials must never be exposed on the client side.
 
 HTTP request method: **POST**<br>
@@ -29,10 +29,10 @@ If your customer account is in the EU data center, use `lon.netverify.com` inste
 **Authentication:** The API call is protected. To access it, use HTTP Basic Authentication with your API token as the "userid" and your API secret as the "password". You can find your API token and API secret by logging into your Jumio customer portal and navigating to the "Settings" page and clicking on the "API credentials" tab.
 
 **Header:** The following parameters are mandatory in the "header" section of your request.<br>
--`Accept: application/json`
--`Content-Type: multipart/form-data`
--`Content-Length: xxx` (RFC-2616)
--`User-Agent: YOURCOMPANYNAME YOURAPPLICATIONNAME/VERSION` <br>
+- `Accept: application/json`<br />
+- `Content-Type: multipart/form-data`<br />
+- `Content-Length: xxx` (RFC-2616)<br />
+- `User-Agent: YOURCOMPANYNAME YOURAPPLICATIONNAME/VERSION` <br>
 (e.g. MyCompany MyApp/1.0.0, change this to reflect your company)
 
 **TLS handshake:** The TLS protocol is required (see [Supported Cipher Suites](/netverify/supported-cipher-suites.md)) and we strongly recommend using the latest version.

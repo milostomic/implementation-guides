@@ -37,7 +37,8 @@ If you have any questions regarding our implementation guides please contact Jum
 
 | Date           | Description       |
 |:---------------|:------------------|
-|2018-02-01|Added callback parameter "originalDocument" for Document Verification<br />Added Australia and Canada states to callback parameter "idUsState"|
+| 2018-02-14 | Updated supported browsers |
+| 2018-02-01 |Added callback parameter "originalDocument" for Document Verification<br />Added Australia and Canada states to callback parameter "idUsState"|
 | 2018-01-17  |Added new validity reason BLACK_AND_WHITE<br>Updated supported countries for idSubtype LEARNING_DRIVING_LICENSE|
 | 2017-11-23  |Added "Visa" to request parameter "idType" for performNetverify<br>Added "Visa" to callback parameter "idType"<br>Added credit card to supported documents for data extraction<br>Added callback parameters "pan" and "expiryDate" to extractedData for Document Verification|
 | 2017-11-08  |Added credit card support for Document Verification and Document Verification API|

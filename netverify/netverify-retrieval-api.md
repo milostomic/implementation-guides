@@ -51,7 +51,7 @@ If the scan status is done or failed (not pending), retrieve scan details and im
 
 **Header:** The following parameters are mandatory in the "header" section of your request.
 -	`Accept: application/json`<br />
-(Except for "Retrieving specific image")
+- or `Accept: image/jpeg, image/png` for "Retrieving specific image"
 -	`User-Agent: YOURCOMPANYNAME YOURAPPLICATIONNAME/VERSION`<br />
 (e.g. MyCompany MyApp/1.0.0, change this to reflect your company)
 
@@ -150,26 +150,26 @@ Authorization: Basic
 {
 "timestamp": "2014-08-14T08:16:20.845Z",
 "scanReference": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
- "document": {
-"type": "PASSPORT",
-"dob": "1990-01-01",
-"expiry": "2022-12-31",
-"firstName": "FIRSTNAME",
-"issuingCountry": "USA",
-"lastName": "LASTNAME",
-"number": "P1234",
-"status": "APPROVED_VERIFIED"
-},
- "transaction": {
-"clientIp": "xxx.xxx.xxx.xxx",
-"customerId": "CUSTOMERID",
-"date": "2014-08-10T10:27:29.494Z",
-"source": "WEB_UPLOAD",
-"status": "DONE"
-},
- "verification": {
-"mrzCheck": "OK"
-}
+"document": {
+  "type": "PASSPORT",
+  "dob": "1990-01-01",
+  "expiry": "2022-12-31",
+  "firstName": "FIRSTNAME",
+  "issuingCountry": "USA",
+  "lastName": "LASTNAME",
+  "number": "P1234",
+  "status": "APPROVED_VERIFIED"
+  },
+"transaction": {
+  "clientIp": "xxx.xxx.xxx.xxx",
+  "customerId": "CUSTOMERID",
+  "date": "2014-08-10T10:27:29.494Z",
+  "source": "WEB_UPLOAD",
+  "status": "DONE"
+  },
+"verification": {
+  "mrzCheck": "OK"
+  }
 }
 ```
 
@@ -326,6 +326,7 @@ Authorization: Basic
 ### Sample Response
 
 ```
+{
 "clientIp": "xxx.xxx.xxx.xxx",
 "customerId": "CUSTOMERID",
 "date": "2014-08-10T10:27:29.494Z",
@@ -333,6 +334,7 @@ Authorization: Basic
 "status": "DONE"
 "scanReference": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
 "timestamp": "2014-08-14T10:06:13.610Z"
+}
 ```
 
 
@@ -457,20 +459,20 @@ Authorization: Basic
 ```
 {
 "timestamp": "2014-08-14T11:22:20.182Z",
- "images": [
- {
-"classifier": "back",
-"href": "https://netverify.com/api/netverify/v2/scans/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/images/back"
-},
- {
-"classifier": "front",
-"href": "https://netverify.com/api/netverify/v2/scans/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/images/front"
-},
- {
-"classifier": "face",
-"href": "https://netverify.com/api/netverify/v2/scans/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/images/face"
- }
-],
+"images": [
+  {
+  "classifier": "back",
+  "href": "https://netverify.com/api/netverify/v2/scans/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/images/back"
+  },
+  {
+  "classifier": "front",
+  "href": "https://netverify.com/api/netverify/v2/scans/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/images/front"
+  },
+  {
+  "classifier": "face",
+  "href": "https://netverify.com/api/netverify/v2/scans/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/images/face"
+  }
+  ],
 "scanReference": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
 }
 ```
@@ -594,26 +596,27 @@ Authorization: Basic
 
 ### Sample Response
 ```
+{
 "scanReference": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
 "timestamp": "2015-08-14T08:16:20.845Z",
 "document": {
-"status": "EXTRACTED",
-"type": "SSC",
-"extractedData": {
-"firstName": "FIRSTNAME",
-"lastName": "LASTNAME",
-"ssn": "12341234",
-"signatureAvailable": true
-}
-},
+  "status": "EXTRACTED",
+  "type": "SSC",
+  "extractedData": {
+    "firstName": "FIRSTNAME",
+    "lastName": "LASTNAME",
+    "ssn": "12341234",
+    "signatureAvailable": true
+    }
+  },
 "transaction": {
-"status": "DONE",
-"merchantReportingCriteria": "YOURMERCHANTREPORTINGCRITERIA",
-"merchantScanReference": "YOURSCANREFERENCE",
-"customerId": "CUSTOMERID",
-"source": "DOC_UPLOAD"
-}
-}
+  "status": "DONE",
+  "merchantReportingCriteria": "YOURMERCHANTREPORTINGCRITERIA",
+  "merchantScanReference": "YOURSCANREFERENCE",
+  "customerId": "CUSTOMERID",
+  "source": "DOC_UPLOAD"
+  }
+}  
 ```
 
 ## <a name="multi-retrieving-document-data-only"></a>Retrieving Document Data Only
@@ -673,10 +676,11 @@ Authorization: Basic
 "type": "SSC",
 "country": "USA",
 "extractedData": {
-"firstName": "FIRSTNAME",
-"lastName": "LASTNAME",
-"ssn": "12341234",
-"signatureAvailable": true
+  "firstName": "FIRSTNAME",
+  "lastName": "LASTNAME",
+  "ssn": "12341234",
+  "signatureAvailable": true
+  }
 }
 ```
 
@@ -779,15 +783,15 @@ Authorization: Basic
 {
 "timestamp": "2015-08-14T11:22:20.182Z",
 "images": [
-{
-"classifier": 1,
-"href": "https://retrieval.netverify.com/api/netverify/v2/documents/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/pages/1"
-},
-{
-"classifier": 2,
-"href": "https://retrieval.netverify.com/api/netverify/v2/documents/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/pages/2"
-}
-],
+  {
+  "classifier": 1,
+  "href": "https://retrieval.netverify.com/api/netverify/v2/documents/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/pages/1"
+  },
+  {
+  "classifier": 2,
+  "href": "https://retrieval.netverify.com/api/netverify/v2/documents/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/pages/2"
+  }
+  ],
 "scanReference": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
 }
 ```

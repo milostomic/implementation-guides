@@ -101,8 +101,11 @@ POST https://netverify.com/api/netverify/v2/initiateNetverify HTTP/1.1Accept: a
 ### Sample Response
 
 ```
-{"timestamp": "2017-08-16T10:27:29.494Z",
-"authorizationToken": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx","jumioIdScanReference": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"}
+{
+"timestamp": "2017-08-16T10:27:29.494Z",
+"authorizationToken": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
+"jumioIdScanReference": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+}
 ```
 
 
@@ -316,30 +319,29 @@ Any values within the API call parameters override settings configured within yo
 ### Sample Request
 
 ```
-POST https://netverify.com/api/netverify/v2/initiateNetverifyRedirect HTTP/1.1
-Accept: application/json
-Content-Type: application/json
+POST https://netverify.com/api/netverify/v2/initiateNetverifyRedirect HTTP/1.1
+Accept: application/json  
+Content-Type: application/json
 Content-Length: xxx
-User-Agent: YOURCOMPANYNAME YOURAPPLICATIONNAME/x.x.x
+User-Agent: YOURCOMPANYNAME YOURAPPLICATIONNAME/x.x.x
 Authorization: Basic
-{
-  "merchantIdScanReference": "YOURSCANREFERENCE",
-  "customerId": "CUSTOMERID",
-  "successUrl": "https://www.your-site.com/success",
-  "errorUrl": "https://www.your-site.com/error"
+{
+"merchantIdScanReference": "YOURSCANREFERENCE",
+"customerId": "CUSTOMERID",
+"successUrl": "https://www.your-site.com/success",
+"errorUrl": "https://www.your-site.com/error"
 }
 ```
 
 ### Sample Response
-
 ```
-{"timestamp": "2012-08-16T10:27:29.494Z",
-"authorizationToken": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
-"clientRedirectUrl": "https://[your-domain-prefix].netverify.com/v2?authorizationToken=xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
-"jumioIdScanReference": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"}
+{
+"timestamp": "2012-08-16T10:27:29.494Z",
+"authorizationToken": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
+"clientRedirectUrl": "https://[your-domain-prefix].netverify.com/v2?authorizationToken=xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
+"jumioIdScanReference": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+}
 ```
-
-
 
 ## Calling your landing page
 
@@ -444,21 +446,24 @@ Any values within the API call parameters override settings configured within yo
 
 ```
 POST https://netverify.com/api/netverify/v2/performNetverify HTTP/1.1
-Accept: application/json
-Content-Type: application/json
-Content-Length: xxx
+Accept: application/json
+Content-Type: application/json
+Content-Length: xxx
 User-Agent: YOURCOMPANYNAME YOURAPPLICATIONNAME/x.x.x
-Authorization: Basic
-{
-  "merchantIdScanReference": "YOURSCANREFERENCE",
-  "frontsideImage": "YOURBASE64STRING"}
+Authorization: Basic
+
+{
+"merchantIdScanReference": "YOURSCANREFERENCE",
+"frontsideImage": "YOURBASE64STRING"
+}
 ```
 
 ### Sample Response
-
 ```
-{"timestamp": "2017-08-16T10:37:44.623Z",
-"jumioIdScanReference": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"}
+{
+"timestamp": "2017-08-16T10:37:44.623Z",
+"jumioIdScanReference": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+}
 ```
 
 ---
@@ -518,7 +523,56 @@ Authorization: Basic
 ### Sample Response
 ```
 {
-"supportedIdTypes": [{"countryName": "Austria","countryCode": "AUT","idTypes": [{"idType": "ID_CARD","acquisitionConfig": {"backSide": true}},{"idType": "DRIVER_LICENSE","acquisitionConfig": {"backSide": false}},{"idType":"PASSPORT","acquisitionConfig": {"backSide": false}}]},{"countryName": "United states","countryCode": "USA","idTypes": [{"idType": "ID_CARD","acquisitionConfig": {"backSide": false}},{"idType": "DRIVER_LICENSE","acquisitionConfig": {"backSide": false}},{"idType": "PASSPORT","acquisitionConfig": {"backSide": false}}]}],
+"supportedIdTypes": [
+  {
+  "countryName": "Austria",
+  "countryCode": "AUT",
+  "idTypes": [
+    {
+    "idType": "ID_CARD",
+    "acquisitionConfig": {
+      "backSide": true
+      }
+    },
+    {
+    "idType": "DRIVER_LICENSE",
+    "acquisitionConfig": {
+      "backSide": false
+      }
+    },
+    {
+    "idType":"PASSPORT",
+    "acquisitionConfig": {
+      "backSide": false
+      }
+    }
+    ]
+  },
+  {
+  "countryName": "United states",
+  "countryCode": "USA",
+  "idTypes": [
+    {
+    "idType": "ID_CARD",
+    "acquisitionConfig": {
+      "backSide": false
+      }
+    },
+    {
+    "idType": "DRIVER_LICENSE",
+    "acquisitionConfig": {
+      "backSide": false
+      }
+    },
+    {
+    "idType": "PASSPORT",
+    "acquisitionConfig": {
+      "backSide": false
+      }
+    }
+    ]
+  }
+  ],
 "timestamp": "2013-04-10T07:38:25.332Z"
 }
 ```
@@ -579,7 +633,56 @@ Authorization: Basic
 
 ```
 {
-"acceptedIdTypes": [{"countryName": "Austria","countryCode": "AUT","idTypes": [{"idType": "ID_CARD","acquisitionConfig": {"backSide": true}},{"idType": "DRIVER_LICENSE","acquisitionConfig": {"backSide": false}},{"idType":"PASSPORT","acquisitionConfig": {"backSide": false}}]},{"countryName": "United states","countryCode": "USA","idTypes": [{"idType": "ID_CARD","acquisitionConfig": {"backSide": false}},{"idType": "DRIVER_LICENSE","acquisitionConfig": {"backSide": false}},{"idType": "PASSPORT","acquisitionConfig": {"backSide": false}}]}],
+"acceptedIdTypes": [
+  {
+  "countryName": "Austria",
+  "countryCode": "AUT",
+  "idTypes": [
+    {
+    "idType": "ID_CARD",
+    "acquisitionConfig": {
+      "backSide": true
+      }
+    },
+    {
+    "idType": "DRIVER_LICENSE",
+    "acquisitionConfig": {
+      "backSide": false
+      }
+    },
+    {
+    "idType":"PASSPORT",
+    "acquisitionConfig": {
+      "backSide": false
+      }
+    }
+    ]
+  },
+  {
+  "countryName": "United states",
+  "countryCode": "USA",
+  "idTypes": [
+    {
+    "idType": "ID_CARD",
+    "acquisitionConfig": {
+      "backSide": false
+      }
+    },
+    {
+    "idType": "DRIVER_LICENSE",
+    "acquisitionConfig": {
+      "backSide": false
+      }
+    },
+    {
+    "idType": "PASSPORT",
+    "acquisitionConfig": {
+      "backSide": false
+      }
+    }
+    ]
+  }
+  ],
 "timestamp": "2013-04-10T07:38:25.332Z"
 }
 ```
@@ -617,26 +720,27 @@ Capture methods:
 
 ## Desktop
 
-|Browser name|Major browser version|Operating system |Image upload |HTML5<br>video stream |Flash  \*<br> video stream|
+|Browser name|Major browser version|Operating system |Image upload |HTML5<br>video stream |Flash  <sup>1</sup><br> video stream|
 |:---|:---|:---|:---|:---|:---|
 |Google Chrome|current +<br> 1 previous|Windows + Mac|X|X|X|
 |Mozilla Firefox|current +<br>1 previous|Windows + Mac|X|X|X|
-|Apple Safari|current|Mac|X|N|O|
-|Microsoft Internet Explorer|current|Windows|X|N|X|
+|Apple Safari|current|Mac|X|X<sup>2</sup>|O|
+|Microsoft Internet Explorer|current|Windows|X| |X|
 |Microsoft Edge|current|Windows|X|X|X|
 
 ## Mobile
 
-|Browser name|Major browser version|Operating system |Image upload |HTML<br>video stream | Flash \*<br>video stream|
+|Browser name|Major browser version|Operating system |Image upload |HTML<br>video stream |Flash  <sup>1</sup><br> video stream|
 |:---|:---|:---|:---|:---|:---|
-|Google Chrome |Current |Android|X|X|N|
-|Apple Safari |Current |iOS|X|N|N|
+|Google Chrome |current |Android|X|X| |
+|Apple Safari |current |iOS|X|X<sup>2</sup>| |
 
-\* Fallback method for HTML5 video streaming
 
 X - Supported<br>
 O - Support turned off by default but can be enabled by the end-user<br>
-N - Not supported
+<br>
+<sup>1</sup> Fallback method for HTML5 video streaming<br>
+<sup>2</sup> Netverify redirect only
 
 ---
 # Test IDs
