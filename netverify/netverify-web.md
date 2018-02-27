@@ -55,15 +55,15 @@ If your customer account is in the EU data center, use `lon.netverify.com` inste
 ### Request Parameters
 
  Any values within the API call parameters override settings configured within your Jumio portal.<br>
-**Note:** Mandatory JSON parameters are highlighted bold.<br>
+**Note:** Mandatory parameters are marked with an asterisk * and highlighted bold.<br>
 
 
 |Parameter    |Type    |Max. length    |Description    |
 |:------------|:-------|:--------------|:--------------|
-|**merchantIdScanReference**|String|100|Your reference for each scan must not contain sensitive data like PII (Personally Identifiable Information) or account login|
-|**successUrl** \*|String|2048|Redirect URL in case of success (for constraints see [Success and error URLs](/netverify/portal-settings.md#success-and-error-urls)).<br><b>\* Mandatory if not specified in your Jumio portal.</b>|
-|**errorUrl** \*|String|255|Redirect URL in case of error (for constraints see [Success and error URLs](/netverify/portal-settings.md#success-and-error-urls)). <br><b>\* Mandatory if not specifed in your Jumio portal.</b>|
-|enabledFields|String|100|Defines fields which will be extracted during the ID verification. If a field is not listed in this parameter, it will not be processed for this transaction, regardless of customer portal settings.<br> **Note:** Face match and Address extraction will not be processed unless enabled for your account. If you want to enable them, please contact your Customer Success Manager, or reach out to Jumio Support.<br><br>Possible values:<br>"idNumber,idFirstName,idLastName,idDob,idExpiry,idUsState,idPersonalNumber,idFaceMatch,idAddress"|
+|**merchantIdScanReference** *|String|100|Your reference for each scan must not contain sensitive data like PII (Personally Identifiable Information) or account login|
+|**successUrl** * |String|2048|Redirect URL in case of success (for constraints see [Success and error URLs](/netverify/portal-settings.md#success-and-error-urls)).<br><b>\* Mandatory if not specified in your Jumio portal.</b>|
+|**errorUrl** * |String|255|Redirect URL in case of error (for constraints see [Success and error URLs](/netverify/portal-settings.md#success-and-error-urls)). <br><b>\* Mandatory if not specifed in your Jumio portal.</b>|
+|enabledFields|String|100|Defines fields which will be extracted during the ID verification. If a field is not listed in this parameter, it will not be processed for this transaction, regardless of customer portal settings.<br> **Note:** Face match and Address extraction will not be processed unless enabled for your account. If you want to enable them, please contact your Customer Success Manager, or reach out to Jumio Support.<br><br>Possible values:<br>"idNumber,idFirstName,idLastName,idDob,idExpiry,idUsState,<br>idPersonalNumber,idFaceMatch,idAddress"|
 |authorizationTokenLifetime|Number|Max value:<br>5184000|Time in seconds until the authorization token expires.<br>• Default: 1800 seconds <br>• 0 = 60 days|
 |merchantReportingCriteria|String|100|Your reporting criteria for each scan|
 |callbackUrl|String|255|Callback URL for the confirmation after the verification is completed (for constraints see [Callback URL](/netverify/portal-settings.md#callback-url))|
@@ -133,11 +133,11 @@ in your HTML code where you want the client to appear.
 
 ### Embed Code Parameters
 
-**Note**: Mandatory JavaScript parameters are highlighted bold.
+**Note:** Mandatory parameters are marked with an asterisk * and highlighted bold.
 
 |Parameter|Type |Description|
 |:--------|:----|:----------|
-|**authorizationToken**|String|Your transaction-specific authorization token|
+|**authorizationToken** *|String|Your transaction-specific authorization token|
 |clientHeight|String|For a fixed size choose from "small" to "big", for a responsive size use "responsive". <br><br>Possible values:<br>• responsive (default)<br>• small (600px)<br>• medium (620px)<br>• big (640px)|
 |clientWidth|String|For a fixed size choose from "small" to "big", for a responsive size use "responsive". <br><br>Possible values:<br>• responsive (default)<br>• small (800px)<br>• medium (860px)<br>• big (900px)|
 |locale|String|Locale of the Netverify client. This parameter overrides the initiateNetverify parameter "locale".<br>• "bg" Bulgarian<br>• "cs" Czech<br>• "da" Danish<br>• "de" German<br>• "el" Greek<br>• "en" American English (default)<br>• "en\_GB" British English<br>• "es" Spanish<br>• "es\_MX" Spanish Mexico<br>• "et" Estonian<br>• "fi" Finnish<br>• "fr" French<br>• "hu" Hungarian<br>• "it" Italian<br>• "ja" Japanese<br>• "ko" Korean<br>• "lt" Lithuanian<br>• "nl" Dutch<br>• "no" Norwegian<br>• "pl" Polish<br>• "pt" Portuguese<br>• "pt\_BR" Brazilian Portuguese<br>• "ro" Romanian<br>• "ru" Russian<br>• "sk" Slovak<br>• "sv" Swedish<br>• "tr" Turkish<br>• "vi" Vietnamese<br>• "zh\_CN" Chinese (China)<br>• "zh\_HK" Chinese (Hong Kong)|
@@ -280,12 +280,12 @@ If your customer account is in the EU data center, use `lon.netverify.com` inste
 ### Request Parameters
 
 Any values within the API call parameters override settings configured within your Jumio portal.<br>
-**Note:** Mandatory JSON parameters are highlighted bold.<br>
+**Note:** Mandatory parameters are marked with an asterisk * and highlighted bold.<br>
 
 |Parameter|Type|Max. length|Description |
 |:--------|:---|:----------|:-----------|
-|**merchantIdScanReference**|String|100|Your reference for each scan must not contain sensitive data like PII (Personally Identifiable Information) or account login|
-|**customerId**|String|100|Identification of the customer should not contain sensitive data like PII (Personally Identifiable Information) or account login|
+|**merchantIdScanReference** *|String|100|Your reference for each scan must not contain sensitive data like PII (Personally Identifiable Information) or account login|
+|**customerId** *|String|100|Identification of the customer should not contain sensitive data like PII (Personally Identifiable Information) or account login|
 |successUrl|String|2048|Redirect URL in case of success (for constraints see [Success and error URLs](/netverify/portal-settings.md#success-and-error-urls))|
 |errorUrl|String|255|Redirect URL in case of error (for contraints see [Success and error URLs](/netverify/portal-settings.md#success-and-error-urls))|
 |enabledFields|String|100|Defines fields which will be extracted during the ID verification. If a field is not listed in this parameter, it will not be processed for this transaction, regardless of customer portal settings.<br> **Note:** Face match and Address extraction will not be processed unless enabled for your account. If you want to enable them, please contact your Customer Success Manager, or reach out to Jumio Support.<br><br>Possible values:<br>"idNumber,idFirstName,idLastName,idDob,idExpiry,idUsState,idPersonalNumber,idFaceMatch,idAddress"|
@@ -409,15 +409,15 @@ If your customer account is in the EU data center, use `lon.netverify.com` inste
 ### Request Parameters
 
 Any values within the API call parameters override settings configured within your Jumio portal.<br>
-**Note**: Mandatory JSON parameters are highlighted bold.
+**Note:** Mandatory parameters are marked with an asterisk * and highlighted bold.
 
 |Parameter|Type|Max. length|Description|
 |:--------|:---|:----------|:----------|
-|**merchantIdScanReference**|String|100|Your reference for each scan must not contain sensitive data like PII (Personally Identifiable Information) or account login|
-|**frontsideImage**|String|Max. 5MB & <8000 pixels per side|Base64 encoded image of ID front side|
-|**faceImage** *|String|Max. 5MB & <8000 pixels per side|Base64 encoded image of face<br> ***Mandatory if Face match enabled**|
-|**country**|String|3|Possible countries:<br>• [ISO 3166-1 alpha-3](http://en.wikipedia.org/wiki/ISO_3166-1_alpha-3) country code<br>• XKX (Kosovo)|
-|**idType**|String|255|PASSPORT, DRIVING\_LICENSE, ID\_CARD, VISA|
+|**merchantIdScanReference** *|String|100|Your reference for each scan must not contain sensitive data like PII (Personally Identifiable Information) or account login|
+|**frontsideImage** *|String|Max. 5MB & <8000 pixels per side|Base64 encoded image of ID front side|
+|**faceImage** * |String|Max. 5MB & <8000 pixels per side|Base64 encoded image of face<br> ***Mandatory if Face match enabled**|
+|**country** *|String|3|Possible countries:<br>• [ISO 3166-1 alpha-3](http://en.wikipedia.org/wiki/ISO_3166-1_alpha-3) country code<br>• XKX (Kosovo)|
+|**idType** *|String|255|PASSPORT, DRIVING\_LICENSE, ID\_CARD, VISA|
 |frontsideImageMimeType|String||Mime type of front side image<br>Possible values: image/jpeg (default), image/png|
 |faceImageMimeType|String||Mime type of face image<br>Possible values: image/jpeg (default), image/png|
 |backsideImage|String|Max. 5MB & <8000 pixels per side|Base64 encoded image of face|
@@ -432,7 +432,7 @@ Any values within the API call parameters override settings configured within yo
 |expiry|String||Date of expiry in the format YYYY-MM-DD|
 |number|String|100|Identification number of the document|
 |dob|String||Date of birth in the format YYYY-MM-DD|
-|callbackGranularity|String|255|Possible values:<br>• onFinish (default): Callback is only sent after the whole verification<br>• onAllSteps: Additional callback is sent before the ID verification, if the ID is able to be processed and not rejected as unreadable/fraud immediately|
+|callbackGranularity|String|255|Possible values:<br>• onFinish (default): Callback is only sent after the whole verification<br>• onAllSteps: Additional callback is sent when the images are received|
 |personalNumber|String|14|Personal number of the document|
 
 ### Response Parameters
@@ -734,7 +734,6 @@ Capture methods:
 |:---|:---|:---|:---|:---|:---|
 |Google Chrome |current |Android|X|X| |
 |Apple Safari |current |iOS|X|X<sup>2</sup>| |
-
 
 X - Supported<br>
 O - Support turned off by default but can be enabled by the end-user<br>

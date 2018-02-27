@@ -29,13 +29,40 @@ This guide illustrates how to implement the Netverify Retrieval API.
 ---
 # Release Notes
 
-Find the release information for the Netverify Retrieval API via the link below.<p>
-[View Release Notes](/netverify/README.md)
+Find the release information for the Retrieval API below.
+
+| Date    | Description|
+|:--------|:------------|
+| 2018-02-01   |Added response parameter "originalDocument" for Document Verification Retrieval - Retrieving document data only<br />Added Australia and Canada states to response parameter "usState" |
+| 2018-01-17   |Added new validity reason BLACK_AND_WHITE<br> Updated supported countries for idSubtype LEARNING_DRIVING_LICENSE|
+| 2017-11-23   |Added value "Visa" to response parameter "type" for Netverify Retrieval - Retrieving Document Data only|
+| 2017-09-21   |Removed response parameter "additionalInformation"|
+| 2017-08-24   |Added response parameter "identityVerification"|
+| 2017-05-23   |Added response parameter "issuingDate" for retrieving scan details and<br />document data only|
+| 2017-01-31   |Added value "PASSPORT\_CARD\_ID" and "MILITARY\_ID" to parameter "idSubType" |
+| 2016-11-15   |Added reject reason detail code 10011 for PLACE\_OF\_BIRTH |
+| 2016-06-21   |Removed Content-Length header for HTTP GET APIs |
+| 2016-05-18   |Added value "STUDENT\_ID" to parameter "idSubType"<br />Removed TLS\_DHE ciphers |
+| 2016-02-09   |Added reject reason code 111 for MISMATCH\_PRINTED\_BARCODE\_DATA |
+| 2015-11-17   |Added parameter "idSubtype" to Netverify Retrieval |
+| 2015-10-21   |Added ECDHE ciphers to supported cipher suites |
+| 2015-09-23   |Added parameter "country" and "customDocumentCode" for Netverify Multi Document<br/>Retrieval |
+| 2015-09-09   |Added Netverify Multi Document Retrieval<br />Added second set of API credentials for retrieving transaction data |
+| 2015-08-11   |Added new classifier "face" for retrieving scan images |
+| 2015-07-14   |Added value "XKX" for Kosovo to parameters "country" and "issuingCountry"<br />Added value "Kosovo" to parameter "usState" |
+| 2015-06-30   |Introduced EU data center |
+| 2015-04-08   |Added reject reason code 109 for PUNCHED_DOCUMENT |
+| 2015-03-24   |Removed cipher TLS\_RSA\_WITH\_RC4\_128\_SHA due to RC4 deprecation |
+| 2014-03-05   |Added sources WEB and REDIRECT<br />Document type not mandatory anymore |
+| 2014-09-25   |Changed parameter "maskhint" to apply for credit cards only |
+| 2014-08-19   |Initial release |
+
+
 
 ---
 # Usage
 
-The Netverify Retrieval API should be used as a fallback, if your server was not able to process the callback.
+The Retrieval API should be used as a fallback, if your server was not able to process the callback.
 
 Permanent, scheduled calls, or bulk requests should be avoided, otherwise Jumio can occasionally restrict API access.
 
@@ -73,9 +100,11 @@ If your customer account is in the EU data center, use `lon.netverify.com` inste
 
 ### Request Parameter
 
+**Note:** Mandatory parameters are marked with an asterisk * and highlighted bold.
+
 |Parameter       | Type    | Max. Length| Description|
 |:---------------|:--------|:------------|:------------|
-|**scanReference**<br>(path parameter)| String|36|Jumio’s reference number of an existing scan from your account|
+|**scanReference <br>(path parameter)** *| String|36|Jumio’s reference number of an existing scan from your account|
 
 ### Response
 
@@ -117,22 +146,24 @@ If your customer account is in the EU data center, use `lon.netverify.com` inste
 
 ### Request Parameter
 
+**Note:** Mandatory parameters are marked with an asterisk * and highlighted bold.
+
 |Parameter       | Type    | Max. Length| Description|
 |:---------------|:--------|:------------|:------------|
-|**scanReference** | String|36|Jumio’s reference number of an existing scan from your account|
+|**scanReference <br>(path parameter)** *| String|36|Jumio’s reference number of an existing scan from your account|
 
 ### Response
 
 You receive a JSON response in case of success, or HTTP status code **404 Not Found** if the scan is not available or deleted.
 
-**Note:** Mandatory JSON parameters are highlighted bold.
+**Note:** Mandatory parameters are marked with an asterisk * and highlighted bold.
 
 |Parameter       | Type    | Max. Length| Description|
 |:---------------|:--------|:------------|:------------|
-|**timestamp**| String| |Timestamp of the response in the format YYYY-MM-DDThh:mm:ss.SSSZ|
-|**scanReference**| String|36|Jumio’s reference number for each scan|
-|**document**| Object| |Same parameters as listed in the section [Retrieving document data only](#retrieving-document-data-only) but without timestamp and scanReference|
-|**transaction**| Object| |Same parameters as listed in the section [Retrieving transaction data only](#retrieving-transaction-data-only) but without timestamp and scanReference|
+|**timestamp** *| String| |Timestamp of the response in the format YYYY-MM-DDThh:mm:ss.SSSZ|
+|**scanReference** *| String|36|Jumio’s reference number for each scan|
+|**document** *| Object| |Same parameters as listed in the section [Retrieving document data only](#retrieving-document-data-only) but without timestamp and scanReference|
+|**transaction** *| Object| |Same parameters as listed in the section [Retrieving transaction data only](#retrieving-transaction-data-only) but without timestamp and scanReference|
 |verification| Object| |Same parameters as listed in the section [Retrieving verification data only](#retrieving-verification-data-only) but without timestamp and scanReference|
 
 ### Sample Request
@@ -183,21 +214,23 @@ If your customer account is in the EU data center, use `lon.netverify.com` inste
 
 ### Request Parameter
 
+**Note:** Mandatory parameters are marked with an asterisk * and highlighted bold.
+
 |Parameter       | Type    | Max. Length| Description|
 |:---------------|:--------|:------------|:------------|
-|**scanReference** <br>(path parameter)| String|36|Jumio’s reference number of an existing scan from your account|
+|**scanReference <br>(path parameter)** *| String|36|Jumio’s reference number of an existing scan from your account|
 
 ### Response
 
 You receive a JSON response in case of success, or HTTP status code **404 Not Found** if the scan is not available, pending or deleted.
 
-**Note:** Mandatory JSON parameters are highlighted bold.
+**Note:** Mandatory parameters are marked with an asterisk * and highlighted bold.
 
 |Parameter       | Type    | Max. Length| Description|
 |:---------------|:--------|:------------|:------------|
-|**timestamp**| String| |Timestamp of the response in the format YYYY-MM-DDThh:mm:ss.SSSZ|
-|**scanReference**| String|36|Jumio’s reference number for each scan|
-|**status**| String| |Netverify:<br>• APPROVED\_VERIFED<br>• DENIED\_FRAUD<br>• DENIED\_UNSUPPORTED\_ID\_TYPE<br>• DENIED\_UNSUPPORTED\_ID\_COUNTRY<br>• DENIED\_NAME\_MISMATCH<br>• ERROR\_NOT\_READABLE\_ID<br>• NO\_ID\_UPLOADED |
+|**timestamp** *| String| |Timestamp of the response in the format YYYY-MM-DDThh:mm:ss.SSSZ|
+|**scanReference** *| String|36|Jumio’s reference number for each scan|
+|**status** *| String| |Netverify:<br>• APPROVED\_VERIFED<br>• DENIED\_FRAUD<br>• DENIED\_UNSUPPORTED\_ID\_TYPE<br>• DENIED\_UNSUPPORTED\_ID\_COUNTRY<br>• DENIED\_NAME\_MISMATCH<br>• ERROR\_NOT\_READABLE\_ID<br>• NO\_ID\_UPLOADED |
 |type| String| |Netverify:<br>•	PASSPORT<br>• DRIVING\_LICENSE<br>• ID\_CARD<br>• VISA<br>• UNSUPPORTED |
 |idSubtype| String|255|Possible subtypes if idType = ID\_CARD<br>•	NATIONAL\_ID<br>• CONSULAR\_ID<br>• ELECTORAL\_ID<br>• RESIDENT\_PERMIT\_ID<br>• TAX\_ID (only supported for PHL)<br>• STUDENT\_ID (only supported for POL)<br>• PASSPORT\_CARD\_ID (only supported for IRL and USA)<br>• MILITARY\_ID (only supported for GRC)<br>• OTHER\_ID<br>• VISA (only supported for USA)<br>• UNKNOWN<br><br>Possible subtypes if idType = DRIVING\_LICENSE<br>• LEARNING\_DRIVING\_LICENSE (only supported for USA, CAN, AUS, GBR, IRL, DEU)<br><br>Possible subtypes if idType = PASSPORT<br>• E\_PASSPORT (only for mobile)|
 |issuingCountry|String|3|Possible countries:<br>• [ISO 3166-1 alpha-3](http://en.wikipedia.org/wiki/ISO_3166-1_alpha-3) country code<br>- XKX (Kosovo)|
@@ -292,23 +325,25 @@ If your customer account is in the EU data center, use `lon.netverify.com` inste
 
 ### Request Parameter
 
+**Note:** Mandatory parameters are marked with an asterisk * and highlighted bold.
+
 |Parameter       | Type    | Max. Length| Description|
 |:---------------|:--------|:------------|:------------|
-|**scanReference** <br>(path parameter)| String|36|Jumio’s reference number of an existing scan from your account|
+|**scanReference <br>(path parameter)** *| String|36|Jumio’s reference number of an existing scan from your account|
 
 ### Response
 
 You receive a JSON response in case of success, or HTTP status code **404 Not Found** if the scan is not available, pending or deleted.
 
-**Note:** Mandatory JSON parameters are highlighted bold.
+**Note:** Mandatory parameters are marked with an asterisk * and highlighted bold.
 
 |Parameter       | Type    | Max. Length| Description|
 |:---------------|:--------|:------------|:------------|
-|**timestamp**| String| |Timestamp of the response in the format YYYY-MM-DDThh:mm:ss.SSSZ|
-|**scanReference**| String|36 |Jumio’s reference number for each scan|
-|**status**| String| |Possible states:<br>• PENDING<br>• DONE<br>• FAILED|
-|**source**| String| |Netverify Web embedded:<br>• WEB<br>• WEB-CAM<br>• WEB-UPLOAD<br><br>Netverify Web redirect:<br>• REDIRECT<br>• REDIRECT-CAM<br>• REDIRECT-UPLOAD<br><br>performNetverify:<br>• API<br><br>Netverify Mobile:<br>• SDK |
-|**date**| String| |Timestamp of the scan creation in the format YYYY-MM-DDThh:mm:ss.SSSZ|
+|**timestamp** *| String| |Timestamp of the response in the format YYYY-MM-DDThh:mm:ss.SSSZ|
+|**scanReference** *| String|36 |Jumio’s reference number for each scan|
+|**status** *| String| |Possible states:<br>• PENDING<br>• DONE<br>• FAILED|
+|**source** *| String| |Netverify Web embedded:<br>• WEB<br>• WEB-CAM<br>• WEB-UPLOAD<br><br>Netverify Web redirect:<br>• REDIRECT<br>• REDIRECT-CAM<br>• REDIRECT-UPLOAD<br><br>performNetverify:<br>• API<br><br>Netverify Mobile:<br>• SDK |
+|**date** *| String| |Timestamp of the scan creation in the format YYYY-MM-DDThh:mm:ss.SSSZ|
 |clientIp| String| |IP address of the client in the format xxx.xxx.xxx.xxx|
 |customerId| String|255 |ID of the customer|
 |merchantScanReference| String|255 |Your reference for each scan|
@@ -348,20 +383,22 @@ If your customer account is in the EU data center, use `lon.netverify.com` inste
 
 ### Request Parameter
 
+**Note:** Mandatory parameters are marked with an asterisk * and highlighted bold.
+
 |Parameter       | Type    | Max. Length| Description|
 |:---------------|:--------|:------------|:------------|
-|**scanReference** <br>(path parameter)| String|36|Jumio’s reference number of an existing scan from your account|
+|**scanReference <br>(path parameter)** *| String|36|Jumio’s reference number of an existing scan from your account|
 
 ### Response
 
 You receive a JSON response in case of success, or HTTP status code **404 Not Found** if the scan is not available, pending, deleted or of source Netverify Multi Document Legacy.
 
-**Note:** Mandatory JSON parameters are highlighted bold.
+**Note:** Mandatory parameters are marked with an asterisk * and highlighted bold.
 
 |Parameter       | Type    | Max. Length| Description|
 |:---------------|:--------|:------------|:------------|
-|**timestamp**| String| |Timestamp of the response in the format YYYY-MM-DDThh:mm:ss.SSSZ|
-|**scanReference**| String|36 |Jumio’s reference number for each scan|
+|**timestamp** *| String| |Timestamp of the response in the format YYYY-MM-DDThh:mm:ss.SSSZ|
+|**scanReference** *| String|36 |Jumio’s reference number for each scan|
 |mrzCheck|String||Possible values:<br>• OK<br>• NOT\_OK<br>• NOT\_AVAILABLE|
 |faceMatch|String||Face match percentage 0-100|
 |rejectReason|Object||Reject reason, see tables below|
@@ -421,27 +458,29 @@ If your customer account is in the EU data center, use `lon.netverify.com` inste
 
 ### Request Parameter
 
+**Note:** Mandatory parameters are marked with an asterisk * and highlighted bold.
+
 |Parameter       | Type    | Max. Length| Description|
 |:---------------|:--------|:------------|:------------|
-|**scanReference** <br>(path parameter)| String|36|Jumio’s reference number of an existing scan from your account|
+|**scanReference <br>(path parameter)** *| String|36|Jumio’s reference number of an existing scan from your account|
 
 
 ### Response
 
 You receive a JSON response in case of success, or HTTP status code **404 Not Found** if the scan is not available, pending or deleted.
 
-**Note:** Mandatory JSON parameters are highlighted bold.
+**Note:** Mandatory parameters are marked with an asterisk * and highlighted bold.
 
 |Parameter       | Type    | Max. Length| Description|
 |:---------------|:--------|:------------|:------------|
-|**timestamp**| String| |Timestamp of the response in the format YYYY-MM-DDThh:mm:ss.SSSZ|
-|**scanReference**| String|36 |Jumio’s reference number for each scan|
+|**timestamp** *| String| |Timestamp of the response in the format YYYY-MM-DDThh:mm:ss.SSSZ|
+|**scanReference** *| String|36 |Jumio’s reference number for each scan|
 |images|JSON Array/Object||Available image/s see table below|
 
 |Parameter "images"       | Type    | Description|
 |:---------------|:--------|:------------|
-|**classifier**| String| Netverify:<br/>•	front<br/>•	face<br/>•	back|
-|**href**| String |REST URL to retrieve specific image (see [Retrieving specific image](#retrieving-specific-image) section)|
+|**classifier** *| String| Netverify:<br/>•	front<br/>•	face<br/>•	back|
+|**href** *| String |REST URL to retrieve specific image (see [Retrieving specific image](#retrieving-specific-image) section)|
 |maskhint| String |For credit cards:<br />•	masked<br>•	unmasked<br/>|
 
 ### Sample Request
@@ -491,12 +530,12 @@ If your customer account is in the **EU** data center, use `lon.netverify.com` i
 
 ### Request Parameter
 
-**Note:** Mandatory JSON parameters are highlighted bold.
+**Note:** Mandatory parameters are marked with an asterisk * and highlighted bold.
 
 |Parameter       | Type    | Max. Length| Description|
 |:---------------|:--------|:------------|:------------|
-|**scanReference** <br>(path parameter)| String|36|Jumio’s reference number of an existing scan from your account|
-|**classifier** (path parameter)| String| |Netverify:<br/>•	front<br/>•	face<br/>•	back|
+|**scanReference <br>(path parameter)** *| String|36|Jumio’s reference number of an existing scan from your account|
+|**classifier** * (path parameter)| String| |Netverify:<br/>•	front<br/>•	face<br/>•	back|
 |maskhint (path parameter)| String| |For credit cards:<br/>•	masked (default)<br/>•	unmasked|
 
 ### Response
@@ -515,7 +554,6 @@ Authorization: Basic
 
 # Document Verification Retrieval
 
-(formerly Netverify Multi Document)
 
 ## <a name="multi-retrieving-scan-status"></a>Retrieving Scan Status
 
@@ -527,9 +565,11 @@ If your customer account is in the **EU** data center, use `retrieval.lon.netver
 
 ### Request Parameter
 
+**Note:** Mandatory parameters are marked with an asterisk * and highlighted bold.
+
 |Parameter       | Type    | Max. Length| Description|
 |:---------------|:--------|:------------|:------------|
-|**scanReference** <br>(path parameter)| String|36|Jumio’s reference number of an existing scan from your account|
+|**scanReference <br>(path parameter)** *| String|36|Jumio’s reference number of an existing scan from your account|
 
 ### Response
 
@@ -568,15 +608,17 @@ If your customer account is in the **EU** data center, use `retrieval.lon.netver
 
 ### Request Parameter
 
+**Note:** Mandatory parameters are marked with an asterisk * and highlighted bold.
+
 |Parameter       | Type    | Max. Length| Description|
 |:---------------|:--------|:------------|:------------|
-|**scanReference** <br>(path parameter)| String|36|Jumio’s reference number of an existing scan from your account|
+|**scanReference <br>(path parameter)** *| String|36|Jumio’s reference number of an existing scan from your account|
 
 ### Response
 
 You receive a JSON response in case of success, or HTTP status code **404 Not Found** if the scan is not available, pending or deleted.
 
-**Note:** Mandatory JSON parameters are highlighted bold.
+**Note:** Mandatory parameters are marked with an asterisk * and highlighted bold.
 
 |Parameter       | Type    | Max. Length| Description|
 |:---------------|:--------|:------------|:------------|
@@ -629,21 +671,23 @@ If your customer account is in the **EU** data center, use `retrieval.lon.netver
 
 ### Request Parameter
 
+**Note:** Mandatory parameters are marked with an asterisk * and highlighted bold.
+
 |Parameter       | Type    | Max. Length| Description|
 |:---------------|:--------|:------------|:------------|
-|**scanReference** <br>(path parameter)| String|36|Jumio’s reference number of an existing scan from your account|
+|**scanReference <br>(path parameter)** *| String|36|Jumio’s reference number of an existing scan from your account|
 
 ### Response
 
 You receive a JSON response in case of success, or HTTP status code **404 Not Found** if the scan is not available, pending or deleted.
 
-**Note:** Mandatory JSON parameters are highlighted bold.
+**Note:** Mandatory parameters are marked with an asterisk * and highlighted bold.
 
 |Parameter       | Type    | Max. Length| Description|
 |:---------------|:--------|:------------|:------------|
-|**timestamp**|String||Timestamp of the response in the format YYYY-MM-DDThh:mm:ss.SSSZ|
-|**scanReference**| String|36|Jumio’s reference number for each scan|
-|**status**|String||Possible states:<br>•	UPLOADED (default)<br>•	EXTRACTED if supported document for data extraction provided<br>•	DISCARDED if no supported document for data extraction provided |
+|**timestamp** *|String||Timestamp of the response in the format YYYY-MM-DDThh:mm:ss.SSSZ|
+|**scanReference** *| String|36|Jumio’s reference number for each scan|
+|**status** *|String||Possible states:<br>•	UPLOADED (default)<br>•	EXTRACTED if supported document for data extraction provided<br>•	DISCARDED if no supported document for data extraction provided |
 |type|String||Possible types:<br>• CC (Credit card, front and back side)<br>• BS (Bank statement, front side)<br>•	IC (Insurance card, front side)<br>•	UB (Utility bill, front side)<br>•	CAAP (Cash advance application, front and back side)<br>•	CRC (Corporate resolution certificate, front and back side)<br>•	CCS (Credit card statement, front and back side)<br>•	LAG (Lease agreement, front and back side)<br>•	LOAP (Loan application, front and back side)<br>•	MOAP (Mortgage application, front and back side)<br>•	TR (Tax return, front and back side)<br>•	VT (Vehicle title, front side)<br>•	VC (Voided check, front side)<br>•	STUC (Student card, front side)<br>•	HCC (Health care card, front side)<br>•	CB (Council bill, front side)<br>•	SENC (Seniors card, front side)<br>•	MEDC (Medicare card, front side)<br>•	BC (Birth certificate, front side)<br>•	WWCC (Working with children check, front side)<br>•	SS (Superannuation statement, front side)<br>•	TAC (Trade association card, front side)<br>•	SEL (School enrolment letter, front side)<br>•	PB (Phone bill, front side)<br>•	USSS (US social security card, front side)<br>•	SSC (Social security card, front side)<br>•	CUSTOM (Custom document type) |
 |country|String|3|Possible countries:<br>• [ISO 3166-1 alpha-3](http://en.wikipedia.org/wiki/ISO_3166-1_alpha-3) country code<br>•	XKX (Kosovo)|
 |originalDocument|String|255|URL to the originally submitted document of the scan (PDF) if available |
@@ -696,22 +740,24 @@ If your customer account is in the **EU** data center, use `retrieval.lon.netver
 
 ### Request Parameter
 
+**Note:** Mandatory parameters are marked with an asterisk * and highlighted bold.
+
 |Parameter       | Type    | Max. Length| Description|
 |:---------------|:--------|:------------|:------------|
-|**scanReference** (path parameter)| String|36|Jumio’s reference number of an existing scan from your account|
+|**scanReference <br>(path parameter)** *| String|36|Jumio’s reference number of an existing scan from your account|
 
 ### Response
 
 You will receive a JSON response in case of success, or HTTP status code **404 Not Found** if the scan is not available, pending or deleted.
 
-**Note:** Mandatory JSON parameters are highlighted bold.
+**Note:** Mandatory parameters are marked with an asterisk * and highlighted bold.
 
 |Parameter       | Type    | Max. Length| Description|
 |:---------------|:--------|:------------|:------------|
-|**timestamp**| String||Timestamp of the response in the format YYYY-MM-DDThh:mm:ss.SSSZ|
-|**scanReference**|String|36|Jumio’s reference number for each scan|
-|**status**|String||Possible states:<br>•	DONE<br>•	FAILED |
-|**source**|String||Possible status:<br>•	DOC\_API<br>• DOC\_UPLOAD |
+|**timestamp** *| String||Timestamp of the response in the format YYYY-MM-DDThh:mm:ss.SSSZ|
+|**scanReference** *|String|36|Jumio’s reference number for each scan|
+|**status** *|String||Possible states:<br>•	DONE<br>•	FAILED |
+|**source** *|String||Possible status:<br>•	DOC\_API<br>• DOC\_UPLOAD |
 |merchantReportingCriteria|String|255|Your reporting criteria for each scan|
 |merchantScanReference|String|255|Your reference for each scan|
 |customerId|String|255|ID of the customer|
@@ -747,26 +793,28 @@ If your customer account is in the **EU** data center, use `retrieval.lon.netver
 
 ### Request Parameter
 
+**Note:** Mandatory parameters are marked with an asterisk * and highlighted bold.
+
 |Parameter       | Type    | Max. Length| Description|
 |:---------------|:--------|:------------|:------------|
-|**scanReference** <br>(path parameter)| String|36|Jumio’s reference number of an existing scan from your account|
+|**scanReference <br>(path parameter)** *| String|36|Jumio’s reference number of an existing scan from your account|
 
 ### Response
 
 You will receive a JSON response in case of success, or HTTP status code **404 Not Found** if the scan is not available, pending, deleted or of source Netverify Multi Document Legacy.
 
-**Note:** Mandatory JSON parameters are highlighted bold.
+**Note:** Mandatory parameters are marked with an asterisk * and highlighted bold.
 
 |Parameter       | Type    | Max. Length| Description|
 |:---------------|:--------|:------------|:------------|
-|**timestamp**| String| |Timestamp of the response in the format YYYY-MM-DDThh:mm:ss.SSSZ|
-|**scanReference**| String|36 |Jumio’s reference number for each scan|
+|**timestamp** *| String| |Timestamp of the response in the format YYYY-MM-DDThh:mm:ss.SSSZ|
+|**scanReference** *| String|36 |Jumio’s reference number for each scan|
 |images|JSON Array/Object||Available image/s see table below|
 
 |Parameter "images"       | Type    | Description|
 |:---------------|:--------|:------------|
-|**classifier**| Integer| Page number specified when uploading the page|
-|**href**| String |REST URL to retrieve specific image (see [Retrieving specific image section](#multi-retrieving-specific-image))|
+|**classifier** *| Integer| Page number specified when uploading the page|
+|**href** *| String |REST URL to retrieve specific image (see [Retrieving specific image section](#multi-retrieving-specific-image))|
 
 ### Sample Request
 
@@ -806,12 +854,12 @@ If your customer account is in the **EU** data center, use `lon.netverify.com` i
 
 ### Request Parameter
 
-**Note:** Mandatory JSON parameters are highlighted bold.
+**Note:** Mandatory parameters are marked with an asterisk * and highlighted bold.
 
 |Parameter       | Type    | Max. Length| Description|
 |:---------------|:--------|:------------|:------------|
-|**scanReference** <br>(path parameter)| String|36|Jumio’s reference number of an existing scan from your account|
-|**page_number**| String|36|Page number specified when uploading the page|
+|**scanReference <br>(path parameter)** *| String|36|Jumio’s reference number of an existing scan from your account|
+|**page_number** *| String|36|Page number specified when uploading the page|
 
 ### Response
 

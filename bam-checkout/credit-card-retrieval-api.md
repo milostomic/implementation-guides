@@ -40,7 +40,7 @@ In case you are unsure about the ramifications of retrieving unmasked images reg
 
 HTTP request method: **GET**<br>
 **REST URL:** `https://bam-retrieval.jumio.com/api/netswipe/v1/scans/<scanReference>/images/front`<br>
-If your customer account is in the EU data center, use `lon.jumio.com` instead of `netswipe.com`.
+If your customer account is in the EU data center, use `bam-retrieval.lon.jumio.com` instead of `bam-retrieval.jumio.com`.
 
 **Authentication:** The API call is protected. To access it, use HTTP Basic Authentication with your API token as the "userid" and your API secret as the "password". Log into your Jumio customer portal, and you can find your API token and API secret on the "Settings" page under "API credentials".
 
@@ -55,11 +55,11 @@ If your customer account is in the EU data center, use `lon.jumio.com` instead o
 
 ### Request Parameters
 
-**Note:** Mandatory parameters are highlighted bold.
+**Note:** Mandatory parameters are marked with an asterisk * and highlighted bold.
 
 |Parameter       | Type    | Max. length| Description|
 |:---------------|:--------|:------------|:------------|
-|**scanReference (path parameter)**| String|36|Jumio’s reference number of an existing scan from your account|
+|**scanReference (path parameter)** *| String|36|Jumio’s reference number of an existing scan from your account|
 |maskint (query parameter) |String||Possible values:<br>• masked (default)<br>• unmasked|
 
 ### Response
@@ -85,7 +85,7 @@ To receive unmasked card details, append the query parameter `maskhint=unmasked`
 
 HTTP request method: **GET**<br>
 **REST URL:** `https://bam-retrieval.jumio.com/api/netswipe/v1/scans/<scanReference>/creditCard`<br>
-If your customer account is in the EU data center, use `lon.jumio.com` instead of `netswipe.com`.
+If your customer account is in the EU data center, use `bam-retrieval.lon.jumio.com` instead of `bam-retrieval.jumio.com`.
 
 **Authentication:** The API call is protected. To access it, use HTTP Basic Authentication with your API token as the "userid" and your API secret as the "password". Log into your Jumio customer portal, and you can find your API token and API secret on the "Settings" page under "API credentials".
 
@@ -100,23 +100,24 @@ If your customer account is in the EU data center, use `lon.jumio.com` instead o
 
 ## Request Parameters
 
-**Note:** Mandatory parameters are highlighted bold.
+**Note:** Mandatory parameters are marked with an asterisk * and highlighted bold.
 
 |Parameter       | Type    | Max. length| Description|
 |:---------------|:--------|:------------|:------------|
-|**scanReference (path parameter)**| String|36|Jumio’s reference number of an existing scan from your account|
+|**scanReference (path parameter)** *| String|36|Jumio’s reference number of an existing scan from your account|
 |maskint (query parameter) |String||Possible values:<br>• masked (default)<br>• unmasked|
 
 ## Response Parameters
 
 You receive a JSON response in case of success, or HTTP status code **404 Not Found** if the scan or the credit card data is not available, which may take up to 5 minutes. <br>
-**Note:** Mandatory JSON parameters are highlighted bold.
+
+**Note:** Mandatory parameters are marked with an asterisk * and highlighted bold.
 
 
 |Parameter       | Type    | Max. length| Description|
 |:---------------|:--------|:------------|:----------|
-|**jumioRequestReference**|String |36|Jumio’s reference number for each scan|
-|**cardNumber** |String|19|If maskhint = masked (default):<br>•	First 6 and last 4 digits of the credit card number, other digits are masked with "x"<br>If maskhint = unmasked:<br>•	Full credit card number|
+|**jumioRequestReference** *|String |36|Jumio’s reference number for each scan|
+|**cardNumber** * |String|19|If maskhint = masked (default):<br>•	First 6 and last 4 digits of the credit card number, other digits are masked with "x"<br>If maskhint = unmasked:<br>•	Full credit card number|
 |cardExpiryMonth|Number|Min. value: 1<br>Max. value: 12|Month card expires|
 |cardExpiryYear|Number|4|Year card expires in the format YY|
 |cardHolderName|String|100|Name of the credit card holder in capital letters|

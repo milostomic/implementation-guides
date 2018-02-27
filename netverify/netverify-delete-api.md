@@ -8,13 +8,13 @@ This guide illustrates how to implement the Netverify Delete API.
 ## Table of Contents
 
 - [Deleting a Netverify scan](#deleting-a-netverify-scan)
-- [Deleting a Document Verification Scan](#deleting-a-document-verification-scan)
+- [Deleting a Document Verification scan](#deleting-a-document-verification-scan)
 - [Supported Cipher Suites](#supported-cipher-suites)
 
 ---
 # Release Notes
 
-The release notes for the Netverify Delete API can be viewed via the link below.
+The release notes for the Netverify Delete API can be viewed link below.
 
 | Date    | Description|
 |:--------|:------------|
@@ -48,7 +48,7 @@ If your customer account is in the EU data center, use `lon.netverify.com` inste
 
 |Parameter       | Type    | Max. Length| Description|
 |:---------------|:--------|:------------|:------------|
-|scanReference (path parameter)| String|36|Jumio’s reference number of an existing scan from your account|
+|**scanReference (path parameter)** *| String|36|Jumio’s reference number of an existing scan from your account|
 
 ### Response
 
@@ -90,7 +90,7 @@ If your customer account is in the EU data center, use `retrieval.lon.netverify.
 
 |Parameter       | Type    | Max. Length| Description|
 |:--------|:--------|:--------|:---------|
-|scanReference (path parameter)| String|36|Jumio’s reference number of an existing scan from your account|
+|**scanReference (path parameter)** *| String|36|Jumio’s reference number of an existing scan from your account|
 
 ### Response
 
@@ -99,7 +99,7 @@ You receive HTTP status code **200 OK** in case of success.
 ### Sample Request
 
 ```
-DELETE https://netverify.com/api/netverify/v2/documents/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx HTTP/1.1
+DELETE https://retrieval.netverify.com/api/netverify/v2/documents/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx HTTP/1.1
 Accept: application/json
 User-Agent: YOURCOMPANYNAME YOURAPPLICATIONNAME/x.x.x
 Authorization: Basic

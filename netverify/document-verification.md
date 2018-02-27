@@ -1,8 +1,8 @@
 ![Jumio](/images/netverify.png)
 
-# Netverify Document Verification Implementation Guide
+# Document Verification Implementation Guide
 
-This is a reference manual and configuration guide for the Netverify Document Verification (formerly Multi Document) product. It illustrates how to embed Netverify Document Verification into your web page, as well as implement the Netverify Document Verification APIs.
+This is a reference manual and configuration guide for the Document Verification product. It illustrates how to embed Document Verification into your web page, as well as implement the Document Verification APIs.
 
 
 ## Table of Contents
@@ -34,7 +34,7 @@ The release information for Document Verification can be found via the link belo
 
 # Using Document Verification client
 
-Netverify Document Verification offers document upload and extraction (see [Supported documents for data extraction](#supported-documents)) with a Jumio-hosted user interface. Simply use the following RESTful API and you will receive a callback after completion (see [Callback](/netverify/callback.md)).
+Document Verification offers document upload and extraction (see [Supported documents for data extraction](#supported-documents)) with a Jumio-hosted user interface. Simply use the following RESTful API and you will receive a callback after completion (see [Callback](/netverify/callback.md)).
 
 Uploads are restricted to a total of 10MB in size and can only include JPEG, PNG or PDF file types. Credit card uploads are limited to 2 images or PDF pages, and all other document types are limited to 30 images or PDF pages.
 
@@ -61,14 +61,14 @@ Note: If your customer account is in the EU data center, use `lon.netverify.com`
 
 ### Request Parameters
 
-**Note:** Mandatory JSON parameters are highlighted bold.
+**Note:** Mandatory parameters are marked with an asterisk * and highlighted bold.
 
 |Parameter       | Type    | Max. Length| Description|
 |:---------------|:--------|:------------|:------------|
-|**type**|String||Possible codes:<br>See [Supported documents](#supported-documents) chapter|
-|**country**<br>Not mandatory for type=CC|String|3|Possible countries:<br>• [ISO 3166-1 alpha-3](http://en.wikipedia.org/wiki/ISO_3166-1_alpha-3) country code<br>•	XKX (Kosovo)|
-|**merchantScanReference**|String|100|Your reference for each scan must not contain sensitive data like PII (Personally Identifiable Information) or account login|
-|**customerId**|String|100|Identification of the customer should not contain sensitive data like PII (Personally Identifiable Information) or account login|
+|**type** *|String||Possible codes:<br>See [Supported documents](#supported-documents) chapter|
+|**country** *<br>Not mandatory for type=CC|String|3|Possible countries:<br>• [ISO 3166-1 alpha-3](http://en.wikipedia.org/wiki/ISO_3166-1_alpha-3) country code<br>•	XKX (Kosovo)|
+|**merchantScanReference** *|String|100|Your reference for each scan must not contain sensitive data like PII (Personally Identifiable Information) or account login|
+|**customerId** *|String|100|Identification of the customer should not contain sensitive data like PII (Personally Identifiable Information) or account login|
 |callbackUrl|String|255|Callback URL for the confirmation after the user journey is completed (constraints see [Callback URL](/netverify/portal-settings.md#callback-url) chapter). This setting overrides your Jumio portal settings.|
 |successUrl|String|255|Redirect URL in case of success (constraints see [Success and error URLs](/netverify/portal-settings.md#success-and-error-urls) chapter).|
 |errorUrl|String|255|Redirect URL in case of error (constraints see [Success and error URLs](/netverify/portal-settings.md#success-and-error-urls) chapter).|
@@ -198,14 +198,14 @@ If your customer account is in the EU data center, use `acquisition.lon.netverif
 
 ### Request Parameters
 
-**Note:** Mandatory JSON parameters are highlighted bold.
+**Note:** Mandatory parameters are marked with an asterisk * and highlighted bold.
 
 |Parameter       | Type    | Max. Length| Description|
 |:---------------|:--------|:------------|:------------|
-|**type**<br>Not mandatory for type=CC|String||Possible codes:<br>See [Supported documents](#supported-documents) chapter |
-|**country**|String|3|Possible countries:<br>•	[ISO 3166-1 alpha-3](http://en.wikipedia.org/wiki/ISO_3166-1_alpha-3) country code<br>•	XKX (Kosovo)|
-|**merchantScanReference**|String|100|Your reference for each scan must not contain sensitive data like PII (Personally Identifiable Information) or account login|
-|**customerId**|String|100|Identification of the customer should not contain sensitive data like PII (Personally Identifiable Information) or account login|
+|**type** *<br>Not mandatory for type=CC|String||Possible codes:<br>See [Supported documents](#supported-documents) chapter |
+|**country** *|String|3|Possible countries:<br>•	[ISO 3166-1 alpha-3](http://en.wikipedia.org/wiki/ISO_3166-1_alpha-3) country code<br>•	XKX (Kosovo)|
+|**merchantScanReference** *|String|100|Your reference for each scan must not contain sensitive data like PII (Personally Identifiable Information) or account login|
+|**customerId** *|String|100|Identification of the customer should not contain sensitive data like PII (Personally Identifiable Information) or account login|
 |callbackUrl|String|255|Callback URL for the confirmation after the user journey is completed (constraints see [Callback URL](/netverify/portal-settings.md#callback-url) settings). This setting overrides your Jumio portal settings.|
 |merchantReportingCriteria|String|100|Your reporting criteria for each scan|
 |clientIp|String|100|IP address of the client|
@@ -264,8 +264,8 @@ If your customer account is in the EU data center, use `acquisition.lon.netverif
 
 |Parameter       | Type    | Max. Length| Description|
 |:---------------|:--------|:------------|:------------|
-|scanReference <br>(path parameter)|String|36|Jumio’s reference number of a scan created/updated less than 5 minutes ago|
-|page <br>(path parameter) |String|Max. value: 30|Page number|
+|**scanReference <br>(path parameter)** *|String|36|Jumio’s reference number of a scan created/updated less than 5 minutes ago|
+|**page <br>(path parameter)** * |String|Max. value: 30|Page number|
 
 Send your JPEG, PNG or PDF file with a maximum size of 10 MB as `multipart/form-data` in the body of your request.
 
@@ -316,7 +316,7 @@ If your customer account is in the EU data center, use `acquisition.lon.netverif
 
 |Parameter       | Type    | Max. Length| Description|
 |:---------------|:--------|:------------|:------------|
-|scanReference<br>(path parameter)|String|36|Jumio’s reference number of a scan created/updated less than 5 minutes ago|
+|**scanReference<br>(path parameter)** *|String|36|Jumio’s reference number of a scan created/updated less than 5 minutes ago|
 
 Send your PDF file with a maximum size of 10 MB and maximum of 30 pages as `multipart/form-data` in the body of your request.
 
@@ -368,7 +368,7 @@ If your customer account is in the EU data center, use `acquisition.lon.netverif
 
 |Parameter       | Type    | Max. Length| Description|
 |:---------------|:--------|:------------|:------------|
-|scanReference (path parameter)|String|36|Jumio’s reference number of a scan created/updated less than 5 minutes ago |
+|**scanReference (path parameter)** *|String|36|Jumio’s reference number of a scan created/updated less than 5 minutes ago |
 
 ### Response Parameter
 
@@ -409,20 +409,20 @@ If your customer account is in the EU data center, use `acquisition.lon.netverif
 
 ### Request Parameters
 
-**Note:** Mandatory JSON parameters are highlighted bold.
+**Note:** Mandatory parameters are marked with an asterisk * and highlighted bold.
 
 |Parameter       | Type    | Max. Length| Description|
 |:---------------|:--------|:------------|:------------|
-|**image** |PDF, JPEG or PNG|Max. 10 MB|Image of the customer's document should be always listed before the metadata parameter|
-|**metadata**|JSON||Metadata of the customer's document as JSON objects, see table below|
+|**image** * |PDF, JPEG or PNG|Max. 10 MB|Image of the customer's document should be always listed before the metadata parameter|
+|**metadata** *|JSON||Metadata of the customer's document as JSON objects, see table below|
 
 
 |Parameter "metadata"  | Type    | Max. Length| Description|
 |:---------------|:--------|:------------|:------------|
-|**type**<br>Not mandatory for type=CC|String||Possible codes:<br>See [Supported documents](#supported-documents) chapter |
-|**country**|String|3|Possible countries:<br>•	[ISO 3166-1 alpha-3](http://en.wikipedia.org/wiki/ISO_3166-1_alpha-3) country code<br>•	XKX (Kosovo)|
-|**merchantScanReference**|String|100|Your reference for each scan must not contain sensitive data like PII (Personally Identifiable Information) or account login|
-|**customerId**|String|100|Identification of the customer should not contain sensitive data like PII (Personally Identifiable Information) or account login|
+|**type** *<br>Not mandatory for type=CC|String||Possible codes:<br>See [Supported documents](#supported-documents) chapter |
+|**country** *|String|3|Possible countries:<br>•	[ISO 3166-1 alpha-3](http://en.wikipedia.org/wiki/ISO_3166-1_alpha-3) country code<br>•	XKX (Kosovo)|
+|**merchantScanReference** *|String|100|Your reference for each scan must not contain sensitive data like PII (Personally Identifiable Information) or account login|
+|**customerId** *|String|100|Identification of the customer should not contain sensitive data like PII (Personally Identifiable Information) or account login|
 |callbackUrl|String|255|Callback URL for the confirmation after the user journey is completed (constraints see [Callback URL](/netverify/portal-settings.md#callback-url) settings). This setting overrides your Jumio portal settings.|
 |merchantReportingCriteria|String|100|Your reporting criteria for each scan|
 |clientIp|String|100|IP address of the client|

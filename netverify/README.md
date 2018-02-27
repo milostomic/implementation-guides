@@ -13,25 +13,7 @@ The Jumio Knowledge Base contains a wealth of information regarding our services
 If you have any questions regarding our implementation guides please contact Jumio Support at support@jumio.com.
 
 ---
-## Table of Contents
-
-- [Netverify Implementation Guides](#netverify-implementation-guides) - Links
-- [Netverify Web and Document Verification](#netverify-web-and-document-verification) - Release Notes
-- [Netverify Retrieval API](#netverify-retrieval-api) - Release Notes
-
----
-# Netverify Implementation Guides
-
-- [Netverify Web](/netverify/netverify-web.md)
-- [Document Verification](/netverify/document-verification.md)
-- [Fastfill API](/netverify/fastfill-api.md)
-- [Netverify Retrieval API](/netverify/netverify-retrieval-api.md)
-- [Netverify Delete API](/netverify/netverify-delete-api.md)
-
-
----
 ## Netverify Web and Document Verification
-(formerly Netverify Multi Document)
 
 ### Release Notes
 
@@ -130,38 +112,6 @@ If you have any questions regarding our implementation guides please contact Jum
 | 2012-05-30  |Added "idScanImageBackside" callback parameter|
 | 2011-03-06  |Introduced "showIntroductionText" parameter|
 | 2011-03-01  |Initial release|
-
-
----
-## Netverify Retrieval API
-### Release Notes
-
-| Date    | Description|
-|:--------|:------------|
-| 2018-02-01   |Added response parameter "originalDocument" for Document Verification Retrieval - Retrieving document data only<br />Added Australia and Canada states to response parameter "usState" |
-| 2018-01-17   |Added new validity reason BLACK_AND_WHITE<br> Updated supported countries for idSubtype LEARNING_DRIVING_LICENSE|
-| 2017-11-23   |Added value "Visa" to response parameter "type" for Netverify Retrieval - Retrieving Document Data only|
-| 2017-09-21   |Removed response parameter "additionalInformation"|
-| 2017-08-24   |Added response parameter "identityVerification"|
-| 2017-05-23   |Added response parameter "issuingDate" for retrieving scan details and<br />document data only|
-| 2017-01-31   |Added value "PASSPORT\_CARD\_ID" and "MILITARY\_ID" to parameter "idSubType" |
-| 2016-11-15   |Added reject reason detail code 10011 for PLACE\_OF\_BIRTH |
-| 2016-06-21   |Removed Content-Length header for HTTP GET APIs |
-| 2016-05-18   |Added value "STUDENT\_ID" to parameter "idSubType"<br />Removed TLS\_DHE ciphers |
-| 2016-02-09   |Added reject reason code 111 for MISMATCH\_PRINTED\_BARCODE\_DATA |
-| 2015-11-17   |Added parameter "idSubtype" to Netverify Retrieval |
-| 2015-10-21   |Added ECDHE ciphers to supported cipher suites |
-| 2015-09-23   |Added parameter "country" and "customDocumentCode" for Netverify Multi Document<br/>Retrieval |
-| 2015-09-09   |Added Netverify Multi Document Retrieval<br />Added second set of API credentials for retrieving transaction data |
-| 2015-08-11   |Added new classifier "face" for retrieving scan images |
-| 2015-07-14   |Added value "XKX" for Kosovo to parameters "country" and "issuingCountry"<br />Added value "Kosovo" to parameter "usState" |
-| 2015-06-30   |Introduced EU data center |
-| 2015-04-08   |Added reject reason code 109 for PUNCHED_DOCUMENT |
-| 2015-03-24   |Removed cipher TLS\_RSA\_WITH\_RC4\_128\_SHA due to RC4 deprecation |
-| 2014-03-05   |Added sources WEB and REDIRECT<br />Document type not mandatory anymore |
-| 2014-09-25   |Changed parameter "maskhint" to apply for credit cards only |
-| 2014-08-19   |Initial release |
-
 
 ---
 &copy; Jumio Corp. 268 Lambert Avenue, Palo Alto, CA 94306

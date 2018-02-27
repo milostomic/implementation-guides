@@ -41,23 +41,23 @@ If your customer account is in the EU data center, use `lon.netverify.com` inste
 
 ### Request Parameter
 
-**Note:** Mandatory parameters are highlighted bold.
+**Note:** Mandatory parameters are marked with an asterisk * and highlighted bold.
 
 |Parameter       | Type    | Max. Length| Description|
 |:---------------|:--------|:------------|:------------|
-|**metadata**|JSON||Metadata of the customer's document as JSON objects, see table below|
-|**frontsideImage**|JPEG or PNG|Max. 5 MB|Front side image of the customer's document<br> <strong>Mandatory<br>-	if type = PASSPORT<br>-	If type = ID\_CARD or DRIVING\_LICENSE and backsideImage not provided</strong> |
-|**backsideImage**|JPEG or PNG|Max. 5 MB|Back side image of the customer's document if type = ID\_CARD or DRIVING\_LICENSE<br><strong>Mandatory if frontsideImage not provided</strong>|
-|**type**|String||Possible types:<br>-	PASSPORT<br>-	ID\_CARD<br>- DRIVING\_LICENSE |
-|**country**|String|3|Possible countries:<br>- [ISO 3166-1 alpha-3](http://en.wikipedia.org/wiki/ISO_3166-1_alpha-3) country code<br>-	XKX (Kosovo) |
+|**metadata** *|JSON||Metadata of the customer's document as JSON objects, see table below|
+|**frontsideImage** *|JPEG or PNG|Max. 5 MB|Front side image of the customer's document<br> <strong>Mandatory<br>-	if type = PASSPORT<br>-	If type = ID\_CARD or DRIVING\_LICENSE and backsideImage not provided</strong> |
+|**backsideImage** *|JPEG or PNG|Max. 5 MB|Back side image of the customer's document if type = ID\_CARD or DRIVING\_LICENSE<br><strong>Mandatory if frontsideImage not provided</strong>|
+|**type** *|String||Possible types:<br>-	PASSPORT<br>-	ID\_CARD<br>- DRIVING\_LICENSE |
+|**country** *|String|3|Possible countries:<br>- [ISO 3166-1 alpha-3](http://en.wikipedia.org/wiki/ISO_3166-1_alpha-3) country code<br>-	XKX (Kosovo) |
 
 ### Response Parameter
 
-**Note:** Mandatory parameters are highlighted bold.
+**Note:** Mandatory parameters are marked with an asterisk * and highlighted bold.
 
 |Parameter       | Type    | Max. Length| Description|
 |:---------------|:--------|:------------|:------------|
-|**scanReference**|String||Jumio’s reference number for each scan|
+|**scanReference** *|String||Jumio’s reference number for each scan|
 |type|String||Possible types:<br>-	PASSPORT<br>-	ID\_CARD<br>- DRIVING\_LICENSE|
 |issueDate|String|255|Issue date in the format YYYY-MM-DD|
 |issuingCountry|String|3|Possible countries:<br>- [ISO 3166-1 alpha-3](http://en.wikipedia.org/wiki/ISO_3166-1_alpha-3) country code<br>-	XKX (Kosovo)|

@@ -41,24 +41,24 @@ For mobile: ID verification must be enabled to receive the callback.
 
 The following parameters are posted to your callback URL for Netverify Web embedded, redirect, performNetverify and Netverify Mobile iOS/Android.
 
-**Note:** Mandatory parameters are highlighted bold.
+**Note:** Mandatory parameters are marked with an asterisk * and highlighted bold.
 
 |Parameter       | Max. Length    | Description| Activation needed |
 |:---------------|:--------|:------------| ------ |
-|**callBackType**   |   |NETVERIFYID | |
-|**jumioIdScanReference**   |36  |Jumio’s reference number for each scan | |
-|**verificationStatus**   |   |Possible states:<br/>•	APPROVED\_VERIFIED<br/> •	DENIED\_FRAUD<br/>•	DENIED\_UNSUPPORTED\_ID\_TYPE (`*1`)<br/> •	DENIED\_UNSUPPORTED\_ID\_COUNTRY (`*1`)<br/>•	ERROR\_NOT\_READABLE\_ID<br/> •	NO\_ID\_UPLOADED | |
-|**idScanStatus**   |   |SUCCESS if verificationStatus = APPROVED\_VERIFIED, otherwise ERROR | |
-|**idScanSource**   |   |Possible values:<br>•	WEB (if Netverify Web embedded and no camera or upload started)<br>•	WEB\_CAM (if Netverify Web embedded via camera)<br>•	WEB\_UPLOAD (if Netverify Web embedded via upload)<br>•	REDIRECT (if Netverify Web redirect and no camera or upload started)<br>•	REDIRECT\_CAM (if Netverify Web redirect via camera)<br>•	REDIRECT\_UPLOAD (if Netverify Web redirect via upload)<br>•	API (if performNetverify)<br>• SDK (if mobile) | |
-|**idCheckDataPositions**   |   |"OK" if verificationStatus = APPROVED\_VERIFIED, otherwise "N/A" | |
-|**idCheckDocumentValidation**   |   |"OK" if verificationStatus = APPROVED\_VERIFIED, otherwise "N/A" | |
-|**idCheckHologram**   |   |"OK" if verificationStatus = APPROVED\_VERIFIED, otherwise "N/A" | |
-|**idCheckMRZcode**   |   |"OK" for passports and supported ID cards if verificationStatus = APPROVED\_VERIFIED and MRZ check is enabled, otherwise "N/A" | |
-|**idCheckMicroprint**   |   |"OK" if verificationStatus = APPROVED\_VERIFIED, otherwise "N/A" | |
-|**idCheckSecurityFeatures**   |   |"OK" if verificationStatus = APPROVED\_VERIFIED, otherwise "N/A" | |
-|**idCheckSignature**   |   |"OK" if verificationStatus = APPROVED\_VERIFIED, otherwise "N/A" | |
-|**transactionDate**   |   |Timestamp of the scan creation in the format YYYY-MM-DDThh:mm:ss.SSSZ | |
-|**callbackDate**   |   |Timestamp of the callback creation in the format YYYY-MM-DDThh:mm:ss.SSSZ | |
+|**callBackType** *   |   |NETVERIFYID | |
+|**jumioIdScanReference** *   |36  |Jumio’s reference number for each scan | |
+|**verificationStatus** *   |   |Possible states:<br/>•	APPROVED\_VERIFIED<br/> •	DENIED\_FRAUD<br/>•	DENIED\_UNSUPPORTED\_ID\_TYPE (`*1`)<br/> •	DENIED\_UNSUPPORTED\_ID\_COUNTRY (`*1`)<br/>•	ERROR\_NOT\_READABLE\_ID<br/> •	NO\_ID\_UPLOADED | |
+|**idScanStatus** *   |   |SUCCESS if verificationStatus = APPROVED\_VERIFIED, otherwise ERROR | |
+|**idScanSource** *   |   |Possible values:<br>•	WEB (if Netverify Web embedded and no camera or upload started)<br>•	WEB\_CAM (if Netverify Web embedded via camera)<br>•	WEB\_UPLOAD (if Netverify Web embedded via upload)<br>•	REDIRECT (if Netverify Web redirect and no camera or upload started)<br>•	REDIRECT\_CAM (if Netverify Web redirect via camera)<br>•	REDIRECT\_UPLOAD (if Netverify Web redirect via upload)<br>•	API (if performNetverify)<br>• SDK (if mobile) | |
+|**idCheckDataPositions** *   |   |"OK" if verificationStatus = APPROVED\_VERIFIED, otherwise "N/A" | |
+|**idCheckDocumentValidation** *   |   |"OK" if verificationStatus = APPROVED\_VERIFIED, otherwise "N/A" | |
+|**idCheckHologram** *   |   |"OK" if verificationStatus = APPROVED\_VERIFIED, otherwise "N/A" | |
+|**idCheckMRZcode** *   |   |"OK" for passports and supported ID cards if verificationStatus = APPROVED\_VERIFIED and MRZ check is enabled, otherwise "N/A" | |
+|**idCheckMicroprint** *   |   |"OK" if verificationStatus = APPROVED\_VERIFIED, otherwise "N/A" | |
+|**idCheckSecurityFeatures** *   |   |"OK" if verificationStatus = APPROVED\_VERIFIED, otherwise "N/A" | |
+|**idCheckSignature** *   |   |"OK" if verificationStatus = APPROVED\_VERIFIED, otherwise "N/A" | |
+|**transactionDate** *   |   |Timestamp of the scan creation in the format YYYY-MM-DDThh:mm:ss.SSSZ | |
+|**callbackDate** *   |   |Timestamp of the callback creation in the format YYYY-MM-DDThh:mm:ss.SSSZ | |
 |idType   |   |Possible types:<br/>•	PASSPORT<br/>•	DRIVING\_LICENSE<br/>•	ID\_CARD<br>•	VISA (only supported for country = CHN or USA) | |
 |idSubtype   |255  |Possible subtypes if idType = ID\_CARD<br/>•	NATIONAL\_ID<br/>•	CONSULAR\_ID<br/>•	ELECTORAL\_ID<br/>•	RESIDENT\_PERMIT\_ID<br/>•	TAX\_ID (only supported for PHL)<br/>•	STUDENT\_ID (only supported for POL)<br/>•	PASSPORT\_CARD\_ID (only supported for IRL, RUS and USA)<br/>•	MILITARY\_ID (only supported for GRC)<br/>•	OTHER\_ID<br/>•	VISA (only supported for USA)<br/>•	UNKNOWN<br/><br/>Possible subtypes if idType = DRIVING\_LICENSE<br/>•	LEARNING\_DRIVING\_LICENSE (only supported for USA, CAN, AUS, GBR, IRL, DEU)<br/><br/>Possible subtypes if idType = PASSPORT<br/>•	E\_PASSPORT (only for mobile) | |
 |idCountry   |3  |Possible countries:<br/>•	[ISO 3166-1 alpha-3](http://en.wikipedia.org/wiki/ISO_3166-1_alpha-3) country code<br/>•	XKX (Kosovo)| |
@@ -83,6 +83,7 @@ The following parameters are posted to your callback URL for Netverify Web embed
 |optionalData1   |255  |Optional field of MRZ line 1 | |
 |optionalData2   |255  |Optional field of MRZ line 2 | |
 |dni   |255  |DNI as available on the ID if idCountry = ESP and idSubtype = NATIONAL\_ID  | |
+|curp   |255  |CURP as available on the ID if idCountry = MEX and idSubtype = NATIONAL\_ID  |X |
 |gender   |2  |Possible values: M, F<br>• if idCountry = FRA and idSubtype = NATIONAL\_ID (MRZ type CNIS)<br/>•	if idType = VISA and additional extraction for Visa enabled | |
 |idFaceLiveness **(deprecated)**  |   |only available for SDK<br/>Possible values:<br/>•	TRUE (if face match enabled for ID verification and liveness detected successfully during scanning)<br/>•	FALSE |X |
 |identityVerification   |   |Identity verification as JSON object if verificationStatus = APPROVED\_VERIFIED, see table below|X |
@@ -94,7 +95,6 @@ The following parameters are posted to your callback URL for Netverify Web embed
 |durationOfStay|255|Duration of stay if idType = VISA and additional extraction for Visa enabled|X |
 |numberOfEntries|255|Number of entries if idType = VISA and additional extraction for Visa enabled|X |
 |visaCategory|255|Visa category if idType = VISA and additional extraction for Visa enabled|X |
-
 
 
 (`*1`) Scan is declined as unsupported if the provided ID is not supported by Jumio, or not accepted in your Netverify settings.<br/>
@@ -111,7 +111,7 @@ To access the image, use the HTTP GET method and HTTP Basic Authentication with 
 |stateCode   |6  |[ISO 3166-2](http://en.wikipedia.org/wiki/ISO_3166-2) state code |
 |streetName   |64  |Street name |
 |streetSuffix   |14  |Street suffix abbreviation<br/>Examples: [US](http://www.gis.co.clay.mn.us/USPS.htm#suffix), [Canada](http://www.canadapost.ca/tools/pg/manual/PGaddress-e.asp#1423617), [Australia](https://auspost.com.au/media/documents/australia-post-addressing-standards-1999.pdf) |
-|streetDirection   |4  |Street direction abbreviation<br/>Examples: US (E=EAST, W=WEST, N=NORTH, S=SOUTH), [Canada](http://www.canadapost.ca/tools/pg/manual/PGaddress-e.asp#1403220), [Australia](https://auspost.com.au/media/documents/australia-post-addressing-standards-1999.pdf) |
+|streetDirection   |255  |Street direction abbreviation<br/>Examples: US (E=EAST, W=WEST, N=NORTH, S=SOUTH), [Canada](http://www.canadapost.ca/tools/pg/manual/PGaddress-e.asp#1403220), [Australia](https://auspost.com.au/media/documents/australia-post-addressing-standards-1999.pdf) |
 |streetNumber   |14  |Street number |
 |unitDesignator   |14  |Unit designator abbreviation<br/>Examples: [US](http://www.gis.co.clay.mn.us/USPS.htm#secunitdesig), [Canada](http://www.canadapost.ca/tools/pg/manual/PGaddress-e.asp#1380473), [Australia](https://auspost.com.au/media/documents/australia-post-addressing-standards-1999.pdf) |
 |unitNumber   |14  |Unit number |
@@ -165,15 +165,15 @@ To access the image, use the HTTP GET method and HTTP Basic Authentication with 
 
 |Parameter "identityVerification"       | Max. Length    | Description|
 |:---------------|:--------|:------------|
-|**similarity**  |  |Possible values:<br/> •	MATCH<br />•	NO\_MATCH<br />•	NOT\_POSSIBLE|
-|**validity**  |  |Possible values:<br/> •	TRUE<br />•	FALSE |
+|**similarity** *  |  |Possible values:<br/> •	MATCH<br />•	NO\_MATCH<br />•	NOT\_POSSIBLE|
+|**validity** *  |  |Possible values:<br/> •	TRUE<br />•	FALSE |
 |reason   |  |Provided if validity = FALSE<br/>Possible values:<br />• SELFIE\_CROPPED\_FROM\_ID<br />•	ENTIRE\_ID\_USED\_AS\_SELFIE<br />•	MULTIPLE\_PEOPLE<br />•	SELFIE\_IS\_SCREEN\_PAPER\_VIDEO<br />•	SELFIE\_MANIPULATED<br />• AGE\_DIFFERENCE\_TOO\_BIG<br />•	NO\_FACE\_PRESENT<br />•	FACE\_NOT\_FULLY\_VISIBLE<br />•	BAD\_QUALITY<br />•	BLACK\_AND\_WHITE|
 
 ### Driver License Categories
 
 |Parameter "dlCategories"       | Max. Length    | Description|
 |:---------------|:--------|:------------|
-|**category** | 10 |Possible values:<br/> •	B1<br />•	B<br />•	BE|
+|**category** * | 10 |Possible values:<br/> •	B1<br />•	B<br />•	BE|
 |issueDate   |  |Issue date in the format YYYY-MM-DD|
 |expiryDate   |  |Date of expiry in the format YYYY-MM-DD as available on the driver license|
 |isReadable   |  |Possible value:<br>• FALSE |
@@ -206,33 +206,33 @@ The following parameters are posted to your callback URL for Document Verificati
 
 |Parameter       | Type    | Max. Length|  Description|
 |:---------------|:--------|:----------: |:------------|
-|**scanReference**   | String  |36 |Jumio's reference number for each scan|
-|**timestamp** | String  |  |Timestamp of the response in the format YYYY-MM-DDThh:mm:ss.SSSZ|
-|**transaction** | JSON object  |  |Transaction related data, see table below|
+|**scanReference** *   | String  |36 |Jumio's reference number for each scan|
+|**timestamp** * | String  |  |Timestamp of the response in the format YYYY-MM-DDThh:mm:ss.SSSZ|
+|**transaction** * | JSON object  |  |Transaction related data, see table below|
 |document   | JSON object  |       |Document related data if transaction status = DONE, see table |
 
 |Parameter "transaction"       | Type    | Max. Length|  Description|
 |:---------------|:--------|:----------:|:------------|
-|**date**   					        | String  |    |Timestamp of the scan creation in the format YYYY-MM-DDThh:mm:ss.SSSZ|
-|**status**  | String  |    |Possible states:<br>•	DONE<br>•	FAILED (if initialized acquisition is not successfully finalized within 5 minutes after creation/last update)|
-|**source**     							| String  |    |Possible values: <br>• DOC\_UPLOAD (Document Verification)<br>• DOC\_API (Document Verification API)<br>• DOC\_SDK (Document Verification Mobile)|
-|**merchantScanReference**		| String  |255 |Your reference for each scan |
-|**customerId**       				| String  |255 |ID of the customer|
+|**date** *   					        | String  |    |Timestamp of the scan creation in the format YYYY-MM-DDThh:mm:ss.SSSZ|
+|**status** *  | String  |    |Possible states:<br>•	DONE<br>•	FAILED (if initialized acquisition is not successfully finalized within 5 minutes after creation/last update)|
+|**source** *     							| String  |    |Possible values: <br>• DOC\_UPLOAD (Document Verification)<br>• DOC\_API (Document Verification API)<br>• DOC\_SDK (Document Verification Mobile)|
+|**merchantScanReference** *		| String  |255 |Your reference for each scan |
+|**customerId** *       				| String  |255 |ID of the customer|
 |merchantReportingCriteria    | String  |255 |Your reporting criteria for each scan|
 |clientIp       	| String  |100  |IP address of the client if provided for the Document Verification API |
 
 |Parameter "document"      | Type    | Max. Length|  Description|
 |:-------------------------|:--------|:----------:|:------------|
-|**status**   					| String  |    |Possible states: <br/> ⦁ UPLOADED (default) <br/> ⦁	EXTRACTED if supported document for data extraction provided <br/> ⦁	DISCARDED if no supported document for data extraction provided |
-|**country**     				| String  |3   |Possible countries: <br/> ⦁ [ISO 3166-1 alpha-3](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-3) country code <br/> ⦁	XKX (Kosovo) |
-|**type**     					| String  |    |Possible types: <br>⦁ CC (Credit card, front and back side)<br/>⦁	BS (Bank statement, front side) <br/>⦁	IC (Insurance card, front side) <br/>⦁	UB (Utility bill, front side) <br/>⦁	CAAP (Cash advance application, front and back side) <br/>⦁	CRC (Corporate resolution certificate, front and back side) <br/>⦁	CCS (Credit card statement, front and back side) <br/>⦁	LAG (Lease agreement, front and back side) <br/>⦁	LOAP (Loan application, front and back side) <br/>⦁	MOAP (Mortgage application, front and back side) <br/>⦁	TR (Tax return, front and back side) <br/>⦁	VT (Vehicle title, front side) <br/>⦁	VC (Voided check, front side) <br/>⦁	STUC (Student card, front side) <br/>⦁	HCC (Health care card, front side) <br/>⦁	CB (Council bill, front side) <br/>⦁	SENC (Seniors card, front side) <br/>⦁	MEDC (Medicare card, front side) <br/>⦁	BC (Birth certificate, front side) <br/>⦁	WWCC (Working with children check, front side) <br/>⦁	SS (Superannuation statement, front side) <br/>⦁	TAC (Trade association card, front side) <br/>⦁	SEL (School enrolment letter, front side) <br/>⦁	PB (Phone bill, front side) <br/>⦁	USSS (US social security card, front side) <br/>⦁	SSC (Social security card, front side) <br/>⦁	CUSTOM (Custom document type)|
-|**images**	| JSON array  |  |URLs to the images of the scan (JPEG or PNG) (`*1`) |
+|**status** * 	| String  |    |Possible states: <br/> ⦁ UPLOADED (default) <br/> ⦁	EXTRACTED if supported document for data extraction provided <br/> ⦁	DISCARDED if no supported document for data extraction provided |
+|**country** * | String  |3   |Possible countries: <br/> ⦁ [ISO 3166-1 alpha-3](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-3) country code <br/> ⦁	XKX (Kosovo) |
+|**type** *    | String  |    |Possible types: <br>⦁ CC (Credit card, front and back side)<br/>⦁	BS (Bank statement, front side) <br/>⦁	IC (Insurance card, front side) <br/>⦁	UB (Utility bill, front side) <br/>⦁	CAAP (Cash advance application, front and back side) <br/>⦁	CRC (Corporate resolution certificate, front and back side) <br/>⦁	CCS (Credit card statement, front and back side) <br/>⦁	LAG (Lease agreement, front and back side) <br/>⦁	LOAP (Loan application, front and back side) <br/>⦁	MOAP (Mortgage application, front and back side) <br/>⦁	TR (Tax return, front and back side) <br/>⦁	VT (Vehicle title, front side) <br/>⦁	VC (Voided check, front side) <br/>⦁	STUC (Student card, front side) <br/>⦁	HCC (Health care card, front side) <br/>⦁	CB (Council bill, front side) <br/>⦁	SENC (Seniors card, front side) <br/>⦁	MEDC (Medicare card, front side) <br/>⦁	BC (Birth certificate, front side) <br/>⦁	WWCC (Working with children check, front side) <br/>⦁	SS (Superannuation statement, front side) <br/>⦁	TAC (Trade association card, front side) <br/>⦁	SEL (School enrolment letter, front side) <br/>⦁	PB (Phone bill, front side) <br/>⦁	USSS (US social security card, front side) <br/>⦁	SSC (Social security card, front side) <br/>⦁	CUSTOM (Custom document type)|
+|**images** *	| JSON array  |  |URLs to the images of the scan (JPEG or PNG) (`*1`) |
 |originalDocument |String | | URL to the originally submitted document of the scan (PDF) if available (`*1`)  |
 |customDocumentCode | String  |100 |Your custom document code (maintained in your Jumio customer portal) if type = CUSTOM |
 |extractedData | JSON object  | |Extracted data if status = EXTRACTED, see [Supported documents for data extraction](#supported-documents-for-data-extraction)|
 
 
-(`*1`) To access the images or the originalDocument, use the HTTP GET method and HTTP Basic Authentication with your API token as the "userid" and your API secret as the "password". <br/>Set "User-Agent: YOURCOMPANYNAME YOURAPPLICATIONNAME/VERSION" (e.g. MyCompany MyApp/1.0.0) in the "header" section of your request. <br/>The TLS protocol is required during the TLS handshake (see [Supported cipher suites](/netverify/supported-cipher-suites.md)) and we strongly recommend using the latest version.<br/>
+(`*1`) To access the images or the originalDocument, use the HTTP GET method and HTTP Basic Authentication with your API token as the "userid" and your API secret as the "password". <br/>Set "User-Agent: YOURCOMPANYNAME YOURAPPLICATIONNAME/VERSION" (e.g. MyCompany MyApp/1.0.0) and "Accept: application/pdf" in the "header" section of your request. <br/>The TLS protocol is required during the TLS handshake (see [Supported cipher suites](/netverify/supported-cipher-suites.md)) and we strongly recommend using the latest version.<br/>
 
 
 

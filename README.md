@@ -24,7 +24,7 @@ Jumio's Netverify ID Verification, lets customers easily and securely capture an
 
 ## Document Verification
 
-Transform the way you extract and verify data from customer documents with Jumio’s Netverify Document Verification (formerly Netverify Multi Document).
+Transform the way you extract and verify data from customer documents with Jumio’s Document Verification.
 
 - [Document Verification](/netverify/document-verification.md)
 - [Document Verification Mobile iOS](https://github.com/Jumio/mobile-sdk-ios)
