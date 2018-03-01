@@ -19,6 +19,7 @@ If you have any questions regarding our implementation guides please contact Jum
 
 | Date           | Description       |
 |:---------------|:------------------|
+| 2018-03-01 | Added request parameter "enableExtraction" to Document Verification<br> Added additional countries for Bank Statement and Utility Bill for extraction |
 | 2018-02-14 | Updated supported browsers |
 | 2018-02-01 |Added callback parameter "originalDocument" for Document Verification<br />Added Australia and Canada states to callback parameter "idUsState"|
 | 2018-01-17  |Added new validity reason BLACK_AND_WHITE<br>Updated supported countries for idSubtype LEARNING_DRIVING_LICENSE|

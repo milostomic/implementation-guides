@@ -399,7 +399,7 @@ You receive a JSON response in case of success, or HTTP status code **404 Not Fo
 |:---------------|:--------|:------------|:------------|
 |**timestamp** *| String| |Timestamp of the response in the format YYYY-MM-DDThh:mm:ss.SSSZ|
 |**scanReference** *| String|36 |Jumio’s reference number for each scan|
-|mrzCheck|String||Possible values:<br>• OK<br>• NOT\_OK<br>• NOT\_AVAILABLE|
+|mrzCheck|String||Possible values:<br>• OK<br>• NOT\_AVAILABLE|
 |faceMatch|String||Face match percentage 0-100|
 |rejectReason|Object||Reject reason, see tables below|
 |identityVerification|Object||Identity verification, see table below|
