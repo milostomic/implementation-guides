@@ -19,6 +19,7 @@ If you have any questions regarding our implementation guides please contact Jum
 
 | Date           | Description       |
 |:---------------|:------------------|
+| 2018-04-11 |Added address extraction for French passports, driver licenses and ID cards|
 | 2018-03-01 | Added request parameter "enableExtraction" to Document Verification<br> Added additional countries for Bank Statement and Utility Bill for extraction |
 | 2018-02-14 | Updated supported browsers |
 | 2018-02-01 |Added callback parameter "originalDocument" for Document Verification<br />Added Australia and Canada states to callback parameter "idUsState"|

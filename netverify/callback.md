@@ -25,7 +25,8 @@ For mobile: ID verification must be enabled to receive the callback.
 
 |User journey state       | Scan state    | Callback|
 |:---------------|:--------|:------------|
-|Not started or drop off before/during first attempt|Pending => Failed|Transaction will be cleaned-up from pending to failed after the authorization token lifetime<br>Callback: Verification status NO\_ID\_UPLOADED |
+|Not started |Pending => Failed|Transaction will be cleaned-up from pending to failed after the authorization token lifetime<br>Callback: Verification status NO\_ID\_UPLOADED |
+|Drop off during first attept| Pending => Failed| Transaction will be finished 15 minutes after the last update<br>Callback: Verification status NO\_ID\_UPLOADED|
 |Drop off during second or third attempt  | Done  |Transaction will be finished 15 minutes after the last update<br>Callback: Verification status ERROR\_NOT\_READABLE\_ID with previous reject reason |
 |Finished       | Done  |Callback: Verification status depends on the result |
 
@@ -88,8 +89,9 @@ The following parameters are posted to your callback URL for Netverify Web embed
 |idFaceLiveness **(deprecated)**  |   |only available for SDK<br/>Possible values:<br/>•	TRUE (if face match enabled for ID verification and liveness detected successfully during scanning)<br/>•	FALSE |X |
 |identityVerification   |   |Identity verification as JSON object if verificationStatus = APPROVED\_VERIFIED, see table below|X |
 |presetCountry   | 3  |Possible countries:<br />•	[ISO 3166-1 alpha-3](http://en.wikipedia.org/wiki/ISO_3166-1_alpha-3) country code <br /> • XKX (Kosovo)| |
-|presetIdType   |    |Possible ID types: PASSPORT, DRIVING_LICENSE, ID_CARD| |
-|dlCategories   | JSON object  |Driver license categories as JSON object if verificationStatus = APPROVED\_VERIFIED, see table below<br />(only supported for country FRA and BEL)|X |
+|presetIdType   |    |Possible ID types: PASSPORT, DRIVING\_LICENSE, ID\_CARD| |
+|dlCarPermission|255 |Only available if:<br/> •Extraction supported for specific country<br/>•verificationStatus = APPROVED\_VERIFIED<br/><br/>Possible values:<br /> • YES<br /> • NO<br /> • NOT\_READABLE|X|
+|dlCategories   | JSON object  |Driver license categories as JSON object if verificationStatus = APPROVED\_VERIFIED, see table below <br /><br />Supported Countries:<br />• France<br />• Belgium<br />• Germany<br />• Italy<br />• Spain<br />• Austria<br />• Netherlands<br />• Great Britain|X |
 |nationality |3|Nationality if idType = VISA and additional extraction for Visa enabled. Possible countries: <br>• [ISO 3166-1 alpha-3](http://en.wikipedia.org/wiki/ISO_3166-1_alpha-3) country code <br />• XKX (Kosovo)|X |
 |passportNumber|255|Passport number if idType = VISA and additional extraction for Visa enabled|X |
 |durationOfStay|255|Duration of stay if idType = VISA and additional extraction for Visa enabled|X |

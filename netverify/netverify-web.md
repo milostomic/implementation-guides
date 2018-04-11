@@ -83,7 +83,21 @@ If your customer account is in the EU data center, use `lon.netverify.com` inste
 |presetCountry|String|3|Preset country and ID type to skip the "Select country and ID type" screen.<br>Note: Both parameters must be present.<br>Possible countries:<br>• [ISO 3166-1 alpha-3](http://en.wikipedia.org/wiki/ISO_3166-1_alpha-3) country code<br>• XKX (Kosovo)|
 |presetIdType|String|255|Preset country and ID type to skip the "Select country and ID type" screen.<br>Note: Both parameters must be present.<br>Possible ID types: PASSPORT, DRIVING\_LICENSE, ID\_CARD|
 
-### Reponse Parameters
+#### Supported documents for address extraction
+
+|Country    |ID card    |Driving license    |Passport    |Callback format |
+|:------------|:-------|:--------------|:--------------|:-------|
+|Australia|No|Yes|No|US|
+|Canada|No|Yes|No|US|
+|France|Yes|Yes|Yes|Raw|
+|Germany|Yes|No|No|EU|
+|Ireland|No|Yes|No|Raw|
+|Mexico|Yes|No|No|US|
+|Spain|Yes|No|No|EU|
+|United Kingdom|No|Yes|No|Raw|
+|United States|No|Yes|No|US|
+
+### Response Parameters
 
 |Parameter|Type|Max. length|Description|
 |:----|:----|:----|:----|
@@ -195,13 +209,20 @@ To display information on your redirect pages, you can use the following paramet
 ### Sample Redirect URL: Success
 
 ```
-https://www.your-site.com/success?idScanStatus=SUCCESS&merchantIdScanReference=YOURIDSCANREFERENCE&jumioIdScanReference=xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+https://www.your-successurl.com/success?idScanStatus=SUCCESS&merchantIdScanReference=YOURIDSCANREFERENCE&jumioIdScanReference=xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
 ```
 
 ### Sample Redirect URL: Error
 
 ```
-https://www.your-site.com/error?idScanStatus=ERROR&merchantIdScanReference=YOURIDSCANREFERENCE&jumioIdScanReference=xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx&errorCode=320
+https://www.your-errorurl.com/error?idScanStatus=ERROR&merchantIdScanReference=YOURIDSCANREFERENCE&jumioIdScanReference=xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx&errorCode=320
+```
+
+### Sample Redirect URL: Expired Authorization Token
+In case the user is trying to go through the user journey after their authorization token has expired. They will be redirected to the error URL with different parameters.
+
+```
+https://www.your-errorurl.com/?idScanStatus=ERROR&errorCode=xxx&authorizationToken=xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
 ```
 
 ## Callback
@@ -288,7 +309,7 @@ Any values within the API call parameters override settings configured within yo
 |**customerId** *|String|100|Identification of the customer should not contain sensitive data like PII (Personally Identifiable Information) or account login|
 |successUrl|String|2048|Redirect URL in case of success (for constraints see [Success and error URLs](/netverify/portal-settings.md#success-and-error-urls))|
 |errorUrl|String|255|Redirect URL in case of error (for contraints see [Success and error URLs](/netverify/portal-settings.md#success-and-error-urls))|
-|enabledFields|String|100|Defines fields which will be extracted during the ID verification. If a field is not listed in this parameter, it will not be processed for this transaction, regardless of customer portal settings.<br> **Note:** Face match and Address extraction will not be processed unless enabled for your account. If you want to enable them, please contact your Customer Success Manager, or reach out to Jumio Support.<br><br>Possible values:<br>"idNumber,idFirstName,idLastName,idDob,idExpiry,idUsState,idPersonalNumber,idFaceMatch,idAddress"|
+|enabledFields|String|100|Defines fields which will be extracted during the ID verification. If a field is not listed in this parameter, it will not be processed for this transaction, regardless of customer portal settings.<br> **Note:** Face match and Address extraction will not be processed unless enabled for your account. If you want to enable them, please contact your Customer Success Manager, or reach out to Jumio Support.<br><br>Possible values:<br>"idNumber,idFirstName,idLastName,idDob,idExpiry,idUsState,<br>idPersonalNumber,idFaceMatch,idAddress"|
 |authorizationTokenLifetime|Number|Max. value:<br>5184000|Time in seconds until the authorization token expires<br>• Default: 1800 seconds<br>• 0: 60 days|
 |merchantReportingCriteria|String|100|Your reporting criteria for each scan|
 |callbackUrl|String|255|Callback URL for the confirmation after the verification is completed (for constraints see [Callback URL](/netverify/portal-settings.md#callback-url))|
@@ -306,6 +327,20 @@ Any values within the API call parameters override settings configured within yo
 |captureMethod|String||Capture method for this scan. Possible values: <br>• CAM<br>• UPLOAD<br>• ALL|
 |presetCountry|String|3|Preset country and ID type to skip the "Select country and ID type" screen.<br>Note: Both parameters must be present.<br><br>Possible countries:<br>• [ISO 3166-1 alpha-3](http://en.wikipedia.org/wiki/ISO_3166-1_alpha-3) country code<br>• XKX (Kosovo)|
 |presetIdType|String|255|Preset country and ID type to skip the "Select country and ID type" screen.<br>Note: Both parameters must be present.<br><br>Possible ID types: PASSPORT, DRIVING\_LICENSE, ID\_CARD|
+
+#### Supported documents for address extraction
+
+|Country    |ID card    |Driving license    |Passport    |Callback format |
+|:------------|:-------|:--------------|:--------------|:-------|
+|Australia|No|Yes|No|US|
+|Canada|No|Yes|No|US|
+|France|Yes|Yes|Yes|Raw|
+|Germany|Yes|No|No|EU|
+|Ireland|No|Yes|No|Raw|
+|Mexico|Yes|No|No|US|
+|Spain|Yes|No|No|EU|
+|United Kingdom|No|Yes|No|Raw|
+|United States|No|Yes|No|US|
 
 ### Response Parameters
 
@@ -370,13 +405,20 @@ To display information on your redirect pages, you can use the following paramet
 ### Sample Redirect URL: Success
 
 ```
-https://www.your-site.com/success?idScanStatus=SUCCESS&merchantIdScanReference=YOURIDSCANREFERENCE&jumioIdScanReference=xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+https://www.your-successurl.com/success?idScanStatus=SUCCESS&merchantIdScanReference=YOURIDSCANREFERENCE&jumioIdScanReference=xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
 ```
 
 ### Sample Redirect URL: Error
 
 ```
-https://www.your-site.com/error?idScanStatus=ERROR&merchantIdScanReference=YOURIDSCANREFERENCE&jumioIdScanReference=xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx&errorCode=320
+https://www.your-errorurl.com/error?idScanStatus=ERROR&merchantIdScanReference=YOURIDSCANREFERENCE&jumioIdScanReference=xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx&errorCode=320
+```
+
+### Sample Redirect URL: Expired Authorization Token
+In case the user is trying to go through the user journey after their authorization token has expired. They will be redirected to the error URL with different parameters.
+
+```
+https://www.your-errorurl.com/?idScanStatus=ERROR&errorCode=xxx&authorizationToken=xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
 ```
 
 ### Callback
@@ -412,17 +454,17 @@ Any values within the API call parameters override settings configured within yo
 **Note:** Mandatory parameters are marked with an asterisk * and highlighted bold.
 
 |Parameter|Type|Max. length|Description|
-|:--------|:---|:----------|:----------|
-|**merchantIdScanReference** *|String|100|Your reference for each scan must not contain sensitive data like PII (Personally Identifiable Information) or account login|
-|**frontsideImage** *|String|Max. 5MB & <8000 pixels per side|Base64 encoded image of ID front side|
-|**faceImage** * |String|Max. 5MB & <8000 pixels per side|Base64 encoded image of face<br> ***Mandatory if Face match enabled**|
-|**country** *|String|3|Possible countries:<br>• [ISO 3166-1 alpha-3](http://en.wikipedia.org/wiki/ISO_3166-1_alpha-3) country code<br>• XKX (Kosovo)|
-|**idType** *|String|255|PASSPORT, DRIVING\_LICENSE, ID\_CARD, VISA|
+|:---|:---|:---|:---|
+|**merchantIdScanReference** \*|String|100|Your reference for each scan must not contain sensitive data like PII (Personally Identifiable Information) or account login|
+|**frontsideImage** \*|String|Max. 5MB & <8000 pixels per side|Base64 encoded image of ID front side|
+|**faceImage** \*|String|Max. 5MB & <8000 pixels per side|Base64 encoded image of face<br> **\*Mandatory if Face match enabled**|
+|**country** \*|String|3|Possible countries:<br>• [ISO 3166-1 alpha-3](http://en.wikipedia.org/wiki/ISO_3166-1_alpha-3) country code<br>• XKX (Kosovo)|
+|**idType** \*|String|255|PASSPORT, DRIVING\_LICENSE, ID\_CARD, VISA|
 |frontsideImageMimeType|String||Mime type of front side image<br>Possible values: image/jpeg (default), image/png|
 |faceImageMimeType|String||Mime type of face image<br>Possible values: image/jpeg (default), image/png|
 |backsideImage|String|Max. 5MB & <8000 pixels per side|Base64 encoded image of face|
 |backsideImageMimeType|String||Mime type of back side image<br>Possible values: image/jpeg (default), image/png|
-|enabledFields|String|100|Defines fields which will be extracted during the ID verification. If a field is not listed in this parameter, it will not be processed for this transaction, regardless of customer portal settings.<br> **Note:** Face match and Address extraction will not be processed unless enabled for your account. If you want to enable them, please contact your Customer Success Manager, or reach out to Jumio Support.<br><br>Possible values:<br>"idNumber,idFirstName,idLastName,idDob,idExpiry,idUsState,idPersonalNumber,idFaceMatch,idAddress"|
+|enabledFields|String|100|Defines fields which will be extracted during the ID verification. If a field is not listed in this parameter, it will not be processed for this transaction, regardless of customer portal settings.<br> **Note:** Face match and Address extraction will not be processed unless enabled for your account. If you want to enable them, please contact your Customer Success Manager, or reach out to Jumio Support.<br><br>Possible values:<br>"idNumber, idFirstName, idLastName, idDob, idExpiry, idUsState, idPersonalNumber, idFaceMatch, idAddress"|
 |merchantReportingCriteria|String|100|Your reporting criteria for each scan|
 |customerId|String|100|Identification of the customer should not contain sensitive data like PII (Personally Identificable Information) or account login|
 |callbackUrl|String|255|Callback URL for the confirmation after the verification is completed (for constraints see [Callback URL](/netverify/portal-settings.md#callback-url))|
@@ -434,6 +476,20 @@ Any values within the API call parameters override settings configured within yo
 |dob|String||Date of birth in the format YYYY-MM-DD|
 |callbackGranularity|String|255|Possible values:<br>• onFinish (default): Callback is only sent after the whole verification<br>• onAllSteps: Additional callback is sent when the images are received|
 |personalNumber|String|14|Personal number of the document|
+
+#### Supported documents for address extraction
+
+|Country    |ID card    |Driving license    |Passport    |Callback format |
+|:------------|:-------|:--------------|:--------------|:-------|
+|Australia|No|Yes|No|US|
+|Canada|No|Yes|No|US|
+|France|Yes|Yes|Yes|Raw|
+|Germany|Yes|No|No|EU|
+|Ireland|No|Yes|No|Raw|
+|Mexico|Yes|No|No|US|
+|Spain|Yes|No|No|EU|
+|United Kingdom|No|Yes|No|Raw|
+|United States|No|Yes|No|US|
 
 ### Response Parameters
 
@@ -454,7 +510,9 @@ Authorization: Basic
 
 {
 "merchantIdScanReference": "YOURSCANREFERENCE",
-"frontsideImage": "YOURBASE64STRING"
+"frontsideImage": "YOURBASE64STRING",
+"country": "XKX",
+"idType": "PASSPORT"
 }
 ```
 
@@ -761,3 +819,4 @@ Verification status DENIED\_UNSUPPORTED\_ID\_TYPE:<br>
 
 ---
 &copy; Jumio Corp. 268 Lambert Avenue, Palo Alto, CA 94306
+`

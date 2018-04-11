@@ -218,7 +218,7 @@ If your customer account is in the EU data center, use `lon.netverify.com` inste
 
 |Parameter       | Type    | Max. Length| Description|
 |:---------------|:--------|:------------|:------------|
-|**scanReference <br>(path parameter)** *| String|36|Jumio’s reference number of an existing scan from your account|
+|**scanReference <br>(path parameter)** \*| String|36|Jumio’s reference number of an existing scan from your account|
 
 ### Response
 
@@ -228,11 +228,11 @@ You receive a JSON response in case of success, or HTTP status code **404 Not Fo
 
 |Parameter       | Type    | Max. Length| Description|
 |:---------------|:--------|:------------|:------------|
-|**timestamp** *| String| |Timestamp of the response in the format YYYY-MM-DDThh:mm:ss.SSSZ|
-|**scanReference** *| String|36|Jumio’s reference number for each scan|
-|**status** *| String| |Netverify:<br>• APPROVED\_VERIFED<br>• DENIED\_FRAUD<br>• DENIED\_UNSUPPORTED\_ID\_TYPE<br>• DENIED\_UNSUPPORTED\_ID\_COUNTRY<br>• DENIED\_NAME\_MISMATCH<br>• ERROR\_NOT\_READABLE\_ID<br>• NO\_ID\_UPLOADED |
+|**timestamp** \*| String| |Timestamp of the response in the format YYYY-MM-DDThh:mm:ss.SSSZ|
+|**scanReference** \*| String|36|Jumio’s reference number for each scan|
+|**status** \*| String| |Netverify:<br>• APPROVED\_VERIFED<br>• DENIED\_FRAUD<br>• DENIED\_UNSUPPORTED\_ID\_TYPE<br>• DENIED\_UNSUPPORTED\_ID\_COUNTRY<br>• DENIED\_NAME\_MISMATCH<br>• ERROR\_NOT\_READABLE\_ID<br>• NO\_ID\_UPLOADED |
 |type| String| |Netverify:<br>•	PASSPORT<br>• DRIVING\_LICENSE<br>• ID\_CARD<br>• VISA<br>• UNSUPPORTED |
-|idSubtype| String|255|Possible subtypes if idType = ID\_CARD<br>•	NATIONAL\_ID<br>• CONSULAR\_ID<br>• ELECTORAL\_ID<br>• RESIDENT\_PERMIT\_ID<br>• TAX\_ID (only supported for PHL)<br>• STUDENT\_ID (only supported for POL)<br>• PASSPORT\_CARD\_ID (only supported for IRL and USA)<br>• MILITARY\_ID (only supported for GRC)<br>• OTHER\_ID<br>• VISA (only supported for USA)<br>• UNKNOWN<br><br>Possible subtypes if idType = DRIVING\_LICENSE<br>• LEARNING\_DRIVING\_LICENSE (only supported for USA, CAN, AUS, GBR, IRL, DEU)<br><br>Possible subtypes if idType = PASSPORT<br>• E\_PASSPORT (only for mobile)|
+|idSubtype| String|255|Possible subtypes if type = ID\_CARD<br>•	NATIONAL\_ID<br>• CONSULAR\_ID<br>• ELECTORAL\_ID<br>• RESIDENT\_PERMIT\_ID<br>• TAX\_ID (only supported for PHL)<br>• STUDENT\_ID (only supported for POL)<br>• PASSPORT\_CARD\_ID (only supported for IRL and USA)<br>• MILITARY\_ID (only supported for GRC)<br>• OTHER\_ID<br>• VISA (only supported for USA)<br>• UNKNOWN<br><br>Possible subtypes if type = DRIVING\_LICENSE<br>• LEARNING\_DRIVING\_LICENSE (only supported for USA, CAN, AUS, GBR, IRL, DEU)<br><br>Possible subtypes if type = PASSPORT<br>• E\_PASSPORT (only for mobile)|
 |issuingCountry|String|3|Possible countries:<br>• [ISO 3166-1 alpha-3](http://en.wikipedia.org/wiki/ISO_3166-1_alpha-3) country code<br>- XKX (Kosovo)|
 |firstName|String|255|First name of the customer|
 |lastName|String|255|Last name of the customer|
@@ -240,7 +240,7 @@ You receive a JSON response in case of success, or HTTP status code **404 Not Fo
 |expiry|String||Date of expiry in the format YYYY-MM-DD|
 |issuingDate|String|255|Issue date in the format YYYY-MM-DD|
 |number|String|255|Identification number of the document|
-|usState|String|255|Possible values if idType = PASSPORT or ID\_CARD:<br/>•	Last two characters of [ISO 3166-2:US](http://en.wikipedia.org/wiki/ISO_3166-2:US) state code<br/>•	Last 2-3 characters of [ISO 3166-2:AU](http://en.wikipedia.org/wiki/ISO_3166-2:AU) state code<br/>•	Last two characters of [ISO 3166-2:CA](http://en.wikipedia.org/wiki/ISO_3166-2:CA) state code<br/>• [ISO 3166-1](http://en.wikipedia.org/wiki/ISO_3166-1_alpha-3) country name<br/>• XKX (Kosovo)<br/><br/>If idType = DRIVING\_LICENSE:<br/>•	Last two characters of [ISO 3166-2:US](http://en.wikipedia.org/wiki/ISO_3166-2:US) state code<br/>•	Last 2-3 characters of [ISO 3166-2:AU](http://en.wikipedia.org/wiki/ISO_3166-2:AU) state code<br/>•	Last two characters of [ISO 3166-2:CA](http://en.wikipedia.org/wiki/ISO_3166-2:CA) state code|
+|usState|String|255|Possible values if type = PASSPORT or ID\_CARD:<br/>•	Last two characters of [ISO 3166-2:US](http://en.wikipedia.org/wiki/ISO_3166-2:US) state code<br/>•	Last 2-3 characters of [ISO 3166-2:AU](http://en.wikipedia.org/wiki/ISO_3166-2:AU) state code<br/>•	Last two characters of [ISO 3166-2:CA](http://en.wikipedia.org/wiki/ISO_3166-2:CA) state code<br/>• [ISO 3166-1](http://en.wikipedia.org/wiki/ISO_3166-1_alpha-3) country name<br/>• XKX (Kosovo)<br/><br/>If idType = DRIVING\_LICENSE:<br/>•	Last two characters of [ISO 3166-2:US](http://en.wikipedia.org/wiki/ISO_3166-2:US) state code<br/>•	Last 2-3 characters of [ISO 3166-2:AU](http://en.wikipedia.org/wiki/ISO_3166-2:AU) state code<br/>•	Last two characters of [ISO 3166-2:CA](http://en.wikipedia.org/wiki/ISO_3166-2:CA) state code|
 |personalNumber|String|255|Personal number of the document|
 |optionalData1|String|255|Optional field of MRZ line 1|
 |optionalData2|String|255|Optional field of MRZ line 2|
