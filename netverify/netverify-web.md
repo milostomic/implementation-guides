@@ -462,7 +462,7 @@ Any values within the API call parameters override settings configured within yo
 |**idType** \*|String|255|PASSPORT, DRIVING\_LICENSE, ID\_CARD, VISA|
 |frontsideImageMimeType|String||Mime type of front side image<br>Possible values: image/jpeg (default), image/png|
 |faceImageMimeType|String||Mime type of face image<br>Possible values: image/jpeg (default), image/png|
-|backsideImage|String|Max. 5MB & <8000 pixels per side|Base64 encoded image of face|
+|backsideImage|String|Max. 5MB & <8000 pixels per side|Base64 encoded image of ID back side |
 |backsideImageMimeType|String||Mime type of back side image<br>Possible values: image/jpeg (default), image/png|
 |enabledFields|String|100|Defines fields which will be extracted during the ID verification. If a field is not listed in this parameter, it will not be processed for this transaction, regardless of customer portal settings.<br> **Note:** Face match and Address extraction will not be processed unless enabled for your account. If you want to enable them, please contact your Customer Success Manager, or reach out to Jumio Support.<br><br>Possible values:<br>"idNumber, idFirstName, idLastName, idDob, idExpiry, idUsState, idPersonalNumber, idFaceMatch, idAddress"|
 |merchantReportingCriteria|String|100|Your reporting criteria for each scan|

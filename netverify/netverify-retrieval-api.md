@@ -427,6 +427,7 @@ You receive a JSON response in case of success, or HTTP status code **404 Not Fo
 |similarity |  |Possible values:<br/>• MATCH<br />• NO\_MATCH<br />• NOT\_POSSIBLE|
 |validity  |  |Possible values:<br/>• TRUE<br />• FALSE |
 |reason   |  |Provided if validity = FALSE<br/>Possible values:<br />• SELFIE\_CROPPED\_FROM\_ID<br />•	ENTIRE\_ID\_USED\_AS\_SELFIE<br />•	MULTIPLE\_PEOPLE<br />•	SELFIE\_IS\_SCREEN\_PAPER\_VIDEO<br />•	SELFIE\_MANIPULATED<br />• AGE\_DIFFERENCE\_TOO\_BIG<br />•	NO\_FACE\_PRESENT<br />•	FACE\_NOT\_FULLY\_VISIBLE<br />• BAD\_QUALITY<br />• BLACK\_AND\_WHITE|
+|handwrittenNoteMatches	|	|Only visible if setting is turned on within your account. For questions about this feature, please contact your Support. <br/><br/>Possible values:<br/> •	TRUE<br />•	FALSE|
 
 
 ### Sample Request
