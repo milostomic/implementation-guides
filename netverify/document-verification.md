@@ -69,7 +69,7 @@ Note: If your customer account is in the EU data center, use `lon.netverify.com`
 |**country** *<br>Not mandatory for type=CC|String|3|Possible countries:<br>• [ISO 3166-1 alpha-3](http://en.wikipedia.org/wiki/ISO_3166-1_alpha-3) country code<br>•	XKX (Kosovo)|
 |**merchantScanReference** *|String|100|Your reference for each scan must not contain sensitive data like PII (Personally Identifiable Information) or account login|
 |**customerId** *|String|100|Identification of the customer should not contain sensitive data like PII (Personally Identifiable Information) or account login|
-|**enableExtraction** *| Boolean ||Enables or disables Extraction for each transaction. Possible values:<br>• TRUE<br>• FALSE<br> ** * Mandatory if Extraction is activated** <br><br>Note: If you want to enable Extraction for your account in general, please contact your Account Manager, or reach out to Jumio Support.|
+|**enableExtraction** *| Boolean ||Enables or disables Extraction for each transaction. Possible values:<br>• true<br>• false<br> **Mandatory if Extraction is activated** <br><br>Note: If you want to enable Extraction for your account in general, please contact your Account Manager, or reach out to Jumio Support.|
 |callbackUrl|String|255|Callback URL for the confirmation after the user journey is completed (constraints see [Callback URL](/netverify/portal-settings.md#callback-url) chapter). This setting overrides your Jumio portal settings.|
 |successUrl|String|255|Redirect URL in case of success (constraints see [Success and error URLs](/netverify/portal-settings.md#success-and-error-urls) chapter).|
 |errorUrl|String|255|Redirect URL in case of error (constraints see [Success and error URLs](/netverify/portal-settings.md#success-and-error-urls) chapter).|
