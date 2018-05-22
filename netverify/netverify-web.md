@@ -199,10 +199,10 @@ To display information on your redirect pages, you can use the following paramet
 
 |Parameter|Description|
 |:---|:---|
-|idScanStatus|"SUCCESS" or "ERROR"|
+|idScanStatus|"SUCCESS" - if document uplaoded succesfully <br> or "ERROR"|
 |merchantIdScanReference|Your reference for each scan|
 |jumioIdScanReference|Jumio's reference number for each scan|
-|errorCode|Possible codes: <br>• 110 (network communication problem)<br>• 210 (authorization token invalidates or expires during user journey)<br>• 310 (denied as fraud immediately)<br>• 320 (ID not able to be processed)<br>• 340 (capture method restricted to camera and camera not available)|
+|errorCode|Possible codes: <br>• 110 (network communication problem)<br>• 210 (authorization token invalidates or expires during user journey)<br>• 310 (denied as fraud immediately)<br>• 320 (ID could not be processed, e.g. bad image quality)<br>• 340 (capture method restricted to camera and camera not available)|
 
 **Note:** Because HTTP GET parameters can be manipulated on the client side, they may be used for display purposes only. It is also possible to set success and error URLs to the same address, because you can get the status from the URL's query parameter "idScanStatus".
 
@@ -292,7 +292,8 @@ If your customer account is in the EU data center, use `lon.netverify.com` inste
 -	`Accept: application/json`
 - `Content-Type: application/json`
 - `Content-Length: xxx` (RFC-2616)
--	`User-Agent: YOURCOMPANYNAME YOURAPPLICATIONNAME/VERSION`<br>(e.g. MyCompany MyApp/1.0.0, change this to reflect your company)
+-	`User-Agent: YOURCOMPANYNAME YOURAPPLICATIONNAME/VERSION`<br>
+The value for this parameter must contain a reference to your business or entity name in order for Jumio to be able to identify your requests. (e.g. YourCompanyName YourAppName/1.0.0). In case we are blocking your request on our firewall, it will take much longer to identify the issue without a proper User-Agent header.
 
 **TLS Handshake**: The TLS protocol is required (see [Supported cipher suites](#supported-cipher-suites) chapter) and we strongly recommend using the latest version.
 
@@ -395,10 +396,10 @@ To display information on your redirect pages, you can use the following paramet
 
 |Parameter|Description|
 |:---------|:----------|
-|idScanStatus|"SUCCESS" or "ERROR"|
+|idScanStatus|"SUCCESS" - if document uploaded successfully <br>or "ERROR"|
 |merchantIdScanReference|Your reference for each scan|
 |jumioIdScanReference|Jumio's reference number for each scan|
-|errorCode|Possible codes: <br>• 110 (network communication problem)<br>• 210 (authorization token invalidates or expires during user journey)<br>• 310 (denied as fraud immediately)<br>• 320 (ID not able to be processed)<br>• 340 (capture method restricted to camera and camera not available)|
+|errorCode|Possible codes: <br>• 110 (network communication problem)<br>• 210 (authorization token invalidates or expires during user journey)<br>• 310 (denied as fraud immediately)<br>• 320 (ID could not be processed, e.g. bad image quality)<br>• 340 (capture method restricted to camera and camera not available)|
 
 **Note:** Because HTTP GET parameters can be manipulated on the client side, tey may be used for display purposes only. It is also possible to set success and error URLs to the same address, because you can get the status from the URL's query parameter "idScanStatus".
 

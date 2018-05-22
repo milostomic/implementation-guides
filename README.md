@@ -45,7 +45,6 @@ BAM Checkout enables your mobile customers with the easiest and most friction-fr
 
 - [BAM Checkout Mobile iOS](https://github.com/Jumio/mobile-sdk-ios)
 - [BAM Checkout Mobile Android](https://github.com/Jumio/mobile-sdk-android)
-- [BAM Checkout Mobile Web](/bam-checkout/bam-checkout-mobile-web.md)
 - [Credit Card Retrieval API](/bam-checkout/credit-card-retrieval-api.md)
 
 

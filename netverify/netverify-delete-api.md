@@ -38,7 +38,7 @@ If your customer account is in the EU data center, use `lon.netverify.com` inste
 **Header:** The following parameters are mandatory in the "header" section of your request.<br>
 -	`Accept: application/json`<br />
 -	`User-Agent: YOURCOMPANYNAME YOURAPPLICATIONNAME/VERSION`<br />
-(e.g. MyCompany MyApp/1.0.0, change this to reflect your company)
+The value for this parameter must contain a reference to your business or entity name in order for Jumio to be able to identify your requests. (e.g. YourCompanyName YourAppName/1.0.0). In case we are blocking your request on our firewall, it will take much longer to identify the issue without a proper User-Agent header.
 
 **TLS handshake:** The TLS protocol is required (see [Supported cipher suites](/netverify/supported-cipher-suites.md)) and we strongly recommend using the latest version.
 
@@ -80,7 +80,7 @@ If your customer account is in the EU data center, use `retrieval.lon.netverify.
 **Header:** The following parameters are mandatory in the "header" section of your request.
 -	`Accept: application/json`
 -	`User-Agent: YOURCOMPANYNAME YOURAPPLICATIONNAME/VERSION`
-(e.g. MyCompany MyApp/1.0.0, change this to reflect your company)
+The value for this parameter must contain a reference to your business or entity name in order for Jumio to be able to identify your requests. (e.g. YourCompanyName YourAppName/1.0.0). In case we are blocking your request on our firewall, it will take much longer to identify the issue without a proper User-Agent header.
 
 **TLS handshake:** The TLS protocol is required (see [Supported cipher suites](/netverify/supported-cipher-suites.md)) and we strongly recommend using the latest version.
 

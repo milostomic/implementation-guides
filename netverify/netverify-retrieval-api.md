@@ -33,7 +33,7 @@ Find the release information for the Retrieval API below.
 
 | Date    | Description|
 |:--------|:------------|
-| 2018-02-01   |Added response parameter "originalDocument" for Document Verification Retrieval - Retrieving document data only<br />Added Australia and Canada states to response parameter "usState" |
+| 2018-02-01   |Added response parameter "originalDocument" for Document Verification Retrieval <br />Retrieving document data only<br />Added Australia and Canada states to response parameter "usState" |
 | 2018-01-17   |Added new validity reason BLACK_AND_WHITE<br> Updated supported countries for idSubtype LEARNING_DRIVING_LICENSE|
 | 2017-11-23   |Added value "Visa" to response parameter "type" for Netverify Retrieval - Retrieving Document Data only|
 | 2017-09-21   |Removed response parameter "additionalInformation"|
@@ -57,8 +57,6 @@ Find the release information for the Retrieval API below.
 | 2014-09-25   |Changed parameter "maskhint" to apply for credit cards only |
 | 2014-08-19   |Initial release |
 
-
-
 ---
 # Usage
 
@@ -68,7 +66,14 @@ Permanent, scheduled calls, or bulk requests should be avoided, otherwise Jumio 
 
 ### Best Practice:
 If your server was not able to process the callback for a scan, call the status retrieval API.
-If the scan status is done or failed (not pending), retrieve scan details and image(s) once.
+
+- You must use [Scan Status Retrieval](/netverify/netverify-retrieval-api.md#retrieving-scan-status) for all requests until the scan status is not pending anymore.
+- If the scan status is done or failed (not pending), retrieve scan details and image(s) once.
+-  Max. 10 consecutive retrieval attempts after successful image acquisition <br />(SDK/Web: User journey finshed; API: after performNetverify API call)<br />
+  * In case a final result is not available after 10 attempts, you are allowed to perform a retrieval call once a day in addition.
+- Request timings recommendation:
+  * 40, 60, 100, 160, 240, 340, 460, 600, 760, 940 seconds
+  * You are also allowed to set your own definition.
 
 # Authentication and Header
 
@@ -80,7 +85,7 @@ If the scan status is done or failed (not pending), retrieve scan details and im
 -	`Accept: application/json`<br />
 - or `Accept: image/jpeg, image/png` for "Retrieving specific image"
 -	`User-Agent: YOURCOMPANYNAME YOURAPPLICATIONNAME/VERSION`<br />
-(e.g. MyCompany MyApp/1.0.0, change this to reflect your company)
+The value for this parameter must contain a reference to your business or entity name in order for Jumio to be able to identify your requests. (e.g. YourCompanyName YourAppName/1.0.0). In case we are blocking your request on our firewall, it will take much longer to identify the issue without a proper User-Agent header.
 
 **TLS handshake:** The TLS protocol is required (see [Supported cipher suites](/netverify/supported-cipher-suites.md)) and we strongly recommend using the latest version.
 
@@ -230,7 +235,7 @@ You receive a JSON response in case of success, or HTTP status code **404 Not Fo
 |:---------------|:--------|:------------|:------------|
 |**timestamp** \*| String| |Timestamp of the response in the format YYYY-MM-DDThh:mm:ss.SSSZ|
 |**scanReference** \*| String|36|Jumio’s reference number for each scan|
-|**status** \*| String| |Netverify:<br>• APPROVED\_VERIFED<br>• DENIED\_FRAUD<br>• DENIED\_UNSUPPORTED\_ID\_TYPE<br>• DENIED\_UNSUPPORTED\_ID\_COUNTRY<br>• DENIED\_NAME\_MISMATCH<br>• ERROR\_NOT\_READABLE\_ID<br>• NO\_ID\_UPLOADED |
+|**status** \*| String| |Netverify:<br>• APPROVED\_VERIFIED<br>• DENIED\_FRAUD<br>• DENIED\_UNSUPPORTED\_ID\_TYPE<br>• DENIED\_UNSUPPORTED\_ID\_COUNTRY<br>• DENIED\_NAME\_MISMATCH<br>• ERROR\_NOT\_READABLE\_ID<br>• NO\_ID\_UPLOADED |
 |type| String| |Netverify:<br>•	PASSPORT<br>• DRIVING\_LICENSE<br>• ID\_CARD<br>• VISA<br>• UNSUPPORTED |
 |idSubtype| String|255|Possible subtypes if type = ID\_CARD<br>•	NATIONAL\_ID<br>• CONSULAR\_ID<br>• ELECTORAL\_ID<br>• RESIDENT\_PERMIT\_ID<br>• TAX\_ID (only supported for PHL)<br>• STUDENT\_ID (only supported for POL)<br>• PASSPORT\_CARD\_ID (only supported for IRL and USA)<br>• MILITARY\_ID (only supported for GRC)<br>• OTHER\_ID<br>• VISA (only supported for USA)<br>• UNKNOWN<br><br>Possible subtypes if type = DRIVING\_LICENSE<br>• LEARNING\_DRIVING\_LICENSE (only supported for USA, CAN, AUS, GBR, IRL, DEU)<br><br>Possible subtypes if type = PASSPORT<br>• E\_PASSPORT (only for mobile)|
 |issuingCountry|String|3|Possible countries:<br>• [ISO 3166-1 alpha-3](http://en.wikipedia.org/wiki/ISO_3166-1_alpha-3) country code<br>- XKX (Kosovo)|
@@ -397,8 +402,8 @@ You receive a JSON response in case of success, or HTTP status code **404 Not Fo
 
 |Parameter       | Type    | Max. Length| Description|
 |:---------------|:--------|:------------|:------------|
-|**timestamp** *| String| |Timestamp of the response in the format YYYY-MM-DDThh:mm:ss.SSSZ|
-|**scanReference** *| String|36 |Jumio’s reference number for each scan|
+|**timestamp** \*| String| |Timestamp of the response in the format YYYY-MM-DDThh:mm:ss.SSSZ|
+|**scanReference** \*| String|36 |Jumio’s reference number for each scan|
 |mrzCheck|String||Possible values:<br>• OK<br>• NOT\_AVAILABLE|
 |faceMatch|String||Face match percentage 0-100|
 |rejectReason|Object||Reject reason, see tables below|

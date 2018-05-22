@@ -64,7 +64,6 @@ The following parameters are posted to your callback URL for Netverify Web embed
 |idSubtype   |255  |Possible subtypes if idType = ID\_CARD<br/>•	NATIONAL\_ID<br/>•	CONSULAR\_ID<br/>•	ELECTORAL\_ID<br/>•	RESIDENT\_PERMIT\_ID<br/>•	TAX\_ID (only supported for PHL)<br/>•	STUDENT\_ID (only supported for POL)<br/>•	PASSPORT\_CARD\_ID (only supported for IRL, RUS and USA)<br/>•	MILITARY\_ID (only supported for GRC)<br/>•	OTHER\_ID<br/>•	VISA (only supported for USA)<br/>•	UNKNOWN<br/><br/>Possible subtypes if idType = DRIVING\_LICENSE<br/>•	LEARNING\_DRIVING\_LICENSE (only supported for USA, CAN, AUS, GBR, IRL, DEU)<br/><br/>Possible subtypes if idType = PASSPORT<br/>•	E\_PASSPORT (only for mobile) | |
 |idCountry   |3  |Possible countries:<br/>•	[ISO 3166-1 alpha-3](http://en.wikipedia.org/wiki/ISO_3166-1_alpha-3) country code<br/>•	XKX (Kosovo)| |
 |rejectReason   |   |Reject reason as JSON object if verificationStatus = DENIED\_FRAUD or ERROR\_NOT\_READABLE\_ID, see tables below  | |
-|idFaceMatch **(deprecated)**   |   |Face match percentage 0-100 if verificationStatus = APPROVED\_VERIFIED (`*2`) |X |
 |idScanImage   |255  |URL to the image of the scan (JPEG or PNG) if available (`*3`) | |
 |idScanImageFace   |255  |URL to the face image of the scan (JPEG or PNG) if available (`*3`)| |
 |idScanImageBackside   |255  |URL to the back side image of the scan (JPEG or PNG) if available (`*3`)| |
@@ -84,9 +83,8 @@ The following parameters are posted to your callback URL for Netverify Web embed
 |optionalData1   |255  |Optional field of MRZ line 1 | |
 |optionalData2   |255  |Optional field of MRZ line 2 | |
 |dni   |255  |DNI as available on the ID if idCountry = ESP and idSubtype = NATIONAL\_ID  | |
-|curp   |255  |CURP as available on the ID if idCountry = MEX and idSubtype = NATIONAL\_ID  |X |
+|curp   |255  |CURP as available on the ID if idCountry = MEX and idSubtype = ELECTORAL\_ID  |X |
 |gender   |2  |Possible values: M, F<br>• if idCountry = FRA and idSubtype = NATIONAL\_ID (MRZ type CNIS)<br/>•	if idType = VISA and additional extraction for Visa enabled | |
-|idFaceLiveness **(deprecated)**  |   |only available for SDK<br/>Possible values:<br/>•	TRUE (if face match enabled for ID verification and liveness detected successfully during scanning)<br/>•	FALSE |X |
 |identityVerification   |   |Identity verification as JSON object if verificationStatus = APPROVED\_VERIFIED, see table below|X |
 |presetCountry   | 3  |Possible countries:<br />•	[ISO 3166-1 alpha-3](http://en.wikipedia.org/wiki/ISO_3166-1_alpha-3) country code <br /> • XKX (Kosovo)| |
 |presetIdType   |    |Possible ID types: PASSPORT, DRIVING\_LICENSE, ID\_CARD| |

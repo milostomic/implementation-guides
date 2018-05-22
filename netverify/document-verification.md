@@ -53,7 +53,7 @@ Note: If your customer account is in the EU data center, use `lon.netverify.com`
 -	`Content-Type: application/json`
 - `Content-Length: xxx` (RFC-2616)
 - `User-Agent: YOURCOMPANYNAME YOURAPPLICATIONNAME/VERSION`<br>
-(e.g. MyCompany MyApp/1.0.0, change this to reflect your company)
+The value for this parameter must contain a reference to your business or entity name in order for Jumio to be able to identify your requests. (e.g. YourCompanyName YourAppName/1.0.0). In case we are blocking your request on our firewall, it will take much longer to identify the issue without a proper User-Agent header.
 
 **TLS handshake:** The TLS protocol is required (see [Supported Cipher Suites](/netverify/supported-cipher-suites.md)) and we strongly recommend using the latest version.
 
@@ -151,7 +151,7 @@ You can use the following parameters to display information on your redirect pag
 |:----------|:------------|
 |idScanStatus|"SUCCESS" or "ERROR"|
 |jumioIdScanReference|Jumio’s reference number for each scan|
-|errorCode|Possible codes:<br>•	211 (authorization token invalidates)<br>•	310 (upload session has expired)<br>•	311 (document upload was already completed for provided scan reference)<br>•	320 (browser session has been started multiple times)<br>•	338 (browser is in private mode (not supported)|
+|errorCode|Possible codes:<br>•	211 (authorization token invalidates)<br>•	310 (upload session has expired)<br>•	311 (document upload was already completed for provided scan reference)<br>•	320 (browser session has been started multiple times)<br>•	338 (third party cookies are disabled)|
 
 **Note:** Since HTTP GET parameters can be manipulated on the client side, they may be used for display purposes only. It is also possible to configure success and error URLs with the same address; as you can get the status from the URL’s query parameter "idScanStatus".
 
@@ -195,7 +195,7 @@ If your customer account is in the EU data center, use `acquisition.lon.netverif
 -	`Content-Type: application/json`
 -	`Content-Length: xxx` (RFC-2616)
 -	`User-Agent: YOURCOMPANYNAME YOURAPPLICATIONNAME/VERSION`<br>
-(e.g. MyCompany MyApp/1.0.0, change this to reflect your company)
+The value for this parameter must contain a reference to your business or entity name in order for Jumio to be able to identify your requests. (e.g. YourCompanyName YourAppName/1.0.0). In case we are blocking your request on our firewall, it will take much longer to identify the issue without a proper User-Agent header.
 
 ### Request Parameters
 
@@ -207,7 +207,7 @@ If your customer account is in the EU data center, use `acquisition.lon.netverif
 |**country** *|String|3|Possible countries:<br>•	[ISO 3166-1 alpha-3](http://en.wikipedia.org/wiki/ISO_3166-1_alpha-3) country code<br>•	XKX (Kosovo)|
 |**merchantScanReference** *|String|100|Your reference for each scan must not contain sensitive data like PII (Personally Identifiable Information) or account login|
 |**customerId** *|String|100|Identification of the customer should not contain sensitive data like PII (Personally Identifiable Information) or account login|
-|**enableExtraction** *| Boolean ||Enables or disables Extraction for each transaction. Possible values:<br>• TRUE<br>• FALSE<br> ** * Mandatory if Extraction is activated** <br><br>Note: If you want to enable Extraction for your account in general, please contact your Account Manager, or reach out to Jumio Support.|
+|**enableExtraction** *| Boolean ||Enables or disables Extraction for each transaction. Possible values:<br>• true<br>• false<br> **Mandatory if Extraction is activated** <br><br>Note: If you want to enable Extraction for your account in general, please contact your Account Manager, or reach out to Jumio Support.|
 |callbackUrl|String|255|Callback URL for the confirmation after the user journey is completed (constraints see [Callback URL](/netverify/portal-settings.md#callback-url) settings). This setting overrides your Jumio portal settings.|
 |merchantReportingCriteria|String|100|Your reporting criteria for each scan|
 |clientIp|String|100|IP address of the client|
@@ -260,7 +260,7 @@ If your customer account is in the EU data center, use `acquisition.lon.netverif
 -	`Content-Type: multipart/form-data`
 -	`Content-Length: xxx` (RFC-2616)
 -	`User-Agent: YOURCOMPANYNAME YOURAPPLICATIONNAME/VERSION`<br>
-(e.g. MyCompany MyApp/1.0.0, change this to reflect your company)
+The value for this parameter must contain a reference to your business or entity name in order for Jumio to be able to identify your requests. (e.g. YourCompanyName YourAppName/1.0.0). In case we are blocking your request on our firewall, it will take much longer to identify the issue without a proper User-Agent header.
 
 ### Request Parameters
 
@@ -312,7 +312,7 @@ If your customer account is in the EU data center, use `acquisition.lon.netverif
 -	`Content-Type: multipart/form-data`
 -	`Content-Length: xxx` (RFC-2616)
 -	`User-Agent: YOURCOMPANYNAME YOURAPPLICATIONNAME/VERSION`<br>
-(e.g. MyCompany MyApp/1.0.0, change this to reflect your company)
+The value for this parameter must contain a reference to your business or entity name in order for Jumio to be able to identify your requests. (e.g. YourCompanyName YourAppName/1.0.0). In case we are blocking your request on our firewall, it will take much longer to identify the issue without a proper User-Agent header.
 
 ### Request Parameter
 
@@ -364,7 +364,7 @@ If your customer account is in the EU data center, use `acquisition.lon.netverif
 **Header:** The following parameter is mandatory in the "header" section of your request.
 -	`Accept: application/json`
 -	`User-Agent: YOURCOMPANYNAME YOURAPPLICATIONNAME/VERSION`<br>
-(e.g. MyCompany MyApp/1.0.0, change this to reflect your company)
+The value for this parameter must contain a reference to your business or entity name in order for Jumio to be able to identify your requests. (e.g. YourCompanyName YourAppName/1.0.0). In case we are blocking your request on our firewall, it will take much longer to identify the issue without a proper User-Agent header.
 
 ### Request Parameter
 
@@ -407,7 +407,7 @@ If your customer account is in the EU data center, use `acquisition.lon.netverif
 -	`Content-Type: multipart/form-data`
 -	`Content-Length: xxx` (RFC-2616)
 -	`User-Agent: YOURCOMPANYNAME YOURAPPLICATIONNAME/VERSION`<br>
-(e.g. MyCompany MyApp/1.0.0, change this to reflect your company)
+The value for this parameter must contain a reference to your business or entity name in order for Jumio to be able to identify your requests. (e.g. YourCompanyName YourAppName/1.0.0). In case we are blocking your request on our firewall, it will take much longer to identify the issue without a proper User-Agent header.
 
 ### Request Parameters
 
@@ -425,7 +425,7 @@ If your customer account is in the EU data center, use `acquisition.lon.netverif
 |**country** *|String|3|Possible countries:<br>•	[ISO 3166-1 alpha-3](http://en.wikipedia.org/wiki/ISO_3166-1_alpha-3) country code<br>•	XKX (Kosovo)|
 |**merchantScanReference** *|String|100|Your reference for each scan must not contain sensitive data like PII (Personally Identifiable Information) or account login|
 |**customerId** *|String|100|Identification of the customer should not contain sensitive data like PII (Personally Identifiable Information) or account login|
-|**enableExtraction** *| Boolean ||Enables or disables Extraction for each transaction. Possible values:<br>• TRUE<br>• FALSE<br> ** * Mandatory if Extraction is activated** <br><br>Note: If you want to enable Extraction for your account in general, please contact your Account Manager, or reach out to Jumio Support.|
+|**enableExtraction** *| Boolean ||Enables or disables Extraction for each transaction. Possible values:<br>• true<br>• false<br> **Mandatory if Extraction is activated** <br><br>Note: If you want to enable Extraction for your account in general, please contact your Account Manager, or reach out to Jumio Support.|
 |callbackUrl|String|255|Callback URL for the confirmation after the user journey is completed (constraints see [Callback URL](/netverify/portal-settings.md#callback-url) settings). This setting overrides your Jumio portal settings.|
 |merchantReportingCriteria|String|100|Your reporting criteria for each scan|
 |clientIp|String|100|IP address of the client|
@@ -487,7 +487,7 @@ If your customer account is in the EU data center, use `lon.netverify.com` inste
 **Header:** The following parameters are mandatory in the "header" section of your request.
 -	`Accept: application/json`
 -	`User-Agent: YOURCOMPANYNAME YOURAPPLICATIONNAME/VERSION`<br>
-(e.g. MyCompany MyApp/1.0.0, change this to reflect your company)
+The value for this parameter must contain a reference to your business or entity name in order for Jumio to be able to identify your requests. (e.g. YourCompanyName YourAppName/1.0.0). In case we are blocking your request on our firewall, it will take much longer to identify the issue without a proper User-Agent header.
 
 **TLS handshake:** The TLS protocol is required (see [Supported cipher suites](/netverify/supported-cipher-suites.md)) and we strongly recommend using the latest version.
 
