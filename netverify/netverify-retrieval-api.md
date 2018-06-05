@@ -81,11 +81,10 @@ If your server was not able to process the callback for a scan, call the status 
 
 **Note:** You have the opportunity to generate a second set of API credentials for retrieving transaction data in your customer portal under "API credentials - Transaction administration APIs".
 
-**Header:** The following parameters are mandatory in the "header" section of your request.
--	`Accept: application/json`<br />
-- or `Accept: image/jpeg, image/png` for "Retrieving specific image"
--	`User-Agent: YOURCOMPANYNAME YOURAPPLICATIONNAME/VERSION`<br />
-The value for this parameter must contain a reference to your business or entity name in order for Jumio to be able to identify your requests. (e.g. YourCompanyName YourAppName/1.0.0). In case we are blocking your request on our firewall, it will take much longer to identify the issue without a proper User-Agent header.
+**Header:** The following parameters are mandatory in the "header" section of your request.<br/>
+-	`Accept: application/json` **or** `image/jpeg, image/png` for "Retrieving specific image"<br/>
+-	`User-Agent: YOURCOMPANYNAME YOURAPPLICATIONNAME/VERSION`<br /><br/>
+The value for **User-Agent** must contain a reference to your business or entity for Jumio to be able to identify your requests. (e.g. YourCompanyName YourAppName/1.0.0). Without a proper User-Agent header, Jumio will take longer to diagnose API issues.
 
 **TLS handshake:** The TLS protocol is required (see [Supported cipher suites](/netverify/supported-cipher-suites.md)) and we strongly recommend using the latest version.
 

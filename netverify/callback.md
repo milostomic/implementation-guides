@@ -70,7 +70,7 @@ The following parameters are posted to your callback URL for Netverify Web embed
 |idNumber   |200  |Identification number of the document as available on the ID if verificationStatus = APPROVED\_VERIFIED and enabled, otherwise if provided | |
 |idFirstName   |200  |•	First name of the customer as available on the ID if verificationStatus = APPROVED\_VERIFIED and enabled, otherwise if provided<br/><br>•	N/A (for non-Latin characters)<br />o	if idCountry = CHN and idType = DRIVING\_LICENSE or ID\_CARD<br>o	if idCountry = KOR and idType = DRIVING\_LICENSE or ID\_CARD<br>o	if idCountry = JPN and idType = DRIVING\_LICENSE<br>o	if idCountry = RUS and idType = ID\_CARD| |
 |idLastName   |200  |•	Last name of the customer as available on the ID if verificationStatus = APPROVED\_VERIFIED and enabled, otherwise if provided<br/><br>•	Only if full name is printed in Latin characters<br />o if idCountry = KOR and idType = DRIVING\_LICENSE (first name and last name)<br /><br> •	N/A (for non-Latin characters)<br />o	if idCountry = CHN and idType = DRIVING\_LICENSE or ID\_CARD<br>o	if idCountry = KOR and idType = DRIVING\_LICENSE or ID\_CARD<br>o	if idCountry = JPN and idType = DRIVING\_LICENSE<br>o	if idCountry = RUS and idType = ID\_CARD | |
-|idDob   |10  |Date of birth in the format YYYY-MM-DD as available on the ID if verificationStatus = APPROVED\_VERIFIED and enabled, otherwise if provided | |
+|idDob   |10  |Date of birth in the format YYYY-MM-DD as available on the ID if verificationStatus = APPROVED\_VERIFIED and enabled, otherwise if provided <br /><br />If idCountry = IND date of birth can be incomplete, possible values e.g.:<br />•	Year-Month-Day: 1990-12-09 <br />•	Year only: 1990-01-01 <br />•	Year-Month: 1990-12-01 <br />•	Year-Day: 1990-01-09<br />Additional parameter "originDob" will be provided| |
 |idExpiry   |10  |Date of expiry in the format YYYY-MM-DD as available on the ID if verificationStatus = APPROVED\_VERIFIED and enabled, otherwise if provided | |
 |idUsState   |255  |Possible values if idType = PASSPORT or ID\_CARD:<br/>•	Last two characters of [ISO 3166-2:US](http://en.wikipedia.org/wiki/ISO_3166-2:US) state code<br/>•	Last 2-3 characters of [ISO 3166-2:AU](http://en.wikipedia.org/wiki/ISO_3166-2:AU) state code<br/>•	Last two characters of [ISO 3166-2:CA](http://en.wikipedia.org/wiki/ISO_3166-2:CA) state code<br/>• [ISO 3166-1](http://en.wikipedia.org/wiki/ISO_3166-1_alpha-3) country name<br/>• XKX (Kosovo)<br/>• Free text - if it can't be mapped to a state/country code<br/><br/>If idType = DRIVING\_LICENSE:<br/>•	Last two characters of [ISO 3166-2:US](http://en.wikipedia.org/wiki/ISO_3166-2:US) state code<br/>•	Last 2-3 characters of [ISO 3166-2:AU](http://en.wikipedia.org/wiki/ISO_3166-2:AU) state code<br/>•	Last two characters of [ISO 3166-2:CA](http://en.wikipedia.org/wiki/ISO_3166-2:CA) state code| |
 |personalNumber   |14  |Personal number of the document <br />• if verificationStatus = APPROVED\_VERIFIED and <br />• if idType = PASSPORT and if data available on the document | |
@@ -95,13 +95,18 @@ The following parameters are posted to your callback URL for Netverify Web embed
 |durationOfStay|255|Duration of stay if idType = VISA and additional extraction for Visa enabled|X |
 |numberOfEntries|255|Number of entries if idType = VISA and additional extraction for Visa enabled|X |
 |visaCategory|255|Visa category if idType = VISA and additional extraction for Visa enabled|X |
+|originDob|10|Original format of date of birth if idCountry = IND <br/>Possible values e.g.: <br />• Year/Month/Day: 1990/12/09 <br />• Year only: 1990// <br />• Year/Month: 1990/12/ <br />• Year/Day: 1990//09|<br /> |
 
 
 (`*1`) Scan is declined as unsupported if the provided ID is not supported by Jumio, or not accepted in your Netverify settings.<br/>
 (`*2`) Face match is performed if enabled.<br/>
-(`*3`) For ID types that are configured to support a separate scan of the front side and back side, there is a separate image of the front side (idScanImage) and the back side (idScanImageBackside). If face match is enabled, there is also a picture of the face (idScanImageFace).
-To access the image, use the HTTP GET method and HTTP Basic Authentication with your API token as the "userid" and your API secret as the "password". Set "User-Agent: YOURCOMPANYNAME YOURAPPLICATIONNAME/VERSION" (e.g. MyCompany MyApp/1.0.0) in the "header" section of your request. The TLS protocol is required during the TLS handshake (see [Supported cipher suites](/netverify/supported-cipher-suites.md)) and we strongly recommend using the latest version.<br/>
-(`*4`) Address recognition is performed for supported IDs, if enabled. Please note, there are three different address formats. You are able to view which format applies to specific IDs by logging into your Jumio customer portal and navigating to the "Data settings" section. The different address parameters are a part of the JSON object, if they are available on the ID.
+(`*3`) For ID types that are configured to support a separate scan of the front side and back side, there is a separate image of the front side (idScanImage) and the back side (idScanImageBackside). If face match is enabled, there is also a picture of the face (idScanImageFace).<br><br>
+**Retrieving Images**<br><br>
+Use HTTP: **GET** with **Basic Authorization** using your API token and secret, as userid and password.<br>
+Include Header:`User-Agent: YOURCOMPANYNAME YOURAPPLICATIONNAME/VERSION` <br><br>
+The value for **User-Agent** must contain a reference to your business or entity for Jumio to be able to identify your requests. (e.g. YourCompanyName YourAppName/1.0.0). Without a proper User-Agent header, Jumio will take longer to diagnose API issues.<br><br/>
+The TLS protocol is required during the TLS handshake (see [Supported cipher suites](/netverify/supported-cipher-suites.md)) and we strongly recommend using the latest version.<br/><br>
+(`*4`) Address recognition is performed for supported IDs, if enabled. Please note, there are three different address formats (US, EU, Raw). Please check [Supported documents for address extraction](/netverify/netverify-web.md#supported-documents-for-address-extraction) to see which format applies to specific IDs. The different address parameters are a part of the JSON object, if they are available on the ID.
 
 ### US Address Format
 
@@ -233,7 +238,11 @@ The following parameters are posted to your callback URL for Document Verificati
 |extractedData | JSON object  | |Extracted data if status = EXTRACTED, see [Supported documents for data extraction](#supported-documents-for-data-extraction)|
 
 
-(`*1`) To access the images or the originalDocument, use the HTTP GET method and HTTP Basic Authentication with your API token as the "userid" and your API secret as the "password". <br/>Set "User-Agent: YOURCOMPANYNAME YOURAPPLICATIONNAME/VERSION" (e.g. MyCompany MyApp/1.0.0) and "Accept: application/pdf" in the "header" section of your request. <br/>The TLS protocol is required during the TLS handshake (see [Supported cipher suites](/netverify/supported-cipher-suites.md)) and we strongly recommend using the latest version.<br/>
+(`*1`) **Retrieving Images**<br><br>
+Use HTTP: **GET** with **Basic Authorization** using your API token and secret, as userid and password.<br>
+Include Header:`User-Agent: YOURCOMPANYNAME YOURAPPLICATIONNAME/VERSION` <br><br>
+The value for **User-Agent** must contain a reference to your business or entity for Jumio to be able to identify your requests. (e.g. YourCompanyName YourAppName/1.0.0). Without a proper User-Agent header, Jumio will take longer to diagnose API issues.<br><br/>
+The TLS protocol is required during the TLS handshake (see [Supported cipher suites](/netverify/supported-cipher-suites.md)) and we strongly recommend using the latest version.<br/>
 
 
 

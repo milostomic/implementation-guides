@@ -52,8 +52,8 @@ Note: If your customer account is in the EU data center, use `lon.netverify.com`
 -	`Accept: application/json`
 -	`Content-Type: application/json`
 - `Content-Length: xxx` (RFC-2616)
-- `User-Agent: YOURCOMPANYNAME YOURAPPLICATIONNAME/VERSION`<br>
-The value for this parameter must contain a reference to your business or entity name in order for Jumio to be able to identify your requests. (e.g. YourCompanyName YourAppName/1.0.0). In case we are blocking your request on our firewall, it will take much longer to identify the issue without a proper User-Agent header.
+- `User-Agent: YOURCOMPANYNAME YOURAPPLICATIONNAME/VERSION`<br><br>
+The value for **User-Agent** must contain a reference to your business or entity for Jumio to be able to identify your requests. (e.g. YourCompanyName YourAppName/1.0.0). Without a proper User-Agent header, Jumio will take longer to diagnose API issues.
 
 **TLS handshake:** The TLS protocol is required (see [Supported Cipher Suites](/netverify/supported-cipher-suites.md)) and we strongly recommend using the latest version.
 
@@ -194,8 +194,8 @@ If your customer account is in the EU data center, use `acquisition.lon.netverif
 -	`Accept: application/json`
 -	`Content-Type: application/json`
 -	`Content-Length: xxx` (RFC-2616)
--	`User-Agent: YOURCOMPANYNAME YOURAPPLICATIONNAME/VERSION`<br>
-The value for this parameter must contain a reference to your business or entity name in order for Jumio to be able to identify your requests. (e.g. YourCompanyName YourAppName/1.0.0). In case we are blocking your request on our firewall, it will take much longer to identify the issue without a proper User-Agent header.
+-	`User-Agent: YOURCOMPANYNAME YOURAPPLICATIONNAME/VERSION`<br><br>
+The value for **User-Agent** must contain a reference to your business or entity for Jumio to be able to identify your requests. (e.g. YourCompanyName YourAppName/1.0.0). Without a proper User-Agent header, Jumio will take longer to diagnose API issues.
 
 ### Request Parameters
 
@@ -259,8 +259,8 @@ If your customer account is in the EU data center, use `acquisition.lon.netverif
 -	`Accept: application/json`
 -	`Content-Type: multipart/form-data`
 -	`Content-Length: xxx` (RFC-2616)
--	`User-Agent: YOURCOMPANYNAME YOURAPPLICATIONNAME/VERSION`<br>
-The value for this parameter must contain a reference to your business or entity name in order for Jumio to be able to identify your requests. (e.g. YourCompanyName YourAppName/1.0.0). In case we are blocking your request on our firewall, it will take much longer to identify the issue without a proper User-Agent header.
+-	`User-Agent: YOURCOMPANYNAME YOURAPPLICATIONNAME/VERSION`<br><br>
+The value for **User-Agent** must contain a reference to your business or entity for Jumio to be able to identify your requests. (e.g. YourCompanyName YourAppName/1.0.0). Without a proper User-Agent header, Jumio will take longer to diagnose API issues.
 
 ### Request Parameters
 
@@ -311,8 +311,8 @@ If your customer account is in the EU data center, use `acquisition.lon.netverif
 - `Accept: application/json`
 -	`Content-Type: multipart/form-data`
 -	`Content-Length: xxx` (RFC-2616)
--	`User-Agent: YOURCOMPANYNAME YOURAPPLICATIONNAME/VERSION`<br>
-The value for this parameter must contain a reference to your business or entity name in order for Jumio to be able to identify your requests. (e.g. YourCompanyName YourAppName/1.0.0). In case we are blocking your request on our firewall, it will take much longer to identify the issue without a proper User-Agent header.
+-	`User-Agent: YOURCOMPANYNAME YOURAPPLICATIONNAME/VERSION`<br><br>
+The value for **User-Agent** must contain a reference to your business or entity for Jumio to be able to identify your requests. (e.g. YourCompanyName YourAppName/1.0.0). Without a proper User-Agent header, Jumio will take longer to diagnose API issues.
 
 ### Request Parameter
 
@@ -363,8 +363,8 @@ If your customer account is in the EU data center, use `acquisition.lon.netverif
 
 **Header:** The following parameter is mandatory in the "header" section of your request.
 -	`Accept: application/json`
--	`User-Agent: YOURCOMPANYNAME YOURAPPLICATIONNAME/VERSION`<br>
-The value for this parameter must contain a reference to your business or entity name in order for Jumio to be able to identify your requests. (e.g. YourCompanyName YourAppName/1.0.0). In case we are blocking your request on our firewall, it will take much longer to identify the issue without a proper User-Agent header.
+-	`User-Agent: YOURCOMPANYNAME YOURAPPLICATIONNAME/VERSION`<br><br>
+The value for **User-Agent** must contain a reference to your business or entity for Jumio to be able to identify your requests. (e.g. YourCompanyName YourAppName/1.0.0). Without a proper User-Agent header, Jumio will take longer to diagnose API issues.
 
 ### Request Parameter
 
@@ -406,8 +406,8 @@ If your customer account is in the EU data center, use `acquisition.lon.netverif
 -	`Accept: application/json`
 -	`Content-Type: multipart/form-data`
 -	`Content-Length: xxx` (RFC-2616)
--	`User-Agent: YOURCOMPANYNAME YOURAPPLICATIONNAME/VERSION`<br>
-The value for this parameter must contain a reference to your business or entity name in order for Jumio to be able to identify your requests. (e.g. YourCompanyName YourAppName/1.0.0). In case we are blocking your request on our firewall, it will take much longer to identify the issue without a proper User-Agent header.
+-	`User-Agent: YOURCOMPANYNAME YOURAPPLICATIONNAME/VERSION`<br><br>
+The value for **User-Agent** must contain a reference to your business or entity for Jumio to be able to identify your requests. (e.g. YourCompanyName YourAppName/1.0.0). Without a proper User-Agent header, Jumio will take longer to diagnose API issues.
 
 ### Request Parameters
 
@@ -486,8 +486,8 @@ If your customer account is in the EU data center, use `lon.netverify.com` inste
 
 **Header:** The following parameters are mandatory in the "header" section of your request.
 -	`Accept: application/json`
--	`User-Agent: YOURCOMPANYNAME YOURAPPLICATIONNAME/VERSION`<br>
-The value for this parameter must contain a reference to your business or entity name in order for Jumio to be able to identify your requests. (e.g. YourCompanyName YourAppName/1.0.0). In case we are blocking your request on our firewall, it will take much longer to identify the issue without a proper User-Agent header.
+-	`User-Agent: YOURCOMPANYNAME YOURAPPLICATIONNAME/VERSION`<br><br>
+The value for **User-Agent** must contain a reference to your business or entity for Jumio to be able to identify your requests. (e.g. YourCompanyName YourAppName/1.0.0). Without a proper User-Agent header, Jumio will take longer to diagnose API issues.
 
 **TLS handshake:** The TLS protocol is required (see [Supported cipher suites](/netverify/supported-cipher-suites.md)) and we strongly recommend using the latest version.
 

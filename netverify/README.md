@@ -19,6 +19,7 @@ If you have any questions regarding our implementation guides please contact Jum
 
 | Date           | Description       |
 |:---------------|:------------------|
+| 2018-06-05 |Added callback parameter "originDob"|
 | 2018-05-22 |Finally removed callback parameter "idFaceMatch" and "idFaceLiveness"|
 | 2018-04-11 |Added address extraction for French passports, driver licenses and ID cards|
 | 2018-03-01 | Added request parameter "enableExtraction" to Document Verification<br> Added additional countries for Bank Statement and Utility Bill for extraction |

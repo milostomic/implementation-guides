@@ -44,11 +44,12 @@ If your customer account is in the EU data center, use `lon.netverify.com` inste
 
 **Authentication**: The initiateNetverify API call is protected. To access it, use HTTP Basic Authentication with your API token as the "userid" and your API secret as the "password". Log into your Jumio customer portal, and you can find your API token and API secret on the "Settings" page under "API credentials".
 
-**Header:** The following parameters are mandatory in the "header" section of your request.<br>
-- `Accept: application/json`
-- `Content-Type: application/json`
-- `Content-Length: xxx`(RFC-2616)
-- `User-Agent: YOURCOMPANYNAME YOURAPPLICATIONNAME/VERSION`<br>(e.g. MyCompany MyApp/1.0.0, change this to reflect your company)
+**Header:** The following parameters are mandatory in the "header" section of your request.<br/>
+- `Accept: application/json`<br/>
+- `Content-Type: application/json`<br/>
+- `Content-Length: xxx`(RFC-2616) <br/>
+- `User-Agent: YOURCOMPANYNAME YOURAPPLICATIONNAME/VERSION`<br><br>
+The value for **User-Agent** must contain a reference to your business or entity for Jumio to be able to identify your requests. (e.g. YourCompanyName YourAppName/1.0.0). Without a proper User-Agent header, Jumio will take longer to diagnose API issues.
 
 **TLS handshake**: The TLS protocol is required (see Supported cipher suites chapter) and we strongly recommend using the latest version.Note: Calls with missing or suspicious headers, suspicious parameter values, or without HTTP Basic Authentication will result in HTTP status code 403 Forbidden.
 
@@ -289,11 +290,12 @@ If your customer account is in the EU data center, use `lon.netverify.com` inste
 **Authentication**: The initiateNetverifyRedirect API call is protected. To access it, use HTTP Basic Authentication with your API token as the "userid" and your API secret as the "password". Log into your Jumio customer portal and you can find your API token and API secret on the "Settings" page under "API credentials".
 
 **Header**: The following parameters are mandatory in the "header" section of your request.<br>
--	`Accept: application/json`
-- `Content-Type: application/json`
-- `Content-Length: xxx` (RFC-2616)
--	`User-Agent: YOURCOMPANYNAME YOURAPPLICATIONNAME/VERSION`<br>
-The value for this parameter must contain a reference to your business or entity name in order for Jumio to be able to identify your requests. (e.g. YourCompanyName YourAppName/1.0.0). In case we are blocking your request on our firewall, it will take much longer to identify the issue without a proper User-Agent header.
+-	`Accept: application/json`<br>
+- `Content-Type: application/json`<br>
+- `Content-Length: xxx` (RFC-2616)<br>
+-	`User-Agent: YOURCOMPANYNAME YOURAPPLICATIONNAME/VERSION`<br><br>
+The value for **User-Agent** must contain a reference to your business or entity for Jumio to be able to identify your requests. (e.g. YourCompanyName YourAppName/1.0.0). Without a proper User-Agent header, Jumio will take longer to diagnose API issues.
+
 
 **TLS Handshake**: The TLS protocol is required (see [Supported cipher suites](#supported-cipher-suites) chapter) and we strongly recommend using the latest version.
 
@@ -439,11 +441,12 @@ If your customer account is in the EU data center, use `lon.netverify.com` inste
 
 **Authentication:** The performNetverify API call is protected. To access it, use HTTP Basic Authentication with your API token as the "userid" and your API secret as the "password". Log into your Jumio customer portal, and you can find your API token and API secret on the "Settings" page under "API credentials".
 
-**Header:** The following parameters are mandatory in the "header" section of your request.
--	Accept: `application/json`
--	`Content-Type: application/json`
-- `Content-Length: xxx` (RFC-2616)
-- `User-Agent: YOURCOMPANYNAME YOURAPPLICATIONNAME/VERSION`<br>(e.g. MyCompany MyApp/1.0.0, change this to reflect your company)
+**Header:** The following parameters are mandatory in the "header" section of your request.<br>
+- `Accept: application/json`<br>
+- `Content-Type: application/json`<br>
+- `Content-Length: xxx` (RFC-2616)<br>
+- `User-Agent: YOURCOMPANYNAME YOURAPPLICATIONNAME/VERSION`<br><br>
+The value for **User-Agent** must contain a reference to your business or entity for Jumio to be able to identify your requests. (e.g. YourCompanyName YourAppName/1.0.0). Without a proper User-Agent header, Jumio will take longer to diagnose API issues.
 
 **TLS Handshake:** The TLS protocol is required (see [Supported Cipher Suites](#supported-cipher-suites)) and we strongly recommend using the latest version.
 
@@ -539,10 +542,11 @@ If your customer account is in the EU data center, use `lon.netverify.com` inste
 
 **Authentication:** The supportedIdTypes API call is protected. To access it, use HTTP Basic Authentication with your API token as the "userid" and your API secret as the "password".
 
-**Header:** The following parameters are mandatory in the "header" section of your request.
-- `Accept: application/json`
-- `User-Agent: YOURCOMPANYNAME YOURAPPLICATIONNAME/VERSION`<br>
-(e.g. MyCompany MyApp/1.0.0, change this to reflect your company)
+**Header:** The following parameters are mandatory in the "header" section of your request.<br>
+- `Accept: application/json`<br>
+- `User-Agent: YOURCOMPANYNAME YOURAPPLICATIONNAME/VERSION`<br><br>
+The value for **User-Agent** must contain a reference to your business or entity for Jumio to be able to identify your requests. (e.g. YourCompanyName YourAppName/1.0.0). Without a proper User-Agent header, Jumio will take longer to diagnose API issues.
+
 
 **TLS handshake:** The TLS protocol is required (see [Supported cipher suites](#supported-cipher-suites) chapter) and we strongly recommend using the latest version.
 
@@ -646,10 +650,11 @@ If your customer account is in the EU data center, use `lon.netverify.com` inste
 
 **Authentication:** The acceptedIdTypes API call is protected. To access it, use HTTP Basic Authentication with your API token as the "userid" and your API secret as the "password".
 
-**Header:** The following parameters are mandatory in the "header" section of your request.
-- `Accept: application/json`
-- `User-Agent: YOURCOMPANYNAME YOURAPPLICATIONNAME/VERSION`<br>
-(e.g. MyCompany MyApp/1.0.0, change this to reflect your company)
+**Header:** The following parameters are mandatory in the "header" section of your request.<br>
+- `Accept: application/json`<br>
+- `User-Agent: YOURCOMPANYNAME YOURAPPLICATIONNAME/VERSION`<br><br>
+The value for **User-Agent** must contain a reference to your business or entity for Jumio to be able to identify your requests. (e.g. YourCompanyName YourAppName/1.0.0). Without a proper User-Agent header, Jumio will take longer to diagnose API issues.
+
 
 **TLS handshake:** The TLS protocol is required (see [Supported cipher](#supported-cipher-suites) suites chapter) and we strongly recommend using the latest version.
 
