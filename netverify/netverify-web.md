@@ -94,6 +94,7 @@ The value for **User-Agent** must contain a reference to your business or entity
 |Germany|Yes|No|No|EU|
 |Ireland|No|Yes|No|Raw|
 |Mexico|Yes|No|No|US|
+|Singapore|Yes|No|No|Raw|
 |Spain|Yes|No|No|EU|
 |United Kingdom|No|Yes|No|Raw|
 |United States|No|Yes|No|US|
@@ -134,7 +135,7 @@ If you are using jQuery, include the jQuery JavaScript library beforehand.
 <script type="text/javascript" src="https://netverify.com/widget/jumio-verify/2.0/iframe-script.js">
 </script><script type="text/javascript">
 /*<![CDATA[*/JumioClient.setVars({
-  authorizationToken: "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+authorizationToken: "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
 }).initVerify("JUMIOIFRAME");
 /*]]>*/
 </script>
