@@ -70,7 +70,7 @@ The value for **User-Agent** must contain a reference to your business or entity
 |callbackUrl|String|255|Callback URL for the confirmation after the verification is completed (for constraints see [Callback URL](/netverify/portal-settings.md#callback-url))|
 |locale|String|100|Locale of the Netverify client:<br>• "bg" Bulgarian<br>• "cs" Czech<br>• "da" Danish<br>• "de" German<br>• "el" Greek<br>• "en" American English (default)<br>• "en\_GB" British English<br>• "es" Spanish<br>• "es\_MX" Spanish Mexico<br>• "et" Estonian<br>• "fi" Finnish<br>• "fr" French<br>• "hu" Hungarian<br>• "it" Italian<br>• "ja" Japanese<br>• "ko" Korean<br>• "lt" Lithuanian<br>• "nl" Dutch<br>• "no" Norwegian<br>• "pl" Polish<br>• "pt" Portuguese<br>• "pt\_BR" Brazilian Portuguese<br>• "ro" Romanian<br>• "ru" Russian<br>• "sk" Slovak<br>• "sv" Swedish<br>• "tr" Turkish<br>• "vi" Vietnamese<br>• "zh\_CN" Chinese (China)<br>• "zh\_HK" Chinese (Hong Kong)|
 |clientIp|String|100|IP address of the client|
-|customerId|String|100|Identification of the customer should not contain sensitive data like PII (Personally Identifiable Information) or account login|
+|customerId|String|100| Must not contain sensitive data like PII (Personally Identifiable Information) or account login|
 |firstName|String|100|First name of the customer|
 |lastName|String|100|Last name of the customer|
 |country|String|3|Possible countries:<br>• [ISO 3166-1 alpha-3](http://en.wikipedia.org/wiki/ISO_3166-1_alpha-3) country code<br>• XKX (Kosovo)|
@@ -270,7 +270,7 @@ The file size for header, intro, success, or error image must not exceed 5 MB.
 
 #### Label for customer ID
 
-Specify the label for the customer identification field on your landing page. This field should not contain sensitive data like PII (Personally Identifiable Information) or account login.
+Specify the label for the customer identification field on your landing page. This field must not contain sensitive data like PII (Personally Identifiable Information) or account login.
 
 ## <a name="redirect-initiating-the-transaction"></a>Initiating the Transaction
 
@@ -310,7 +310,7 @@ Any values within the API call parameters override settings configured within yo
 |Parameter|Type|Max. length|Description |
 |:--------|:---|:----------|:-----------|
 |**merchantIdScanReference** *|String|100|Your reference for each scan must not contain sensitive data like PII (Personally Identifiable Information) or account login|
-|**customerId** *|String|100|Identification of the customer should not contain sensitive data like PII (Personally Identifiable Information) or account login|
+|**customerId** *|String|100|Identification of the customer must not contain sensitive data like PII (Personally Identifiable Information) or account login|
 |successUrl|String|2048|Redirect URL in case of success (for constraints see [Success and error URLs](/netverify/portal-settings.md#success-and-error-urls))|
 |errorUrl|String|255|Redirect URL in case of error (for contraints see [Success and error URLs](/netverify/portal-settings.md#success-and-error-urls))|
 |enabledFields|String|100|Defines fields which will be extracted during the ID verification. If a field is not listed in this parameter, it will not be processed for this transaction, regardless of customer portal settings.<br> **Note:** Face match and Address extraction will not be processed unless enabled for your account. If you want to enable them, please contact your Customer Success Manager, or reach out to Jumio Support.<br><br>Possible values:<br>"idNumber,idFirstName,idLastName,idDob,idExpiry,idUsState,<br>idPersonalNumber,idFaceMatch,idAddress"|
@@ -471,7 +471,7 @@ Any values within the API call parameters override settings configured within yo
 |backsideImageMimeType|String||Mime type of back side image<br>Possible values: image/jpeg (default), image/png|
 |enabledFields|String|100|Defines fields which will be extracted during the ID verification. If a field is not listed in this parameter, it will not be processed for this transaction, regardless of customer portal settings.<br> **Note:** Face match and Address extraction will not be processed unless enabled for your account. If you want to enable them, please contact your Customer Success Manager, or reach out to Jumio Support.<br><br>Possible values:<br>"idNumber, idFirstName, idLastName, idDob, idExpiry, idUsState, idPersonalNumber, idFaceMatch, idAddress"|
 |merchantReportingCriteria|String|100|Your reporting criteria for each scan|
-|customerId|String|100|Identification of the customer should not contain sensitive data like PII (Personally Identificable Information) or account login|
+|customerId|String|100|Identification of the customer must not contain sensitive data like PII (Personally Identificable Information) or account login|
 |callbackUrl|String|255|Callback URL for the confirmation after the verification is completed (for constraints see [Callback URL](/netverify/portal-settings.md#callback-url))|
 |firstName|String|100|First name of the customer|
 |lastName|String|100|Last name of the customer|
