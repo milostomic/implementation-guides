@@ -19,6 +19,7 @@ If you have any questions regarding our implementation guides please contact Jum
 
 | Date           | Description       |
 |:---------------|:------------------|
+| 2018-07-03 |Document Verification: Added support for data extraction for all countries with Latin characters|
 | 2018-06-19 |Added address extraction for Singapore ID cards|
 | 2018-06-05 |Added callback parameter "originDob"|
 | 2018-05-22 |Finally removed callback parameter "idFaceMatch" and "idFaceLiveness"|
@@ -26,7 +27,7 @@ If you have any questions regarding our implementation guides please contact Jum
 | 2018-03-01 | Added request parameter "enableExtraction" to Document Verification<br> Added additional countries for Bank Statement and Utility Bill for extraction |
 | 2018-02-14 | Updated supported browsers |
 | 2018-02-01 |Added callback parameter "originalDocument" for Document Verification<br />Added Australia and Canada states to callback parameter "idUsState"|
-| 2018-01-17  |Added new validity reason BLACK_AND_WHITE<br>Updated supported countries for idSubtype LEARNING_DRIVING_LICENSE|
+| 2018-01-17  |Added new validity reason BLACK\_AND\_WHITE<br>Updated supported countries for idSubtype LEARNING\_DRIVING\_LICENSE|
 | 2017-11-23  |Added "Visa" to request parameter "idType" for performNetverify<br>Added "Visa" to callback parameter "idType"<br>Added credit card to supported documents for data extraction<br>Added callback parameters "pan" and "expiryDate" to extractedData for Document Verification|
 | 2017-11-08  |Added credit card support for Document Verification and Document Verification API|
 | 2017-10-30  |Added callback parameters "presetCountry" and "presetIdType"|
@@ -43,7 +44,7 @@ If you have any questions regarding our implementation guides please contact Jum
 | 2017-02-28  |Added capture methods for supported browsers|
 | 2017-01-31  |Added "errorCode" 338 to HTTP GET parameter for Multi Document error redirect URL<br>Added details for custom document type for Netverify Multi Document|
 | 2017-01-17  |Added value "MILITARY\_ID" to callback parameter "idSubtype"|
-| 2016-11-15  |Added reject reason detail code 10011 for PLACE_OF_BIRTH|
+| 2016-11-15  |Added reject reason detail code 10011 for PLACE\_OF\_BIRTH|
 | 2016-10-04  |performNetverify parameters "country" and "idType" are mandatory |
 | 2016-08-17  |Updated "idFirstName" and "idLastName" callback parameter description|
 | 2016-06-21  |Added callback IP addresses for the US data center<br>Added callback parameter "dni" for Netverify|

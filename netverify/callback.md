@@ -60,7 +60,7 @@ The following parameters are posted to your callback URL for Netverify Web embed
 |**idCheckSignature** *   |   |"OK" if verificationStatus = APPROVED\_VERIFIED, otherwise "N/A" | |
 |**transactionDate** *   |   |Timestamp of the scan creation in the format YYYY-MM-DDThh:mm:ss.SSSZ | |
 |**callbackDate** *   |   |Timestamp of the callback creation in the format YYYY-MM-DDThh:mm:ss.SSSZ | |
-|idType   |   |Possible types:<br/>•	PASSPORT<br/>•	DRIVING\_LICENSE<br/>•	ID\_CARD<br>•	VISA (only supported for country = CHN or USA) | |
+|idType   |   |Possible types:<br/>•	PASSPORT<br/>•	DRIVING\_LICENSE<br/>•	ID\_CARD<br>•	VISA <br/><br/>*Currently only US and China Visas are supported in certain cases. However, Visas from other countries will be rejected as unsupported with idType = VISA | |
 |idSubtype   |255  |Possible subtypes if idType = ID\_CARD<br/>•	NATIONAL\_ID<br/>•	CONSULAR\_ID<br/>•	ELECTORAL\_ID<br/>•	RESIDENT\_PERMIT\_ID<br/>•	TAX\_ID (only supported for PHL)<br/>•	STUDENT\_ID (only supported for POL)<br/>•	PASSPORT\_CARD\_ID (only supported for IRL, RUS and USA)<br/>•	MILITARY\_ID (only supported for GRC)<br/>•	OTHER\_ID<br/>•	VISA (only supported for USA)<br/>•	UNKNOWN<br/><br/>Possible subtypes if idType = DRIVING\_LICENSE<br/>•	LEARNING\_DRIVING\_LICENSE (only supported for USA, CAN, AUS, GBR, IRL, DEU)<br/><br/>Possible subtypes if idType = PASSPORT<br/>•	E\_PASSPORT (only for mobile) | |
 |idCountry   |3  |Possible countries:<br/>•	[ISO 3166-1 alpha-3](http://en.wikipedia.org/wiki/ISO_3166-1_alpha-3) country code<br/>•	XKX (Kosovo)| |
 |rejectReason   |   |Reject reason as JSON object if verificationStatus = DENIED\_FRAUD or ERROR\_NOT\_READABLE\_ID, see tables below  | |
@@ -299,10 +299,10 @@ The TLS protocol is required during the TLS handshake (see [Supported cipher sui
 
 |Country ([ISO 3166-1 alpha-3](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-3) country code ) | Type | Extracted data |
 |:---------------|:----------|:------------|
-|ALB, AND, AGO, ATG, ARG, AUS, AUT, AZE, BHS, BRB, BEL, BLZ, BEN, BOL, BIH, BWA, BRA, BFA, BDI, CMR, CAN, CPV, CAF, TCD, CHL, COL, COM, CRI, CIV, HRV, CUB, CYP, CZE, DNK, DJI, DMA, DOM, ECU, SLV, GNQ, ERI, EST, FJI, FIN, FRA, GAB, GMB, DEU, GHA, GRD, GTM, GIN, GNB, GUY, HTI, HND, HUN, ISL, IND, IDN, IRL, ITA, JAM, JPN, KEN, KIR, LVA, LSO, LBR, LIE, LTU, LUX, MDG, MWI, MYS, MLI, MLT, MHL, MRT, MUS, MEX, MDA, MCO, MNE, MOZ, NAM, NRU, NLD, NZL, NIC, NER, NGA, NOR, PAK, PLW, PAN, PNG, PRY, PER, PHL, POL, PRT, ROU, RWA, KNA, LCA, VCT, WSM, SMR, STP, SEN, SRB, SYC, SLE, SGP, SVK, SVN, SLB, SOM, ZAF, SSD, ESP, SDN, SUR, SWZ, SWE, CHE, TGO, TON, TTO, TUR, TKM, TUV, UGA, ARE, GBR, USA, URY, UZB, VUT, VAT, VEN, VNM, ZMB, ZWE |BS (Bank Statement) |name, issueDate, address, accountNumber |
-|all |CC (Credit card) |name, pan, expiryDate |
-|ALB, AND, AGO, ATG, ARG, AUS, AUT, AZE, BHS, BRB, BEL, BLZ, BEN, BOL, BIH, BWA, BRA, BFA, BDI, CMR, CAN, CPV, CAF, TCD, CHL, COL, COM, CRI, CIV, HRV, CUB, CYP, CZE, DNK, DJI, DMA, DOM, ECU, SLV, GNQ, ERI, EST, FJI, FIN, FRA, GAB, GMB, DEU, GHA, GRD, GTM, GIN, GNB, GUY, HTI, HND, HUN, ISL, IND, IDN, IRL, ITA, JAM, JPN, KEN, KIR, LVA, LSO, LBR, LIE, LTU, LUX, MDG, MWI, MYS, MLI, MLT, MHL, MRT, MUS, MEX, MDA, MCO, MNE, MOZ, NAM, NRU, NLD, NZL, NIC, NER, NGA, NOR, PAK, PLW, PAN, PNG, PRY, PER, PHL, POL, PRT, ROU, RWA, KNA, LCA, VCT, WSM, SMR, STP, SEN, SRB, SYC, SLE, SGP, SVK, SVN, SLB, SOM, ZAF, SSD, ESP, SDN, SUR, SWZ, SWE, CHE, TGO, TON, TTO, TUR, TKM, TUV, UGA, ARE, GBR, USA, URY, UZB, VUT, VAT, VEN, VNM, ZMB, ZWE |UB (Utility Bill) |name, issueDate, address, dueDate |
-|AUS, CAN, GBR, USA |CCS (Credit card statement) |name, issueDate, address, cardNumberLastFourDigits |
+|All countries<br/>⦁	Only if data appears in Latin characters<br />⦁	If extraction is not possible transaction will be discarded |BS (Bank Statement) |name, issueDate, address, accountNumber |
+|All countries |CC (Credit card) |name, pan, expiryDate |
+|All countries<br/>⦁	Only if data appears in Latin characters<br />⦁	If extraction is not possible transaction will be discarded |UB (Utility Bill) |name, issueDate, address, dueDate |
+|All countries<br/>⦁	Only if data appears in Latin characters<br />⦁	If extraction is not possible transaction will be discarded  |CCS (Credit card statement) |name, issueDate, address, cardNumberLastFourDigits |
 |USA |SSC (Social security card) |firstName, lastName, ssn, signatureAvailable  |
 
 

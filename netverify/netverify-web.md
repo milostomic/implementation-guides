@@ -342,9 +342,11 @@ Any values within the API call parameters override settings configured within yo
 |Germany|Yes|No|No|EU|
 |Ireland|No|Yes|No|Raw|
 |Mexico|Yes|No|No|US|
+|Singapore|Yes|No|No|Raw|
 |Spain|Yes|No|No|EU|
 |United Kingdom|No|Yes|No|Raw|
 |United States|No|Yes|No|US|
+
 
 ### Response Parameters
 
@@ -492,9 +494,11 @@ Any values within the API call parameters override settings configured within yo
 |Germany|Yes|No|No|EU|
 |Ireland|No|Yes|No|Raw|
 |Mexico|Yes|No|No|US|
+|Singapore|Yes|No|No|Raw|
 |Spain|Yes|No|No|EU|
 |United Kingdom|No|Yes|No|Raw|
 |United States|No|Yes|No|US|
+
 
 ### Response Parameters
 

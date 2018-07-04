@@ -45,8 +45,8 @@ If your customer account is in the EU data center, use `bam-retrieval.lon.jumio.
 **Authentication:** The API call is protected. To access it, use HTTP Basic Authentication with your API token as the "userid" and your API secret as the "password". Log into your Jumio customer portal, and you can find your API token and API secret on the "Settings" page under "API credentials".
 
 **Header:** The following parameter is mandatory in the "header" section of your request.<br>
-- `User-Agent: YOURCOMPANYNAME YOURAPPLICATIONNAME/VERSION`<br>
-The value for this parameter must contain a reference to your business or entity name in order for Jumio to be able to identify your requests. (e.g. YourCompanyName YourAppName/1.0.0). In case we are blocking your request on our firewall, it will take much longer to identify the issue without a proper User-Agent header.
+- `User-Agent: YOURCOMPANYNAME YOURAPPLICATIONNAME/VERSION`<br><br>
+The value for **User-Agent** must contain a reference to your business or entity for Jumio to be able to identify your requests. (e.g. YourCompanyName YourAppName/1.0.0). Without a proper User-Agent header, Jumio will take longer to diagnose API issues.
 
 **TLS handshake:** The TLS protocol is required (see [Supported Cipher Suites](/netverify/supported-cipher-suites.md) chapter) and we strongly recommend using the latest version.
 
@@ -90,9 +90,9 @@ If your customer account is in the EU data center, use `bam-retrieval.lon.jumio.
 **Authentication:** The API call is protected. To access it, use HTTP Basic Authentication with your API token as the "userid" and your API secret as the "password". Log into your Jumio customer portal, and you can find your API token and API secret on the "Settings" page under "API credentials".
 
 **Header:** The following parameters are mandatory in the "header" section of your request.<br>
--	`Accept: application/json`
--	`User-Agent: YOURCOMPANYNAME YOURAPPLICATIONNAME/VERSION`
-(e.g. MyCompany MyApp/1.0.0, change this to reflect your company)
+-	`Accept: application/json`<br>
+-	`User-Agent: YOURCOMPANYNAME YOURAPPLICATIONNAME/VERSION`<br><br>
+The value for **User-Agent** must contain a reference to your business or entity for Jumio to be able to identify your requests. (e.g. YourCompanyName YourAppName/1.0.0). Without a proper User-Agent header, Jumio will take longer to diagnose API issues.
 
 **TLS handshake:** The TLS protocol is required (see [Supported Cipher Suites](/netverify/supported-cipher-suites.md)) and we strongly recommend using the latest version.
 
