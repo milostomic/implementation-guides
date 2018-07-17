@@ -100,11 +100,14 @@ The following parameters are posted to your callback URL for Netverify Web embed
 
 (`*1`) Scan is declined as unsupported if the provided ID is not supported by Jumio, or not accepted in your Netverify settings.<br/>
 (`*2`) Face match is performed if enabled.<br/>
-(`*3`) For ID types that are configured to support a separate scan of the front side and back side, there is a separate image of the front side (idScanImage) and the back side (idScanImageBackside). If face match is enabled, there is also a picture of the face (idScanImageFace).<br><br>
-**Retrieving Images**<br><br>
+(`*3`) For ID types that are configured to support a separate scan of the front side and back side, there is a separate image of the front side (idScanImage) and the back side (idScanImageBackside). If face match is enabled, there is also a picture of the face (idScanImageFace).
+#### Retrieving Images
 Use HTTP: **GET** with **Basic Authorization** using your API token and secret, as userid and password.<br>
-Include Header:`User-Agent: YOURCOMPANYNAME YOURAPPLICATIONNAME/VERSION` <br><br>
-The value for **User-Agent** must contain a reference to your business or entity for Jumio to be able to identify your requests. (e.g. YourCompanyName YourAppName/1.0.0). Without a proper User-Agent header, Jumio will take longer to diagnose API issues.<br><br/>
+**Header**: The following parameters are mandatory in the "header" section of your request.
+- `Accept: image/jpeg, image/png`
+- `User-Agent: YOURCOMPANYNAME YOURAPPLICATIONNAME/VERSION`<br /><br />
+The value for **User-Agent** must contain a reference to your business or entity for Jumio to be able to identify your requests. (e.g. YourCompanyName YourAppName/1.0.0). Without a proper User-Agent header, Jumio will take longer to diagnose API issues.<br>
+
 The TLS protocol is required during the TLS handshake (see [Supported cipher suites](/netverify/supported-cipher-suites.md)) and we strongly recommend using the latest version.<br/><br>
 (`*4`) Address recognition is performed for supported IDs, if enabled. Please note, there are three different address formats (US, EU, Raw). Please check [Supported documents for address extraction](/netverify/netverify-web.md#supported-documents-for-address-extraction) to see which format applies to specific IDs. The different address parameters are a part of the JSON object, if they are available on the ID.
 

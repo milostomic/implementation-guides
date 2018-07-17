@@ -269,7 +269,11 @@ The value for **User-Agent** must contain a reference to your business or entity
 |**scanReference <br>(path parameter)** *|String|36|Jumio’s reference number of a scan created/updated less than 5 minutes ago|
 |**page <br>(path parameter)** * |String|Max. value: 30|Page number|
 
-Send your JPEG, PNG or PDF file with a maximum size of 10 MB as `multipart/form-data` in the body of your request.
+#### Body - `multipart/form-data`
+|Key				|Value				|
+|:------			|:------			|
+|**Image \***		|JPEG, PNG, PDF file with max size of 10 MB|
+
 
 ### Response Parameter
 
@@ -320,7 +324,11 @@ The value for **User-Agent** must contain a reference to your business or entity
 |:---------------|:--------|:------------|:------------|
 |**scanReference<br>(path parameter)** *|String|36|Jumio’s reference number of a scan created/updated less than 5 minutes ago|
 
-Send your PDF file with a maximum size of 10 MB and maximum of 30 pages as `multipart/form-data` in the body of your request.
+#### Body - `multipart/form-data`
+|Key				|Value				|
+|:------			|:------			|
+|**Image \***		|PDF file with max size of 10 MB and 30 pages|
+
 
 ### Response Parameters
 
@@ -413,11 +421,11 @@ The value for **User-Agent** must contain a reference to your business or entity
 
 **Note:** Mandatory parameters are marked with an asterisk * and highlighted bold.
 
-|Parameter       | Type    | Max. Length| Description|
-|:---------------|:--------|:------------|:------------|
-|**image** * |PDF, JPEG or PNG|Max. 10 MB|Image of the customer's document should be always listed before the metadata parameter|
-|**metadata** *|JSON||Metadata of the customer's document as JSON objects, see table below|
-
+#### Body - `multipart/form-data`
+|Key				|Value				|
+|:------			|:------			|
+|**image \***		|JPEG, PNG, PDF file with max size of 10 MB|
+|**metadata \***	|Metadata of the customer's document as JSON objects, see table below|
 
 |Parameter "metadata"  | Type    | Max. Length| Description|
 |:---------------|:--------|:------------|:------------|
@@ -430,8 +438,6 @@ The value for **User-Agent** must contain a reference to your business or entity
 |merchantReportingCriteria|String|100|Your reporting criteria for each scan|
 |clientIp|String|100|IP address of the client|
 |customDocumentCode|String|100|Your custom document code (see [Multi documents](/netverify/portal-settings.md#multi-documents))<br>Needs to be added if type = CUSTOM|
-
-Send your JPEG, PNG or PDF file with a maximum size of 10 MB as `multipart/form-data` in the body of your request.
 
 
 ### Response Parameters
