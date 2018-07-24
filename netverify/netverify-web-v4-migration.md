@@ -4,7 +4,7 @@
 
 Welcome to the new Netverify Web client!
 
-This document is intended as a reference manual for customers migrating from Netverify Web v3 to Netverify Web v4. ([Which version of the Netverify Web client I am using?](https://support.jumio.com/hc/en-us/articles/360007401353))
+This document is intended as a reference manual for customers migrating from Netverify Web v3 to Netverify Web v4. ([Which version of the Netverify Web client am I using?](https://support.jumio.com/hc/en-us/articles/360007401353))
 
 It provides an overview of the significant changes in the new client and describes the adjustments that will be need to be made to your implementation to use the new version.
 
