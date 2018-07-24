@@ -2,7 +2,7 @@
 
 # Netverify Web v4 Implementation Guide
 
-This is a reference manual and configuration guide for the new Netverify web client. It describes how to initiate a transaction, how to customize your settings and branding, and how to display Netverify to your users.
+This is a reference manual and configuration guide for the new Netverify Web client. It describes how to initiate a transaction, how to customize your settings and branding, and how to display Netverify to your users.
 
 <br>
 
@@ -423,7 +423,7 @@ You can create a transaction manually in the Customer Portal under the "Create v
 
 When the Netverify client is embedded in an iFrame<sup>1</sup>, it will communicate with the containing page using the JavaScript [`window.postMessage()`](https://developer.mozilla.org/en-US/docs/Web/API/Window/postMessage) method to send events containing pre-defined data. This allows the containing page to react to events as they occur (e.g., by directing to a new page once the `success` event is received). Events include data that allows the containing page to identify which Netverify transaction triggered the event. Events are generated in a stateless way, so that each event contains general contextual information about the transaction (e.g., transaction reference, authorization token, etc.) in addition to data about the specific event that occurred.
 
-Using JavaScript, the containing page can receive the notification and consume the data it contains by listening for the `message` event on the global `window` object and reacting to it as needed. The data passed by the Netverify web client in this notification is represented as JSON in the `data` string property of the listener method's `event` argument. Parsing this JSON string results in an object with the properties described below.
+Using JavaScript, the containing page can receive the notification and consume the data it contains by listening for the `message` event on the global `window` object and reacting to it as needed. The data passed by the Netverify Web client in this notification is represented as JSON in the `data` string property of the listener method's `event` argument. Parsing this JSON string results in an object with the properties described below.
 
 All data is encoded with [UTF-8](https://tools.ietf.org/html/rfc3629).
 <br>

@@ -2,11 +2,11 @@
 
 # Netverify Web v4 Migration Guide
 
-Welcome to the new Netverify web client!
+Welcome to the new Netverify Web client!
 
 This document is intended as a reference manual for customers migrating from Netverify Web v3 to Netverify Web v4. ([Which version of the Netverify Web client I am using?](https://support.jumio.com/hc/en-us/articles/360007401353))
 
-It provides an overview of the significant changes in the new web client and describes the adjustments that will be need to be made to your implementation to use the new version.
+It provides an overview of the significant changes in the new client and describes the adjustments that will be need to be made to your implementation to use the new version.
 
 <br>
 
@@ -87,7 +87,7 @@ No change from v3. See the new [Netverify Web v4 Implementation Guide](/netverif
 
 
 ## Request body
-With this version of the Netverify web client, we have begun the process of improving consistency across all of our APIs. This will be done gradually, to make the transition as smooth as possible for our existing customers.
+With this version of the Netverify Web client, we have begun the process of improving consistency across all of our APIs. This will be done gradually, to make the transition as smooth as possible for our existing customers.
 
 Some of the **initiate** API request fields have been retained, but have new names. Some previously mandatory fields are now optional, and some optional fields are now mandatory. We have also deprecated some fields and added a few new ones. Our changes are described below.
 
@@ -352,7 +352,7 @@ All images must be formatted as [JPG](https://jpeg.org/jpeg/) or [PNG](https://e
 
 # Displaying Netverify
 
-To make things easier, we've simplified displaying the Netverify web client.
+To make things easier, we've simplified displaying the Netverify Web client.
 
 The **redirectUrl** returned in the response to your **initate** API call, which loads your customized Netverify page, can be used in several ways:
 
@@ -386,7 +386,7 @@ We've updated our optional iFrame logging feature to extend its functionality. W
 
 When the Netverify client is embedded in an iFrame<sup>1</sup>, it will communicate with the containing page using the JavaScript [`window.postMessage()`](https://developer.mozilla.org/en-US/docs/Web/API/Window/postMessage) method to send **events** containing pre-defined data. This allows the containing page to react to events as they occur (e.g., by directing to a new page once the **success** event is received). Events include data that allows the containing page to identify which Netverify transaction triggered the event. Events are generated in a stateless way, so that each event contains general contextual information about the transaction (e.g., transaction reference, authorization token, etc.) in addition to data about the specific event that took occurred.
 
-Using JavaScript, the containing page can receive the notification and consume the data it contains by listening for the `message` event on the global `window` object and reacting to it as needed. The data passed by the Netverify web client in this notification is represented as JSON in the `data` string property of the listener method's `event` argument. Parsing this JSON string results in an object with the properties described below.
+Using JavaScript, the containing page can receive the notification and consume the data it contains by listening for the `message` event on the global `window` object and reacting to it as needed. The data passed by the Netverify Web client in this notification is represented as JSON in the `data` string property of the listener method's `event` argument. Parsing this JSON string results in an object with the properties described below.
 
 All data is encoded with [UTF-8](https://tools.ietf.org/html/rfc3629).
 <br>
@@ -409,7 +409,7 @@ All data is encoded with [UTF-8](https://tools.ietf.org/html/rfc3629).
 <br>
 
 ### `event.data.payload` object
-This new object gives us the option to notify you when the Netverify web client is loaded, and when the user journey ends with either a success or an error.
+This new object gives us the option to notify you when the Netverify Web client is loaded, and when the user journey ends with either a success or an error.
 
 **Required fields appear in bold type.**  
 
