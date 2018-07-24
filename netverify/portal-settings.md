@@ -1,16 +1,20 @@
 ![Jumio](/images/netverify.png)
 
-# Global Netverify Settings
+# Configuring Settings in the Customer Portal
 
-In your Jumio customer portal settings, you can configure the ID verification as follows.
+You can customize your settings, brand your Netverify page, and manage your API credentials in the Customer Portal. Save changes with your Customer Portal password to activate them.
 
 
 ## Table of Contents
-- [Application settings](#application-settings)
-    - [Callback URL](#callback-url)
-    - [Success and Error URLs](#success-and-error-urls)
-    - [ID Scan Capture Method](#id-scan-capture-method)
+- [Application settings - General](#application-settings--general)
+  - [Callback URL](#callback-error-and-success-urls)
+  - [Select Capture Method](#select-capture-method)
+  - [Skip "Start ID verification" screen](#skip-start-id-verification-screen)
+- [Application settings - Redirect](#application-settings--redirect)
+  - [Domain Name Prefix](#domain-name-prefix)
+  - [Default Locale](#default-locale)
 - [Customize client](#customize-client)
+  - [Images](#images)
 - [Accepted IDs](#accepted-ids)
 - [Data settings](#data-settings)
     - [Mandatory Fields](#mandatory-fields)
@@ -21,60 +25,129 @@ In your Jumio customer portal settings, you can configure the ID verification as
 - [Two-factor Authentication](#two-factor-authentication)
 
 ---
-# Application Settings
+## Application Settings — General
 
-## Callback URL
+### Callback, Error, and Success URLs
 
-Provide a URL which meets the following constraints:
-* HTTPS using the TLS protocol (we strongly recommend using the latest version)
-* Valid URL (RFC-2396) using ASCII characters or IDNA Punycode
-* IP addresses, ports, query parameters and fragment identifiers are not allowed
-* Personally identifiable information (PII) is not allowed in any form
+Define a **Callback URL** to automatically receive verification results and extracted user data from Jumio when a transaction is completed.
 
-Whitelist the following IP addresses for callbacks, and use these to verify that the callback originated from Jumio:
+Define a **Success URL** to direct your customer after a successful user journey.
 
-**US data center:** </br>
-184.106.91.66, 184.106.91.67, 104.130.61.196, 146.20.77.156, 34.202.241.227, 34.226.103.119, 34.226.254.127, 52.53.95.123, 52.52.51.178, 54.67.101.173.  </br>
-You can look up the IP addresses with the host name "callback.jumio.com".<p>
+Define an **Error URL** to direct your customer when the verification process ends with an error or a failed submission attempt.
 
-**EU data center:**</br>
-162.13.228.132, 162.13.228.134, 162.13.229.103, 162.13.229.104, 34.253.41.236, 52.209.180.134, 52.48.0.25, 35.157.27.193, 52.57.194.92, 52.58.113.86. <br/>
-You can look up the IP addresses with the host name "callback.lon.jumio.com".
 
-Jumio will post callbacks to your HTTPS URL if you are using a valid certificate to ensure a successful TLS handshake. If you are not receiving callbacks, please check the following [article](https://support.jumio.com/hc/en-us/articles/200275338-I-am-not-receiving-callbacks-What-can-I-do).
+#### Required:
 
-## Success and Error URLs
+* HTTPS using the [TLS Protocol](https://tools.ietf.org/html/rfc5246) (most recent version recommended)
+* Valid URL [(RFC-3986)](https://tools.ietf.org/html/rfc3986) using [ASCII characters](https://tools.ietf.org/html/rfc2046) or [IDNA Punycode](https://tools.ietf.org/html/rfc3492)
 
-Provide redirect URLs which meet the following constraints:
-* Valid URL (RFC-2396) using ASCII characters or IDNA Punycode
-*	IP addresses, ports, query parameters and fragment identifiers are not allowed
-*	Netverify: HTTPS is strongly recommend, using the TLS protocol
-*	Document Verification: HTTPS using the TLS protocol
-* Personally identifiable information (PII) is not allowed in any form
+#### Forbidden:
 
-## ID Scan Capture Method
+* IP addresses, ports, query parameters and fragment identifiers are not allowed.
+* Personally identifiable information (PII) is not allowed in any form.
 
-You can restrict Netverify Web to capture IDs via camera or upload option only.
+### Select Capture Method
 
-**Note:** Selecting "Webcam only" means some mobile browsers will not be supported.
+Here you can specify how your user can submit an ID or Identity image for verification.<br>
+<br>
+Choose from:
 
+- **Webcam and image upload**
+- **Webcam only**
+- **Image upload only**
+
+
+
+|⚠️  Selecting "Webcam only" means some mobile browsers will not be supported.
+|:----------|
+<br>
+
+### Skip "Start ID verification" screen
+
+Select this checkbox to bypass the introductory screen in the Netverify client.
 
 ---
-# Customize Client
-Specify primary and secondary colors for your own look and feel per locale for Netverify Web.
+## Application Settings — Redirect
 
-Any configuration which is not set will first default to the language (e.g. EN\_GB to EN), then to your default setup, and finally to the Jumio standard.
+### Domain Name Prefix
 
+You can optionally define a domain name prefix (`https://example.netverfy.com`) for the URL of your Netverify page.
+
+
+- Allowed characters are: letters `a-z`, numbers `0-9`, `-`
+- Must not start or end with: `-`
+- Max. 63 characters
+
+### Default Locale
+
+Select a language from the dropdown list to set your display language for Netverify. If no language is selected, Netverify will be displayed in English (US).<br>
+
+Choose from:<br>
+
+- English
+- English (United Kingdom)
+- German
+- Turkish
+- Finnish
+- Norwegian
+- Polish
+- Swedish
+- Russian
+- Portuguese
+- Portuguese (Brazil)
+- Spanish
+- Spanish (Mexico)
+- Italian
+- French
+- Dutch
+- Bulgarian
+- Chinese (China)
+- Chinese (Hong Kong)
+- Czech
+- Danish
+- Greek
+- Hungarian
+- Japanese
+- Korean
+- Romanian
+- Slovak
+- Vietnamese
+- Lithuanian
+- Estonian
+
+---
+## Customize client
+
+### Colors
+
+Specify primary and secondary colors for each locale to give Netverify your own look and feel.
+
+Any configuration which is not set will first default to the root language (e.g. EN\_GB to EN), then to your default setup, and finally to the Jumio default.
+
+You can also reset all colors to the Jumio default.
+
+
+### Images
+
+Add a **Header image** for each locale to brand your Netverify page.
+
+Add a **Success image** and **Error image** for each locale to be displayed on the Jumio default success and error pages when you do not specify your own **successUrl** and **errorUrl**.
+
+Any configuration which is not set will first default to the root language (e.g. EN\_GB to EN), then to your default setup, and finally to the Jumio default.
+
+All images must be formatted as [JPG](https://jpeg.org/jpeg/) or [PNG](https://en.wikipedia.org/wiki/Portable_Network_Graphics) and must not exceed 5 MB.
 
 ---
 ## Accepted IDs
-You can configure accepted IDs per region or country. The default setup includes all countries and ID types supported by Jumio at the time when your account was created.
+You can configure accepted IDs **Per region** or **Per country**.
 
-**Note:** You can disable the option to automatically accept newly supported IDs by Jumio.
+To configure **Per region**, select **All**, **None**, or **Jumio supported** from the dropdown. Your region selections can be copied to the **Per country** configuration page for further custimization. The default includes all countries and ID types supported by Jumio at the time when your account was created.
+
+Select the checkbox to automatically accept newly supported IDs by Jumio.
 
 ---
 ## Data Settings
-You can choose which fields should be processed during the ID verification.
+You can choose which fields should be extracted during the ID verification process.
 
 ### Mandatory Fields
 Mandatory fields will be returned in the callback for all Jumio supported IDs, if enabled.
@@ -92,27 +165,74 @@ Optional fields will be returned in the callback under certain conditions, if en
 
 **Note:** To perform the MRZ check, the fields date of birth, expiry and personal number will be processed during the ID verification and returned in the callback, if available on the ID.
 
-**Supported countries for ID card MRZ check:** Albania, Argentina, Austria, Bosnia & Herzegovina, Bulgaria, Chile, Croatia, Czech Republic, Denmark, Dominican Republic, Ecuador, El Salvador, Estonia, Finland, France, Georgia, Germany, Guatemala, Hungary, Italy, Kazakhstan, Kenya, Latvia, Liechtenstein, Lithuania, Macedonia, Malta, Mexico , Moldova, Montenegro, Netherlands, Pakistan, Paraguay, Peru, Poland, Portugal, Romania, Serbia, Slovakia, Slovenia, Spain, Sweden, Switzerland, Turkey, United Arab Emirates
+**Supported countries for ID card MRZ check:**<br>
+
+- Albania
+- Argentina
+- Austria
+- Bosnia & Herzegovina
+- Bulgaria
+- Chile
+- Croatia
+- Czech Republic
+- Denmark
+- Dominican Republic
+- Ecuador
+- El Salvador
+- Estonia
+- Finland
+- France
+- Georgia
+- Germany
+- Guatemala
+- Hungary
+- Italy
+- Kazakhstan
+- Kenya
+- Latvia
+- Liechtenstein
+- Lithuania
+- Macedonia
+- Malta
+- Mexico
+- Moldova
+- Montenegro
+- Netherlands
+- Pakistan
+- Paraguay
+- Peru
+- Poland
+- Portugal
+- Romania
+- Serbia
+- Slovakia
+- Slovenia
+- Spain
+- Sweden
+- Switzerland
+- Turkey
+- United Arab Emirates
 
 ### Data Retention
 Select a time interval for permanent purge of sensitive data (360 days by default) or keep your data forever. The deletion of fraud transactions can be enabled (excluded by default).
+
+If you update your data retention settings to a shorter span of time, records falling in the range of dates between your previous and new settings will be deleted automatically.
 
 ---
 ## Multi Documents
 
 ### Custom
 
-In your Jumio customer portal settings, you can create your own custom document types. After submitting a new custom document type it takes up to five minutes until it is applied.
+You can create your own custom document types for Document Verification transactions. When submitting a new custom document type, it may take up to five minutes for your new custom document to appear in the Customer Portal.
 
-Specify:
-* A unique document code (constraint: Blanks are not allowed),
-* A name and
-* A default label name in English.
+Specify all three of the following:
+* A unique document code (constraint: blanks are not allowed)
+* A name
+* A default label name in English
 
 It is possible to add translations for different languages.
 
-**Note:** All fields can be updated after creation, except the document code. Created document types cannot be deleted, but they can be disabled (because of the unique document code which cannot be reused).
-
+**Note:** The name and default label can be updated after creation. The document code cannot be changed. Custom document types can be disabled but not deleted, and the document code cannot be reused.
 
 ---
 

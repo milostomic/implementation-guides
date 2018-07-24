@@ -38,6 +38,13 @@ Document Verification offers document upload and extraction (see [Supported docu
 
 Uploads are restricted to a total of 10MB in size and can only include JPEG, PNG or PDF file types. Credit card uploads are limited to 2 images or PDF pages, and all other document types are limited to 30 images or PDF pages.
 
+
+
+|⚠️ Credit cards uploaded with incorrect `type` cannot be masked and are a significant security risk!
+|:----------|
+
+<br>
+
 ## Initiating the Transaction
 
 Call the RESTful HTTP POST API **acquisitions** with the below JSON parameters, in order to create a transaction for each user. You will receive a Jumio scan reference and your client redirect URL, which will be valid for a certain amount of time. The length of time is specified in the request parameter, `authorizationTokenLifetime`.

@@ -7,17 +7,54 @@ The callback is the authoritative answer from Jumio. Specify a callback URL (for
 
 ## Table of Contents
 
+- [Jumio Callback IP List](#jumio-callback-ip-List)
 - [Callback for Netverify](#callback-for-netverify)
+  - [Supported Documents for Address Extraction](#supported-documents-for-address-extraction)
 - [Callback for Document Verification](#callback-for-document-verification)
-    - [Supported Documents for Data Extraction](#supported-documents-for-data-extraction)
+  - [Supported Documents for Data Extraction](#supported-documents-for-data-extraction)
 - [Netverify Retrieval API](#netverify-retrieval-api)
 - [Supported cipher suites](#supported-cipher-suites)
 
 
 ---
+
+## Jumio Callback IP List
+
+Whitelist these IP addresses for callbacks, and use them to verify that the callback originated from Jumio.
+
+**US data center:** </br>
+
+34.202.241.227<br>
+34.226.103.119<br>
+34.226.254.127<br>
+52.52.51.178<br>
+52.53.95.123<br>
+54.67.101.173<br>
+104.130.61.196<br>
+146.20.77.156<br>
+184.106.91.66<br>
+184.106.91.67<br>
+
+Use the hostname `callback.jumio.com` to look up the most current IP addresses.<p>
+
+**EU data center:**</br>
+
+34.253.41.236<br>
+35.157.27.193<br>
+52.48.0.25<br>
+52.57.194.92<br>
+52.58.113.86<br>
+52.209.180.134<br>
+162.13.228.132<br>
+162.13.228.134<br>
+162.13.229.103<br>
+162.13.229.104<br>
+
+Use the hostname `callback.lon.jumio.com` to look up the most current IP addresses.<p>
+
 ## Callback for Netverify
 
-An HTTP POST is sent to your specified callback URL (see [Global Netverify settings](/netverify/portal-settings.md#callback-url)) containing an `application/x-www-form-urlencoded` formatted string with the result.
+An HTTP POST request is sent to your specified callback URL (see [Global Netverify settings](/netverify/portal-settings.md#callback-url)) containing an `application/x-www-form-urlencoded` formatted string with the result.
 
 For mobile: ID verification must be enabled to receive the callback.
 
@@ -58,9 +95,9 @@ The following parameters are posted to your callback URL for Netverify Web embed
 |**idCheckMicroprint** *   |   |"OK" if verificationStatus = APPROVED\_VERIFIED, otherwise "N/A" | |
 |**idCheckSecurityFeatures** *   |   |"OK" if verificationStatus = APPROVED\_VERIFIED, otherwise "N/A" | |
 |**idCheckSignature** *   |   |"OK" if verificationStatus = APPROVED\_VERIFIED, otherwise "N/A" | |
-|**transactionDate** *   |   |Timestamp of the scan creation in the format YYYY-MM-DDThh:mm:ss.SSSZ | |
-|**callbackDate** *   |   |Timestamp of the callback creation in the format YYYY-MM-DDThh:mm:ss.SSSZ | |
-|idType   |   |Possible types:<br/>•	PASSPORT<br/>•	DRIVING\_LICENSE<br/>•	ID\_CARD<br>•	VISA <br/><br/>*Currently only US and China Visas are supported in certain cases. However, Visas from other countries will be rejected as unsupported with idType = VISA | |
+|**transactionDate** *   |   |Timestamp (UTC) of the scan creation<br>format: YYYY-MM-DDThh:mm:ss.SSSZ | |
+|**callbackDate** *   |   |Timestamp  (UTC) of the callback creation <br>format: YYYY-MM-DDThh:mm:ss.SSSZ | |
+|idType   |   |Possible types:<br/>•	PASSPORT<br/>•	DRIVING\_LICENSE<br/>•	ID\_CARD<br>•	VISA *<br/><br/>* Currently only US and China Visas are supported in certain cases. However, Visas from other countries will be rejected as unsupported with idType = VISA | |
 |idSubtype   |255  |Possible subtypes if idType = ID\_CARD<br/>•	NATIONAL\_ID<br/>•	CONSULAR\_ID<br/>•	ELECTORAL\_ID<br/>•	RESIDENT\_PERMIT\_ID<br/>•	TAX\_ID (only supported for PHL)<br/>•	STUDENT\_ID (only supported for POL)<br/>•	PASSPORT\_CARD\_ID (only supported for IRL, RUS and USA)<br/>•	MILITARY\_ID (only supported for GRC)<br/>•	OTHER\_ID<br/>•	VISA (only supported for USA)<br/>•	UNKNOWN<br/><br/>Possible subtypes if idType = DRIVING\_LICENSE<br/>•	LEARNING\_DRIVING\_LICENSE (only supported for USA, CAN, AUS, GBR, IRL, DEU)<br/><br/>Possible subtypes if idType = PASSPORT<br/>•	E\_PASSPORT (only for mobile) | |
 |idCountry   |3  |Possible countries:<br/>•	[ISO 3166-1 alpha-3](http://en.wikipedia.org/wiki/ISO_3166-1_alpha-3) country code<br/>•	XKX (Kosovo)| |
 |rejectReason   |   |Reject reason as JSON object if verificationStatus = DENIED\_FRAUD or ERROR\_NOT\_READABLE\_ID, see tables below  | |
@@ -68,8 +105,8 @@ The following parameters are posted to your callback URL for Netverify Web embed
 |idScanImageFace   |255  |URL to the face image of the scan (JPEG or PNG) if available (`*3`)| |
 |idScanImageBackside   |255  |URL to the back side image of the scan (JPEG or PNG) if available (`*3`)| |
 |idNumber   |200  |Identification number of the document as available on the ID if verificationStatus = APPROVED\_VERIFIED and enabled, otherwise if provided | |
-|idFirstName   |200  |•	First name of the customer as available on the ID if verificationStatus = APPROVED\_VERIFIED and enabled, otherwise if provided<br/><br>•	N/A (for non-Latin characters)<br />o	if idCountry = CHN and idType = DRIVING\_LICENSE or ID\_CARD<br>o	if idCountry = KOR and idType = DRIVING\_LICENSE or ID\_CARD<br>o	if idCountry = JPN and idType = DRIVING\_LICENSE<br>o	if idCountry = RUS and idType = ID\_CARD| |
-|idLastName   |200  |•	Last name of the customer as available on the ID if verificationStatus = APPROVED\_VERIFIED and enabled, otherwise if provided<br/><br>•	Only if full name is printed in Latin characters<br />o if idCountry = KOR and idType = DRIVING\_LICENSE (first name and last name)<br /><br> •	N/A (for non-Latin characters)<br />o	if idCountry = CHN and idType = DRIVING\_LICENSE or ID\_CARD<br>o	if idCountry = KOR and idType = DRIVING\_LICENSE or ID\_CARD<br>o	if idCountry = JPN and idType = DRIVING\_LICENSE<br>o	if idCountry = RUS and idType = ID\_CARD | |
+|idFirstName   |200  |•	First name of the customer as available on the ID if verificationStatus = APPROVED\_VERIFIED and enabled, otherwise if provided<br/><br>•	N/A (for non-Latin characters)<br /> -	if idCountry = CHN and idType = DRIVING\_LICENSE or ID\_CARD<br> -	if idCountry = KOR and idType = DRIVING\_LICENSE or ID\_CARD<br> -	if idCountry = JPN and idType = DRIVING\_LICENSE<br> -	if idCountry = RUS and idType = ID\_CARD| |
+|idLastName   |200  |•	Last name of the customer as available on the ID if verificationStatus = APPROVED\_VERIFIED and enabled, otherwise if provided<br/><br>•	Only if full name is printed in Latin characters<br /> - if idCountry = KOR and idType = DRIVING\_LICENSE (first name and last name)<br /><br> •	N/A (for non-Latin characters)<br /> -	if idCountry = CHN and idType = DRIVING\_LICENSE or ID\_CARD<br> -	if idCountry = KOR and idType = DRIVING\_LICENSE or ID\_CARD<br> -	if idCountry = JPN and idType = DRIVING\_LICENSE<br> -	if idCountry = RUS and idType = ID\_CARD | |
 |idDob   |10  |Date of birth in the format YYYY-MM-DD as available on the ID if verificationStatus = APPROVED\_VERIFIED and enabled, otherwise if provided <br /><br />If idCountry = IND date of birth can be incomplete, possible values e.g.:<br />•	Year-Month-Day: 1990-12-09 <br />•	Year only: 1990-01-01 <br />•	Year-Month: 1990-12-01 <br />•	Year-Day: 1990-01-09<br />Additional parameter "originDob" will be provided| |
 |idExpiry   |10  |Date of expiry in the format YYYY-MM-DD as available on the ID if verificationStatus = APPROVED\_VERIFIED and enabled, otherwise if provided | |
 |idUsState   |255  |Possible values if idType = PASSPORT or ID\_CARD:<br/>•	Last two characters of [ISO 3166-2:US](http://en.wikipedia.org/wiki/ISO_3166-2:US) state code<br/>•	Last 2-3 characters of [ISO 3166-2:AU](http://en.wikipedia.org/wiki/ISO_3166-2:AU) state code<br/>•	Last two characters of [ISO 3166-2:CA](http://en.wikipedia.org/wiki/ISO_3166-2:CA) state code<br/>• [ISO 3166-1](http://en.wikipedia.org/wiki/ISO_3166-1_alpha-3) country name<br/>• XKX (Kosovo)<br/>• Free text - if it can't be mapped to a state/country code<br/><br/>If idType = DRIVING\_LICENSE:<br/>•	Last two characters of [ISO 3166-2:US](http://en.wikipedia.org/wiki/ISO_3166-2:US) state code<br/>•	Last 2-3 characters of [ISO 3166-2:AU](http://en.wikipedia.org/wiki/ISO_3166-2:AU) state code<br/>•	Last two characters of [ISO 3166-2:CA](http://en.wikipedia.org/wiki/ISO_3166-2:CA) state code| |
@@ -79,13 +116,13 @@ The following parameters are posted to your callback URL for Netverify Web embed
 |merchantReportingCriteria   |100  |Your reporting criteria for each scan | |
 |customerId   |100  |ID of the customer as provided | |
 |clientIp   |   |IP address of the client in the format xxx.xxx.xxx.xxx | |
-|firstAttemptDate   |  |Timestamp of the first scan attempt in the format YYYY-MM-DDThh:mm:ss.SSSZ | |
+|firstAttemptDate   |  |Timestamp (UTC) of the first scan attempt <br>format: YYYY-MM-DDThh:mm:ss.SSSZ | |
 |optionalData1   |255  |Optional field of MRZ line 1 | |
 |optionalData2   |255  |Optional field of MRZ line 2 | |
 |dni   |255  |DNI as available on the ID if idCountry = ESP and idSubtype = NATIONAL\_ID  | |
 |curp   |255  |CURP as available on the ID if idCountry = MEX and idSubtype = ELECTORAL\_ID  |X |
 |gender   |2  |Possible values: M, F<br>• if idCountry = FRA and idSubtype = NATIONAL\_ID (MRZ type CNIS)<br/>•	if idType = VISA and additional extraction for Visa enabled | |
-|identityVerification   |   |Identity verification as JSON object if verificationStatus = APPROVED\_VERIFIED, see table below|X |
+|identityVerification   |   |Identity verification as JSON object if verificationStatus = APPROVED\_VERIFIED, see table below (`*2`)|X |
 |presetCountry   | 3  |Possible countries:<br />•	[ISO 3166-1 alpha-3](http://en.wikipedia.org/wiki/ISO_3166-1_alpha-3) country code <br /> • XKX (Kosovo)| |
 |presetIdType   |    |Possible ID types: PASSPORT, DRIVING\_LICENSE, ID\_CARD| |
 |dlCarPermission|255 |Only available if:<br/> •Extraction supported for specific country<br/>•verificationStatus = APPROVED\_VERIFIED<br/><br/>Possible values:<br /> • YES<br /> • NO<br /> • NOT\_READABLE|X|
@@ -97,10 +134,10 @@ The following parameters are posted to your callback URL for Netverify Web embed
 |visaCategory|255|Visa category if idType = VISA and additional extraction for Visa enabled|X |
 |originDob|10|Original format of date of birth if idCountry = IND <br/>Possible values e.g.: <br />• Year/Month/Day: 1990/12/09 <br />• Year only: 1990// <br />• Year/Month: 1990/12/ <br />• Year/Day: 1990//09|<br /> |
 
-
 (`*1`) Scan is declined as unsupported if the provided ID is not supported by Jumio, or not accepted in your Netverify settings.<br/>
-(`*2`) Face match is performed if enabled.<br/>
+(`*2`) Identity verification is performed if enabled.<br/>
 (`*3`) For ID types that are configured to support a separate scan of the front side and back side, there is a separate image of the front side (idScanImage) and the back side (idScanImageBackside). If face match is enabled, there is also a picture of the face (idScanImageFace).
+
 #### Retrieving Images
 Use HTTP: **GET** with **Basic Authorization** using your API token and secret, as userid and password.<br>
 **Header**: The following parameters are mandatory in the "header" section of your request.
@@ -109,7 +146,7 @@ Use HTTP: **GET** with **Basic Authorization** using your API token and secret, 
 The value for **User-Agent** must contain a reference to your business or entity for Jumio to be able to identify your requests. (e.g. YourCompanyName YourAppName/1.0.0). Without a proper User-Agent header, Jumio will take longer to diagnose API issues.<br>
 
 The TLS protocol is required during the TLS handshake (see [Supported cipher suites](/netverify/supported-cipher-suites.md)) and we strongly recommend using the latest version.<br/><br>
-(`*4`) Address recognition is performed for supported IDs, if enabled. Please note, there are three different address formats (US, EU, Raw). Please check [Supported documents for address extraction](/netverify/netverify-web.md#supported-documents-for-address-extraction) to see which format applies to specific IDs. The different address parameters are a part of the JSON object, if they are available on the ID.
+(`*4`) Address recognition is performed for supported IDs, if enabled. Please note, there are three different address formats (US, EU, Raw). Please check [Supported documents for Address Extraction](#supported-documents-for-address-extraction) to see which format applies to specific IDs. The different address parameters are a part of the JSON object, if they are available on the ID.
 
 ### US Address Format
 
@@ -187,6 +224,20 @@ The TLS protocol is required during the TLS handshake (see [Supported cipher sui
 |expiryDate   |  |Date of expiry in the format YYYY-MM-DD as available on the driver license|
 |isReadable   |  |Possible value:<br>• FALSE |
 
+### Supported documents for Address Extraction
+
+|Country    |ID card    |Driving license    |Passport    |Callback format |
+|:------------|:-------|:--------------|:--------------|:-------|
+|Australia|No|Yes|No|US|
+|Canada|No|Yes|No|US|
+|France|Yes|Yes|Yes|Raw|
+|Germany|Yes|No|No|EU|
+|Ireland|No|Yes|No|Raw|
+|Mexico|Yes|No|No|US|
+|Singapore|Yes|No|No|Raw|
+|Spain|Yes|No|No|EU|
+|United Kingdom|No|Yes|No|Raw|
+|United States|No|Yes|No|US|
 
 ### Sample Callbacks
 
@@ -216,19 +267,23 @@ The following parameters are posted to your callback URL for Document Verificati
 |Parameter       | Type    | Max. Length|  Description|
 |:---------------|:--------|:----------: |:------------|
 |**scanReference** *   | String  |36 |Jumio's reference number for each scan|
-|**timestamp** * | String  |  |Timestamp of the response in the format YYYY-MM-DDThh:mm:ss.SSSZ|
+|**timestamp** * | String  |  |Timestamp (UTC) of the response <br>format: YYYY-MM-DDThh:mm:ss.SSSZ|
 |**transaction** * | JSON object  |  |Transaction related data, see table below|
 |document   | JSON object  |       |Document related data if transaction status = DONE, see table |
 
+### Transaction
+
 |Parameter "transaction"       | Type    | Max. Length|  Description|
 |:---------------|:--------|:----------:|:------------|
-|**date** *   					        | String  |    |Timestamp of the scan creation in the format YYYY-MM-DDThh:mm:ss.SSSZ|
+|**date** *   					        | String  |    |Timestamp (UTC) of the scan creation<br>format: YYYY-MM-DDThh:mm:ss.SSSZ|
 |**status** *  | String  |    |Possible states:<br>•	DONE<br>•	FAILED (if initialized acquisition is not successfully finalized within 5 minutes after creation/last update)|
 |**source** *     							| String  |    |Possible values: <br>• DOC\_UPLOAD (Document Verification)<br>• DOC\_API (Document Verification API)<br>• DOC\_SDK (Document Verification Mobile)|
 |**merchantScanReference** *		| String  |255 |Your reference for each scan |
 |**customerId** *       				| String  |255 |ID of the customer|
 |merchantReportingCriteria    | String  |255 |Your reporting criteria for each scan|
 |clientIp       	| String  |100  |IP address of the client if provided for the Document Verification API |
+
+### Document
 
 |Parameter "document"      | Type    | Max. Length|  Description|
 |:-------------------------|:--------|:----------:|:------------|
@@ -238,16 +293,21 @@ The following parameters are posted to your callback URL for Document Verificati
 |**images** *	| JSON array  |  |URLs to the images of the scan (JPEG or PNG) (`*1`) |
 |originalDocument |String | | URL to the originally submitted document of the scan (PDF) if available (`*1`)  |
 |customDocumentCode | String  |100 |Your custom document code (maintained in your Jumio customer portal) if type = CUSTOM |
-|extractedData | JSON object  | |Extracted data if status = EXTRACTED, see [Supported documents for data extraction](#supported-documents-for-data-extraction)|
+|extractedData | JSON object  | |Extracted data if status = EXTRACTED, see [Supported documents for Data Extraction](#supported-documents-for-data-extraction)|
 
 
-(`*1`) **Retrieving Images**<br><br>
+(`*1`) Retrieve the images of the transaction.
+
+#### Retrieving Images
 Use HTTP: **GET** with **Basic Authorization** using your API token and secret, as userid and password.<br>
-Include Header:`User-Agent: YOURCOMPANYNAME YOURAPPLICATIONNAME/VERSION` <br><br>
-The value for **User-Agent** must contain a reference to your business or entity for Jumio to be able to identify your requests. (e.g. YourCompanyName YourAppName/1.0.0). Without a proper User-Agent header, Jumio will take longer to diagnose API issues.<br><br/>
-The TLS protocol is required during the TLS handshake (see [Supported cipher suites](/netverify/supported-cipher-suites.md)) and we strongly recommend using the latest version.<br/>
+**Header**: The following parameters are mandatory in the "header" section of your request.
+- `Accept: image/jpeg, image/png`
+- `User-Agent: YOURCOMPANYNAME YOURAPPLICATIONNAME/VERSION`<br /><br />
+The value for **User-Agent** must contain a reference to your business or entity for Jumio to be able to identify your requests. (e.g. YourCompanyName YourAppName/1.0.0). Without a proper User-Agent header, Jumio will take longer to diagnose API issues.<br>
 
+The TLS protocol is required during the TLS handshake (see [Supported cipher suites](/netverify/supported-cipher-suites.md)) and we strongly recommend using the latest version.<br/><br>
 
+### Extracted Data
 
 |Parameter "extractedData"      | Type    | Max. Length|  Description|
 |:---------------|:--------|:----------:|:------------|
@@ -262,7 +322,7 @@ The TLS protocol is required during the TLS handshake (see [Supported cipher sui
 |signatureAvailable  | String  |   |"true" if signature available, otherwise "false"|
 |address	| JSON object  |  |Address as JSON object in raw format if status = EXTRACTED, see table below |
 
-#### Raw Address Format
+### Raw Address Format
 
 |Parameter "address"      | Max. Length|  Description|
 |:---------------|:----------:|:------------|
@@ -276,7 +336,7 @@ The TLS protocol is required during the TLS handshake (see [Supported cipher sui
 |city |64 |City |
 |subdivision |50 |Name of subdivision |
 
-#### Supported Documents for Data Extraction
+### Supported Documents for Data Extraction
 
 <!-- removed with R151
 |Country      | Type | Extracted data |
@@ -326,6 +386,7 @@ timestamp=2017-06-06T12%3A06%3A49.016Z&scanReference=xxxxxxxx-xxxx-xxxx-xxxx-xxx
 ```
 timestamp=2017-06-06T12%3A06%3A49.016Z&scanReference=xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx&document=%7B%22type%22%3A%22SSC%22%2C%22country%22%3A%22USA%22%2C%22images%22%3A%5B%22https%3A%2F%2Fretrieval.netverify.com%2Fapi%2Fnetverify%2Fv2%2Fdocuments%2Fxxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx%2Fpages%2F1%22%5D%2C%22status%22%3A%22DISCARDED%22%7D&transaction=%7B%22customerId%22%3A%22CUSTOMERID%22%2C%22date%22%3A%222014-10-17T06%3A37%3A51.969Z%22%2C%22merchantScanReference%22%3A%22YOURSCANREFERENCE%22%2C%22source%22%3A%22DOC_SDK%22%2C%22status%22%3A%22DONE%22%7D
 ```
+
 ---
 ## Netverify Retrieval API
 If your server was not able to process the callback, which is the authoritative answer from Jumio, you can implement RESTful HTTP GET APIs to retrieve the status, details and image(s) for a specific scan. The implementation guide can be viewed via the link below.

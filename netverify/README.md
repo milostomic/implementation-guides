@@ -19,6 +19,7 @@ If you have any questions regarding our implementation guides please contact Jum
 
 | Date           | Description       |
 |:---------------|:------------------|
+| 2018-07-24 |Release of Netverify Web version 4|
 | 2018-07-03 |Document Verification: Added support for data extraction for all countries with Latin characters|
 | 2018-06-19 |Added address extraction for Singapore ID cards|
 | 2018-06-05 |Added callback parameter "originDob"|

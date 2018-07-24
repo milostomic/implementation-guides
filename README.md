@@ -16,7 +16,10 @@ If you have any questions regarding our implementation guides please contact Jum
 
 Jumio's Netverify ID Verification, lets customers easily and securely capture and submit their government-issued ID documents, performs real-time ID verification using machine learning and helps deter fraud and meet regulatory requirements.
 
+- [Netverify Web v4](/netverify/netverify-web-v4.md)
 - [Netverify Web](/netverify/netverify-web.md)
+  - [Netverify Web Migration v4](/netverify/netverify-web.md)
+- [performNetverify](/netverify/performNetverify.md)
 - [Netverify Mobile iOS](https://github.com/Jumio/mobile-sdk-ios)
 - [Netverify Mobile Android](https://github.com/Jumio/mobile-sdk-android)
 - [Netverify Retrieval API](/netverify/netverify-retrieval-api.md)
