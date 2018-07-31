@@ -97,7 +97,8 @@ Some of the **initiate** API request fields have been retained, but have new nam
 <br>
 
 ### Fields retained from v3 to v4 (with changes where applicable)
-Changes to the fields in the **initiate** API request are listed in the tables below.<br>
+Changes to the fields in the **initiate** API request are listed in the tables below.
+
 **Required fields appear in bold type.**  
 
 |NVW3 embedded<br>NVW3 redirect|NVW4             |Type   | Max. length|Changes                                                                                              
@@ -194,7 +195,7 @@ If the optional **presets** field is used, all three values must be passed toget
 |:------------|:-------|:--------------|:--------------|
 |**index**|integer|1| &nbsp; must be set to `1`|
 |**country**|string|3|Possible values:<br>•	[ISO 3166-1 alpha-3](http://en.wikipedia.org/wiki/ISO_3166-1_alpha-3) country code <br /> • `XKX` (Kosovo) is also allowed|
-|**type**|string|15|Possible values:<br>• `PASSPORT`<br>•	`DRIVING\_LICENSE`<br>•	`ID\_CARD`|
+|**type**|string|15|Possible values:<br>• `PASSPORT`<br>•	`DRIVING_LICENSE`<br>•	`ID_CARD`|
 
 <br>
 

@@ -8,7 +8,7 @@
 
 <br>
 
-[Which version of the Netverify Web client I am using?](https://support.jumio.com/hc/en-us/articles/360007401353)
+[Which version of the Netverify Web client am I using?](https://support.jumio.com/hc/en-us/articles/360007401353)
 
 <br>
 

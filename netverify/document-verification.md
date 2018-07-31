@@ -42,6 +42,7 @@ Uploads are restricted to a total of 10MB in size and can only include JPEG, PNG
 
 |⚠️ Credit cards uploaded with incorrect `type` cannot be masked and are a significant security risk!
 |:----------|
+|Jumio applies appropriate controls where credit card data is uploaded via fields designed for such data. However, we cannot provide the same assurance where such credit card data is entered into other field types. This may present a risk to your customers and business, so please take care when uploading data to ensure its optimally protected.|
 
 <br>
 
