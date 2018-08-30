@@ -81,17 +81,17 @@ The following parameters are posted to your callback URL for Netverify Web embed
 
 **Note:** Mandatory parameters are marked with an asterisk * and highlighted bold.
 
-|Parameter       | Max. Length    | Description| Activation needed |
+|Parameter       | Max. Length    | Description| Notes |
 |:---------------|:--------|:------------| ------ |
 |**callBackType** *   |   |NETVERIFYID | |
 |**jumioIdScanReference** *   |36  |Jumio’s reference number for each scan | |
-|**verificationStatus** *   |   |Possible states:<br/>•	APPROVED\_VERIFIED<br/> •	DENIED\_FRAUD<br/>•	DENIED\_UNSUPPORTED\_ID\_TYPE (`*1`)<br/> •	DENIED\_UNSUPPORTED\_ID\_COUNTRY (`*1`)<br/>•	ERROR\_NOT\_READABLE\_ID<br/> •	NO\_ID\_UPLOADED | |
+|**verificationStatus** *   |   |Possible states:<br/>•	APPROVED\_VERIFIED<br/> •	DENIED\_FRAUD<br/>•	DENIED\_UNSUPPORTED\_ID\_TYPE<sup>1</sup><br/> •	DENIED\_UNSUPPORTED\_ID\_COUNTRY<sup>1</sup><br/>•	ERROR\_NOT\_READABLE\_ID<br/> •	NO\_ID\_UPLOADED | |
 |**idScanStatus** *   |   |SUCCESS if verificationStatus = APPROVED\_VERIFIED, otherwise ERROR | |
 |**idScanSource** *   |   |Possible values:<br>•	WEB (if Netverify Web embedded and no camera or upload started)<br>•	WEB\_CAM (if Netverify Web embedded via camera)<br>•	WEB\_UPLOAD (if Netverify Web embedded via upload)<br>•	REDIRECT (if Netverify Web redirect and no camera or upload started)<br>•	REDIRECT\_CAM (if Netverify Web redirect via camera)<br>•	REDIRECT\_UPLOAD (if Netverify Web redirect via upload)<br>•	API (if performNetverify)<br>• SDK (if mobile) | |
 |**idCheckDataPositions** *   |   |"OK" if verificationStatus = APPROVED\_VERIFIED, otherwise "N/A" | |
 |**idCheckDocumentValidation** *   |   |"OK" if verificationStatus = APPROVED\_VERIFIED, otherwise "N/A" | |
 |**idCheckHologram** *   |   |"OK" if verificationStatus = APPROVED\_VERIFIED, otherwise "N/A" | |
-|**idCheckMRZcode** *   |   |"OK" for passports and supported ID cards if verificationStatus = APPROVED\_VERIFIED and MRZ check is enabled, otherwise "N/A" | |
+|**idCheckMRZcode** *   |   |"OK" for passports and supported ID cards if verificationStatus = APPROVED\_VERIFIED and MRZ check is enabled, otherwise "N/A" |not returned for NLD, DEU, KOR if NV masking is enabled <sup>4</sup>|
 |**idCheckMicroprint** *   |   |"OK" if verificationStatus = APPROVED\_VERIFIED, otherwise "N/A" | |
 |**idCheckSecurityFeatures** *   |   |"OK" if verificationStatus = APPROVED\_VERIFIED, otherwise "N/A" | |
 |**idCheckSignature** *   |   |"OK" if verificationStatus = APPROVED\_VERIFIED, otherwise "N/A" | |
@@ -101,41 +101,42 @@ The following parameters are posted to your callback URL for Netverify Web embed
 |idSubtype   |255  |Possible subtypes if idType = ID\_CARD<br/>•	NATIONAL\_ID<br/>•	CONSULAR\_ID<br/>•	ELECTORAL\_ID<br/>•	RESIDENT\_PERMIT\_ID<br/>•	TAX\_ID (only supported for PHL)<br/>•	STUDENT\_ID (only supported for POL)<br/>•	PASSPORT\_CARD\_ID (only supported for IRL, RUS, UKR and USA)<br/>•	MILITARY\_ID (only supported for GRC)<br/>•	OTHER\_ID<br/>•	VISA (only supported for USA)<br/>•	UNKNOWN<br/><br/>Possible subtypes if idType = DRIVING\_LICENSE<br/>•	LEARNING\_DRIVING\_LICENSE (only supported for USA, CAN, AUS, GBR, IRL, DEU)<br/><br/>Possible subtypes if idType = PASSPORT<br/>•	E\_PASSPORT (only for mobile) | |
 |idCountry   |3  |Possible countries:<br/>•	[ISO 3166-1 alpha-3](http://en.wikipedia.org/wiki/ISO_3166-1_alpha-3) country code<br/>•	XKX (Kosovo)| |
 |rejectReason   |   |Reject reason as JSON object if verificationStatus = DENIED\_FRAUD or ERROR\_NOT\_READABLE\_ID, see tables below  | |
-|idScanImage   |255  |URL to the image of the scan (JPEG or PNG) if available (`*2`) | |
-|idScanImageFace   |255  |URL to the face image of the scan (JPEG or PNG) if available (`*2`)| |
-|idScanImageBackside   |255  |URL to the back side image of the scan (JPEG or PNG) if available (`*2`)| |
+|idScanImage   |255  |URL to the image of the scan (JPEG or PNG) if available<sup>2</sup> | |
+|idScanImageFace   |255  |URL to the face image of the scan (JPEG or PNG) if available<sup>2</sup>| |
+|idScanImageBackside   |255  |URL to the back side image of the scan (JPEG or PNG) if available<sup>2</sup>| |
 |idNumber   |200  |Identification number of the document as available on the ID if verificationStatus = APPROVED\_VERIFIED and enabled, otherwise if provided | |
 |idFirstName   |200  |•	First name of the customer as available on the ID if verificationStatus = APPROVED\_VERIFIED and enabled, otherwise if provided<br/><br>•	N/A (for non-Latin characters)<br /> -	if idCountry = CHN and idType = DRIVING\_LICENSE or ID\_CARD<br> -	if idCountry = KOR and idType = DRIVING\_LICENSE or ID\_CARD<br> -	if idCountry = JPN and idType = DRIVING\_LICENSE<br> -	if idCountry = RUS and idType = ID\_CARD| |
 |idLastName   |200  |•	Last name of the customer as available on the ID if verificationStatus = APPROVED\_VERIFIED and enabled, otherwise if provided<br/><br>•	Only if full name is printed in Latin characters<br /> - if idCountry = KOR and idType = DRIVING\_LICENSE (first name and last name)<br /><br> •	N/A (for non-Latin characters)<br /> -	if idCountry = CHN and idType = DRIVING\_LICENSE or ID\_CARD<br> -	if idCountry = KOR and idType = DRIVING\_LICENSE or ID\_CARD<br> -	if idCountry = JPN and idType = DRIVING\_LICENSE<br> -	if idCountry = RUS and idType = ID\_CARD | |
-|idDob   |10  |Date of birth in the format YYYY-MM-DD as available on the ID if verificationStatus = APPROVED\_VERIFIED and enabled, otherwise if provided <br /><br />If idCountry = IND date of birth can be incomplete, possible values e.g.:<br />•	Year-Month-Day: 1990-12-09 <br />•	Year only: 1990-01-01 <br />•	Year-Month: 1990-12-01 <br />•	Year-Day: 1990-01-09<br />Additional parameter "originDob" will be provided| |
+|idDob   |10  |Date of birth in the format YYYY-MM-DD as available on the ID if verificationStatus = APPROVED\_VERIFIED and enabled, otherwise if provided <br /><br />If idCountry = IND date of birth can be incomplete, possible values e.g.:<br />•	Year-Month-Day: 1990-12-09 <br />•	Year only: 1990-01-01 <br />•	Year-Month: 1990-12-01 <br />•	Year-Day: 1990-01-09<br />Additional parameter "originDob" will be provided|not returned for KOR if NV masking is enabled |
 |idExpiry   |10  |Date of expiry in the format YYYY-MM-DD as available on the ID if verificationStatus = APPROVED\_VERIFIED and enabled, otherwise if provided | |
 |idUsState   |255  |Possible values if idType = PASSPORT or ID\_CARD:<br/>•	Last two characters of [ISO 3166-2:US](http://en.wikipedia.org/wiki/ISO_3166-2:US) state code<br/>•	Last 2-3 characters of [ISO 3166-2:AU](http://en.wikipedia.org/wiki/ISO_3166-2:AU) state code<br/>•	Last two characters of [ISO 3166-2:CA](http://en.wikipedia.org/wiki/ISO_3166-2:CA) state code<br/>• [ISO 3166-1](http://en.wikipedia.org/wiki/ISO_3166-1_alpha-3) country name<br/>• XKX (Kosovo)<br/>• Free text - if it can't be mapped to a state/country code<br/><br/>If idType = DRIVING\_LICENSE:<br/>•	Last two characters of [ISO 3166-2:US](http://en.wikipedia.org/wiki/ISO_3166-2:US) state code<br/>•	Last 2-3 characters of [ISO 3166-2:AU](http://en.wikipedia.org/wiki/ISO_3166-2:AU) state code<br/>•	Last two characters of [ISO 3166-2:CA](http://en.wikipedia.org/wiki/ISO_3166-2:CA) state code| |
-|personalNumber   |14  |Personal number of the document <br />• if verificationStatus = APPROVED\_VERIFIED and <br />• if idType = PASSPORT and if data available on the document | |
-|idAddress   |   |Address as JSON object in US, EU or raw format if verificationStatus = APPROVED, see tables below (`*3`) |X |
+|personalNumber   |14  |Personal number of the document <br />• if verificationStatus = APPROVED\_VERIFIED and <br />• if idType = PASSPORT and if data available on the document |not returned for NLD, DEU, KOR if NV masking is enabled <sup>4</sup> |
+|idAddress   |   |Address as JSON object in US, EU or raw format if verificationStatus = APPROVED, see tables below<sup>3</sup> |activation required |
 |merchantIdScanReference   |100  |Your reference for each scan | |
 |merchantReportingCriteria   |100  |Your reporting criteria for each scan | |
 |customerId   |100  |ID of the customer as provided | |
 |clientIp   |   |IP address of the client in the format xxx.xxx.xxx.xxx | |
 |firstAttemptDate   |  |Timestamp (UTC) of the first scan attempt <br>format: YYYY-MM-DDThh:mm:ss.SSSZ | |
-|optionalData1   |255  |Optional field of MRZ line 1 | |
+|optionalData1   |255  |Optional field of MRZ line 1 | not returned for NLD ID if NV masking is enabled <sup>4</sup>|
 |optionalData2   |255  |Optional field of MRZ line 2 | |
 |dni   |255  |DNI as available on the ID if idCountry = ESP and idSubtype = NATIONAL\_ID  | |
-|curp   |255  |CURP as available on the ID if idCountry = MEX and idSubtype = ELECTORAL\_ID  |X |
+|curp   |255  |CURP as available on the ID if idCountry = MEX and idSubtype = ELECTORAL\_ID  |activation required |
 |gender   |2  |Possible values: M, F<br>• if idCountry = FRA and idSubtype = NATIONAL\_ID (MRZ type CNIS)<br/>•	if idType = VISA and additional extraction for Visa enabled | |
-|identityVerification   |   |Identity verification as JSON object if verificationStatus = APPROVED\_VERIFIED, see table [Identity Verification](#identity-verification) below|X |
+|identityVerification   |   |Identity verification as JSON object if verificationStatus = APPROVED\_VERIFIED, see table [Identity Verification](#identity-verification) below|activation required |
 |presetCountry   | 3  |Possible countries:<br />•	[ISO 3166-1 alpha-3](http://en.wikipedia.org/wiki/ISO_3166-1_alpha-3) country code <br /> • XKX (Kosovo)| |
 |presetIdType   |    |Possible ID types: PASSPORT, DRIVING\_LICENSE, ID\_CARD| |
-|dlCarPermission|255 |Only available if:<br/> •Extraction supported for specific country<br/>•verificationStatus = APPROVED\_VERIFIED<br/><br/>Possible values:<br /> • YES<br /> • NO<br /> • NOT\_READABLE|X|
-|dlCategories   | JSON object  |Driver license categories as JSON object if verificationStatus = APPROVED\_VERIFIED, see table below <br /><br />Supported Countries:<br />• France<br />• Belgium<br />• Germany<br />• Italy<br />• Spain<br />• Austria<br />• Netherlands<br />• Great Britain|X |
-|nationality |3|Nationality if idType = VISA and additional extraction for Visa enabled. Possible countries: <br>• [ISO 3166-1 alpha-3](http://en.wikipedia.org/wiki/ISO_3166-1_alpha-3) country code <br />• XKX (Kosovo)|X |
-|passportNumber|255|Passport number if idType = VISA and additional extraction for Visa enabled|X |
-|durationOfStay|255|Duration of stay if idType = VISA and additional extraction for Visa enabled|X |
-|numberOfEntries|255|Number of entries if idType = VISA and additional extraction for Visa enabled|X |
-|visaCategory|255|Visa category if idType = VISA and additional extraction for Visa enabled|X |
+|dlCarPermission|255 |Only available if:<br/> •Extraction supported for specific country<br/>•verificationStatus = APPROVED\_VERIFIED<br/><br/>Possible values:<br /> • YES<br /> • NO<br /> • NOT\_READABLE|activation required|
+|dlCategories   | JSON object  |Driver license categories as JSON object if verificationStatus = APPROVED\_VERIFIED, see table below <br /><br />Supported Countries:<br />• France<br />• Belgium<br />• Germany<br />• Italy<br />• Spain<br />• Austria<br />• Netherlands<br />• Great Britain|activation required |
+|nationality |3|Nationality if idType = VISA and additional extraction for Visa enabled. Possible countries: <br>• [ISO 3166-1 alpha-3](http://en.wikipedia.org/wiki/ISO_3166-1_alpha-3) country code <br />• XKX (Kosovo)|activation required |
+|passportNumber|255|Passport number if idType = VISA and additional extraction for Visa enabled|activation required |
+|durationOfStay|255|Duration of stay if idType = VISA and additional extraction for Visa enabled|activation required |
+|numberOfEntries|255|Number of entries if idType = VISA and additional extraction for Visa enabled|activation required |
+|visaCategory|255|Visa category if idType = VISA and additional extraction for Visa enabled|activation required |
 |originDob|10|Original format of date of birth if idCountry = IND <br/>Possible values e.g.: <br />• Year/Month/Day: 1990/12/09 <br />• Year only: 1990// <br />• Year/Month: 1990/12/ <br />• Year/Day: 1990//09|<br /> |
 
-(`*1`) Scan is declined as unsupported if the provided ID is not supported by Jumio, or not accepted in your Netverify settings.<br/>
-(`*2`) For ID types that are configured to support a separate scan of the front side and back side, there is a separate image of the front side (idScanImage) and the back side (idScanImageBackside). If face match is enabled, there is also a picture of the face (idScanImageFace).
+<sup>1</sup> Scan is declined as unsupported if the provided ID is not supported by Jumio, or not accepted in your Netverify settings.<br/> <sup>2</sup> For ID types that are configured to support a separate scan of the front side and back side, there is a separate image of the front side (idScanImage) and the back side (idScanImageBackside). If face match is enabled, there is also a picture of the face (idScanImageFace).<br>
+<sup>3</sup> Address recognition is performed for supported IDs, if enabled. Please note, there are three different address formats (US, EU, Raw). Please check [Supported documents for Address Extraction](#supported-documents-for-address-extraction) to see which format applies to specific IDs. The different address parameters are a part of the JSON object, if they are available on the ID.
+<sup>4</sup> Fields containing certain kinds of personally identifying information are not returned if NV masking is enabled for the Netherlands, Germany, or South Korea. See [Netverify masking](#netverify-masking) for more information. 
 
 #### Retrieving Images
 Use HTTP: **GET** with **Basic Authorization** using your API token and secret, as userid and password.<br>
@@ -145,7 +146,7 @@ Use HTTP: **GET** with **Basic Authorization** using your API token and secret, 
 The value for **User-Agent** must contain a reference to your business or entity for Jumio to be able to identify your requests. (e.g. YourCompanyName YourAppName/1.0.0). Without a proper User-Agent header, Jumio will take longer to diagnose API issues.<br>
 
 The TLS protocol is required during the TLS handshake (see [Supported cipher suites](/netverify/supported-cipher-suites.md)) and we strongly recommend using the latest version.<br/><br>
-(`*3`) Address recognition is performed for supported IDs, if enabled. Please note, there are three different address formats (US, EU, Raw). Please check [Supported documents for Address Extraction](#supported-documents-for-address-extraction) to see which format applies to specific IDs. The different address parameters are a part of the JSON object, if they are available on the ID.
+
 
 ### US Address Format
 
@@ -238,6 +239,23 @@ The TLS protocol is required during the TLS handshake (see [Supported cipher sui
 |United Kingdom|No|Yes|No|Raw|
 |United States|No|Yes|No|US|
 
+## Netverify masking
+
+Extracting certain sensitive information from identity documents in the Netherlands, Germany, and South Korea is prohibited by law for customers with a business presence in those countries. These customers can elect to enable Netverify masking to protect this sensitive data.
+
+When masking is enabled for these countries, certain fields cannot be extracted and returned in the callback. The information contained in these fields is masked before the user's image is stored.
+
+|Country|Document|Affected parameters (not returned in the callback)|
+|:---|:---|:---|
+Germany|Passport|idCheckMRZcode, idNumber|
+Germany|ID card|idCheckMRZcode, idNumber|
+Netherlands|Passport|idCheckMRZcode, personalNumber|
+Netherlands|ID card|idCheckMRZcode, personalNumber|
+Netherlands|Driver license|image is masked, no extracted data fields are affected|
+South Korea|Passport|idCheckMRZcode, personalNumber|
+South Korea|ID card|idNumber, idDob|
+South Korea|Driver license|idDob|
+
 ### Sample Callbacks
 
 #### Sample callback (URL-encoded POST): Approved and verified
@@ -289,13 +307,13 @@ The following parameters are posted to your callback URL for Document Verificati
 |**status** * 	| String  |    |Possible states: <br/> ⦁ UPLOADED (default) <br/> ⦁	EXTRACTED if supported document for data extraction provided <br/> ⦁	DISCARDED if no supported document for data extraction provided |
 |**country** * | String  |3   |Possible countries: <br/> ⦁ [ISO 3166-1 alpha-3](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-3) country code <br/> ⦁	XKX (Kosovo) |
 |**type** *    | String  |    |Possible types: <br>⦁ CC (Credit card, front and back side)<br/>⦁	BS (Bank statement, front side) <br/>⦁	IC (Insurance card, front side) <br/>⦁	UB (Utility bill, front side) <br/>⦁	CAAP (Cash advance application, front and back side) <br/>⦁	CRC (Corporate resolution certificate, front and back side) <br/>⦁	CCS (Credit card statement, front and back side) <br/>⦁	LAG (Lease agreement, front and back side) <br/>⦁	LOAP (Loan application, front and back side) <br/>⦁	MOAP (Mortgage application, front and back side) <br/>⦁	TR (Tax return, front and back side) <br/>⦁	VT (Vehicle title, front side) <br/>⦁	VC (Voided check, front side) <br/>⦁	STUC (Student card, front side) <br/>⦁	HCC (Health care card, front side) <br/>⦁	CB (Council bill, front side) <br/>⦁	SENC (Seniors card, front side) <br/>⦁	MEDC (Medicare card, front side) <br/>⦁	BC (Birth certificate, front side) <br/>⦁	WWCC (Working with children check, front side) <br/>⦁	SS (Superannuation statement, front side) <br/>⦁	TAC (Trade association card, front side) <br/>⦁	SEL (School enrolment letter, front side) <br/>⦁	PB (Phone bill, front side) <br/>⦁	USSS (US social security card, front side) <br/>⦁	SSC (Social security card, front side) <br/>⦁	CUSTOM (Custom document type)|
-|**images** *	| JSON array  |  |URLs to the images of the scan (JPEG or PNG) (`*1`) |
-|originalDocument |String | | URL to the originally submitted document of the scan (PDF) if available (`*1`)  |
+|**images** *	| JSON array  |  |URLs to the images of the scan (JPEG or PNG)<sup>1</sup> |
+|originalDocument |String | | URL to the originally submitted document of the scan (PDF) if available<sup>1</sup> |
 |customDocumentCode | String  |100 |Your custom document code (maintained in your Jumio customer portal) if type = CUSTOM |
 |extractedData | JSON object  | |Extracted data if status = EXTRACTED, see [Supported documents for Data Extraction](#supported-documents-for-data-extraction)|
 
 
-(`*1`) Retrieve the images of the transaction.
+<sup>1</sup> Retrieve the images of the transaction.
 
 #### Retrieving Images
 Use HTTP: **GET** with **Basic Authorization** using your API token and secret, as userid and password.<br>

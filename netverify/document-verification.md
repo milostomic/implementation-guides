@@ -1,52 +1,51 @@
 ![Jumio](/images/netverify.png)
 
-# Document Verification Implementation Guide
+# Document Verification implementation guide
 
 This is a reference manual and configuration guide for the Document Verification product. It illustrates how to embed Document Verification into your web page, as well as implement the Document Verification APIs.
 
 
-## Table of Contents
-- [Release Notes](#release-notes)
+## Table of contents
+- [Release notes](#release-notes)
 - [Using Document Verification](#using-document-verification)
     - [Initiating the transaction](#initiating-the-transaction)
-    - [Displaying your Document Verification client](#displaying-your-document-verification-client)
-    - [Redirecting the customer after the user journey](#redirecting-the-customer-after-the-user-journey)
+    - [Displaying the Document Verification client](#displaying-your-document-verification-client)
+    - [After the user journey](#redirecting-the-customer-after-the-user-journey)
 - [Using the Document Verification API](#using-the-document-verification-api)
     - [Multi page upload: Initiating the transaction](#multi-page-upload-initiating-the-transaction)
-    - [Multi-page Upload: Adding a Page](#multi-page-upload-adding-a-page)
-    - [Multi-page Upload: Adding a Document](#multi-page-upload-adding-a-document)
+    - [Multi-page Upload: Adding a page](#multi-page-upload-adding-a-page)
+    - [Multi-page Upload: Adding a document](#multi-page-upload-adding-a-document)
     - [Multi page upload: Finalizing the transaction](#multi-page-upload-finalizing-the-transaction)
     - [Single page upload](#single-page-upload)
-- [Global Netverify APIs](#global-netverify-apis)
-    - [Supported documents](#supported-documents)
-- [Netverify Delete API](#netverify-delete-api)
+- [Supported documents](#supported-documents)
+- [Deleting transactions](#netverify-delete-api)
 - [Global Netverify Settings](#global-netverify-settings)
 - [Supported Cipher Suites](#supported-cipher-suites)
 
 
 ---
-# Release Notes
+# Release notes
 
 The release information for Document Verification can be found via the link below.<p>
 [View Release Notes](/netverify/README.md)
 
 ----
 
-# Using Document Verification client
+# Using the Document Verification web client
 
 Document Verification offers document upload and extraction (see [Supported documents for data extraction](#supported-documents)) with a Jumio-hosted user interface. Simply use the following RESTful API and you will receive a callback after completion (see [Callback](/netverify/callback.md)).
 
 Uploads are restricted to a total of 10MB in size and can only include JPEG, PNG or PDF file types. Credit card uploads are limited to 2 images or PDF pages, and all other document types are limited to 30 images or PDF pages.
 
+<br>
 
-
-|⚠️ Credit cards uploaded with incorrect `type` cannot be masked and are a significant security risk!
+|⚠️ Credit cards uploaded with incorrect `type` may pose a risk to your customers and your business!
 |:----------|
-|Jumio applies appropriate controls where credit card data is uploaded via fields designed for such data. However, we cannot provide the same assurance where such credit card data is entered into other field types. This may present a risk to your customers and business, so please take care when uploading data to ensure its optimally protected.|
+|Jumio applies appropriate security controls to credit cards correctly uploaded as the `CC` document type, which was designed with sensitive credit card data in mind.<br><br>Submission of credit card data with any other **non-`CC`** document type is **not supported**. Any such transactions may present a risk to your business and are subject to deletion.|
 
 <br>
 
-## Initiating the Transaction
+## Initiating the transaction
 
 Call the RESTful HTTP POST API **acquisitions** with the below JSON parameters, in order to create a transaction for each user. You will receive a Jumio scan reference and your client redirect URL, which will be valid for a certain amount of time. The length of time is specified in the request parameter, `authorizationTokenLifetime`.
 
@@ -56,28 +55,29 @@ Note: If your customer account is in the EU data center, use `lon.netverify.com`
 
 **Authentication:** The acquisitions API call is protected. To access it, use HTTP Basic Authentication with your API token as the "userid" and your API secret as the "password". You can find your API token and API secret by logging into your Jumio customer portal and navigating to the "Settings" page and clicking on the "API credentials" tab.
 
-**Header:** The following parameters are mandatory in the "header" section of your request.
+**Header:** The following parameters are mandatory in the "header" section of your request.<br>
+
 -	`Accept: application/json`
 -	`Content-Type: application/json`
 - `Content-Length: xxx` (RFC-2616)
 - `User-Agent: YOURCOMPANYNAME YOURAPPLICATIONNAME/VERSION`<br><br>
 The value for **User-Agent** must contain a reference to your business or entity for Jumio to be able to identify your requests. (e.g. YourCompanyName YourAppName/1.0.0). Without a proper User-Agent header, Jumio will take longer to diagnose API issues.
 
-**TLS handshake:** The TLS protocol is required (see [Supported Cipher Suites](/netverify/supported-cipher-suites.md)) and we strongly recommend using the latest version.
+**TLS handshake:** The TLS protocol is required (see [supported cipher suites](/netverify/supported-cipher-suites.md)) and we strongly recommend using the latest version.
 
 **Note:** Calls with missing or suspicious headers, suspicious parameter values, or without HTTP Basic Authentication will result in the HTTP status code, **403 Forbidden**.
 
-### Request Parameters
+### Request parameters
 
 **Note:** Mandatory parameters are marked with an asterisk * and highlighted bold.
 
 |Parameter       | Type    | Max. Length| Description|
 |:---------------|:--------|:------------|:------------|
-|**type** *|String||Possible codes:<br>See [Supported documents](#supported-documents) chapter|
+|**type** *|String||Possible codes:<br>See [supported documents](#supported-documents) chapter|
 |**country** *<br>Not mandatory for type=CC|String|3|Possible countries:<br>• [ISO 3166-1 alpha-3](http://en.wikipedia.org/wiki/ISO_3166-1_alpha-3) country code<br>•	XKX (Kosovo)|
-|**merchantScanReference** *|String|100|Your reference for each scan must not contain sensitive data like PII (Personally Identifiable Information) or account login|
-|**customerId** *|String|100|Identification of the customer must not contain sensitive data like PII (Personally Identifiable Information) or account login|
-|**enableExtraction** *| Boolean ||Enables or disables Extraction for each transaction. Possible values:<br>• true<br>• false<br> **Mandatory if Extraction is activated** <br><br>Note: If you want to enable Extraction for your account in general, please contact your Account Manager, or reach out to Jumio Support.|
+|**merchantScanReference** * |String|100|Your reference for each scan **must not** contain sensitive data like PII (Personally Identifiable Information) or account login|
+|**customerId** *|String|100|Identification of the customer **must not** contain sensitive data like PII (Personally Identifiable Information) or account login|
+|**enableExtraction** *| Boolean ||Enables or disables data extraction for each transaction. Possible values:<br>• true<br>• false<br> **Mandatory to activate extraction for the transaction.** <br><br>Note: If you want to enable Extraction for your account in general, please contact your Account Manager, or reach out to Jumio Support.|
 |callbackUrl|String|255|Callback URL for the confirmation after the user journey is completed (constraints see [Callback URL](/netverify/portal-settings.md#callback-url) chapter). This setting overrides your Jumio portal settings.|
 |successUrl|String|255|Redirect URL in case of success (constraints see [Success and error URLs](/netverify/portal-settings.md#success-and-error-urls) chapter).|
 |errorUrl|String|255|Redirect URL in case of error (constraints see [Success and error URLs](/netverify/portal-settings.md#success-and-error-urls) chapter).|
@@ -486,7 +486,6 @@ Content-Disposition: form-data; name="metadata"
 ```
 
 ---
-# Global Netverify APIs
 
 ## Supported Documents
 
@@ -498,8 +497,9 @@ If your customer account is in the EU data center, use `lon.netverify.com` inste
 
 **Authentication:** The supportedDocumentTypes API call is protected. To access it, use HTTP Basic Authentication with your API token as the "userid" and your API secret as the "password".
 
-**Header:** The following parameters are mandatory in the "header" section of your request.
--	`Accept: application/json`
+**Header:** The following parameters are mandatory in the "header" section of your request.<br>
+
+-	`Accept: application/json`<br>
 -	`User-Agent: YOURCOMPANYNAME YOURAPPLICATIONNAME/VERSION`<br><br>
 The value for **User-Agent** must contain a reference to your business or entity for Jumio to be able to identify your requests. (e.g. YourCompanyName YourAppName/1.0.0). Without a proper User-Agent header, Jumio will take longer to diagnose API issues.
 
@@ -564,24 +564,30 @@ Authorization: Basic
 ```
 
 ---
-# Netverify Delete API
+# Deleting transactions
 
-You can implement the RESTful DELETE API to remove sensitive data (e.g. name, address, date of birth, document number, etc.) and image(s) of a finished scan. The implementation guide can be viewed via the link below.
+You can delete transactions easily in the Customer Portal. 
 
-[View Guide](/netverify/netverify-delete-api.md)
+In **Verifications**, search for the transaction you want to delete. Click the trash can icon to the right of the scan details to remove sensitive data (e.g., name, address, date of birth, document number, etc.) and image(s) from the transaction record. 
+
+You can also implement the RESTful DELETE API to remove sensitive data and image(s) from a completed transaction.<br>
+ 
+[View the Delete API implementation guide](/netverify/netverify-delete-api.md)
+
+When deleting transaction data, the Jumio scan reference and timestamp will be retained for reporting purposes.
 
 ---
 # Global Netverify Settings
 
-The configuration settings are located in your Jumio customer portal. The description of each of the settings are available via the link below.
+Configuration settings are located in your Jumio customer portal. The description of each of the settings are available via the link below.
 
-[View Portal Settings](/netverify/portal-settings.md)
+[View the Customer Portal settings guide](/netverify/portal-settings.md)
 
 
 ----
 # Supported Cipher Suites
 Jumio supported cipher suites during the TLS handshake.<p>
-[View Supported Cipher Suites](/netverify/supported-cipher-suites.md)
+[View supported cipher suites](/netverify/supported-cipher-suites.md)
 
 ----
 &copy; Jumio Corp. 268 Lambert Avenue, Palo Alto, CA 94306
