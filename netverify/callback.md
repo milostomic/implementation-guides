@@ -10,6 +10,7 @@ The callback is the authoritative answer from Jumio. Specify a callback URL (for
 - [Jumio Callback IP List](#jumio-callback-ip-List)
 - [Callback for Netverify](#callback-for-netverify)
   - [Supported Documents for Address Extraction](#supported-documents-for-address-extraction)
+  - [Netverify masking](#netverify-masking)
 - [Callback for Document Verification](#callback-for-document-verification)
   - [Supported Documents for Data Extraction](#supported-documents-for-data-extraction)
 - [Netverify Retrieval API](#netverify-retrieval-api)
