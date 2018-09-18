@@ -117,7 +117,7 @@ Changes to the fields in the **initiate** API request are listed in the tables b
 
 <br>
 
-#### Supported `locale` values
+### Supported `locale` values
 Hyphenated combination of [ISO 639-1:2002 alpha-2](https://en.wikipedia.org/wiki/ISO_639-1) language code plus [ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) country (where applicable).
 
 
@@ -161,18 +161,24 @@ Netverify Web v4 introduces the concept of *acquisition workflows* and *presets*
 
 The `workflowId` parameter lets you optionally specify a combination of verification and capture method options for each transaction. If you choose not to use this field, Identity Verification will be performed on all transactions if it is enabled in your account settings, and the **Capture method** you specify in the Customer Portal will apply.
 
-The `presets` parameter lets you optionally specify the country and document type of the transaction in advance, to skip the selection screen and streamline the user journey.
-
-|NVW4 Parameter                |Type   | Max. length|Description
-|---|---|---|---|
-|workflowId               |integer |3          |Applies this acquisition workflow to the transaction.<br>Overrides **Capture method** in the Customer Portal.<br>See [supported workflowId values](#supported-workflowid-values).|
-|presets                  |JSON   |-|Presets country and document to skip selection screen.<br>See [supported presets values](#supported-presets-values).|-             |
+The `presets` parameter lets you optionally specify certain  information to enhance the user journey. You can use the **ID Verification** preset to set the country and document type, bypassing the selection screen in the user journey. You can also specify an **Identity Verification** preset that allows you to set a custom Liveness Detection phrase for the transaction. You may use the **ID Verification** preset separately, the **Identity Verification** preset separately, both presets together, or skip them entirely — but you must specify all required values for the preset if you choose to use it. 
 
 <br>
 
-#### Supported `workflowId` values
+|NVW4 Parameter                |Type   | Max. length|Description
+|---|---|---|---|
+|workflowId|integer |3|Applies this acquisition workflow to the transaction.<br>Overrides **Capture method** in the Customer Portal.<br>See [supported workflowId values](#supported-workflowid-values).|
+|presets<sup>1</sup>|JSON|-|Preset options to enhance the user journey.<br>See [supported presets values](#supported-presets-values).|-             |
 
-| ⚠️ Requests with a **workflowId** including Identity Verification will return `400 Bad Request` if it is not enabled.
+<sup>1</sup> Values **must not** contain Personally Identifiable Information (PII) or other sensitive data such as email addresses.
+<br>
+
+
+<br>
+
+## Supported `workflowId` values
+
+|⚠️ Identity Verification must be enabled for your account to use an ID + Identity `workflowId`.
 |:----------|
 
 |Value |Verification type |Capture method |
@@ -186,18 +192,42 @@ The `presets` parameter lets you optionally specify the country and document typ
 
 <br>
 
-#### Supported `presets` values
-If the optional **presets** field is used, all three values must be passed together as a JSON array (see [sample request](#sample-nvw4-request)) for the request to be valid. It is not possible to preset a single value.
 
-**Required fields appear in bold type.**
+## Supported `presets` values
+It is possible to specify presets for **ID Verification**, for **Identity Verification**, for both, or for neither. For each preset you use, all values must be passed together as a JSON array (see [Sample request](#sample-request)) for the request to be valid. 
+<br>
 
-|Parameter   |Type    |Max. length    |Options    |
+### ID Verification: preset country and document type
+Preset the country and document type to bypass the selection screen.
+
+**Required items appear in bold type.**
+
+|Name   |Type    |Max. length    |Description    |
 |:------------|:-------|:--------------|:--------------|
-|**index**|integer|1| &nbsp; must be set to `1`|
-|**country**|string|3|Possible values:<br>•	[ISO 3166-1 alpha-3](http://en.wikipedia.org/wiki/ISO_3166-1_alpha-3) country code <br /> • `XKX` (Kosovo) is also allowed|
+|**index**|integer|1| must be set to `1`|
+|**country**|string|3|Possible values:<br>•	[ISO 3166-1 alpha-3](http://en.wikipedia.org/wiki/ISO_3166-1_alpha-3) country code <br /> • `XKX` (Kosovo) |
 |**type**|string|15|Possible values:<br>• `PASSPORT`<br>•	`DRIVING_LICENSE`<br>•	`ID_CARD`|
+<br>
+
+### Identity Verification: preset Liveness Detection phrase
+Preset a custom Liveness Detection phrase for the transaction.<br>
+
+|⚠️ Identity Verification and Liveness Detection must be enabled for your account to use this preset.
+|:----------|
+<br>
+
+**Required items appear in bold type.**
+
+|Name   |Type    |Max. length    |Description    |
+|:------------|:-------|:--------------|:--------------|
+|**index**|integer|1| must be set to `2`|
+|**phrase**<sup>1</sup>|string|30|Possible values:<br>• alpha-numeric Latin characters (upper or lower case) and spaces |
+
+<sup>1</sup> Values **must not** contain Personally Identifiable Information (PII) or other sensitive data such as email addresses.
 
 <br>
+
+
 
 ### Deprecated properties
 
@@ -264,6 +294,9 @@ Authorization: Basic xxxxxxxxxxxxxxxxxxxxxxxxxxxxx
         "index"   : 1,
         "country" : "AUT",
         "type"    : "PASSPORT"
+      },{      
+        "index"   : 2,
+        "phrase" : "MY CUSTOM PHRASE"     
       }
     ],
   "locale" : "en-GB"
@@ -491,20 +524,18 @@ Jumio offers guaranteed support for Netverify on the following browsers and the 
 |:---|:---|:---|:---|:---|
 |Google Chrome|current +<br> 1 previous|Windows + Mac|X|X|
 |Mozilla Firefox|current +<br>1 previous|Windows + Mac|X|X|
-|Apple Safari|current|Mac|X|X<sup>1</sup>|
+|Apple Safari|current|Mac|X|X|
 |Microsoft Internet Explorer|current|Windows|X| |
 |Microsoft Edge|current|Windows|X|X|
 
-<sup>1</sup> Does not work inside an iFrame
 
 ### Mobile
 
 |Browser name|Major browser version|Operating system |Supports<br>image upload |Supports<br>HTML5 video stream |
 |:---|:---|:---|:---|:---|
 |Google Chrome |current |Android|X|X|
-|Apple Safari |current |iOS|X|X<sup>1</sup>|
+|Apple Safari |current |iOS|X|X|
 
-<sup>1</sup> Does not work inside an iFrame
 
 
 

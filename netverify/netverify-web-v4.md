@@ -90,7 +90,7 @@ The body of your **initiate** API request allows you to
 - specify what user information is captured and by which method.
 - indicate where the user should be directed after the user journey.
 - select the language to be displayed.
-- preset options to streamline the user journey.
+- preset options to enhance the user journey.
 
 |ℹ️ Values set in your API request will override the corresponding settings configured in the Customer Portal.
 |:----------|
@@ -107,19 +107,19 @@ The body of your **initiate** API request allows you to
 |successUrl<sup>2</sup>               |string |255        |Redirects to this URL after a successful transaction.<br>Overrides [Success URL](#callback-error-and-success-urls) in the Customer Portal.|
 |errorUrl<sup>2</sup>                 |string |255        |Redirects to this URL after an unsuccessful transaction.<br>Overrides [Error URL](#callback-error-and-success-urls) in the Customer Portal.|
 |callbackUrl<sup>2</sup>              |string |255        |Sends verification result to this URL upon completion.<br>Overrides [Callback URL](#callback-error-and-success-urls) in the Customer Portal.|
-|workflowId               |integer |3          |Applies this acquisition workflow to the transaction.<br>Overrides [Capture method](#capture-method) in the Customer Portal.<br>See [Supported workflowId values](#supported-workflowid-values).|
-|presets                  |JSON   |	  -    |Presets country and document to skip selection screen.<br>See [Supported preset values](#supported-presets-values).|-             |
-|locale                   |string |5          |Renders content in the specified language.<br>Overrides [Default locale](#default-locale) in the Customer Portal.<br>See [Supported locale values](#supported-locale-values).|
+|workflowId               |integer |3          |Applies this acquisition workflow to the transaction.<br>Overrides [Capture method](#capture-method) in the Customer Portal.<br>See [supported workflowId values](#supported-workflowid-values).|
+|presets<sup>1</sup>                  |JSON   |	  -    |Preset options to enhance the user journey.<br>See [supported preset values](#supported-presets-values).|-             |
+|locale                   |string |5          |Renders content in the specified language.<br>Overrides [Default locale](#default-locale) in the Customer Portal.<br>See [supported locale values](#supported-locale-values).|
 
 <sup>1</sup> Values **must not** contain Personally Identifiable Information (PII) or other sensitive data such as email addresses.<br>
 <sup>2</sup> See URL constraints for [Callback, Error, and Success URLs](#callback-error-and-success-urls).
 
 <br>
 
-#### Supported `workflowId` values
+## Supported `workflowId` values
 Acquisition workflows allow you to set a combination of verification and capture method options.
 
-|⚠️ Requests with a **workflowId** including Identity Verification will return `400 Bad Request` if it is not enabled.
+|⚠️ Identity Verification must be enabled for your account to use an ID + Identity `workflowId`.
 |:----------|
 
 |Value |Verification type |Capture method |
@@ -133,20 +133,42 @@ Acquisition workflows allow you to set a combination of verification and capture
 
 <br>
 
-#### Supported `presets` values
-When `presets` is used, all three values must be passed together as a JSON array (see [Sample request](#sample-request)) for the request to be valid. It is not possible to preset a single value.
+## Supported `presets` values
+It is possible to specify presets for **ID Verification**, for **Identity Verification**, for both, or for neither. For each preset you use, all values must be passed together as a JSON array (see [Sample request](#sample-request)) for the request to be valid. 
+<br>
+
+### ID Verification: preset country and document type
+Preset the country and document type to bypass the selection screen.
 
 **Required items appear in bold type.**
 
 |Name   |Type    |Max. length    |Description    |
 |:------------|:-------|:--------------|:--------------|
-|**index**|integer|1| &nbsp; must be set to `1`|
+|**index**|integer|1| must be set to `1`|
 |**country**|string|3|Possible values:<br>•	[ISO 3166-1 alpha-3](http://en.wikipedia.org/wiki/ISO_3166-1_alpha-3) country code <br /> • `XKX` (Kosovo) |
 |**type**|string|15|Possible values:<br>• `PASSPORT`<br>•	`DRIVING_LICENSE`<br>•	`ID_CARD`|
+<br>
+
+### Identity Verification: preset Liveness Detection phrase
+Preset a custom Liveness Detection phrase for the transaction.<br>
+
+|⚠️ Identity Verification and Liveness Detection must be enabled for your account to use this preset.
+|:----------|
+<br>
+
+**Required items appear in bold type.**
+
+|Name   |Type    |Max. length    |Description    |
+|:------------|:-------|:--------------|:--------------|
+|**index**|integer|1| must be set to `2`|
+|**phrase**<sup>1</sup>|string|30|Possible values:<br>• alpha-numeric Latin characters (upper or lower case) and spaces |
+
+<sup>1</sup> Values **must not** contain Personally Identifiable Information (PII) or other sensitive data such as email addresses.
 
 <br>
 
-#### Supported `locale` values
+
+## Supported `locale` values
 Hyphenated combination of [ISO 639-1:2002 alpha-2](https://en.wikipedia.org/wiki/ISO_639-1) language code plus [ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) country (where applicable).
 
 
@@ -222,6 +244,9 @@ Authorization: Basic xxxxxxxxxxxxxxxxxxxxxxxxxxxxx
         "index"   : 1,
         "country" : "AUT",
         "type"    : "PASSPORT"
+      },{      
+        "index"   : 2,
+        "phrase" : "MY CUSTOM PHRASE"     
       }
     ],
   "locale" : "en-GB"
@@ -525,23 +550,21 @@ Jumio offers guaranteed support for Netverify on the following browsers and the 
 ### Desktop
 
 |Browser|Major version|Operating system |Supports<br>image upload |Supports<br>HTML5 video stream |
-|:---|:---|:---|:---|:---|
+|:---|:---|:---|:---:|:---:|
 |Google Chrome|current +<br> 1 previous|Windows + Mac|X|X|
 |Mozilla Firefox|current +<br>1 previous|Windows + Mac|X|X|
-|Apple Safari|current|Mac|X|X<sup>1</sup>|
+|Apple Safari|current|Mac|X|X|
 |Microsoft Internet Explorer|current|Windows|X| |
 |Microsoft Edge|current|Windows|X|X|
 
-<sup>1</sup> Does not work inside an iFrame
 
 ### Mobile
 
 |Browser name|Major browser version|Operating system |Supports<br>image upload |Supports<br>HTML5 video stream |
-|:---|:---|:---|:---|:---|
+|:---|:---|:---|:---:|:---:|
 |Google Chrome |current |Android|X|X|
-|Apple Safari |current |iOS|X|X<sup>1</sup>|
+|Apple Safari |current |iOS|X|X|
 
-<sup>1</sup> Does not work inside an iFrame
 
 
 
