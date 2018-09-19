@@ -134,7 +134,7 @@ Acquisition workflows allow you to set a combination of verification and capture
 <br>
 
 ## Supported `presets` values
-It is possible to specify presets for **ID Verification**, for **Identity Verification**, for both, or for neither. For each preset you use, all values must be passed together as a JSON array (see [Sample request](#sample-request)) for the request to be valid. 
+It is possible to specify presets for **ID Verification**, for **Identity Verification**, for both together, or for neither. For each preset you use, all values must be passed together as a JSON array (see [Sample request](#sample-request)) for the request to be valid. 
 <br>
 
 ### ID Verification: preset country and document type
