@@ -27,6 +27,10 @@ It provides an overview of the significant changes in the new client and describ
 		- [Sample NVW4 response](#sample-nvw4-response)
 - [Configuring settings in the Customer Portal](#configuring-settings-in-the-customer-portal)
 	- [Application settings - General](#application-settings--general)
+		- [Callback, Error, and Success URLs](#callback-error-and-success-urls)
+		- [Capture method](#capture-method)
+		- [Skip "Start ID verification" screen](#skip-start-id-verification-screen)
+		- [Authorization token lifetime](#authorization-token-lifetime) 
 	- [Application settings - Redirect](#application-settings--redirect)
 		- [Domain name prefix](#domain-name-prefix)
 		- [Max attempts per user](#max-attempts-per-user)
@@ -334,8 +338,24 @@ In the **Settings** screen of the Customer Portal you can customize your setting
 
 ## Application settings — General
 
+### Callback, Error, and Success URLs
+
 No change from v3. See the new [Netverify Web v4 Implementation Guide](/netverify/netverify-web-v4.md) for further information.
+
+### Capture method
+
+No change from v3. See the new [Netverify Web v4 Implementation Guide](/netverify/netverify-web-v4.md) for further information.
+
+### Skip "Start ID verification" screen
+
+No change from v3. See the new [Netverify Web v4 Implementation Guide](/netverify/netverify-web-v4.md) for further information.
+
+### Authorization token lifetime
+
+Specify the duration of time for which your `redirectUrl` will remain valid. Enter the value in minutes (minimum 5, maximum 86400). The default value is 30 minutes.
+
 <br>
+
 
 ## Application settings — Redirect
 

@@ -24,6 +24,7 @@ This is a reference manual and configuration guide for the new Netverify Web cli
 		- [Callback, Error, and Success URLs](#callback-error-and-success-urls)
 		- [Capture method](#capture-method)
 		- [Skip "Start ID verification" screen](#skip-start-id-verification-screen)
+		- [Authorization token lifetime](#authorization-token-lifetime) 
 	- [Application settings - Redirect](#application-settings--redirect)
 		- [Domain name prefix](#domain-name-prefix)
 		- [Default locale](#default-locale)
@@ -325,6 +326,12 @@ Choose from:
 ### Skip "Start ID verification" screen
 
 Select this checkbox to bypass the introductory screen in the Netverify Web client.
+
+<br>
+
+### Authorization token lifetime
+
+Specify the duration of time for which your `redirectUrl` will remain valid. Enter the value in minutes (minimum 5, maximum 86400). The default value is 30 minutes.
 
 <br>
 
