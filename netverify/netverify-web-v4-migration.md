@@ -117,7 +117,7 @@ Changes to the fields in the **initiate** API request are listed in the tables b
 
 
 <sup>1</sup> Values **must not** contain Personally Identifiable Information (PII) or other sensitive data such as email addresses.<br>
-<sup>2</sup> See URL constraints for [Callback, Error, and Success URLs](/netverify/#callback-error-and-success-urls).
+<sup>2</sup> See URL constraints for [Callback, Error, and Success URLs](/netverify/netverify-web-v4.md#callback-error-and-success-urls).
 
 <br>
 
