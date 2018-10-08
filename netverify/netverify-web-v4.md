@@ -3,7 +3,10 @@
 # Netverify Web v4 Implementation Guide
 
 This is a reference manual and configuration guide for the new Netverify Web client. It describes how to initiate a transaction, how to customize your settings and branding, and how to display Netverify to your users.
+<br>
+### Revision history
 
+Information about changes to features and improvements documented in each release is available in our [Revision history](/netverify/README.md).
 <br>
 
 ## Table of contents
@@ -423,7 +426,7 @@ The **redirectUrl** returned in the response to your **initate** API call, which
 * as a link shared securely with a user
 
 ## Using Netverify in an iFrame
-If you want to embed Netverify on a web page, place the iFrame tag in your HTML code where you want the client to appear. Use the **redirectUrl** as value of the `src` attribute. The `allow="camera"` attribute must be included to enable the camera for image capture in [supported browsers](#supported-browsers).
+If you want to embed Netverify on a web page, place the iFrame tag in your HTML code where you want the client to appear. Use the `redirectUrl` as value of the `src` attribute. The `allow="camera"` attribute must be included to enable the camera for image capture in [supported browsers](#supported-browsers).
 
 ### Width and height
 We recommend adhering to the responsive breaking points in the table below. The Netverify Web client will responsively fill the dimensions of your iFrame.
@@ -517,15 +520,15 @@ window.addEventListener("message", receiveMessage, false);
 
 ## After the user journey
 
-At the end of the user journey, the user is directed to your **successUrl** if the images they submitted were accepted for processing. If no **successUrl** has been defined, the Jumio default success page will be displayed, including any custom success [image](#images) you have specified in the Customer Portal.
+At the end of the user journey, the user is directed to your **Success URL** if the images they submitted were accepted for processing. If no **Success URL** has been defined, the Jumio default success page will be displayed, including any custom success [image](#images) you have specified in the Customer Portal.
 
-If acceptable images are not provided after three attempts (see [Reject reasons](/netverify/callback.md#reject-reason)), the user is directed to your **errorUrl**. If no **errorUrl** has been defined, the Jumio default error page will be displayed, including any custom error [image](#images) you have specified in the Customer Portal.
+If acceptable images are not provided after three attempts (see [Reject reasons](/netverify/callback.md#reject-reason)), the user is directed to your **Error URL**. If no **Error URL** has been defined, the Jumio default error page will be displayed, including any custom error [image](#images) you have specified in the Customer Portal.
 
-To display relevant information on your success or error page, you can use the following parameters which we append when redirecting to your **successUrl** or **errorUrl** as HTTP `GET` query string parameters<sup>1</sup>. It is also possible to set your **successUrl** and **errorUrl** to the same address, by using the query parameter `transactionStatus`.<br>
+To display relevant information on your success or error page, you can use the following parameters which we append when redirecting to your `successUrl` or `errorUrl` as HTTP `GET` query string parameters<sup>1</sup>. It is also possible to set `successUrl` and `errorUrl` to the same address, by using the query parameter `transactionStatus`.<br>
 
 **Required items appear in bold type.**
 
-|Parameter|Description|
+|Name|Description|
 |:---|:---|
 |**transactionStatus**|Possible values:<br>• `SUCCESS` for successful submissions. <br> • `ERROR`for errors and failure after 3 attempts.|
 |**customerInternalReference**|Your internal reference for the transaction.|

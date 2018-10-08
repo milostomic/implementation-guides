@@ -4,6 +4,13 @@
 
 This is a reference manual and configuration guide for the performNetverify product. It illustrates how to implement the performNetverify API.
 
+---
+### Revision history
+
+Information about changes to features and improvements documented in each release is available in our [Revision history](/netverify/README.md).
+<br>
+---
+
 ## Table of Contents
 - [Release notes](#release-notes)
 - [Using performNetverify](#using-performnetverify)
@@ -18,11 +25,7 @@ This is a reference manual and configuration guide for the performNetverify prod
 	- [Application settings - General](#application-settings--general)
 		- [Callback URL](#callback-url)
 
----
-# Release Notes
 
-Find the release information for Netverify Web at the link below.<p>
-[View Release Notes](/netverify/README.md)
 
 ---
 # Using performNetverify
@@ -79,7 +82,7 @@ The following fields are required in the header section of your request:<br>
 |faceImageMimeType|String||Mime type of face image<br>Possible values: image/jpeg (default), image/png|
 |backsideImage|String|Max. 5MB & <8000 pixels per side|Base64 encoded image of ID back side |
 |backsideImageMimeType|String||Mime type of back side image<br>Possible values: image/jpeg (default), image/png|
-|enabledFields|String|100|Defines fields which will be extracted during the ID verification. If a field is not listed in this parameter, it will not be processed for this transaction, regardless of customer portal settings.<br> **Note:** Face match and Address extraction will not be processed unless enabled for your account. If you want to enable them, please contact your Customer Success Manager, or reach out to Jumio Support.<br><br>Possible values:<br>"idNumber, idFirstName, idLastName, idDob, idExpiry, idUsState, idPersonalNumber, idFaceMatch, idAddress"|
+|enabledFields|String|100|Defines fields which will be extracted during the ID verification. If a field is not listed in this parameter, it will not be processed for this transaction, regardless of customer portal settings.<br> **Note:** Face match and Address extraction will not be processed unless enabled for your account. If you want to enable them, please contact your Customer Success Manager, or reach out to Jumio Support.<br>See [supported documents for address extraction](#supported-documents-for-address-extraction).<br>Possible values:<br>"idNumber, idFirstName, idLastName, idDob, idExpiry, idUsState, idPersonalNumber, idFaceMatch, idAddress"|
 |merchantReportingCriteria|String|100|Your reporting criteria for each scan|
 |customerId|String|100|Identification of the customer must not contain sensitive data like PII (Personally Identificable Information) or account login|
 |callbackUrl|String|255|Callback URL for the confirmation after the verification is completed (for constraints see [Callback URL](/netverify/portal-settings.md#callback-url))|
@@ -92,6 +95,22 @@ The following fields are required in the header section of your request:<br>
 |callbackGranularity|String|255|Possible values:<br>• onFinish (default): Callback is only sent after the whole verification<br>• onAllSteps: Additional callback is sent when the images are received|
 |personalNumber|String|14|Personal number of the document|
 
+<br>
+### Supported documents for address extraction
+
+|Country    |ID card    |Driving license    |Passport    |Callback format |
+|:------------|:-------|:--------------|:--------------|:-------|
+|Australia|No|Yes|No|US|
+|Canada|No|Yes|No|US|
+|France|Yes|Yes|Yes|Raw|
+|Germany|Yes|No|No|EU|
+|Ireland|No|Yes|No|Raw|
+|Mexico|Yes|No|No|US|
+|Romania|Yes|No|No|Raw|
+|Singapore|Yes|No|No|Raw|
+|Spain|Yes|No|No|EU|
+|United Kingdom|No|Yes|No|Raw|
+|United States|No|Yes|No|US|
 ---
 ## Response
 

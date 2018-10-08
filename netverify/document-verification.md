@@ -2,135 +2,255 @@
 
 # Document Verification implementation guide
 
-This is a reference manual and configuration guide for the Document Verification product. It illustrates how to embed Document Verification into your web page, as well as implement the Document Verification APIs.
+This is a reference manual and configuration guide for the Document Verification product. It illustrates how to use both the web client (standalone or embedded into your web page) for Document Verification and the API-only implementation.
 
+### Revision history
+
+Information about changes to features and improvements documented in each release is available in our [Revision history](/netverify/README.md).
 
 ## Table of contents
-- [Release notes](#release-notes)
-- [Using Document Verification](#using-document-verification)
+- [Global Netverify settings](#global-netverify-settings)
+- [Authentication and encryption](#authentication-and-encryption)
+- [Using the Document Verification web client](#using-the-document-verification-web-client)
     - [Initiating the transaction](#initiating-the-transaction)
     - [Displaying the Document Verification client](#displaying-your-document-verification-client)
     - [After the user journey](#redirecting-the-customer-after-the-user-journey)
 - [Using the Document Verification API](#using-the-document-verification-api)
     - [Multi page upload: Initiating the transaction](#multi-page-upload-initiating-the-transaction)
-    - [Multi-page Upload: Adding a page](#multi-page-upload-adding-a-page)
-    - [Multi-page Upload: Adding a document](#multi-page-upload-adding-a-document)
-    - [Multi page upload: Finalizing the transaction](#multi-page-upload-finalizing-the-transaction)
+    - [Multi-page upload: adding a page](#multi-page-upload-adding-a-page)
+    - [Multi-page upload: adding a document](#multi-page-upload-adding-a-document)
+    - [Multi page upload: finalizing the transaction](#multi-page-upload-finalizing-the-transaction)
     - [Single page upload](#single-page-upload)
 - [Supported documents](#supported-documents)
-- [Deleting transactions](#netverify-delete-api)
-- [Global Netverify Settings](#global-netverify-settings)
-- [Supported Cipher Suites](#supported-cipher-suites)
+- [Deleting transactions](#deleting-transactions)
+- [Supported cipher suites](#supported-cipher-suites)
 
-
----
-# Release notes
-
-The release information for Document Verification can be found via the link below.<p>
-[View Release Notes](/netverify/README.md)
 
 ----
 
+# Global Netverify Settings
+
+Configuration settings are located in the Jumio Customer Portal. The description of each of the settings are available via the link below.
+
+[View the Customer Portal settings guide](/netverify/portal-settings.md)
+
+# Authentication and encryption
+
+All Document Verification API calls are protected using [HTTP Basic Authentication](https://tools.ietf.org/html/rfc7617). Your Basic Auth credentials are constructed using your API token as the user-id and your API secret as the password. You can view and manage your API token and secret in the Customer Portal under **Settings > API credentials**.
+<br>
+
+|⚠️ Never share your API token, API secret, or Basic Auth credentials with *anyone* — not even Jumio Support.
+|:----------|
+
+The [TLS Protocol](https://tools.ietf.org/html/rfc5246) is required to securely transmit your data, and we strongly recommend using the latest version. For information on cipher suites supported by Jumio during the TLS handshake see [supported cipher suites](/netverify/supported-cipher-suites.md).
+
+<br>
+
+
 # Using the Document Verification web client
 
-Document Verification offers document upload and extraction (see [Supported documents for data extraction](#supported-documents)) with a Jumio-hosted user interface. Simply use the following RESTful API and you will receive a callback after completion (see [Callback](/netverify/callback.md)).
+The Document Verification web client offers document upload and data extraction (see [supported documents](#supported-documents)) with a Jumio-hosted user interface. Use the RESTful API as described below to initiate a transaction and share the resulting URL securely with your user or embed it in an iFrame on your website. You can receive a callback when the transaction is complete containing extracted data (if applicable) and a link to the image uploaded by your user (see [Callback](/netverify/callback.md)).
 
-Uploads are restricted to a total of 10MB in size and can only include JPEG, PNG or PDF file types. Credit card uploads are limited to 2 images or PDF pages, and all other document types are limited to 30 images or PDF pages.
+Uploads are restricted to JPEG, PNG or PDF file types totaling of 10MB in size. Credit card uploads are limited to 2 images or PDF pages, and all other document types are limited to 30 images or PDF pages.
 
+<br>
+
+
+## Initiating the transaction
+
+Call the RESTful API POST endpoint **/acquisitions** with a JSON object containing the properties described below to create a transaction for each user. You will receive a JSON object in the response containing a Jumio scan reference, and a URL which you can use to present the Document Verification web client to your user.
+
+**HTTP request method:** `POST`<br>
+**REST URL (US):** `https://upload.netverify.com/api/netverify/v2/acquisitions`<br>
+**REST URL (EU):** `https://upload.lon.netverify.com/api/netverify/v2/acquisitions`<br>
+
+<br>
+
+
+## Request headers
+
+The following fields are required in the header section of your request:<br>
+
+`Accept: application/json`<br>
+`Content-Type: application/json`<br>
+`Content-Length:`  (see [RFC-7230](https://tools.ietf.org/html/rfc7230#section-3.3.2))<br>
+`Authorization:` (see [RFC 7617](https://tools.ietf.org/html/rfc7617))<br>
+`User-Agent: YourCompany YourApp/v1.0`<br>
+
+|ℹ️ Jumio requires the `User-Agent` value to reflect your business or entity name for API troubleshooting.|
+|:---|
+
+<br>
+
+
+## Request body
+The body of your **acquisitions** API request allows you to
+
+- provide your own internal tracking information for the user and transaction.
+- specify what type of document is being submitted (including [custom document types](/netverify/portal-settings.md#multi-documents) defined in the Customer Portal)
+- indicate where the user should be directed after the user journey.
+- set data extraction preferences.
+- define the valid lifetime of the `clientRedirectUrl`.
+- customize the header logo and colors to match your branding.
+- localize the display language.
 <br>
 
 |⚠️ Credit cards uploaded with incorrect `type` may pose a risk to your customers and your business!
 |:----------|
 |Jumio applies appropriate security controls to credit cards correctly uploaded as the `CC` document type, which was designed with sensitive credit card data in mind.<br><br>Submission of credit card data with any other **non-`CC`** document type is **not supported**. Any such transactions may present a risk to your business and are subject to deletion.|
 
+|ℹ️ Values set in your API request will override the corresponding settings configured in the Customer Portal.
+|:----------|
+
 <br>
 
-## Initiating the transaction
+**Required items appear in bold type.**  
 
-Call the RESTful HTTP POST API **acquisitions** with the below JSON parameters, in order to create a transaction for each user. You will receive a Jumio scan reference and your client redirect URL, which will be valid for a certain amount of time. The length of time is specified in the request parameter, `authorizationTokenLifetime`.
+|Name               |Type   | Max. length|Description                                                                                                  |
+|:---                      |:---    |:---        |:---                                                                                                          |
+|**type**|string||Possible values:<br>See [supported documents](#supported-documents).|
+|**country**<sup>1</sup>|string|3|Possible values:<br>• [ISO 3166-1 alpha-3](http://en.wikipedia.org/wiki/ISO_3166-1_alpha-3) country code<br>•	XKX (Kosovo)|
+|**merchantScanReference**<sup>2</sup>|string |100       |Your internal reference for the transaction.                                                               |
+|**customerId**<sup>2</sup>           |string |100        |Your internal reference for the user.                                                                   |
+|merchantReportingCriteria        |string |255        |Your reporting criteria for the transaction.                                                                      |
+|successUrl<sup>3</sup>               |string |255        |Redirects to this URL after a successful transaction.<br>Overrides [Success URL](/netverify/portal-settings.md#callback-error-and-success-urls) in the Customer Portal.|
+|errorUrl<sup>3</sup>                 |string |255        |Redirects to this URL after an unsuccessful transaction.<br>Overrides [Error URL](/netverify/portal-settings.md#callback-error-and-success-urls) in the Customer Portal.|
+|callbackUrl<sup>3</sup>              |string |255        |Sends confirmation and any extracted data to this URL upon completion.<br>Overrides [Callback URL](/netverify/portal-settings.md#callback-error-and-success-urls) in the Customer Portal.|
+|enableExtraction| Boolean ||Enables or disables data extraction<sup>4</sup> per transaction.<br><br>Possible values:<br>• `true` (extraction performed)<br>• `false` (no extraction performed)<br><br>**Data extraction will be performed by default if this parameter is not passed.**|
+|authorizationTokenLifetime|integer|7|Duration of time (in seconds) for which your `clientRedirectUrl` remains valid.<br><br> default: 1800 (30 minutes)<br>maximum: 5184000 (60 days)|
+|baseColor|string|6|Hex triplet value for custom main client color. <br>**Must be passed with** `bgColor`.|
+|bgColor|string|6|Hex triplet value for custom background client color. <br>**Must be passed with** `baseColor`.|
+|headerImageUrl<sup>3</sup>|string|255|URL of your custom header logo.<br><br>Logo must be:<br>•	landscape (16:9 or 4:3) <br>•	min. height of 192 pixels <br>•	size 8-64 KB|
+|customDocumentCode|string|100|Your custom document code (see [Multi documents](/netverify/portal-settings.md#multi-documents)).<br>**Mandatory when** `type` = `CUSTOM`|
+|locale                   |string |5          |Renders content in the specified language.<br>Overrides [Default locale](/netverify/portal-settings.md#default-locale) in the Customer Portal.<br>See [supported locale values](#supported-locale-values).|
 
-HTTP request method: **POST**<br>
-**REST URL:** `https://upload.netverify.com/api/netverify/v2/acquisitions`<br>
-Note: If your customer account is in the EU data center, use `lon.netverify.com` instead of `netverify.com`.
+<sup>1</sup> Optional for type `CC`.<br>
+<sup>2</sup> Values **must not** contain Personally Identifiable Information (PII) or other sensitive data such as email addresses.<br>
+<sup>3</sup> See [URL constraints](#constraints-for-success-error-callback-and-headerimage-urls).<br>
+<sup>4</sup> To activate Document Verification data extraction for your account, please contact your Account Manager or Jumio Support.
 
-**Authentication:** The acquisitions API call is protected. To access it, use HTTP Basic Authentication with your API token as the "userid" and your API secret as the "password". You can find your API token and API secret by logging into your Jumio customer portal and navigating to the "Settings" page and clicking on the "API credentials" tab.
+<br>
 
-**Header:** The following parameters are mandatory in the "header" section of your request.<br>
 
--	`Accept: application/json`
--	`Content-Type: application/json`
-- `Content-Length: xxx` (RFC-2616)
-- `User-Agent: YOURCOMPANYNAME YOURAPPLICATIONNAME/VERSION`<br><br>
-The value for **User-Agent** must contain a reference to your business or entity for Jumio to be able to identify your requests. (e.g. YourCompanyName YourAppName/1.0.0). Without a proper User-Agent header, Jumio will take longer to diagnose API issues.
+### Constraints for Success, Error, Callback, and headerImage URLs
+#### Requirements:
 
-**TLS handshake:** The TLS protocol is required (see [supported cipher suites](/netverify/supported-cipher-suites.md)) and we strongly recommend using the latest version.
+* HTTPS using the [TLS Protocol](https://tools.ietf.org/html/rfc5246) (most recent version recommended)
+* Valid [URL](https://tools.ietf.org/html/rfc3986) using [ASCII characters](https://en.wikipedia.org/wiki/ASCII) or [IDNA Punycode](https://tools.ietf.org/html/rfc3492)
 
-**Note:** Calls with missing or suspicious headers, suspicious parameter values, or without HTTP Basic Authentication will result in the HTTP status code, **403 Forbidden**.
+#### Restrictions:
 
-### Request parameters
+* IP addresses, ports, query parameters and fragment identifiers are not allowed.
+* Personally identifiable information (PII) is not allowed in any form.
 
-**Note:** Mandatory parameters are marked with an asterisk * and highlighted bold.
+<br>
 
-|Parameter       | Type    | Max. Length| Description|
-|:---------------|:--------|:------------|:------------|
-|**type** *|String||Possible codes:<br>See [supported documents](#supported-documents) chapter|
-|**country** *<br>Not mandatory for type=CC|String|3|Possible countries:<br>• [ISO 3166-1 alpha-3](http://en.wikipedia.org/wiki/ISO_3166-1_alpha-3) country code<br>•	XKX (Kosovo)|
-|**merchantScanReference** * |String|100|Your reference for each scan **must not** contain sensitive data like PII (Personally Identifiable Information) or account login|
-|**customerId** *|String|100|Identification of the customer **must not** contain sensitive data like PII (Personally Identifiable Information) or account login|
-|**enableExtraction** *| Boolean ||Enables or disables data extraction for each transaction. Possible values:<br>• true<br>• false<br> **Mandatory to activate extraction for the transaction.** <br><br>Note: If you want to enable Extraction for your account in general, please contact your Account Manager, or reach out to Jumio Support.|
-|callbackUrl|String|255|Callback URL for the confirmation after the user journey is completed (constraints see [Callback URL](/netverify/portal-settings.md#callback-url) chapter). This setting overrides your Jumio portal settings.|
-|successUrl|String|255|Redirect URL in case of success (constraints see [Success and error URLs](/netverify/portal-settings.md#success-and-error-urls) chapter).|
-|errorUrl|String|255|Redirect URL in case of error (constraints see [Success and error URLs](/netverify/portal-settings.md#success-and-error-urls) chapter).|
-|authorizationTokenLifetime|Number|Max. value: 5184000|Time in seconds until the authorization token expires<br>Default: 1800 seconds<br>0: 60 days |
-|merchantReportingCriteria|String|255|Your reporting criteria for each scan|
-|locale|String|100|Locale of the Document verification client:<br>•	"bg" Bulgarian<br>•	"cs" Czech<br>•	"da" Danish<br>•	"de" German<br>•	"el" Greek<br>•	"en" American English (default)<br>•	"en\_GB" British English<br>•	"es" Spanish<br>•	"es\_MX" Spanish Mexico<br>•	"et" Estonian<br>•	"fi" Finnish<br>•	"fr" French<br>•	"hu" Hungarian<br>•	"it" Italian<br>•	"ja" Japanese<br>•	"ko" Korean<br>•	"lt" Lithuanian<br>•	"nl" Dutch<br>•	"no" Norwegian<br>•	"pl" Polish<br>•	"pt" Portuguese<br>•	"pt_BR" Brazilian Portuguese<br>•	"ro" Romanian<br>•	"ru" Russian<br>•	"sv" Swedish<br>•	"tr" Turkish<br>•	"sk" Slovak<br>•	"zh\_CN" Chinese (China)<br>•	"zh\_HK" Chinese (Hong Kong)|
-|baseColor|String|6|Client's main web color as hexadecimal triplet <br>Note: Custom colors are only used if both, baseColor and bgColor, are present|
-|bgColor|String|6|Client's background web color as hexadecimal triplet<br>Note: Custom colors are only used if both, baseColor and bgColor, are present|
-|headerImageUrl|String|255|Defines your own header logo, which should be landscape (16:9 or 4:3) with a min. height of 192 pixels and a size between 8 and 64 KB.<br>URL constraints:<br>•	HTTPS using the TLS protocol<br>•	Valid URL (RFC-2396) using ASCII characters or IDNA Punycode<br>•	IP addresses, ports, query parameters and fragment identifiers are not allowed |
-|customDocumentCode|String|100|Your custom document code (see [Multi documents](/netverify/portal-settings.md#multi-documents) chapter)<br>Needs to be added if type = CUSTOM|
 
-### Response Parameters
+### Supported `locale` values
+Combination of [ISO 639-1:2002 alpha-2](https://en.wikipedia.org/wiki/ISO_639-1) language code plus [ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) country (where applicable).
 
-|Parameter       | Type    | Max. Length| Description|
+|Value  |Locale|
+|:--------------|:--------------|
+|bg|Bulgarian|
+|cs|Czech|
+|da|Danish|
+|de|German|
+|el|Greek|
+|en|American English (**default**)|
+|en_GB|British English|
+|es|Spanish|
+|es_MX|Mexican Spanish|
+|et|Estonian|
+|fi|Finnish|
+|fr|French|
+|hu|Hungarian|
+|it|Italian|
+|ja|Japanese|
+|ko|Korean|
+|lt|Lithuanian|
+|nl|Dutch|
+|no|Norwegian|
+|pl|Polish|
+|pt|Portuguese|
+|pt_BR|Brazilian Portuguese|
+|ro|Romanian|
+|ru|Russian|
+|sk|Slovak|
+|sv|Swedish|
+|tr|Turkish|
+|vl|Vietnamese|
+|zh_CN|Simplified Chinese|
+|zh_HK|Traditional Chinese|
+
+<br>
+
+
+### Sample request — basic
+```
+POST https://upload.netverify.com/api/netverify/v2/acquisitions HTTP/1.1
+Accept: application/json
+Content-Type: application/json
+Content-Length: 1234
+User-Agent: Example Corp SampleApp/1.0.1
+Authorization: Basic xxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+{
+  "type": "BS",
+  "country": "USA",
+  "merchantScanReference": "transaction_1234",
+  "customerId": "user_1234"
+}
+```
+<br>
+
+### Sample request — custom document type, colors, logo
+```
+POST https://upload.netverify.com/api/netverify/v2/acquisitions HTTP/1.1
+Accept: application/json
+Content-Type: application/json
+Content-Length: 1234
+User-Agent: Example Corp SampleApp/1.0.1
+Authorization: Basic xxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+{
+  "type": "CUSTOM",
+  "country": "USA",
+  "merchantScanReference": "transaction_1234",
+  "customerId": "user_1234",
+  "merchantReportingCriteria" : "myReport1234",
+  "successUrl" : "https://www.yourcompany.com/success",
+  "errorUrl" : "https://www.yourcompany.com/error",
+  "callbackUrl" : "https://www.yourcompany.com/callback",
+  "enableExtraction" : "true",
+  "authorizationTokenLifetime" : "3600",
+  "baseColor" : "00FF00",
+  "bgColor" : "00FFFF",
+  "headerImageUrl" : ""https://www.yourcompany.com/logo.png",
+  "customDocumentCode" : "27B6"
+}
+```
+
+|⚠️ Sample requests cannot be run as-is. Replace example data with your own values.
+|:----------|
+
+<br>
+
+
+## Response
+Unsuccessful requests will return the relevant [HTTP status code](https://tools.ietf.org/html/rfc7231#section-6) and information about the cause of the error.
+
+Successful requests will return HTTP status code `200 OK` along with a JSON object containing the information described below.
+
+**Required items appear in bold type.**
+
+|Name|Type|Max. length|Description|
 |:---------------|:--------|:-----------|:------------|
-|scanReference|String|36|Jumio’s reference number for each scan|
-|clientRedirectUrl|String|2000|The redirect URL for the customer|
+|**scanReference**|string|36|Jumio reference number for the transaction.|
+|**clientRedirectUrl**|string|2000|URL used to load the Document Verification client.|
 
-### Sample Request
-```
-POST https://upload.netverify.com/api/netverify/v2/acquisitions HTTP/1.1
-Accept: application/json
-Content-Type: application/json
-Content-Length: xxx
-User-Agent: YOURCOMPANYNAME YOURAPPLICATIONNAME/x.x.x
-Authorization: Basic
-{
-"type": "SSC",
-"country": "USA",
-"merchantScanReference": "YOURSCANREFERENCE",
-"customerId": "CUSTOMERID"
-}
-```
+<br>
 
-### Sample Request: Custom Document Code
 
-```
-POST https://upload.netverify.com/api/netverify/v2/acquisitions HTTP/1.1
-Accept: application/json
-Content-Type: application/json
-Content-Length: xxx
-User-Agent: YOURCOMPANYNAME YOURAPPLICATIONNAME/x.x.x
-Authorization: Basic
-{
-"type": "CUSTOM",
-"customDocumentCode": "XXX",
-"country": "USA",
-"merchantScanReference": "YOURSCANREFERENCE",
-"customerId": "CUSTOMERID"
-}
-```
 
-### Sample Response
+### Sample response
 ```
 {
 "scanReference": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
@@ -138,114 +258,174 @@ Authorization: Basic
 }
 ```
 
+<br>
 
-## Displaying your Document Verification Client
 
-To display Document Verification, you can add the obtained "clientRedirectUrl" into the "src" attribute of an "iFrame" tag by specifying width and height, or as a link on your web page.
 
-We recommend considering the following minimum/maximum dimensions:
--	Min. size: 320 x 480 pixels (or vice versa if landscape on mobile)
+
+## Displaying the Document Verification web client
+
+To display the Document Verification, place the `clientRedirectUrl` into the `src` attribute of an iFrame tag, specifying an appropriate width and height, or use it to create a link on your web page.
+
+We recommend considering the following dimensions:
+
+-	Min. size: 320 x 480 pixels (or 480 x 320 if landscape on mobile)
 -	Max. width of 900 pixels (for iFrame only)
 
-**Note:** The URL including its HTTP GET parameter(s) may not be modified.
+<br>
+
 
 ## Redirecting the customer after the user journey
 
-After successfully completing the Document Verification user journey, the user will be redirected to your specified success page. In case of an error, the user will be sent to your specified error page.
+At the end of the user journey, the user is directed to your **Success URL** if the images they submitted were accepted for processing. If no **Success URL** has been defined, the Jumio default success page will be displayed, including any custom success [image](/netverify/portal-settings.md#images) you have specified in the Customer Portal.
 
-You can use the following parameters to display information on your redirect pages. These are attached to your URL as HTTP GET query string parameters:
+In the event of an error, the user is directed to your , the user is directed to your **Error URL**. If no **Error URL** has been defined, the Jumio default error page will be displayed, including any custom error [image](/netverify/portal-settings.md#images) you have specified in the Customer Portal.
 
-|Parameter  | Description|
-|:----------|:------------|
-|idScanStatus|"SUCCESS" or "ERROR"|
-|jumioIdScanReference|Jumio’s reference number for each scan|
-|errorCode|Possible codes:<br>•	211 (authorization token invalidates)<br>•	310 (upload session has expired)<br>•	311 (document upload was already completed for provided scan reference)<br>•	320 (browser session has been started multiple times)<br>•	338 (third party cookies are disabled)|
+To display relevant information on your success or error page, you can use the following parameters which we append when redirecting to your `successUrl` or `errorUrl` as HTTP `GET` query string parameters<sup>1</sup>. It is also possible to set `successUrl` and `errorUrl` to the same address, by using the query parameter `idScanStatus`.<br>
 
-**Note:** Since HTTP GET parameters can be manipulated on the client side, they may be used for display purposes only. It is also possible to configure success and error URLs with the same address; as you can get the status from the URL’s query parameter "idScanStatus".
+<br>
 
-### Sample Redirect URL: Success
+**Required items appear in bold type.**
+
+Name|Description|
+|:---|:---|
+|**idScanStatus**|Possible values:<br>• `SUCCESS` <br> • `ERROR`|
+|**jumioIdScanReference**|Jumio reference number for the transaction.|
+|errorCode|Displayed when `transactionStatus` is `ERROR`.<br>Possible values: <br>• `211` (authorization token invalid)<br>• `310` (upload session has expired)<br>• `311` (document upload was already completed for provided scan reference)<br>• `320` (browser session has been started multiple times)<br>• `338` (third party cookies are disabled)<br>|
+<sup>1</sup> Because HTTP `GET` parameters can be manipulated on the client side, they may be used for display purposes only.
+<br>
+<br>
+
+
+### Sample success redirect
 ```
-https://www.your-site.com/success?idScanStatus=SUCCESS&jumioIdScanReference=xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+https://www.yourcompany.com/success?idScanStatus=SUCCESS&jumioIdScanReference=xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
 ```
 
-### Sample Redirect URL: Error
+### Sample error redirect
 ```
-https://www.your-site.com/error?idScanStatus=ERROR&jumioIdScanReference=xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx&errorCode=320
+https://www.yourcompany.com/error?idScanStatus=ERROR&jumioIdScanReference=xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx&errorCode=320
 ```
 
-## Callback
-
-The callback is the authoritative answer from Jumio. Specify a callback URL (see [Global Netverify settings](/netverify/portal-settings.md)) to receive the detailed results for each scan (see [Callback](/netverify/callback.md)).
+<br>
 
 ----
+
+<br>
+
+
 # Using the Document Verification API
 
-The Document Verification API offers document upload and extraction (see [Supported documents for data extraction](/netverify/callback.md#supported-documents-for-data-extraction)) without a Jumio-hosted user interface. Simply use the following RESTful APIs to submit the user's document. You will receive the results via a callback after completion (see [Callback](/netverify/callback.md#callback-for-document-verification) page).
+The Document Verification API offers document upload and data extraction (see [supported documents](#supported-documents)) without a Jumio-hosted user interface. Use the RESTful APIs as described below to submit the user's document. You can receive a callback when the transaction is complete containing extracted data (if applicable) and a link to the image uploaded by your user (see [Callback](/netverify/callback.md)).
 
-**Authentication:** The below API calls are protected. To access them, use HTTP Basic Authentication with your API token as the "userid" and your API secret as the "password". Log into your Jumio customer portal and you can find your API token and API secret on the "Settings" page under "API credentials".
-
-**TLS handshake:** The TLS protocol is required (see [Supported Cipher Suites](/netverify/supported-cipher-suites.md)) and we strongly recommend using the latest version.
-
-**Note:** Calls with missing or suspicious headers, suspicious parameter values, or without HTTP Basic Authentication will result in an HTTP status code, **403 Forbidden**.
+<br>
 
 
+## Multi-page upload: initiating the transaction
 
-## Multi Page Upload: Initiating the Transaction
+Call the RESTful API POST endpoint **/acquisitions** with a JSON object containing the properties described below to create a transaction for each user.<br>
+**HTTP request method:** `POST`<br>
+**REST URL (US):** `https://acquisition.netverify.com/api/netverify/v2/acquisitions`<br>
+**REST URL (EU):** `https://acquisition.lon.netverify.com/api/netverify/v2/acquisitions`<br>
 
-Call the RESTful HTTP POST API **acquisitions** with the below JSON parameters to create a transaction for each user.
-
-HTTP request method: **POST**<br>
-**REST URL:** `https://acquisition.netverify.com/api/netverify/v2/acquisitions`
-If your customer account is in the EU data center, use `acquisition.lon.netverify.com` instead of `acquisition.netverify.com`.
-
-**Header:** The following parameters are mandatory in the "header" section of your request.
--	`Accept: application/json`
--	`Content-Type: application/json`
--	`Content-Length: xxx` (RFC-2616)
--	`User-Agent: YOURCOMPANYNAME YOURAPPLICATIONNAME/VERSION`<br><br>
-The value for **User-Agent** must contain a reference to your business or entity for Jumio to be able to identify your requests. (e.g. YourCompanyName YourAppName/1.0.0). Without a proper User-Agent header, Jumio will take longer to diagnose API issues.
-
-### Request Parameters
-
-**Note:** Mandatory parameters are marked with an asterisk * and highlighted bold.
-
-|Parameter       | Type    | Max. Length| Description|
-|:---------------|:--------|:------------|:------------|
-|**type** *<br>Not mandatory for type=CC|String||Possible codes:<br>See [Supported documents](#supported-documents) chapter |
-|**country** *|String|3|Possible countries:<br>•	[ISO 3166-1 alpha-3](http://en.wikipedia.org/wiki/ISO_3166-1_alpha-3) country code<br>•	XKX (Kosovo)|
-|**merchantScanReference** *|String|100|Your reference for each scan must not contain sensitive data like PII (Personally Identifiable Information) or account login|
-|**customerId** *|String|100|Identification of the customer must not contain sensitive data like PII (Personally Identifiable Information) or account login|
-|**enableExtraction** *| Boolean ||Enables or disables Extraction for each transaction. Possible values:<br>• true<br>• false<br> **Mandatory if Extraction is activated** <br><br>Note: If you want to enable Extraction for your account in general, please contact your Account Manager, or reach out to Jumio Support.|
-|callbackUrl|String|255|Callback URL for the confirmation after the user journey is completed (constraints see [Callback URL](/netverify/portal-settings.md#callback-url) settings). This setting overrides your Jumio portal settings.|
-|merchantReportingCriteria|String|100|Your reporting criteria for each scan|
-|clientIp|String|100|IP address of the client|
-|customDocumentCode|String|100|Your custom document code (see [Multi documents](/netverify/portal-settings.md#multi-documents))<br>Needs to be added if type = CUSTOM|
+<br>
 
 
-### Response Parameters
+### Request headers
 
-|Parameter       | Type    | Max. Length| Description|
-|:---------------|:--------|:------------|:------------|
-|timestamp|String||Timestamp of the response in the format YYYY-MM-DDThh:mm:ss.SSSZ|
-|scanReference|String|36|Jumio’s reference number for each scan|
+The following fields are required in the header section of your request:<br>
 
-### Sample Request
+`Accept: application/json`<br>
+`Content-Type: application/json`<br>
+`Content-Length:`  (see [RFC-7230](https://tools.ietf.org/html/rfc7230#section-3.3.2))<br>
+`Authorization:` (see [RFC 7617](https://tools.ietf.org/html/rfc7617))<br>
+`User-Agent: YourCompany YourApp/v1.0`<br>
+
+|ℹ️ Jumio requires the `User-Agent` value to reflect your business or entity name for API troubleshooting.|
+|:---|
+
+<br>
+
+
+### Request body
+
+The body of your multi-page **acquisitions** API request allows you to
+
+- provide your own internal tracking information for the user and transaction.
+- specify what type of document is being submitted (including [custom document types](/netverify/portal-settings.md#multi-documents) defined in the Customer Portal)
+- set data extraction preferences.
+<br>
+
+|⚠️ Credit cards uploaded with incorrect `type` may pose a risk to your customers and your business!
+|:----------|
+|Jumio applies appropriate security controls to credit cards correctly uploaded as the `CC` document type, which was designed with sensitive credit card data in mind.<br><br>Submission of credit card data with any other **non-`CC`** document type is **not supported**. Any such transactions may present a risk to your business and are subject to deletion.|
+
+|ℹ️ Values set in your API request will override the corresponding settings configured in the Customer Portal.
+|:----------|
+
+<br>
+
+**Required items appear in bold type.**  
+
+|Name               |Type   |Max. length|Description                                                                                                  |
+|:---                      |:---    |:---        |:---                                                                                                          
+|**type**|string||Possible values:<br>See [supported documents](#supported-documents).|
+|**country**<sup>1</sup>|string|3|Possible values:<br>• [ISO 3166-1 alpha-3](http://en.wikipedia.org/wiki/ISO_3166-1_alpha-3) country code<br>•	XKX (Kosovo)|
+|**merchantScanReference**<sup>2</sup>|string |100       |Your internal reference for the transaction.                                                               
+|**customerId**<sup>2</sup>           |string |100        |Your internal reference for the user.                                                                 
+|merchantReportingCriteria        |string |255        |Your reporting criteria for the transaction.                                                                      
+|callbackUrl<sup>3</sup>              |string |255        |Sends confirmation and any extracted data to this URL upon completion.<br>Overrides [Callback URL](#callback-error-and-success-urls) in the Customer Portal.|
+|enableExtraction| Boolean ||Enables or disables data extraction<sup>4</sup> per transaction.<br><br>Possible values:<br>• `true` (extraction performed)<br>• `false` (no extraction performed)<br><br>**Data extraction will be performed by default if this parameter is not passed.**|
+|customDocumentCode|string|100|Your custom document code (see [Multi documents](/netverify/portal-settings.md#multi-documents)).<br>**Mandatory when** `type` = `CUSTOM`|
+|clientIp|string|100|IP address of the client.|
+
+
+<sup>1</sup> Optional for type `CC`.<br>
+<sup>2</sup> Values **must not** contain Personally Identifiable Information (PII) or other sensitive data such as email addresses.<br>
+<sup>3</sup> See [URL constraints](#callback-error-and-success-urls).<br>
+<sup>4</sup> To activate data extraction for your account, please contact your Account Manager or Jumio Support.
+
+<br>
+
+
+#### Sample request
 ```
 POST https://acquisition.netverify.com/api/netverify/v2/acquisitions HTTP/1.1
 Accept: application/json
 Content-Type: application/json
-Content-Length: xxx
-User-Agent: YOURCOMPANYNAME YOURAPPLICATIONNAME/x.x.x
-Authorization: Basic
+Content-Length: 1234
+User-Agent: Example Corp SampleApp/1.0.1
+Authorization: Basic xxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 {
-"type": "SSC",
-"country": "USA",
-"merchantScanReference": "YOURSCANREFERENCE",
-"customerId": "CUSTOMERID"
+  "type": "BS",
+  "country": "USA",
+  "merchantScanReference": "transaction_1234",
+  "customerId": "user_1234"
 }
 ```
+|⚠️ Sample requests cannot be run as-is. Replace example data with your own values.
+|:----------|
 
-### Sample Response
+<br>
+
+
+### Response
+Unsuccessful requests will return the relevant [HTTP status code](https://tools.ietf.org/html/rfc7231#section-6) and information about the cause of the error.
+
+Successful requests will return HTTP status code `200 OK` along with a JSON object containing the information described below.
+
+**Required items appear in bold type.**
+
+
+|Name      | Type    | Max. length| Description|
+|:---------------|:--------|:------------|:------------|
+|**timestamp**|string||Timestamp of the response in the format *YYYY-MM-DDThh:mm:ss.SSSZ*.|
+|**scanReference**|string|36|Jumio reference number for the transaction.|
+
+<br>
+
+
+#### Sample response
 ```
 {
 "timestamp": "2017-10-17T06:37:51.969Z",
@@ -253,115 +433,189 @@ Authorization: Basic
 }
 ```
 
+<br>
 
 
-## Multi-page Upload: Adding a Page
+## Multi-page upload: adding a page
 
-Call the RESTful HTTP POST API **pages** for a specified scan reference and page number to add a JPEG, PNG or PDF file with a maximum size of 10 MB.
+Call the RESTful API POST endpoint **/pages** with a newly-created or recently updated scan reference and page number to add a JPEG, PNG, or PDF file with a maximum size of 10 MB.
+<br>
 
-HTTP request method: **POST**<br>
-REST URL: `https://acquisition.netverify.com/api/netverify/v2/acquisitions/<scanReference>/document/pages/<page>`<br>
-If your customer account is in the EU data center, use `acquisition.lon.netverify.com` instead of `acquisition.netverify.com`.
+**HTTP request method:** `POST`<br>
+**REST URL (US):** `https://acquisition.netverify.com/api/netverify/v2/acquisitions/<scanReference>/document/pages/<page>`<br>
+**REST URL (EU):** `https://acquisition.lon.netverify.com/api/netverify/v2/acquisitions/<scanReference>/document/pages/<page>`<br>
 
-**Header:** The following parameters are mandatory in the "header" section of your request.
--	`Accept: application/json`
--	`Content-Type: multipart/form-data`
--	`Content-Length: xxx` (RFC-2616)
--	`User-Agent: YOURCOMPANYNAME YOURAPPLICATIONNAME/VERSION`<br><br>
-The value for **User-Agent** must contain a reference to your business or entity for Jumio to be able to identify your requests. (e.g. YourCompanyName YourAppName/1.0.0). Without a proper User-Agent header, Jumio will take longer to diagnose API issues.
+<br>
 
-### Request Parameters
 
-|Parameter       | Type    | Max. Length| Description|
+### Request headers
+
+The following fields are required in the header section of your request:<br>
+
+`Accept: application/json`<br>
+`Content-Type: multipart/form-data`<br>
+`Content-Length:`  (see [RFC-7230](https://tools.ietf.org/html/rfc7230#section-3.3.2))<br>
+`Authorization:` (see [RFC 7617](https://tools.ietf.org/html/rfc7617))<br>
+`User-Agent: YourCompany YourApp/v1.0`<br>
+
+|ℹ️ Jumio requires the `User-Agent` value to reflect your business or entity name for API troubleshooting.|
+|:---|
+
+<br>
+
+
+### Request path parameters
+
+**Required items appear in bold type.**  
+
+|Name               |Type   | Max. length|Description
 |:---------------|:--------|:------------|:------------|
-|**scanReference <br>(path parameter)** *|String|36|Jumio’s reference number of a scan created/updated less than 5 minutes ago|
-|**page <br>(path parameter)** * |String|Max. value: 30|Page number|
+|**scanReference**|string|36|Jumio reference number for a transaction initiated/updated less than 5 minutes ago.|
+|**page**|string|2 |Page number<br> (max. value 30)|
 
-#### Body - `multipart/form-data`
+<br>
+
+
+### Request body - `multipart/form-data`
+
+**Required items appear in bold type.**  
+
 |Key				|Value				|
 |:------			|:------			|
-|**Image \***		|JPEG, PNG, PDF file with max size of 10 MB|
+|**Image**		|JPEG, PNG, PDF file (max. size 10 MB)|
+
+<br>
 
 
-### Response Parameter
-
-You receive a JSON response in case of success, or HTTP status code **404 Not Found** if the scan is not available.
-
-|Parameter       | Type    | Max. Length| Description|
-|:---------------|:--------|:------------|:------------|
-|timestamp|String||Timestamp of the response in the format YYYY-MM-DDThh:mm:ss.SSSZ|
-
-### Sample Request
+#### Sample request
 ```
 POST https://acquisition.netverify.com/api/netverify/v2/acquisitions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/document/pages/1 HTTP/1.1
 Accept: application/json
 Content-Type: multipart/form-data;boundary=----xxxx
-Content-Length: xxx
-User-Agent: YOURCOMPANYNAME YOURAPPLICATIONNAME/x.x.x
-Authorization: Basic
+Content-Length: 1234
+User-Agent: Example Corp SampleApp/1.0.1
+Authorization: Basic xxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 ----xxxx
-// Your JPEG, PNG or PDF page
+// your JPEG, PNG or PDF page
 ----xxxx
 ```
+|⚠️ Sample requests cannot be run as-is. Replace example data with your own values.
+|:----------|
 
-### Sample Response
+<br>
+
+
+### Response
+
+Unsuccessful requests will return HTTP status code `404 Not Found` if the scan is not available.
+
+Successful requests will return HTTP status code `200 OK` along with a JSON object containing the information described below.
+
+**Required items appear in bold type.**  
+
+|Name      | Type    | Max. length| Description|
+|:---------------|:--------|:------------|:------------|
+|**timestamp**|string||Timestamp of the response in the format *YYYY-MM-DDThh:mm:ss.SSSZ*.|
+
+<br>
+
+
+#### Sample response
 ```
 {
 "timestamp": "2017-10-17T07:56:58.613Z"
 }
 ```
 
-## Multi-page Upload: Adding a Document
+<br>
 
-Call the RESTful HTTP POST API **document** for a specified scan reference to add a PDF file with a maximum size of 10 MB and maximum of 30 pages.
 
-HTTP request method: **POST**<br>
-**REST URL:** `https://acquisition.netverify.com/api/netverify/v2/acquisitions/<scanReference>/document`<br>
-If your customer account is in the EU data center, use `acquisition.lon.netverify.com`  instead of `acquisition.netverify.com`.
+## Multi-page upload: adding a document
+Call the RESTful API POST endpoint **/document** for a newly-created or recently updated scan reference to add a PDF file with a maximum size of 10 MB and maximum of 30 pages.
+<br>
 
-**Header:** The following parameters are mandatory in the "header" section of your request.
-- `Accept: application/json`
--	`Content-Type: multipart/form-data`
--	`Content-Length: xxx` (RFC-2616)
--	`User-Agent: YOURCOMPANYNAME YOURAPPLICATIONNAME/VERSION`<br><br>
-The value for **User-Agent** must contain a reference to your business or entity for Jumio to be able to identify your requests. (e.g. YourCompanyName YourAppName/1.0.0). Without a proper User-Agent header, Jumio will take longer to diagnose API issues.
+**HTTP request method:** `POST`<br>
+**REST URL (US):** `https://acquisition.netverify.com/api/netverify/v2/acquisitions/<scanReference>/document`<br>
+**REST URL (EU):** `https://acquisition.lon.netverify.com/api/netverify/v2/acquisitions/<scanReference>/document`<br>
 
-### Request Parameter
+<br>
 
-|Parameter       | Type    | Max. Length| Description|
+
+### Request headers
+
+The following fields are required in the header section of your request:<br>
+
+`Accept: application/json`<br>
+`Content-Type: multipart/form-data`<br>
+`Content-Length:`  (see [RFC-7230](https://tools.ietf.org/html/rfc7230#section-3.3.2))<br>
+`Authorization:` (see [RFC 7617](https://tools.ietf.org/html/rfc7617))<br>
+`User-Agent: YourCompany YourApp/v1.0`<br>
+
+|ℹ️ Jumio requires the `User-Agent` value to reflect your business or entity name for API troubleshooting.|
+|:---|
+
+<br>
+
+
+### Request path parameters
+
+**Required items appear in bold type.**  
+
+|Name               |Type   | Max. length|Description
 |:---------------|:--------|:------------|:------------|
-|**scanReference<br>(path parameter)** *|String|36|Jumio’s reference number of a scan created/updated less than 5 minutes ago|
+|**scanReference**|string|36|Jumio reference number for a transaction initiated/updated less than 5 minutes ago.|
 
-#### Body - `multipart/form-data`
+<br>
+
+
+### Request body — `multipart/form-data`
+
+**Required items appear in bold type.**  
+
 |Key				|Value				|
 |:------			|:------			|
-|**Image \***		|PDF file with max size of 10 MB and 30 pages|
+|**Image**		|PDF file with max size of 10 MB and 30 pages|
+
+<br>
 
 
-### Response Parameters
-
-You receive a JSON response in case of success, or HTTP status code **404 Not Found** if the scan is not available.
-
-|Parameter       | Type    | Max. Length| Description|
-|:---------------|:--------|:------------|:------------|
-|timestamp|String||Timestamp of the response in the format YYYY-MM-DDThh:mm:ss.SSSZ|
-|pages|Number|Max. value: 30|Number of extracted pages|
-
-### Sample Request
+#### Sample request
 
 ```
 POST https://acquisition.netverify.com/api/netverify/v2/acquisitions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/document HTTP/1.1
 Accept: application/json
 Content-Type: multipart/form-data;boundary=----xxxx
-Content-Length: xxx
-User-Agent: YOURCOMPANYNAME YOURAPPLICATIONNAME/x.x.x
-Authorization: Basic
+Content-Length: 1234
+User-Agent: Example Corp SampleApp/1.0.1
+Authorization: Basic xxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 ----xxxx
 // Your PDF document
 ----xxxx
 ```
 
-### Sample Response
+|⚠️ Sample requests cannot be run as-is. Replace example data with your own values.
+|:----------|
+
+<br>
+
+
+### Response
+
+Unsuccessful requests will return HTTP status code `404 Not Found` if the scan is not available.
+
+Successful requests will return HTTP status code `200 OK` along with a JSON object containing the information described below.
+
+**Required items appear in bold type.**  
+
+|Name       | Type    | Max. length| Description|
+|:---------------|:--------|:------------|:------------|
+|**timestamp**|string||Timestamp of the response in the format *YYYY-MM-DDThh:mm:ss.SSSZ*.|
+|**pages**|integer|2|Number of extracted pages (max. 30).|
+
+<br>
+
+
+#### Sample response
 ```
 {
 "timestamp": "2017-10-17T07:56:58.613Z",
@@ -369,100 +623,164 @@ Authorization: Basic
 }
 ```
 
-## Multi-page Upload: Finalizing the Transaction
+<br>
 
-Call the RESTful HTTP PUT API **acquisitions** for a specified scan reference to finalize the transaction.
 
-HTTP request method: **PUT**<br>
-**REST URL:** `https://acquisition.netverify.com/api/netverify/v2/acquisitions/<scanReference>`<br>
-If your customer account is in the EU data center, use `acquisition.lon.netverify.com` instead of `acquisition.netverify.com`.
+## Multi-page upload: finalizing the transaction
 
-**Header:** The following parameter is mandatory in the "header" section of your request.
--	`Accept: application/json`
--	`User-Agent: YOURCOMPANYNAME YOURAPPLICATIONNAME/VERSION`<br><br>
-The value for **User-Agent** must contain a reference to your business or entity for Jumio to be able to identify your requests. (e.g. YourCompanyName YourAppName/1.0.0). Without a proper User-Agent header, Jumio will take longer to diagnose API issues.
+Call the RESTful API PUT endpoint **/acquisitions** with a specified scan reference to finalize the transaction.<br>
 
-### Request Parameter
+**HTTP request method:** `PUT`<br>
+**REST URL (US):** `https://acquisition.netverify.com/api/netverify/v2/acquisitions/<scanReference>`<br>
+**REST URL (EU):** `https://acquisition.lon.netverify.com/api/netverify/v2/acquisitions/<scanReference>`<br>
 
-|Parameter       | Type    | Max. Length| Description|
+<br>
+
+
+### Request headers
+
+The following fields are required in the header section of your request:<br>
+
+`Accept: application/json`<br>
+`Authorization:` (see [RFC 7617](https://tools.ietf.org/html/rfc7617))<br>
+`User-Agent: YourCompany YourApp/v1.0`<br>
+
+|ℹ️ Jumio requires the `User-Agent` value to reflect your business or entity name for API troubleshooting.|
+|:---|
+
+<br>
+
+
+### Request path parameters
+**Required items appear in bold type.**
+
+|Name    | Type    | Max. length| Description|
 |:---------------|:--------|:------------|:------------|
-|**scanReference (path parameter)** *|String|36|Jumio’s reference number of a scan created/updated less than 5 minutes ago |
+|**scanReference**|string|36|Jumio reference number for a transaction initiated/updated less than 5 minutes ago.|
 
-### Response Parameter
+<br>
 
-You receive a JSON response in case of success, or HTTP status code **404 Not Found** if the scan is not available.
 
-|Parameter       | Type    | Max. Length| Description|
-|:---------------|:--------|:------------|:------------|
-|timestamp|String||Timestamp of the response in the format YYYY-MM-DDThh:mm:ss.SSSZ|
-
-### Sample Request
+#### Sample request
 ```
 PUT https://acquisition.netverify.com/api/netverify/v2/acquisitions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx HTTP/1.1
 Accept: application/json
-User-Agent: YOURCOMPANYNAME YOURAPPLICATIONNAME/x.x.x
-Authorization: Basic
+User-Agent: Example Corp SampleApp/1.0.1
+Authorization: Basic xxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 ```
-### Sample Response
+
+|⚠️ Sample requests cannot be run as-is. Replace example data with your own values.
+|:----------|
+
+<br>
+
+
+### Response
+
+Unsuccessful requests will return HTTP status code `404 Not Found` if the scan is not available.
+
+Successful requests will return HTTP status code `200 OK` along with a JSON object containing the information described below.
+
+**Required items appear in bold type.**
+
+|Parameter       | Type    | Max. Length| Description|
+|:---------------|:--------|:------------|:------------|
+|**timestamp**|string||Timestamp of the response in the format *YYYY-MM-DDThh:mm:ss.SSSZ*.|
+
+<br>
+
+
+#### Sample response
 ```
 {
 "timestamp": "2017-10-17T07:56:58.613Z"
 }
 ```
 
-## Single Page Upload
-
-Call the RESTful HTTP POST API **complete** with the below parameters to initialize, upload and finalize a single page document in one API call. You can add a JPEG, PNG or a single page PDF file with a maximum size of 10 MB.
-
-HTTP request method: **POST**<br>
-**REST URL:** `https://acquisition.netverify.com/api/netverify/v2/acquisitions/complete`<br>
-If your customer account is in the EU data center, use `acquisition.lon.netverify.com` instead of `acquisition.netverify.com`.
-
-**Header:** The following parameters are mandatory in the "header" section of your request.
--	`Accept: application/json`
--	`Content-Type: multipart/form-data`
--	`Content-Length: xxx` (RFC-2616)
--	`User-Agent: YOURCOMPANYNAME YOURAPPLICATIONNAME/VERSION`<br><br>
-The value for **User-Agent** must contain a reference to your business or entity for Jumio to be able to identify your requests. (e.g. YourCompanyName YourAppName/1.0.0). Without a proper User-Agent header, Jumio will take longer to diagnose API issues.
-
-### Request Parameters
-
-**Note:** Mandatory parameters are marked with an asterisk * and highlighted bold.
-
-#### Body - `multipart/form-data`
-|Key				|Value				|
-|:------			|:------			|
-|**image \***		|JPEG, PNG, PDF file with max size of 10 MB|
-|**metadata \***	|Metadata of the customer's document as JSON objects, see table below|
-
-|Parameter "metadata"  | Type    | Max. Length| Description|
-|:---------------|:--------|:------------|:------------|
-|**type** *<br>Not mandatory for type=CC|String||Possible codes:<br>See [Supported documents](#supported-documents) chapter |
-|**country** *|String|3|Possible countries:<br>•	[ISO 3166-1 alpha-3](http://en.wikipedia.org/wiki/ISO_3166-1_alpha-3) country code<br>•	XKX (Kosovo)|
-|**merchantScanReference** *|String|100|Your reference for each scan must not contain sensitive data like PII (Personally Identifiable Information) or account login|
-|**customerId** *|String|100|Identification of the customer must not contain sensitive data like PII (Personally Identifiable Information) or account login|
-|**enableExtraction** *| Boolean ||Enables or disables Extraction for each transaction. Possible values:<br>• true<br>• false<br> **Mandatory if Extraction is activated** <br><br>Note: If you want to enable Extraction for your account in general, please contact your Account Manager, or reach out to Jumio Support.|
-|callbackUrl|String|255|Callback URL for the confirmation after the user journey is completed (constraints see [Callback URL](/netverify/portal-settings.md#callback-url) settings). This setting overrides your Jumio portal settings.|
-|merchantReportingCriteria|String|100|Your reporting criteria for each scan|
-|clientIp|String|100|IP address of the client|
-|customDocumentCode|String|100|Your custom document code (see [Multi documents](/netverify/portal-settings.md#multi-documents))<br>Needs to be added if type = CUSTOM|
+<br>
 
 
-### Response Parameters
+## Single-page upload
 
-|Parameter       | Type    | Max. Length| Description|
-|:---------------|:--------|:------------|:------------|
-|timestamp|String||Timestamp of the response in the format YYYY-MM-DDThh:mm:ss.SSSZ|
-|scanReference|String|36|Jumio’s reference number for each scan|
+Call the RESTful API POST endpoint **/complete** with a JSON object containing the properties described below to initialize, upload, and finalize a single-page document in one API call. You can add a JPEG, PNG, or a single-page PDF file with a maximum size of 10 MB.<br>
 
-### Sample Request
+**HTTP request method:** `POST`<br>
+**REST URL (US):** `https://acquisition.netverify.com/api/netverify/v2/acquisitions/complete`<br>
+**REST URL (US):** `https://acquisition.lon.netverify.com/api/netverify/v2/acquisitions/complete`<br>
+
+<br>
+
+
+### Request headers
+
+The following fields are required in the header section of your request:<br>
+
+`Accept: application/json`<br>
+`Content-Type: multipart/form-data`<br>
+`Content-Length:`  (see [RFC-7230](https://tools.ietf.org/html/rfc7230#section-3.3.2))<br>
+`Authorization:` (see [RFC 7617](https://tools.ietf.org/html/rfc7617))<br>
+`User-Agent: YourCompany YourApp/v1.0`<br>
+
+|ℹ️ Jumio requires the `User-Agent` value to reflect your business or entity name for API troubleshooting.|
+|:---|
+
+<br>
+
+
+### Request body — `multipart/form-data`
+
+|Key			|Value				|
+|:------		|:------			|
+|**image**	|JPEG, PNG, PDF file with max size of 10 MB|
+|**metadata**	|Details of the user's document specified as a JSON object|
+
+The `metadata` object in the body of your single-page **complete** API request allows you to
+
+- provide your own internal tracking information for the user and transaction.
+- specify what type of document is being submitted (including [custom document types](/netverify/portal-settings.md#multi-documents) defined in the Customer Portal)
+- set data extraction preferences.
+<br>
+
+|⚠️ Credit cards uploaded with incorrect `type` may pose a risk to your customers and your business!
+|:----------|
+|Jumio applies appropriate security controls to credit cards correctly uploaded as the `CC` document type, which was designed with sensitive credit card data in mind.<br><br>Submission of credit card data with any other **non-`CC`** document type is **not supported**. Any such transactions may present a risk to your business and are subject to deletion.|
+
+|ℹ️ Values set in your API request will override the corresponding settings configured in the Customer Portal.
+|:----------|
+
+<br>
+
+**Required items appear in bold type.**  
+
+### Request body — `metadata`
+|Name               |Type   |Max. length|Description                                                                                                  
+|:---                      |:---    |:---        |:---                                                                                                          
+|**type**|string||Possible values:<br>See [supported documents](#supported-documents).|
+|**country**<sup>1</sup>|string|3|Possible values:<br>• [ISO 3166-1 alpha-3](http://en.wikipedia.org/wiki/ISO_3166-1_alpha-3) country code<br>•	XKX (Kosovo)|
+|**merchantScanReference**<sup>2</sup>|string |100       |Your internal reference for the transaction.                                                               
+|**customerId**<sup>2</sup>           |string |100        |Your internal reference for the user.                                                                 
+|merchantReportingCriteria        |string |255        |Your reporting criteria for the transaction.                                                                      
+|callbackUrl<sup>3</sup>              |string |255        |Sends confirmation and any extracted data to this URL upon completion.<br>Overrides [Callback URL](#callback-error-and-success-urls) in the Customer Portal.|
+|enableExtraction| Boolean ||Enables or disables data extraction<sup>4</sup> per transaction.<br><br>Possible values:<br>• `true` (extraction performed)<br>• `false` (no extraction performed)<br><br>**Data extraction will be performed by default if this parameter is not passed.**|
+|customDocumentCode|string|100|Your custom document code (see [Multi documents](/netverify/portal-settings.md#multi-documents)).<br>**Mandatory when** `type` = `CUSTOM`|
+|clientIp|string|100|IP address of the client.|
+
+<sup>1</sup> Optional for type `CC`.<br>
+<sup>2</sup> Values **must not** contain Personally Identifiable Information (PII) or other sensitive data such as email addresses.<br>
+<sup>3</sup> See [URL constraints](#callback-error-and-success-urls).<br>
+<sup>4</sup> To activate data extraction for your account, please contact your Account Manager or Jumio Support.
+
+<br>
+
+
+#### Sample request
 ```
 POST https://acquisition.netverify.com/api/netverify/v2/acquisitions/complete HTTP/1.1
 Accept: application/json
 Content-Type: multipart/form-data;boundary=----xxxx
-Content-Length: xxx
-User-Agent: YOURCOMPANYNAME YOURAPPLICATIONNAME/x.x.x
-Authorization: Basic
+Content-Length: 1234
+User-Agent: Example Corp SampleApp/1.0.1
+Authorization: Basic xxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 ----xxxx
 Content-Disposition: form-data; name="image"; filename="xxx.png"
 Content-Type: image/png
@@ -477,7 +795,30 @@ Content-Disposition: form-data; name="metadata"
 }
 ----xxxx
 ```
-### Sample Response
+
+|⚠️ Sample requests cannot be run as-is. Replace example data with your own values.
+|:----------|
+
+<br>
+
+
+### Response
+
+Unsuccessful requests will return the relevant [HTTP status code](https://tools.ietf.org/html/rfc7231#section-6) and information about the cause of the error.
+
+Successful requests will return HTTP status code `200 OK` along with a JSON object containing the information described below.
+
+**Required items appear in bold type.**
+
+|Name      | Type    | Max. length| Description|
+|:---------------|:--------|:------------|:------------|
+|**timestamp**|string||Timestamp of the response in the format *YYYY-MM-DDThh:mm:ss.SSSZ*.|
+|**scanReference**|string|36|Jumio reference number for the transaction.|
+
+<br>
+
+
+#### Sample response
 ```
 {
 "timestamp": "2017-10-17T07:56:58.613Z",
@@ -487,37 +828,50 @@ Content-Disposition: form-data; name="metadata"
 
 ---
 
-## Supported Documents
+# Supported documents
 
-Call the RESTful HTTP GET API **supportedDocumentTypes** to receive a JSON response including the code and names of all supported documents.
+Several standard document types are supported for upload and data extraction. You can also create your own [custom document types](/netverify/portal-settings.md#multi-documents) in the Customer Portal.
 
-HTTP request method: **GET**<br>
-**REST URL:** `https://netverify.com/api/netverify/v2/supportedDocumentTypes`<br>
-If your customer account is in the EU data center, use `lon.netverify.com` instead of `netverify.com`.
+## Data extraction
 
-**Authentication:** The supportedDocumentTypes API call is protected. To access it, use HTTP Basic Authentication with your API token as the "userid" and your API secret as the "password".
+**Name**, **Address**, and **Issuing Date** will be extracted for all documents printed in a Latin-script character set, provided that a minimum of two of these three data points are available for extraction. If the document does not meet these extraction criteria, only the document image will be saved — no data extraction will be performed.
 
-**Header:** The following parameters are mandatory in the "header" section of your request.<br>
+For the following specific document types, additional data will be extracted.
 
--	`Accept: application/json`<br>
--	`User-Agent: YOURCOMPANYNAME YOURAPPLICATIONNAME/VERSION`<br><br>
-The value for **User-Agent** must contain a reference to your business or entity for Jumio to be able to identify your requests. (e.g. YourCompanyName YourAppName/1.0.0). Without a proper User-Agent header, Jumio will take longer to diagnose API issues.
+|Type | Extracted data |
+|:---------------|:----------|
+|BS (bank statement) |name, issueDate, address, accountNumber, swiftCode |
+|CC (credit card) |name, pan, expiryDate |
+|UB (utility bill) |name, issueDate, address, dueDate |
+|CCS (credit card statement) |name, issueDate, address, cardNumberLastFourDigits |
+|SSC (Social Security card)<sup>1</sup> |firstName, lastName, ssn, signatureAvailable  |
 
-**TLS handshake:** The TLS protocol is required (see [Supported cipher suites](/netverify/supported-cipher-suites.md)) and we strongly recommend using the latest version.
+<sup>1</sup> USA only
 
-**Note:** Calls with missing or suspicious headers, suspicious parameter values, or without HTTP Basic Authentication will result in HTTP status code, **403 Forbidden**.
+### Disabling data extraction
 
-### Response Parameters
+Should you wish to turn data extraction off for certain documents, this can be accomplished on a per-transaction level by setting `enableExtraction` to `false`.
 
-|Parameter       | Type        | Description|
-|:---------------|:------------|:------------|
-|timestamp|String|Timestamp of the response in the format YYYY-MM-DDThh:mm:ss.SSSZ|
-|supportedDocumentTypes|Array|Array of supported documents|
+## Supported document types
 
-|Parameter "supportedDocumentTypes" | Type |Max. Length       | Description|
-|:---------------|:------------|:------------|:------------|
-|code|String|6|Unique identifier of the document type|
-|name|String|255|Full name of the document type|
+Call the RESTful HTTP GET API **supportedDocumentTypes** to receive a JSON response including the code and names of all supported standard document types.
+
+**HTTP request method:** `GET`<br>
+**REST URL (US):** `https://netverify.com/api/netverify/v2/supportedDocumentTypes`<br>
+**REST URL (EU):** `https://lon.netverify.com/api/netverify/v2/supportedDocumentTypes`<br>
+
+### Request headers
+
+The following fields are required in the header section of your request:<br>
+
+`Accept: application/json`<br>
+`Authorization:` (see [RFC 7617](https://tools.ietf.org/html/rfc7617))<br>
+`User-Agent: YourCompany YourApp/v1.0`<br>
+
+|ℹ️ Jumio requires the `User-Agent` value to reflect your business or entity name for API troubleshooting.|
+|:---|
+
+<br>
 
 ### Sample Request
 ```
@@ -526,6 +880,33 @@ Accept: application/json
 User-Agent: YOURCOMPANYNAME YOURAPPLICATIONNAME/x.x.x
 Authorization: Basic
 ```
+
+|⚠️ Sample requests cannot be run as-is. Replace example data with your own values.
+|:----------|
+
+<br>
+
+
+### Response
+
+**Required items appear in bold type.**
+
+|Name      | Type        | Description|
+|:---------------|:------------|:------------|
+|**timestamp**|string|Timestamp of the response in the format *YYYY-MM-DDThh:mm:ss.SSSZ*.|
+|**supportedDocumentTypes**|array|Array of supported documents.|
+
+#### Parameter `supportedDocumentTypes`
+
+**Required items appear in bold type.**
+
+|Name| Type |Max. length       | Description|
+|:---------------|:------------|:------------|:------------|
+|**code**|string|6|Unique identifier of the document type.|
+|**name**|string|255|Full name of the document type.|
+
+<br>
+
 
 ### Sample Response
 ```
@@ -556,7 +937,6 @@ Authorization: Basic
   {"code":"TAC","name":"Trade association card"},
   {"code":"SEL","name":"School enrolment letter"},
   {"code":"PB","name":"Phone bill"},
-  {"code":"USSS","name":"US social security card"},
   {"code":"SSC","name":"Social security card"},
   {"code":"CUSTOM","name":"DOCUMENT"}
   ]
@@ -566,22 +946,15 @@ Authorization: Basic
 ---
 # Deleting transactions
 
-You can delete transactions easily in the Customer Portal. 
+You can delete transactions easily in the Customer Portal.
 
-In **Verifications**, search for the transaction you want to delete. Click the trash can icon to the right of the scan details to remove sensitive data (e.g., name, address, date of birth, document number, etc.) and image(s) from the transaction record. 
+In **Verifications**, search for the transaction you want to delete. Click the trash can icon to the right of the scan details to remove sensitive data (e.g., name, address, date of birth, document number, etc.) and image(s) from the transaction record.
 
 You can also implement the RESTful DELETE API to remove sensitive data and image(s) from a completed transaction.<br>
- 
+
 [View the Delete API implementation guide](/netverify/netverify-delete-api.md)
 
 When deleting transaction data, the Jumio scan reference and timestamp will be retained for reporting purposes.
-
----
-# Global Netverify Settings
-
-Configuration settings are located in your Jumio customer portal. The description of each of the settings are available via the link below.
-
-[View the Customer Portal settings guide](/netverify/portal-settings.md)
 
 
 ----

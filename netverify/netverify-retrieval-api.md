@@ -4,35 +4,12 @@
 
 This guide illustrates how to implement the Netverify Retrieval API.
 
-## Table of Contents
 
-- [Release Notes](#release-notes)
-- [Usage](#usage)
-- [Authentication and header](#authentication-and-header)
-- [Netverify Retrieval](#netverify-retrieval)
-    - [Retrieving scan status](#retrieving-scan-status)
-    - [Retrieving scan details](#retrieving-scan-details)
-    - [Retrieving document data only](#retrieving-document-data-only)
-    - [Retrieving transaction data only](#retrieving-transaction-data-only)
-    - [Retrieving verification data only](#retrieving-verification-data-only)
-    - [Retrieving available images](#retrieving-available-images)
-    - [Retrieving specific image](#retrieving-specific-image)
-- [Document Verification Retrieval](#document-verification-retrieval)
-    - [Retrieving scan status ](#multi-retrieving-scan-status)
-    - [Retrieving scan details](#multi-retrieving-scan-details)
-    - [Retrieving document data only](#multi-retrieving-document-data-only)
-    - [Retrieving transaction data only](#multi-retrieving-transaction-data-only)
-    - [Retrieving available images](#multi-retrieving-available-images)
-    - [Retrieving specific image](#multi-retrieving-specific-image)
-- [Supported Cipher Suites](#supported-cipher-suites)
-
----
-# Release Notes
-
-Find the release information for the Retrieval API below.
+### Revision history
 
 | Date    | Description|
 |:--------|:------------|
+| 2018-10-02   |Add swiftCode to Parameter "extractedData" for BS, removed deprecated faceMatch percentages|
 | 2018-02-01   |Added response parameter "originalDocument" for Document Verification Retrieval <br />Retrieving document data only<br />Added Australia and Canada states to response parameter "usState" |
 | 2018-01-17   |Added new validity reason BLACK_AND_WHITE<br> Updated supported countries for idSubtype LEARNING_DRIVING_LICENSE|
 | 2017-11-23   |Added value "Visa" to response parameter "type" for Netverify Retrieval - Retrieving Document Data only|
@@ -56,6 +33,30 @@ Find the release information for the Retrieval API below.
 | 2014-03-05   |Added sources WEB and REDIRECT<br />Document type not mandatory anymore |
 | 2014-09-25   |Changed parameter "maskhint" to apply for credit cards only |
 | 2014-08-19   |Initial release |
+
+---
+
+## Table of Contents
+
+- [Usage](#usage)
+- [Authentication and header](#authentication-and-header)
+- [Netverify Retrieval](#netverify-retrieval)
+    - [Retrieving scan status](#retrieving-scan-status)
+    - [Retrieving scan details](#retrieving-scan-details)
+    - [Retrieving document data only](#retrieving-document-data-only)
+    - [Retrieving transaction data only](#retrieving-transaction-data-only)
+    - [Retrieving verification data only](#retrieving-verification-data-only)
+    - [Retrieving available images](#retrieving-available-images)
+    - [Retrieving specific image](#retrieving-specific-image)
+- [Document Verification Retrieval](#document-verification-retrieval)
+    - [Retrieving scan status ](#multi-retrieving-scan-status)
+    - [Retrieving scan details](#multi-retrieving-scan-details)
+    - [Retrieving document data only](#multi-retrieving-document-data-only)
+    - [Retrieving transaction data only](#multi-retrieving-transaction-data-only)
+    - [Retrieving available images](#multi-retrieving-available-images)
+    - [Retrieving specific image](#multi-retrieving-specific-image)
+- [Supported Cipher Suites](#supported-cipher-suites)
+
 
 ---
 # Usage
@@ -244,7 +245,7 @@ You receive a JSON response in case of success, or HTTP status code **404 Not Fo
 |expiry|String||Date of expiry in the format YYYY-MM-DD|
 |issuingDate|String|255|Issue date in the format YYYY-MM-DD|
 |number|String|255|Identification number of the document|
-|usState|String|255|Possible values if type = PASSPORT or ID\_CARD:<br/>•	Last two characters of [ISO 3166-2:US](http://en.wikipedia.org/wiki/ISO_3166-2:US) state code<br/>•	Last 2-3 characters of [ISO 3166-2:AU](http://en.wikipedia.org/wiki/ISO_3166-2:AU) state code<br/>•	Last two characters of [ISO 3166-2:CA](http://en.wikipedia.org/wiki/ISO_3166-2:CA) state code<br/>• [ISO 3166-1](http://en.wikipedia.org/wiki/ISO_3166-1_alpha-3) country name<br/>• XKX (Kosovo)<br/><br/>If idType = DRIVING\_LICENSE:<br/>•	Last two characters of [ISO 3166-2:US](http://en.wikipedia.org/wiki/ISO_3166-2:US) state code<br/>•	Last 2-3 characters of [ISO 3166-2:AU](http://en.wikipedia.org/wiki/ISO_3166-2:AU) state code<br/>•	Last two characters of [ISO 3166-2:CA](http://en.wikipedia.org/wiki/ISO_3166-2:CA) state code|
+|usState|String|255|Possible values:<br/>•	Last two characters of [ISO 3166-2:US](http://en.wikipedia.org/wiki/ISO_3166-2:US) state code<br/>•	Last 2-3 characters of [ISO 3166-2:AU](http://en.wikipedia.org/wiki/ISO_3166-2:AU) state code<br/>•	Last two characters of [ISO 3166-2:CA](http://en.wikipedia.org/wiki/ISO_3166-2:CA) state code<br/>• [ISO 3166-1](http://en.wikipedia.org/wiki/ISO_3166-1_alpha-3) country name<br/>• XKX (Kosovo)<br/>• Free text - if it can't be mapped to a state/country code<br/>|
 |personalNumber|String|255|Personal number of the document|
 |optionalData1|String|255|Optional field of MRZ line 1|
 |optionalData2|String|255|Optional field of MRZ line 2|
@@ -404,7 +405,6 @@ You receive a JSON response in case of success, or HTTP status code **404 Not Fo
 |**timestamp** \*| String| |Timestamp of the response in the format YYYY-MM-DDThh:mm:ss.SSSZ|
 |**scanReference** \*| String|36 |Jumio’s reference number for each scan|
 |mrzCheck|String||Possible values:<br>• OK<br>• NOT\_AVAILABLE|
-|faceMatch|String||Face match percentage 0-100|
 |rejectReason|Object||Reject reason, see tables below|
 |identityVerification|Object||Identity verification, see table below|
 
@@ -706,6 +706,7 @@ You receive a JSON response in case of success, or HTTP status code **404 Not Fo
 |ssn |String |255|Social security number if readable|
 |firstName |String |255|First name if readable|
 |lastName |String |255|Last name if readable|
+|swiftCode |String |20|BIC/SWIFT code|
 
 
 ### Sample Request

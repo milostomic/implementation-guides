@@ -10,6 +10,13 @@ It provides an overview of the significant changes in the new client and describ
 
 <br>
 
+### Revision history
+
+Information about changes to features and improvements documented in each release is available in our [Revision history](/netverify/README.md).
+
+---
+
+
 ## Table of contents
 
 - [Initiating a Netverify transaction](#initiating-a-netverify-transaction)
@@ -19,6 +26,7 @@ It provides an overview of the significant changes in the new client and describ
 		- [Fields retained from v3 to v4](#fields-retained-from-v3-to-v4-with-changes-where-applicable)
 		- [New optional fields](#new-optional-fields)
 		- [Deprecated properties](#deprecated-properties)
+			- [Supported documents for address extraction](#supported-documents-for-address-extraction)
 	- [Response](#response)
 		- [Fields retained from v3 to v4](#fields-retained-from-v3-to-v4-with-changes-where-applicable-1)
 		- [Deprecated fields](#deprecated-fields)
@@ -248,11 +256,26 @@ Preset a custom Liveness Detection phrase for the transaction.<br>
 |idType|This property has been removed.|
 |personalNumber|This property has been removed.|
 |authorizationTokenLifetime|This property has been removed.<br>The default authorization token lifetime of 30 minutes can be modified in the Customer Portal.|
-|enabledFields|This property has been removed.<br>Mandatory fields and optional fields enabled in the Customer Portal will be extracted by default. <br>Address will be extracted if it is enabled for your account.<br>Identity Verification can now be requested on a per-transaction basis using [workflowId](#new-optional-fields).|
+|enabledFields|This property has been removed.<br>Mandatory fields and optional fields enabled in the Customer Portal will be extracted by default. <br>Address will be extracted if it is enabled for your account, and extraction is supported for the country/document type. See [supported documents for address extraction](#supported-documents-for-address-extraction).<br>Identity Verification can now be requested on a per-transaction basis using [workflowId](#new-optional-fields).|
 |captureMethod|This property has been replaced by [workflowId](#new-optional-fields).|
 |presetCountry|This property has been replaced by [presets](#new-optional-fields).|
 |presetIdType|This property has been replaced by [presets](#new-optional-fields).|
 
+#### Supported documents for address extraction
+
+|Country    |ID card    |Driving license    |Passport    |Callback format |
+|:------------|:-------|:--------------|:--------------|:-------|
+|Australia|No|Yes|No|US|
+|Canada|No|Yes|No|US|
+|France|Yes|Yes|Yes|Raw|
+|Germany|Yes|No|No|EU|
+|Ireland|No|Yes|No|Raw|
+|Mexico|Yes|No|No|US|
+|Romania|Yes|No|No|Raw|
+|Singapore|Yes|No|No|Raw|
+|Spain|Yes|No|No|EU|
+|United Kingdom|No|Yes|No|Raw|
+|United States|No|Yes|No|US|
 ---
 ## Response
 Unsuccessful **initiate** requests will return the relevant [HTTP status code](https://tools.ietf.org/html/rfc7231#section-6) and information about the cause of the error.

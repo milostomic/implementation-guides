@@ -4,8 +4,14 @@
 
 This is a reference manual and configuration guide for the Netverify Web product. It illustrates how to embed Netverify into your web page and use Netverify redirect.
 
+
+### Revision history
+
+Information about changes to features and improvements documented in each release is available in our [Revision history](/netverify/README.md).
+
+---
+
 ## Table of Contents
-- [Release notes](#release-notes)
 - [Embedding Netverify into your page](#embedding-netverify-into-your-page)
     - [Initiating the transaction](#embedded-initiating-the-transaction)
     - [Displaying and configuring your Netverify client](#displaying-and-configuring-your-netverify-client)
@@ -25,11 +31,7 @@ This is a reference manual and configuration guide for the Netverify Web product
 - [Supported Browsers](#supported-browsers)
 - [Test IDs](#test-ids)
 
----
-# Release Notes
 
-Find the release information for Netverify Web at the link below.<p>
-[View Release Notes](/netverify/README.md)
 
 ---
 # Embedding Netverify into your page
@@ -111,6 +113,7 @@ The following fields are required in the header section of your request:<br>
 |Germany|Yes|No|No|EU|
 |Ireland|No|Yes|No|Raw|
 |Mexico|Yes|No|No|US|
+|Romania|Yes|No|No|Raw|
 |Singapore|Yes|No|No|Raw|
 |Spain|Yes|No|No|EU|
 |United Kingdom|No|Yes|No|Raw|

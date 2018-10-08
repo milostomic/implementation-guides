@@ -4,10 +4,15 @@
 
 You can customize your settings, brand your Netverify page, and manage your API credentials in the Customer Portal. Save changes with your Customer Portal password to activate them.
 
+### Revision history
+
+Information about changes to features and improvements documented in each release is available in our [Revision history](/netverify/README.md).
+<br>
+
 
 ## Table of Contents
 - [Application settings - General](#application-settings--general)
-  - [Callback, Error, and Success URLs](#callback-error-and-success-urls)
+  - [Callback URL](#callback-error-and-success-urls)
   - [Select Capture Method](#select-capture-method)
   - [Skip "Start ID verification" screen](#skip-start-id-verification-screen)
 - [Application settings - Redirect](#application-settings--redirect)

@@ -4,6 +4,15 @@
 
 This guide illustrates how to implement the Netverify Delete API.
 
+### Revision history
+
+| Date    | Description|
+|:--------|:------------|
+| 2016-05-18  |Removed TLS\_DHE ciphers|
+| 2015-10-20  |Added ECDHE ciphers to supported cipher suites|
+| 2015-09-23  |Initial release|
+
+---
 
 ## Table of Contents
 
@@ -11,16 +20,6 @@ This guide illustrates how to implement the Netverify Delete API.
 - [Deleting a Document Verification scan](#deleting-a-document-verification-scan)
 - [Supported Cipher Suites](#supported-cipher-suites)
 
----
-# Release Notes
-
-The release notes for the Netverify Delete API can be viewed link below.
-
-| Date    | Description|
-|:--------|:------------|
-| 2016-05-18  |Removed TLS\_DHE ciphers|
-| 2015-10-20  |Added ECDHE ciphers to supported cipher suites|
-| 2015-09-23  |Initial release|
 
 ---
 # Deleting a Netverify Scan

@@ -4,17 +4,18 @@
 
 This is a reference manual and configuration guide for the Fastfill API. It illustrates how to immediately retrieve information from an ID image.
 
+### Revision history
+
+Information about changes to features and improvements documented in each release is available in our [Revision history](/netverify/README.md).
+
 ## Table of Contents
 
 - [Using the Fastfill API](#using-the-fastfill-api)
 - [Supported IDs](#supported-ids)
 - [Supported Cipher Suites](#supported-cipher-suites)
 
----
-# Release Notes
 
-The release notes for the Fastfill API can be viewed via the link below.<p>
-[View Release Notes](/netverify/README.md)
+
 
 ---
 # Using the Fastfill API

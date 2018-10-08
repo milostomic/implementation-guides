@@ -4,6 +4,9 @@
 
 The callback is the authoritative answer from Jumio. Specify a callback URL (for constaints see [Global Netverify settings](/netverify/portal-settings.md#callback-url)) to recieve the ID verification result for each scan.
 
+### Revision history
+
+Information about changes to features and improvements documented in each release is available in our [Revision history](/netverify/README.md).
 
 ## Table of Contents
 
@@ -137,7 +140,7 @@ The following parameters are posted to your callback URL for Netverify Web embed
 
 <sup>1</sup> Scan is declined as unsupported if the provided ID is not supported by Jumio, or not accepted in your Netverify settings.<br/> <sup>2</sup> For ID types that are configured to support a separate scan of the front side and back side, there is a separate image of the front side (idScanImage) and the back side (idScanImageBackside). If face match is enabled, there is also a picture of the face (idScanImageFace).<br>
 <sup>3</sup> Address recognition is performed for supported IDs, if enabled. Please note, there are three different address formats (US, EU, Raw). Please check [Supported documents for Address Extraction](#supported-documents-for-address-extraction) to see which format applies to specific IDs. The different address parameters are a part of the JSON object, if they are available on the ID.
-<sup>4</sup> Fields containing certain kinds of personally identifying information are not returned if NV masking is enabled for the Netherlands, Germany, or South Korea. See [Netverify masking](#netverify-masking) for more information. 
+<sup>4</sup> Fields containing certain kinds of personally identifying information are not returned if NV masking is enabled for the Netherlands, Germany, or South Korea. See [Netverify masking](#netverify-masking) for more information.
 
 #### Retrieving Images
 Use HTTP: **GET** with **Basic Authorization** using your API token and secret, as userid and password.<br>
@@ -148,8 +151,23 @@ The value for **User-Agent** must contain a reference to your business or entity
 
 The TLS protocol is required during the TLS handshake (see [Supported cipher suites](/netverify/supported-cipher-suites.md)) and we strongly recommend using the latest version.<br/><br>
 
+### Supported Documents for Address Extraction
 
-### US Address Format
+|Country    |ID card    |Driving license    |Passport    |Callback format |
+|:------------|:-------|:--------------|:--------------|:-------|
+|Australia|No|Yes|No|US|
+|Canada|No|Yes|No|US|
+|France|Yes|Yes|Yes|Raw|
+|Germany|Yes|No|No|EU|
+|Ireland|No|Yes|No|Raw|
+|Mexico|Yes|No|No|US|
+|Romania|Yes|No|No|Raw|
+|Singapore|Yes|No|No|Raw|
+|Spain|Yes|No|No|EU|
+|United Kingdom|No|Yes|No|Raw|
+|United States|No|Yes|No|US|
+
+#### US Address Format
 
 |Parameter "idAddress"       | Max. Length    | Description|
 |:---------------|:--------|:------------|
@@ -165,7 +183,7 @@ The TLS protocol is required during the TLS handshake (see [Supported cipher sui
 |zipExtension   |20  |Zip extension |
 |country   |3  |Possible countries:<br/>•	[ISO 3166-1 alpha-3](http://en.wikipedia.org/wiki/ISO_3166-1_alpha-3) country code<br/>•	XKX (Kosovo) |
 
-### EU Address Format
+#### EU Address Format
 
 |Parameter "idAddress"       | Max. Length    | Description|
 |:---------------|:--------|:------------|
@@ -177,7 +195,7 @@ The TLS protocol is required during the TLS handshake (see [Supported cipher sui
 |postalCode   |15  |Postal code |
 |country   |3  |Possible countries:<br/>•	[ISO 3166-1 alpha-3](http://en.wikipedia.org/wiki/ISO_3166-1_alpha-3) country code<br/>•	XKX (Kosovo) |
 
-### Raw Address Format
+#### Raw Address Format
 
 |Parameter "idAddress"       | Max. Length    | Description|
 |:---------------|:--------|:------------|
@@ -225,22 +243,8 @@ The TLS protocol is required during the TLS handshake (see [Supported cipher sui
 |expiryDate   |  |Date of expiry in the format YYYY-MM-DD as available on the driver license|
 |isReadable   |  |Possible value:<br>• FALSE |
 
-### Supported documents for Address Extraction
 
-|Country    |ID card    |Driving license    |Passport    |Callback format |
-|:------------|:-------|:--------------|:--------------|:-------|
-|Australia|No|Yes|No|US|
-|Canada|No|Yes|No|US|
-|France|Yes|Yes|Yes|Raw|
-|Germany|Yes|No|No|EU|
-|Ireland|No|Yes|No|Raw|
-|Mexico|Yes|No|No|US|
-|Singapore|Yes|No|No|Raw|
-|Spain|Yes|No|No|EU|
-|United Kingdom|No|Yes|No|Raw|
-|United States|No|Yes|No|US|
-
-## Netverify masking
+## Netverify Masking
 
 Extracting certain sensitive information from identity documents in the Netherlands, Germany, and South Korea is prohibited by law for customers with a business presence in those countries. These customers can elect to enable Netverify masking to protect this sensitive data.
 
@@ -338,7 +342,8 @@ The TLS protocol is required during the TLS handshake (see [Supported cipher sui
 |expiryDate |String | |Date of expiry in the format YYYY-MM-DD|
 |ssn   | String  |255 |Social security number if readable|
 |signatureAvailable  | String  |   |"true" if signature available, otherwise "false"|
-|address	| JSON object  |  |Address as JSON object in raw format if status = EXTRACTED, see table below |
+|swiftCode	| String  | 20  | BIC/SWIFT code |
+|address	| JSON object  |  | Address as JSON object in raw format if status = EXTRACTED, see table below |
 
 ### Raw Address Format
 
@@ -378,13 +383,19 @@ The TLS protocol is required during the TLS handshake (see [Supported cipher sui
 -->
 
 
-|Country ([ISO 3166-1 alpha-3](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-3) country code ) | Type | Extracted data |
-|:---------------|:----------|:------------|
-|All countries<br/>⦁	Only if data appears in Latin characters<br />⦁	If extraction is not possible transaction will be discarded |BS (Bank Statement) |name, issueDate, address, accountNumber |
-|All countries |CC (Credit card) |name, pan, expiryDate |
-|All countries<br/>⦁	Only if data appears in Latin characters<br />⦁	If extraction is not possible transaction will be discarded |UB (Utility Bill) |name, issueDate, address, dueDate |
-|All countries<br/>⦁	Only if data appears in Latin characters<br />⦁	If extraction is not possible transaction will be discarded  |CCS (Credit card statement) |name, issueDate, address, cardNumberLastFourDigits |
-|USA |SSC (Social security card) |firstName, lastName, ssn, signatureAvailable  |
+**Name**, **Address**, and **Issuing Date** will be extracted for all documents printed in a Latin-script character set, provided that a minimum of two of these three data points are available for extraction. If the document does not meet these extraction criteria, only the document image will be saved — no data extraction will be performed.
+
+For the following specific document types, additional data will be extracted.
+
+|Type | Extracted data |
+|:---------------|:----------|
+|BS (bank statement) |name, issueDate, address, accountNumber, swiftCode |
+|CC (credit card) |name, pan, expiryDate |
+|UB (utility bill) |name, issueDate, address, dueDate |
+|CCS (credit card statement) |name, issueDate, address, cardNumberLastFourDigits |
+|SSC (Social Security card)<sup>1</sup> |firstName, lastName, ssn, signatureAvailable  |
+
+<sup>1</sup> USA only.
 
 
 

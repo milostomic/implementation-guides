@@ -1,7 +1,7 @@
 ![Jumio](/images/netverify.png)
 
-# Release Notes
-The release notes below provide information on the Netverify features and improvements in each release.
+# Revision history
+The list below provides information on the changes to Netverify features and improvements documented in each release.
 
 ## Contact
 
@@ -15,12 +15,13 @@ If you have any questions regarding our implementation guides please contact Jum
 ---
 ## Netverify Web and Document Verification
 
-### Release Notes
+### Revision history
 
 | Date           | Description       |
 |:---------------|:------------------|
+| 2018-10-05 |Added Place of Birth extraction for France, address extraction for Romanian ID cards<br>Document Verification: Added data extraction of BIC/SWIFT code and callback parameter "swiftCode",<br> added data extraction for all document types with Latin-script characters<br>|
 | 2018-07-24 |Release of Netverify Web version 4|
-| 2018-07-03 |Document Verification: Added support for data extraction for all countries with Latin characters|
+| 2018-07-03 |Document Verification: Added data extraction for all Bank Statements (BS), Utility Bills (UB),<br> and Credit Card Statements (CCS) with Latin-script characters|
 | 2018-06-19 |Added address extraction for Singapore ID cards|
 | 2018-06-05 |Added callback parameter "originDob"|
 | 2018-05-22 |Finally removed callback parameter "idFaceMatch" and "idFaceLiveness"|
