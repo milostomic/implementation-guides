@@ -27,7 +27,7 @@ Information about changes to features and improvements documented in each releas
 		- [Callback, Error, and Success URLs](#callback-error-and-success-urls)
 		- [Capture method](#capture-method)
 		- [Skip "Start ID verification" screen](#skip-start-id-verification-screen)
-		- [Authorization token lifetime](#authorization-token-lifetime) 
+		- [Authorization token lifetime](#authorization-token-lifetime)
 	- [Application settings - Redirect](#application-settings--redirect)
 		- [Domain name prefix](#domain-name-prefix)
 		- [Default locale](#default-locale)
@@ -108,7 +108,7 @@ The body of your **initiate** API request allows you to
 |**customerInternalReference**<sup>1</sup>|string |100        |Your internal reference for the transaction.                                                               |
 |**userReference**<sup>1</sup>           |string |100        |Your internal reference for the user.                                                                   |
 |reportingCriteria        |string |100        |Your reporting criteria for the transaction.                                                                      |
-|successUrl<sup>2</sup>               |string |255        |Redirects to this URL after a successful transaction.<br>Overrides [Success URL](#callback-error-and-success-urls) in the Customer Portal.|
+|successUrl<sup>2</sup>               |string |2047        |Redirects to this URL after a successful transaction.<br>Overrides [Success URL](#callback-error-and-success-urls) in the Customer Portal.|
 |errorUrl<sup>2</sup>                 |string |255        |Redirects to this URL after an unsuccessful transaction.<br>Overrides [Error URL](#callback-error-and-success-urls) in the Customer Portal.|
 |callbackUrl<sup>2</sup>              |string |255        |Sends verification result to this URL upon completion.<br>Overrides [Callback URL](#callback-error-and-success-urls) in the Customer Portal.|
 |workflowId               |integer |3          |Applies this acquisition workflow to the transaction.<br>Overrides [Capture method](#capture-method) in the Customer Portal.<br>See [supported workflowId values](#supported-workflowid-values).|
@@ -138,7 +138,7 @@ Acquisition workflows allow you to set a combination of verification and capture
 <br>
 
 ## Supported `presets` values
-It is possible to specify presets for **ID Verification**, for **Identity Verification**, for both together, or for neither. For each preset you use, all values must be passed together as a JSON array (see [Sample request](#sample-request)) for the request to be valid. 
+It is possible to specify presets for **ID Verification**, for **Identity Verification**, for both together, or for neither. For each preset you use, all values must be passed together as a JSON array (see [Sample request](#sample-request)) for the request to be valid.
 <br>
 
 ### ID Verification: preset country and document type
@@ -215,7 +215,7 @@ Unsuccessful requests will return the relevant [HTTP status code](https://tools.
 
 Successful requests will return HTTP status code `200 OK` along with a JSON object containing the information described below.
 
-**Required items appear in bold type.** 
+**Required items appear in bold type.**
 
 |Name|Type|Max. length|Description|
 |:----|:----|:----|:----|
@@ -304,8 +304,17 @@ Define an **Error URL** to direct the user when the verification process ends wi
 
 #### URL restrictions:
 
-* IP addresses, ports, query parameters and fragment identifiers are not allowed.
+* IP addresses, ports, certain query parameters and fragment identifiers are not allowed.
 * Personally identifiable information (PII) is not allowed in any form.
+
+Jumio appends the following parameters to your Success or Error URL to redirect your user at the conclusion of the user journey. These cannot be used as part of your Success or Error URL:
+
+|Name|Description|
+|:---|:---|
+|transactionStatus| • `SUCCESS` for successful submissions. <br> • `ERROR`for errors and failure after 3 attempts.|
+|customerInternalReference|Your internal reference for the transaction.|
+|transactionReference|Jumio reference number for the transaction.|
+|errorCode|Displayed when `transactionStatus` is `ERROR`.|
 
 <br>
 

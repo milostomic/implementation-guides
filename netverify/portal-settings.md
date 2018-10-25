@@ -12,7 +12,7 @@ Information about changes to features and improvements documented in each releas
 
 ## Table of Contents
 - [Application settings - General](#application-settings--general)
-  - [Callback URL](#callback-error-and-success-urls)
+  - [Callback, Error, and Success URLs](#callback-error-and-success-urls)
   - [Select Capture Method](#select-capture-method)
   - [Skip "Start ID verification" screen](#skip-start-id-verification-screen)
 - [Application settings - Redirect](#application-settings--redirect)
@@ -48,8 +48,18 @@ Define an **Error URL** to direct your customer when the verification process en
 
 #### Forbidden:
 
-* IP addresses, ports, query parameters and fragment identifiers are not allowed.
+* IP addresses, ports, certain query parameters used by Jumio, and fragment identifiers are not allowed.
 * Personally identifiable information (PII) is not allowed in any form.
+
+Jumio appends the following parameters to your Success or Error URL to redirect your user at the conclusion of the user journey. These cannot be used as part of your Success or Error URL:
+
+|Name|Description|
+|:---|:---|
+|transactionStatus| • `SUCCESS` for successful submissions. <br> • `ERROR`for errors and failure after 3 attempts.|
+|customerInternalReference|Your internal reference for the transaction.|
+|transactionReference|Jumio reference number for the transaction.|
+|errorCode|Displayed when `transactionStatus` is `ERROR`.|
+
 
 ### Select Capture Method
 
