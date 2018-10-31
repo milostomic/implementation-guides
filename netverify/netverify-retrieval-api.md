@@ -9,6 +9,7 @@ This guide illustrates how to implement the Netverify Retrieval API.
 
 | Date    | Description|
 |:--------|:------------|
+| 2018-10-31   |Updated usage guidelines|
 | 2018-10-02   |Add swiftCode to Parameter "extractedData" for BS, removed deprecated faceMatch percentages|
 | 2018-02-01   |Added response parameter "originalDocument" for Document Verification Retrieval <br />Retrieving document data only<br />Added Australia and Canada states to response parameter "usState" |
 | 2018-01-17   |Added new validity reason BLACK_AND_WHITE<br> Updated supported countries for idSubtype LEARNING_DRIVING_LICENSE|
@@ -61,17 +62,16 @@ This guide illustrates how to implement the Netverify Retrieval API.
 ---
 # Usage
 
-The Retrieval API should be used as a fallback, if your server was not able to process the callback.
+The Retrieval API is an alternative way to retrieve the results of a Jumio transaction for customers who choose not to implement our callback functionality or in cases where a callback could not be received or processed.
 
-Permanent, scheduled calls, or bulk requests should be avoided, otherwise Jumio can occasionally restrict API access.
+Please contact Jumio Support at support@jumio.com to coordinate bulk requests to the Retrieval API.
 
 ### Best Practice:
-If your server was not able to process the callback for a scan, call the status retrieval API.
 
-- You must use [Scan Status Retrieval](/netverify/netverify-retrieval-api.md#retrieving-scan-status) for all requests until the scan status is not pending anymore.
-- If the scan status is done or failed (not pending), retrieve scan details and image(s) once.
--  Max. 10 consecutive retrieval attempts after successful image acquisition <br />(SDK/Web: User journey finshed; API: after performNetverify API call)<br />
-  * In case a final result is not available after 10 attempts, you are allowed to perform a retrieval call once a day in addition.
+- You must use [Scan Status Retrieval](/netverify/netverify-retrieval-api.md#retrieving-scan-status) for all requests until the scan is no longer in PENDING status.
+- If the scan status is DONE or FAILED (not pending), retrieve scan details and image(s) once.
+-  Maximum of 10 consecutive retrieval attempts after successful image acquisition <br />(SDK/Web: User journey finshed; API: after performNetverify API call)<br />
+  * In case a final result is not available after 10 attempts, you are allowed to perform an additional retrieval call once a day.
 - Request timings recommendation:
   * 40, 60, 100, 160, 240, 340, 460, 600, 760, 940 seconds
   * You are also allowed to set your own definition.
