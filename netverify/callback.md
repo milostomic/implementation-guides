@@ -102,7 +102,7 @@ The following parameters are posted to your callback URL for Netverify Web embed
 |**transactionDate** *   |   |Timestamp (UTC) of the scan creation<br>format: YYYY-MM-DDThh:mm:ss.SSSZ | |
 |**callbackDate** *   |   |Timestamp  (UTC) of the callback creation <br>format: YYYY-MM-DDThh:mm:ss.SSSZ | |
 |idType   |   |Possible types:<br/>•	PASSPORT<br/>•	DRIVING\_LICENSE<br/>•	ID\_CARD<br>•	VISA *<br/><br/>* Currently only US and China Visas are supported in certain cases. However, Visas from other countries will be rejected as unsupported with idType = VISA | |
-|idSubtype   |255  |Possible subtypes if idType = ID\_CARD<br/>•	NATIONAL\_ID<br/>•	CONSULAR\_ID<br/>•	ELECTORAL\_ID<br/>•	RESIDENT\_PERMIT\_ID<br/>•	TAX\_ID (only supported for PHL)<br/>•	STUDENT\_ID (only supported for POL)<br/>•	PASSPORT\_CARD\_ID (only supported for IRL, RUS, UKR and USA)<br/>•	MILITARY\_ID (only supported for GRC)<br/>•	OTHER\_ID<br/>•	VISA (only supported for USA)<br/>•	UNKNOWN<br/><br/>Possible subtypes if idType = DRIVING\_LICENSE<br/>•	LEARNING\_DRIVING\_LICENSE (only supported for USA, CAN, AUS, GBR, IRL, DEU)<br/><br/>Possible subtypes if idType = PASSPORT<br/>•	E\_PASSPORT (only for mobile) | |
+|idSubtype   |255  |Possible subtypes if idType = ID\_CARD<br/>•	NATIONAL\_ID<br/>•	CONSULAR\_ID<br/>•	ELECTORAL\_ID<br/>•	RESIDENT\_PERMIT\_ID<br/>•	TAX\_ID <br/>•	STUDENT\_ID <br/>•	PASSPORT\_CARD\_ID <br/>•	MILITARY\_ID <br/>•	PUBLIC\_SAFETY\_ID <br/>• OTHER\_ID<br/>•	VISA <br/>•	UNKNOWN<br/><br/>Possible subtypes if idType = DRIVING\_LICENSE<br/>•	LEARNING\_DRIVING\_LICENSE <br/><br/>Possible subtypes if idType = PASSPORT<br/>•	E\_PASSPORT (only for mobile) | |
 |idCountry   |3  |Possible countries:<br/>•	[ISO 3166-1 alpha-3](http://en.wikipedia.org/wiki/ISO_3166-1_alpha-3) country code<br/>•	XKX (Kosovo)| |
 |rejectReason   |   |Reject reason as JSON object if verificationStatus = DENIED\_FRAUD or ERROR\_NOT\_READABLE\_ID, see tables below  | |
 |idScanImage   |255  |URL to the image of the scan (JPEG or PNG) if available<sup>2</sup> | |
@@ -137,6 +137,9 @@ The following parameters are posted to your callback URL for Netverify Web embed
 |numberOfEntries|255|Number of entries if idType = VISA and additional extraction for Visa enabled|activation required |
 |visaCategory|255|Visa category if idType = VISA and additional extraction for Visa enabled|activation required |
 |originDob|10|Original format of date of birth if idCountry = IND <br/>Possible values e.g.: <br />• Year/Month/Day: 1990/12/09 <br />• Year only: 1990// <br />• Year/Month: 1990/12/ <br />• Year/Day: 1990//09|<br /> |
+|issuingAuthority|50|Issuing authority of the document (if issuing authority extraction is enabled) |activation required |
+|issuingDate|10|Issuing date of the document (if issuing date extraction enabled) |activation required |
+|issuingPlace|50|Issuing place of the document (if issuing place extraction is enabled) |activation required |
 
 <sup>1</sup> Scan is declined as unsupported if the provided ID is not supported by Jumio, or not accepted in your Netverify settings.<br/> <sup>2</sup> For ID types that are configured to support a separate scan of the front side and back side, there is a separate image of the front side (idScanImage) and the back side (idScanImageBackside). If face match is enabled, there is also a picture of the face (idScanImageFace).<br>
 <sup>3</sup> Address recognition is performed for supported IDs, if enabled. Please note, there are three different address formats (US, EU, Raw). Please check [Supported documents for Address Extraction](#supported-documents-for-address-extraction) to see which format applies to specific IDs. The different address parameters are a part of the JSON object, if they are available on the ID.

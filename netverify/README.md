@@ -19,6 +19,8 @@ If you have any questions regarding our implementation guides please contact Jum
 
 | Date           | Description       |
 |:---------------|:------------------|
+| 2018-11-12 |Added callback parameters "issuingAuthority" and "issuingPlace", value "PUBLIC\_SAFETY\_ID" to <br>parameter "idSubtype", clarified browser support|
+| 2018-10-24 |Added possibility for Netverify Web version 4 to use a Jumio redirectUrl (NV) or <br/>clientRedirectUrl (DV) as the successUrl for your transaction, allowing to daisy-chain multiple <br /> verifications together in your user journey|
 | 2018-10-05 |Added Place of Birth extraction for France, address extraction for Romanian ID cards<br>Document Verification: Added data extraction of BIC/SWIFT code and callback parameter "swiftCode",<br> added data extraction for all document types with Latin-script characters<br>|
 | 2018-07-24 |Release of Netverify Web version 4|
 | 2018-07-03 |Document Verification: Added data extraction for all Bank Statements (BS), Utility Bills (UB),<br> and Credit Card Statements (CCS) with Latin-script characters|

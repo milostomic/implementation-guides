@@ -9,10 +9,11 @@ This guide illustrates how to implement the Netverify Retrieval API.
 
 | Date    | Description|
 |:--------|:------------|
+| 2018-11-12   |Added response parameter "issuingAuthority", "issuingPlace", and value "PUBLIC\_SAFETY\_ID" to parameter "idSubtype", updated idSubtype "MILITARY\_ID"|
 | 2018-10-31   |Updated usage guidelines|
 | 2018-10-02   |Add swiftCode to Parameter "extractedData" for BS, removed deprecated faceMatch percentages|
 | 2018-02-01   |Added response parameter "originalDocument" for Document Verification Retrieval <br />Retrieving document data only<br />Added Australia and Canada states to response parameter "usState" |
-| 2018-01-17   |Added new validity reason BLACK_AND_WHITE<br> Updated supported countries for idSubtype LEARNING_DRIVING_LICENSE|
+| 2018-01-17   |Added new validity reason BLACK\_AND\_WHITE<br> Updated supported countries for idSubtype LEARNING\_DRIVING\_LICENSE|
 | 2017-11-23   |Added value "Visa" to response parameter "type" for Netverify Retrieval - Retrieving Document Data only|
 | 2017-09-21   |Removed response parameter "additionalInformation"|
 | 2017-08-24   |Added response parameter "identityVerification"|
@@ -237,19 +238,21 @@ You receive a JSON response in case of success, or HTTP status code **404 Not Fo
 |**scanReference** \*| String|36|Jumio’s reference number for each scan|
 |**status** \*| String| |Netverify:<br>• APPROVED\_VERIFIED<br>• DENIED\_FRAUD<br>• DENIED\_UNSUPPORTED\_ID\_TYPE<br>• DENIED\_UNSUPPORTED\_ID\_COUNTRY<br>• ERROR\_NOT\_READABLE\_ID<br>• NO\_ID\_UPLOADED |
 |type| String| |Netverify:<br>•	PASSPORT<br>• DRIVING\_LICENSE<br>• ID\_CARD<br>• VISA<br>• UNSUPPORTED |
-|idSubtype| String|255|Possible subtypes if type = ID\_CARD<br>•	NATIONAL\_ID<br>• CONSULAR\_ID<br>• ELECTORAL\_ID<br>• RESIDENT\_PERMIT\_ID<br>• TAX\_ID (only supported for PHL)<br>• STUDENT\_ID (only supported for POL)<br>• PASSPORT\_CARD\_ID (only supported for IRL and USA)<br>• MILITARY\_ID (only supported for GRC)<br>• OTHER\_ID<br>• VISA (only supported for USA)<br>• UNKNOWN<br><br>Possible subtypes if type = DRIVING\_LICENSE<br>• LEARNING\_DRIVING\_LICENSE (only supported for USA, CAN, AUS, GBR, IRL, DEU)<br><br>Possible subtypes if type = PASSPORT<br>• E\_PASSPORT (only for mobile)|
+|idSubtype| String|255|Possible subtypes if type = ID\_CARD<br>•	NATIONAL\_ID<br>• CONSULAR\_ID<br>• ELECTORAL\_ID<br>• RESIDENT\_PERMIT\_ID<br>• TAX\_ID <br>• STUDENT\_ID <br>• PASSPORT\_CARD\_ID <br>• MILITARY\_ID <br>• PUBLIC\_SAFETY\_ID<br>• OTHER\_ID<br>• VISA <br>• UNKNOWN<br><br>Possible subtypes if type = DRIVING\_LICENSE<br>• LEARNING\_DRIVING\_LICENSE <br><br>Possible subtypes if type = PASSPORT<br>• E\_PASSPORT (only for mobile)|
 |issuingCountry|String|3|Possible countries:<br>• [ISO 3166-1 alpha-3](http://en.wikipedia.org/wiki/ISO_3166-1_alpha-3) country code<br>- XKX (Kosovo)|
 |firstName|String|255|First name of the customer|
 |lastName|String|255|Last name of the customer|
 |dob|String||Date of birth in the format YYYY-MM-DD|
 |expiry|String||Date of expiry in the format YYYY-MM-DD|
-|issuingDate|String|255|Issue date in the format YYYY-MM-DD|
+|issuingDate|String|10|Issue date in the format YYYY-MM-DD (if issuing date extraction is enabled)|
 |number|String|255|Identification number of the document|
 |usState|String|255|Possible values:<br/>•	Last two characters of [ISO 3166-2:US](http://en.wikipedia.org/wiki/ISO_3166-2:US) state code<br/>•	Last 2-3 characters of [ISO 3166-2:AU](http://en.wikipedia.org/wiki/ISO_3166-2:AU) state code<br/>•	Last two characters of [ISO 3166-2:CA](http://en.wikipedia.org/wiki/ISO_3166-2:CA) state code<br/>• [ISO 3166-1](http://en.wikipedia.org/wiki/ISO_3166-1_alpha-3) country name<br/>• XKX (Kosovo)<br/>• Free text - if it can't be mapped to a state/country code<br/>|
 |personalNumber|String|255|Personal number of the document|
 |optionalData1|String|255|Optional field of MRZ line 1|
 |optionalData2|String|255|Optional field of MRZ line 2|
 |address|Object||Address in US, EU or Raw format, see tables below|
+|issuingAuthority|String|50|Issuing authority of the document (if issuing authority extraction is enabled)|
+|issuingPlace|String|50|Issuing place of the document (if issuing place extraction is enabled)|
 
 #### US Address Format
 
