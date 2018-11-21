@@ -10,6 +10,11 @@ It provides an overview of the significant changes in the new client and describ
 
 <br>
 
+|⚠️ Netverify Web v3 is officially being deprecated and will not be supported after December 18, 2018.
+|:----------|
+
+<br>
+
 ### Revision history
 
 Information about changes to features and improvements documented in each release is available in our [Revision history](/netverify/README.md).
@@ -38,7 +43,7 @@ Information about changes to features and improvements documented in each releas
 		- [Callback, Error, and Success URLs](#callback-error-and-success-urls)
 		- [Capture method](#capture-method)
 		- [Skip "Start ID verification" screen](#skip-start-id-verification-screen)
-		- [Authorization token lifetime](#authorization-token-lifetime) 
+		- [Authorization token lifetime](#authorization-token-lifetime)
 	- [Application settings - Redirect](#application-settings--redirect)
 		- [Domain name prefix](#domain-name-prefix)
 		- [Max attempts per user](#max-attempts-per-user)
@@ -113,7 +118,7 @@ Changes to the fields in the **initiate** API request are listed in the tables b
 
 **Required fields appear in bold type.**  
 
-|NVW3 embedded<br>NVW3 redirect|NVW4             |Type   | Max. length|Changes                                                                                              
+|NVW3 embedded<br>NVW3 redirect	|NVW4             |Type   | Max. length	|Changes      |
 |:---|:---                      |:---    |:---        |:---                                                                                                          |
 |**merchantIdScanReference**<sup>1</sup>|**customerInternalReference**<sup>1</sup>|string |100        |Field has been renamed.                                                               |
 |**customerId**<sup>1</sup><br>(optional for embedded)|**userReference**<sup>1</sup>           |string |100        |Field has been renamed and is mandatory.                                                                  |
@@ -122,6 +127,7 @@ Changes to the fields in the **initiate** API request are listed in the tables b
 |**errorUrl**<sup>2</sup><br>(optional for redirect)|errorUrl<sup>2</sup>                 |string |255        |Previously required for embedded, if not set in the Customer Portal. Now optional.<br>Overrides **Error URL** in the Customer Portal.|
 |callbackUrl<sup>2</sup>|callbackUrl<sup>2</sup>              |string |255        |No change.<br>Overrides **Callback URL** in the Customer Portal.|
 |locale|locale                   |string |5          |Hyphen replaces underscore in format for extended locale (language + country).<br>Overrides **Default locale** in the Customer Portal.<br>See [supported locale values](#supported-locale-values).|
+|authorizationTokenLifetime |tokenLifetimeInMinutes |number 	|Max value: 86400	|Previously in seconds, now in minutes. (minimum: 5, maximum: 86400)<br>Overrides **Authorization token lifetime** in the Customer Portal.|
 
 
 <sup>1</sup> Values **must not** contain Personally Identifiable Information (PII) or other sensitive data such as email addresses.<br>
@@ -173,7 +179,7 @@ Netverify Web v4 introduces the concept of *acquisition workflows* and *presets*
 
 The `workflowId` parameter lets you optionally specify a combination of verification and capture method options for each transaction. If you choose not to use this field, Identity Verification will be performed on all transactions if it is enabled in your account settings, and the **Capture method** you specify in the Customer Portal will apply.
 
-The `presets` parameter lets you optionally specify certain  information to enhance the user journey. You can use the **ID Verification** preset to set the country and document type, bypassing the selection screen in the user journey. You can also specify an **Identity Verification** preset that allows you to set a custom Liveness Detection phrase for the transaction. You may use the **ID Verification** preset separately, the **Identity Verification** preset separately, both presets together, or skip them entirely — but you must specify all required values for the preset if you choose to use it. 
+The `presets` parameter lets you optionally specify certain  information to enhance the user journey. You can use the **ID Verification** preset to set the country and document type, bypassing the selection screen in the user journey. You can also specify an **Identity Verification** preset that allows you to set a custom Liveness Detection phrase for the transaction. You may use the **ID Verification** preset separately, the **Identity Verification** preset separately, both presets together, or skip them entirely — but you must specify all required values for the preset if you choose to use it.
 
 <br>
 
@@ -206,7 +212,7 @@ The `presets` parameter lets you optionally specify certain  information to enha
 
 
 ## Supported `presets` values
-It is possible to specify presets for **ID Verification**, for **Identity Verification**, for both together, or for neither. For each preset you use, all values must be passed together as a JSON array (see [Sample request](#sample-request)) for the request to be valid. 
+It is possible to specify presets for **ID Verification**, for **Identity Verification**, for both together, or for neither. For each preset you use, all values must be passed together as a JSON array (see [Sample request](#sample-request)) for the request to be valid.
 <br>
 
 ### ID Verification: preset country and document type
@@ -255,7 +261,6 @@ Preset a custom Liveness Detection phrase for the transaction.<br>
 |dob|This property has been removed.|
 |idType|This property has been removed.|
 |personalNumber|This property has been removed.|
-|authorizationTokenLifetime|This property has been removed.<br>The default authorization token lifetime of 30 minutes can be modified in the Customer Portal.|
 |enabledFields|This property has been removed.<br>Mandatory fields and optional fields enabled in the Customer Portal will be extracted by default. <br>Address will be extracted if it is enabled for your account, and extraction is supported for the country/document type. See [supported documents for address extraction](#supported-documents-for-address-extraction).<br>Identity Verification can now be requested on a per-transaction basis using [workflowId](#new-optional-fields).|
 |captureMethod|This property has been replaced by [workflowId](#new-optional-fields).|
 |presetCountry|This property has been replaced by [presets](#new-optional-fields).|
@@ -573,6 +578,8 @@ Jumio offers guaranteed support for Netverify on the following browsers and the 
 
 
 ### Mobile
+
+Netverify Web v4 does not support WebViews.
 
 |Browser name|Major browser version|Operating system |Supports<br>image upload |Supports<br>HTML5 video stream |
 |:---|:---|:---|:---|:---|

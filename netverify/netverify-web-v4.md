@@ -114,6 +114,7 @@ The body of your **initiate** API request allows you to
 |workflowId               |integer |3          |Applies this acquisition workflow to the transaction.<br>Overrides [Capture method](#capture-method) in the Customer Portal.<br>See [supported workflowId values](#supported-workflowid-values).|
 |presets<sup>1</sup>                  |JSON   |	  -    |Preset options to enhance the user journey.<br>See [supported preset values](#supported-presets-values).|-             |
 |locale                   |string |5          |Renders content in the specified language.<br>Overrides [Default locale](#default-locale) in the Customer Portal.<br>See [supported locale values](#supported-locale-values).|
+|tokenLifetimeInMinutes  |number 	|Max. value: 86400 |Time in minutes until the authorization token expires. (minimum: 5, maximum: 86400)<br>Overrides [Authorization token lifetime](#authorization-token-lifetime) in the Customer Portal.  |
 
 <sup>1</sup> Values **must not** contain Personally Identifiable Information (PII) or other sensitive data such as email addresses.<br>
 <sup>2</sup> See URL constraints for [Callback, Error, and Success URLs](#callback-error-and-success-urls).
@@ -578,6 +579,8 @@ Jumio offers guaranteed support for Netverify on the following browsers and the 
 
 
 ### Mobile
+
+Netverify Web v4 does not support WebViews.
 
 |Browser name|Major browser version|Operating system |Supports<br>image upload |Supports<br>HTML5 video stream |
 |:---|:---|:---|:---:|:---:|

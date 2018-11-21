@@ -4,6 +4,12 @@
 
 This is a reference manual and configuration guide for the Netverify Web product. It illustrates how to embed Netverify into your web page and use Netverify redirect.
 
+<br>
+
+|⚠️ Netverify Web v3 is officially being deprecated and will not be supported after December 18, 2018.
+|:----------|
+
+<br>
 
 ### Revision history
 
