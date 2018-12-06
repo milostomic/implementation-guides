@@ -508,6 +508,7 @@ All data is encoded with [UTF-8](https://tools.ietf.org/html/rfc3629).
 |Property|Type|Description|
 |:-------|:---|:----------|
 |**code**|integer|[see **errorCode** values](#after-the-user-journey)|
+Note: The property is currently called `codeExternal` but will be updated within the next release (begin of January)
 <br>
 
 ### Example iFrame logging code
