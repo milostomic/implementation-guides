@@ -176,9 +176,9 @@ Optional fields will be returned in the callback under certain conditions, if en
 * Expiry Date (if availble on the ID)
 * US state (if US ID)
 * Personal number (if available on the ID)
-* MRZ check (if passport for MRZ check supported for the ID card)
+* MRZ check (for passports and ID cards where MRZ check is supported)
 
-**Note:** To perform the MRZ check, the fields date of birth, expiry and personal number will be processed during the ID verification and returned in the callback, if available on the ID.
+**Note:** To perform the MRZ check, the fields date of birth, expiry and personal number will be processed during verification and returned in the callback, if available on the ID document.
 
 **Supported countries for ID card MRZ check:**<br>
 

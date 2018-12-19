@@ -163,6 +163,7 @@ The TLS protocol is required during the TLS handshake (see [Supported cipher sui
 |France|Yes|Yes|Yes|Raw|
 |Germany|Yes|No|No|EU|
 |Ireland|No|Yes|No|Raw|
+|Indonesia|Yes|No|No|Raw|
 |Mexico|Yes|No|No|US|
 |Romania|Yes|No|No|Raw|
 |Singapore|Yes|No|No|Raw|

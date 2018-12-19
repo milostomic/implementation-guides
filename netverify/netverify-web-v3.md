@@ -111,19 +111,7 @@ The following fields are required in the header section of your request:<br>
 
 #### Supported documents for address extraction
 
-|Country    |ID card    |Driving license    |Passport    |Callback format |
-|:------------|:-------|:--------------|:--------------|:-------|
-|Australia|No|Yes|No|US|
-|Canada|No|Yes|No|US|
-|France|Yes|Yes|Yes|Raw|
-|Germany|Yes|No|No|EU|
-|Ireland|No|Yes|No|Raw|
-|Mexico|Yes|No|No|US|
-|Romania|Yes|No|No|Raw|
-|Singapore|Yes|No|No|Raw|
-|Spain|Yes|No|No|EU|
-|United Kingdom|No|Yes|No|Raw|
-|United States|No|Yes|No|US|
+See our Callback guide for information on [Supported documents for address extraction](/netverify/callback.md#supported-documents-for-address-extraction)
 
 ### Response Parameters
 
@@ -273,7 +261,7 @@ The callback is the authoritative answer from Jumio. Specify a callback URL (for
 
 ## Customizing your landing page
 
-In your Jumio portal, you can customize and brand your Netverify redirect page.
+In the Customer Portal, you can customize and brand your Netverify redirect page. (For more detailed information on configurable settings in the Customer Portal, see [Portal Settings](/netverify/portal-settings.md).)
 
 ### Application Settings
 
@@ -737,7 +725,7 @@ You can implement the RESTful DELETE API to remove sensitive data (e.g. name, ad
 ---
 # Global Netverify Settings
 
-In your Jumio customer portal you can configure your settings. Find the description of the settings at the link below.
+In the Customer Portal you can configure your settings. Find the description of the settings at the link below.
 
 [View portal settings](/netverify/portal-settings.md)
 
@@ -772,14 +760,15 @@ Capture methods:
 
 |Browser name|Major browser version|Operating system |Image upload |HTML<br>video stream |Flash  <sup>1</sup><br> video stream|
 |:---|:---|:---|:---|:---|:---|
-|Google Chrome |current |Android|X|X| |
-|Apple Safari |current |iOS|X|X<sup>2</sup>| |
+|Google Chrome<sup>2</sup> |current |Android|X|X| |
+|Apple Safari |current |iOS|X|X<sup>3</sup>| |
 
 X - Supported<br>
 O - Support turned off by default but can be enabled by the end-user<br>
 <br>
 <sup>1</sup> Fallback method for HTML5 video streaming<br>
-<sup>2</sup> Netverify redirect only
+<sup>2</sup> Google Chrome does not support direct camera capture on iOS devices.<br>
+<sup>3</sup> Netverify redirect only<br>
 
 ---
 # Test IDs

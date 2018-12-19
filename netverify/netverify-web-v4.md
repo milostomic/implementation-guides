@@ -585,9 +585,9 @@ Netverify Web v4 does not support WebViews.
 
 |Browser name|Major browser version|Operating system |Supports<br>image upload |Supports<br>HTML5 video stream |
 |:---|:---|:---|:---:|:---:|
-|Google Chrome |current |Android|X|X|
+|Google Chrome<sup>1</sup> |current |Android|X|X|
 |Apple Safari |current |iOS|X|X|
-
+<sup>1</sup> Google Chrome does not support direct camera capture on iOS devices.
 
 
 

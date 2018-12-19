@@ -19,6 +19,7 @@ If you have any questions regarding our implementation guides please contact Jum
 
 | Date           | Description       |
 |:---------------|:------------------|
+| 2018-12-19    | Added Indonesia ID card to Supported Documents for Address Extraction |
 | 2018-11-20     | Added property "tokenLifetimeInMinutes" to Netverify Web version 4 initiate request |
 | 2018-11-12 |Added callback parameters "issuingAuthority" and "issuingPlace", value "PUBLIC\_SAFETY\_ID" to <br>parameter "idSubtype", clarified browser support|
 | 2018-10-24 |Added possibility for Netverify Web version 4 to use a Jumio redirectUrl (NV) or <br/>clientRedirectUrl (DV) as the successUrl for your transaction, allowing to daisy-chain multiple <br /> verifications together in your user journey|
