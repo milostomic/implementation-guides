@@ -101,6 +101,7 @@ The following parameters are posted to your callback URL for Netverify Web embed
 |**idCheckSignature** *   |   |"OK" if verificationStatus = APPROVED\_VERIFIED, otherwise "N/A" | |
 |**transactionDate** *   |   |Timestamp (UTC) of the scan creation<br>format: YYYY-MM-DDThh:mm:ss.SSSZ | |
 |**callbackDate** *   |   |Timestamp  (UTC) of the callback creation <br>format: YYYY-MM-DDThh:mm:ss.SSSZ | |
+|identityVerification   |   |Identity verification as JSON object, <br /> **ONLY** if verificationStatus = APPROVED\_VERIFIED <br/><br/> see table [Identity Verification](#identity-verification) below|activation required |
 |idType   |   |Possible types:<br/>•	PASSPORT<br/>•	DRIVING\_LICENSE<br/>•	ID\_CARD<br>•	VISA *<br/><br/>* Currently only US and China Visas are supported in certain cases. However, Visas from other countries will be rejected as unsupported with idType = VISA | |
 |idSubtype   |255  |Possible subtypes if idType = ID\_CARD<br/>•	NATIONAL\_ID<br/>•	CONSULAR\_ID<br/>•	ELECTORAL\_ID<br/>•	RESIDENT\_PERMIT\_ID<br/>•	TAX\_ID <br/>•	STUDENT\_ID <br/>•	PASSPORT\_CARD\_ID <br/>•	MILITARY\_ID <br/>•	PUBLIC\_SAFETY\_ID <br/>• OTHER\_ID<br/>•	VISA <br/>•	UNKNOWN<br/><br/>Possible subtypes if idType = DRIVING\_LICENSE<br/>•	LEARNING\_DRIVING\_LICENSE <br/><br/>Possible subtypes if idType = PASSPORT<br/>•	E\_PASSPORT (only for mobile) | |
 |idCountry   |3  |Possible countries:<br/>•	[ISO 3166-1 alpha-3](http://en.wikipedia.org/wiki/ISO_3166-1_alpha-3) country code<br/>•	XKX (Kosovo)| |
@@ -109,8 +110,8 @@ The following parameters are posted to your callback URL for Netverify Web embed
 |idScanImageFace   |255  |URL to the face image of the scan (JPEG or PNG) if available<sup>2</sup>| |
 |idScanImageBackside   |255  |URL to the back side image of the scan (JPEG or PNG) if available<sup>2</sup>| |
 |idNumber   |200  |Identification number of the document as available on the ID if verificationStatus = APPROVED\_VERIFIED and enabled, otherwise if provided | |
-|idFirstName   |200  |•	First name of the customer as available on the ID if verificationStatus = APPROVED\_VERIFIED and enabled, otherwise if provided<br/><br>•	N/A (for non-Latin characters)<br /> -	if idCountry = CHN and idType = DRIVING\_LICENSE or ID\_CARD<br> -	if idCountry = KOR and idType = DRIVING\_LICENSE or ID\_CARD<br> -	if idCountry = JPN and idType = DRIVING\_LICENSE<br> -	if idCountry = RUS and idType = ID\_CARD| |
-|idLastName   |200  |•	Last name of the customer as available on the ID if verificationStatus = APPROVED\_VERIFIED and enabled, otherwise if provided<br/><br>•	Only if full name is printed in Latin characters<br /> - if idCountry = KOR and idType = DRIVING\_LICENSE (first name and last name)<br /><br> •	N/A (for non-Latin characters)<br /> -	if idCountry = CHN and idType = DRIVING\_LICENSE or ID\_CARD<br> -	if idCountry = KOR and idType = DRIVING\_LICENSE or ID\_CARD<br> -	if idCountry = JPN and idType = DRIVING\_LICENSE<br> -	if idCountry = RUS and idType = ID\_CARD | |
+|idFirstName   |200  |•	First name of the customer as available on the ID if verificationStatus = APPROVED\_VERIFIED and enabled, otherwise if provided<br/><br>•	For following documents, N/A returned (if name contains non-Latin characters)<br /> -	if idCountry = CHN and idType = DRIVING\_LICENSE or ID\_CARD<br> -	if idCountry = KOR and idType = DRIVING\_LICENSE or ID\_CARD<br> -	if idCountry = JPN and idType = DRIVING\_LICENSE<br> -	if idCountry = RUS and idType = ID\_CARD| |
+|idLastName   |200  |•	Last name of the customer as available on the ID if verificationStatus = APPROVED\_VERIFIED and enabled, otherwise if provided<br/><br>•	Only if full name is printed in Latin characters<br /> - if idCountry = KOR and idType = DRIVING\_LICENSE (first name and last name)<br /><br> •	For following documents, N/A returned (if name contains non-Latin characters) <br /> -	if idCountry = CHN and idType = DRIVING\_LICENSE or ID\_CARD<br> -	if idCountry = KOR and idType = DRIVING\_LICENSE or ID\_CARD<br> -	if idCountry = JPN and idType = DRIVING\_LICENSE<br> -	if idCountry = RUS and idType = ID\_CARD | |
 |idDob   |10  |Date of birth in the format YYYY-MM-DD as available on the ID if verificationStatus = APPROVED\_VERIFIED and enabled, otherwise if provided <br /><br />If idCountry = IND date of birth can be incomplete, possible values e.g.:<br />•	Year-Month-Day: 1990-12-09 <br />•	Year only: 1990-01-01 <br />•	Year-Month: 1990-12-01 <br />•	Year-Day: 1990-01-09<br />Additional parameter "originDob" will be provided|not returned for KOR if NV masking is enabled |
 |idExpiry   |10  |Date of expiry in the format YYYY-MM-DD as available on the ID if verificationStatus = APPROVED\_VERIFIED and enabled, otherwise if provided | |
 |idUsState   |255  |Possible values if idType = PASSPORT or ID\_CARD:<br/>•	Last two characters of [ISO 3166-2:US](http://en.wikipedia.org/wiki/ISO_3166-2:US) state code<br/>•	Last 2-3 characters of [ISO 3166-2:AU](http://en.wikipedia.org/wiki/ISO_3166-2:AU) state code<br/>•	Last two characters of [ISO 3166-2:CA](http://en.wikipedia.org/wiki/ISO_3166-2:CA) state code<br/>• [ISO 3166-1](http://en.wikipedia.org/wiki/ISO_3166-1_alpha-3) country name<br/>• XKX (Kosovo)<br/>• Free text - if it can't be mapped to a state/country code<br/><br/>If idType = DRIVING\_LICENSE:<br/>•	Last two characters of [ISO 3166-2:US](http://en.wikipedia.org/wiki/ISO_3166-2:US) state code<br/>•	Last 2-3 characters of [ISO 3166-2:AU](http://en.wikipedia.org/wiki/ISO_3166-2:AU) state code<br/>•	Last two characters of [ISO 3166-2:CA](http://en.wikipedia.org/wiki/ISO_3166-2:CA) state code| |
@@ -126,7 +127,6 @@ The following parameters are posted to your callback URL for Netverify Web embed
 |dni   |255  |DNI as available on the ID if idCountry = ESP and idSubtype = NATIONAL\_ID  | |
 |curp   |255  |CURP as available on the ID if idCountry = MEX and idSubtype = ELECTORAL\_ID  |activation required |
 |gender   |2  |Possible values: M, F<br>• if idCountry = FRA and idSubtype = NATIONAL\_ID (MRZ type CNIS)<br/>•	if idType = VISA and additional extraction for Visa enabled | |
-|identityVerification   |   |Identity verification as JSON object if verificationStatus = APPROVED\_VERIFIED, see table [Identity Verification](#identity-verification) below|activation required |
 |presetCountry   | 3  |Possible countries:<br />•	[ISO 3166-1 alpha-3](http://en.wikipedia.org/wiki/ISO_3166-1_alpha-3) country code <br /> • XKX (Kosovo)| |
 |presetIdType   |    |Possible ID types: PASSPORT, DRIVING\_LICENSE, ID\_CARD| |
 |dlCarPermission|255 |Only available if:<br/> •Extraction supported for specific country<br/>•verificationStatus = APPROVED\_VERIFIED<br/><br/>Possible values:<br /> • YES<br /> • NO<br /> • NOT\_READABLE|activation required|
@@ -140,10 +140,12 @@ The following parameters are posted to your callback URL for Netverify Web embed
 |issuingAuthority|50|Issuing authority of the document (if issuing authority extraction is enabled) |activation required |
 |issuingDate|10|Issuing date of the document (if issuing date extraction enabled) |activation required |
 |issuingPlace|50|Issuing place of the document (if issuing place extraction is enabled) |activation required |
+|livenessImages| |URLs to the liveness images of the transaction (JPEG or PNG) if available<sup>5</sup> ||
 
 <sup>1</sup> Scan is declined as unsupported if the provided ID is not supported by Jumio, or not accepted in your Netverify settings.<br/> <sup>2</sup> For ID types that are configured to support a separate scan of the front side and back side, there is a separate image of the front side (idScanImage) and the back side (idScanImageBackside). If face match is enabled, there is also a picture of the face (idScanImageFace).<br>
-<sup>3</sup> Address recognition is performed for supported IDs, if enabled. Please note, there are three different address formats (US, EU, Raw). Please check [Supported documents for Address Extraction](#supported-documents-for-address-extraction) to see which format applies to specific IDs. The different address parameters are a part of the JSON object, if they are available on the ID.
-<sup>4</sup> Fields containing certain kinds of personally identifying information are not returned if NV masking is enabled for the Netherlands, Germany, or South Korea. See [Netverify masking](#netverify-masking) for more information.
+<sup>3</sup> Address recognition is performed for supported IDs, if enabled. Please note, there are three different address formats (US, EU, Raw). Please check [Supported documents for Address Extraction](#supported-documents-for-address-extraction) to see which format applies to specific IDs. The different address parameters are a part of the JSON object, if they are available on the ID.<br>
+<sup>4</sup> Fields containing certain kinds of personally identifying information are not returned if NV masking is enabled for the Netherlands, Germany, or South Korea. See [Netverify masking](#netverify-masking) for more information.<br>
+<sup>5</sup> Liveness images are returned only for transactions containing Identity Verification submitted via the Android and iOS SDKs. The number of images can vary from scan to scan and might not be returned in chronological order.
 
 #### Retrieving Images
 Use HTTP: **GET** with **Basic Authorization** using your API token and secret, as userid and password.<br>
@@ -162,8 +164,8 @@ The TLS protocol is required during the TLS handshake (see [Supported cipher sui
 |Canada|No|Yes|No|US|
 |France|Yes|Yes|Yes|Raw|
 |Germany|Yes|No|No|EU|
-|Ireland|No|Yes|No|Raw|
 |Indonesia|Yes|No|No|Raw|
+|Ireland|No|Yes|No|Raw|
 |Mexico|Yes|No|No|US|
 |Romania|Yes|No|No|Raw|
 |Singapore|Yes|No|No|Raw|

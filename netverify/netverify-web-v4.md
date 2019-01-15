@@ -154,10 +154,9 @@ Preset the country and document type to bypass the selection screen.
 |**type**|string|15|Possible values:<br>• `PASSPORT`<br>•	`DRIVING_LICENSE`<br>•	`ID_CARD`|
 <br>
 
-### Identity Verification: preset Liveness Detection phrase
-Preset a custom Liveness Detection phrase for the transaction.<br>
+### Identity Verification: Liveness Detection for Web
 
-|⚠️ Identity Verification and Liveness Detection must be enabled for your account to use this preset.
+|⚠️ In order to use this preset, Identity Verification and Liveness Detection for Web must be enabled for your account. Jumio Support will ask you to provide a default custom phrase to be submitted by your users on a handwritten note during the Identity Verification process. After the default custom phrase has been configured for your account, this preset can be used to change the phrase for any transaction.
 |:----------|
 <br>
 
@@ -206,7 +205,7 @@ Hyphenated combination of [ISO 639-1:2002 alpha-2](https://en.wikipedia.org/wiki
 |sk|Slovak|
 |sv|Swedish|
 |tr|Turkish|
-|vl|Vietnamese|
+|vi|Vietnamese|
 |zh-CN|Simplified Chinese|
 |zh-HK|Traditional Chinese|
 
@@ -436,7 +435,10 @@ The **redirectUrl** returned in the response to your **initate** API call, which
 * as a link shared securely with a user
 
 ## Using Netverify in an iFrame
-If you want to embed Netverify on a web page, place the iFrame tag in your HTML code where you want the client to appear. Use the `redirectUrl` as value of the `src` attribute. The `allow="camera"` attribute must be included to enable the camera for image capture in [supported browsers](#supported-browsers).
+If you want to embed Netverify on a web page, place the iFrame tag in your HTML code where you want the client to appear. Use the `redirectUrl` as value of the `src` attribute.
+
+|⚠️ The `allow="camera"` attribute must be included to enable the camera for image capture in [supported browsers](#supported-browsers).
+|:----------|
 
 ### Width and height
 We recommend adhering to the responsive breaking points in the table below. The Netverify Web client will responsively fill the dimensions of your iFrame.
@@ -585,9 +587,9 @@ Netverify Web v4 does not support WebViews.
 
 |Browser name|Major browser version|Operating system |Supports<br>image upload |Supports<br>HTML5 video stream |
 |:---|:---|:---|:---:|:---:|
-|Google Chrome<sup>1</sup> |current |Android|X|X|
+|Google Chrome |current |Android|X|X|
 |Apple Safari |current |iOS|X|X|
-<sup>1</sup> Google Chrome does not support direct camera capture on iOS devices.
+
 
 
 

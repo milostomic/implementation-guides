@@ -9,7 +9,8 @@ This guide illustrates how to implement the Netverify Retrieval API.
 
 | Date    | Description|
 |:--------|:------------|
-| 2018-11-12   |Added response parameter "issuingAuthority", "issuingPlace", and value "PUBLIC\_SAFETY\_ID" to parameter "idSubtype", updated idSubtype "MILITARY\_ID"|
+| 2019-01-15  |Added response parameter "livenessImages" for Netverify|
+| 2018-11-12   |Added response parameter "issuingAuthority", "issuingPlace", and value "PUBLIC\_SAFETY\_ID" to <br/>parameter "idSubtype", updated idSubtype "MILITARY\_ID"|
 | 2018-10-31   |Updated usage guidelines|
 | 2018-10-02   |Add swiftCode to Parameter "extractedData" for BS, removed deprecated faceMatch percentages|
 | 2018-02-01   |Added response parameter "originalDocument" for Document Verification Retrieval <br />Retrieving document data only<br />Added Australia and Canada states to response parameter "usState" |
@@ -475,7 +476,7 @@ If your customer account is in the EU data center, use `lon.netverify.com` inste
 
 ### Response
 
-You receive a JSON response in case of success, or HTTP status code **404 Not Found** if the scan is not available, pending or deleted.
+You receive a JSON response in case of success, or HTTP status code **404 Not Found** if the scan is not available or deleted.
 
 **Note:** Mandatory parameters are marked with an asterisk * and highlighted bold.
 
@@ -484,6 +485,8 @@ You receive a JSON response in case of success, or HTTP status code **404 Not Fo
 |**timestamp** *| String| |Timestamp of the response in the format YYYY-MM-DDThh:mm:ss.SSSZ|
 |**scanReference** *| String|36 |Jumio’s reference number for each scan|
 |images|JSON Array/Object||Available image/s see table below|
+|livenessImages| JSON Array | | Available liveness images|
+
 
 |Parameter "images"       | Type    | Description|
 |:---------------|:--------|:------------|
@@ -548,7 +551,7 @@ If your customer account is in the **EU** data center, use `lon.netverify.com` i
 
 ### Response
 
-You receive a JPG or PNG image in case of success with the according header (e.g. `Content-Type: image/jpeg`), or HTTP status code **404 Not Found** if the scan is not available, pending, deleted or not containing the specified image.
+You receive a JPG or PNG image in case of success with the according header (e.g. `Content-Type: image/jpeg`), or HTTP status code **404 Not Found** if the scan is not available, deleted or not containing the specified image.
 
 ### Sample Request
 
