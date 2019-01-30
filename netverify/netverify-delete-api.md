@@ -8,6 +8,7 @@ This guide illustrates how to implement the Netverify Delete API.
 
 | Date    | Description|
 |:--------|:------------|
+| 2019-01-30  |Document formatting|
 | 2016-05-18  |Removed TLS\_DHE ciphers|
 | 2015-10-20  |Added ECDHE ciphers to supported cipher suites|
 | 2015-09-23  |Initial release|
@@ -16,99 +17,114 @@ This guide illustrates how to implement the Netverify Delete API.
 
 ## Table of Contents
 
-- [Deleting a Netverify scan](#deleting-a-netverify-scan)
-- [Deleting a Document Verification scan](#deleting-a-document-verification-scan)
-- [Supported Cipher Suites](#supported-cipher-suites)
+- [About deleting transactions](#about-deleting-transactions)
+- [Using the Delete API to delete a Netverify transaction](#using-the-delete-api-to-delete-a-netverify-transaction) 
+- [Using the Delete API to delete a Document Verification transaction](#using-the-delete-api-to-delete-a-document-verification-transaction) 
+	- [Authentication and encryption](#authentication-and-encryption)
+	- [Request headers](#request-headers)
+	- [Request path parameter](#request-path-parameter)
+	- [Response](#response)
+	- [Examples](#examples)
+		- [Sample Netverify delete request](#sample-netverify-delete-request)
+		- [Sample Document Verification delete request](#sample-document-verification-delete-request)
+
+
 
 
 ---
-# Deleting a Netverify Scan
+# About deleting transactions
 
-Call the RESTful HTTP **DELETE** API below to remove sensitive data and image(s) of a scan by specifying the Jumio scan reference as a path parameter.
+If you do not wish to store sensitive customer data after a verification has been completed, you can delete the image(s) and any extracted data in a transaction record either directly in the Customer Portal or via the Delete API.
 
-HTTP request method: **DELETE**<br>
-**REST URL:** `https://netverify.com/api/netverify/v2/scans/<scanReference>`
-If your customer account is in the EU data center, use `lon.netverify.com` instead of `netverify.com`.
+|⚠️ Deletion is immediate and irreversible. Jumio cannot perform any quality or technical support investigations on transactions that have been deleted.
+|:----------|
+<br>
 
-**Authentication:** Each API call is protected. To access it, use HTTP Basic Authentication with your API token as the "userid" and your API secret as the "password". You can find your API token and API secret by logging into your Jumio customer portal and navigating to the "Settings" page and clicking on the "API credentials" tab.
+---
+# Using the Delete API to delete a Netverify transaction
 
-**Note:** You have the opportunity to generate a second set of API credentials for deleting scans. To do so, log into your Jumio customer portal and navigate to "API credentials - Transaction administration APIs".
+Use the HTTP `DELETE` method to call the RESTful API endpoint below. Specify the Jumio transaction reference you want to delete as a path parameter.
 
-**Header:** The following parameters are mandatory in the "header" section of your request.<br>
--	`Accept: application/json`<br />
--	`User-Agent: YOURCOMPANYNAME YOURAPPLICATIONNAME/VERSION`<br /><br>
-The value for **User-Agent** must contain a reference to your business or entity for Jumio to be able to identify your requests. (e.g. YourCompanyName YourAppName/1.0.0). Without a proper User-Agent header, Jumio will take longer to diagnose API issues.
+**HTTP Request Method:** `DELETE`<br>
+**REST URL (US)**: `https://netverify.com/api/netverify/v2/scans/<scanReference>`<br>
+**REST URL (EU)**: `https://lon.netverify.com/api/netverify/v2/scans/<scanReference>`<br>
+<br>
+---
+# Using the Delete API to delete a Document Verification transaction
 
-**TLS handshake:** The TLS protocol is required (see [Supported cipher suites](/netverify/supported-cipher-suites.md)) and we strongly recommend using the latest version.
+Use the HTTP `DELETE` method to call the RESTful API endpoint below. Specify the Jumio transaction reference you want to delete as a path parameter.
 
-**Note:** Calls with missing or suspicious headers, suspicious parameter values, or without HTTP Basic Authentication result in HTTP status code, **403 Forbidden**.
+**HTTP Request Method:** `DELETE`<br>
+**REST URL (US)**: `https://retrieval.netverify.com/api/netverify/v2/documents/<scanReference>`<br>
+**REST URL (EU)**: `https://retrieval.lon.netverify.com/api/netverify/v2/documents/<scanReference>`<br>
+<br>
 
-### Request Parameter
+## Authentication and encryption
+Netverify API calls are protected using [HTTP Basic Authentication](https://tools.ietf.org/html/rfc7617). Your Basic Auth credentials are constructed using your API token as the user-id and your API secret as the password. You can view and manage your API token and secret in the Customer Portal under **Settings > API credentials**. 
 
-|Parameter       | Type    | Max. Length| Description|
+You can generate a separate set of API credentials in the Customer Portal to use when retrieving or deleting transaction data under **Settings > API credentials > Transaction administration APIs**.
+<br>
+
+|⚠️ Never share your API token, API secret, or Basic Auth credentials with *anyone* — not even Jumio Support.
+|:----------|
+<br> 
+The [TLS Protocol](https://tools.ietf.org/html/rfc5246) is required to securely transmit your data, and we strongly recommend using the latest version. For information on cipher suites supported by Jumio during the TLS handshake see [Supported cipher suites](/netverify/supported-cipher-suites.md).<br>	
+<br>
+
+## Request headers
+
+The following fields are required in the header section of your request:<br>
+
+`Accept: application/json`<br>
+`Authorization:` (see [RFC 7617](https://tools.ietf.org/html/rfc7617))<br>
+`User-Agent: YourCompany YourApp/v1.0`<br>
+
+|ℹ️ Jumio requires the `User-Agent` value to reflect your business or entity name for API troubleshooting.|
+|:---|
+<br>
+
+## Request path parameter
+
+**Required items appear in bold type.**  
+
+|Name       | Type    | Max. Length| Description|
 |:---------------|:--------|:------------|:------------|
-|**scanReference (path parameter)** *| String|36|Jumio’s reference number of an existing scan from your account|
+|**scanReference**| String|36|Jumio reference number for an existing transaction in your account.|
+<br>
 
-### Response
+## Response
 
-You will receive the HTTP status code, **200 OK**, to confirm success.
+Unsuccessful requests will return the relevant [HTTP status code](https://tools.ietf.org/html/rfc7231#section-6) and information about the cause of the error.
 
-### Sample Request
+Successful requests will return HTTP status code `200 OK` as confirmation that you have successfully deleted the image(s) and extracted data from the specified transaction record.<br>
+<br>
 
-```
-DELETE https://netverify.com/api/netverify/v2/scans/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx HTTP/1.1
+## Examples
+### Sample Netverify delete request
+
+~~~
+DELETE https://netverify.com/api/netverify/v2/scans/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/ HTTP/1.1
 Accept: application/json
-User-Agent: YOURCOMPANYNAME YOURAPPLICATIONNAME/x.x.x
-Authorization: Basic
-```
+User-Agent: Example Corp SampleApp/1.0.1
+Authorization: Basic xxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+~~~
 
----
 
-# Deleting a Document Verification Scan
+### Sample Document Verification delete request
 
-Call the RESTful HTTP **DELETE** API below to remove sensitive data and image(s) of a Document Verification scan by specifying the Jumio scan reference as a path parameter.
-
-HTTP request method: **DELETE**
-**REST URL:** `https://retrieval.netverify.com/api/netverify/v2/documents/<scanReference>`
-If your customer account is in the EU data center, use `retrieval.lon.netverify.com` instead of `retrieval.netverify.com`.
-
-**Authentication:** Each API call is protected. To access it, use HTTP Basic Authentication with your API token as the "userid" and your API secret as the "password". You can find your API token and API secret by logging into your Jumio customer portal and navigating to the "Settings" page and clicking on the "API credentials" tab.
-
-**Note:** You have the opportunity to generate a second set of API credentials for deleting scans. To do so, log into your Jumio customer portal and navigate to "API credentials - Transaction administration APIs".
-
-**Header:** The following parameters are mandatory in the "header" section of your request.<br/>
--	`Accept: application/json`<br/>
--	`User-Agent: YOURCOMPANYNAME YOURAPPLICATIONNAME/VERSION`<br/><br/>
-The value for **User-Agent** must contain a reference to your business or entity for Jumio to be able to identify your requests. (e.g. YourCompanyName YourAppName/1.0.0). Without a proper User-Agent header, Jumio will take longer to diagnose API issues.
-
-**TLS handshake:** The TLS protocol is required (see [Supported cipher suites](/netverify/supported-cipher-suites.md)) and we strongly recommend using the latest version.
-
-**Note:** Calls with missing or suspicious headers, suspicious parameter values, or without HTTP Basic Authentication result in HTTP status code **403 Forbidden**.
-
-### Request Parameter
-
-|Parameter       | Type    | Max. Length| Description|
-|:--------|:--------|:--------|:---------|
-|**scanReference (path parameter)** *| String|36|Jumio’s reference number of an existing scan from your account|
-
-### Response
-
-You receive HTTP status code **200 OK** in case of success.
-
-### Sample Request
-
-```
-DELETE https://retrieval.netverify.com/api/netverify/v2/documents/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx HTTP/1.1
+~~~
+DELETE https://retrieval.netverify.com/api/netverify/v2/documents/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/ HTTP/1.1
 Accept: application/json
-User-Agent: YOURCOMPANYNAME YOURAPPLICATIONNAME/x.x.x
-Authorization: Basic
-```
+User-Agent: Example Corp SampleApp/1.0.1
+Authorization: Basic xxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+~~~
+<br>
 
----
+|⚠️ Sample requests cannot be run as-is. Replace example data with your own values.
+|:----------|
+<br>
 
-# Supported Cipher Suites
-Jumio supported cipher suites during the TLS handshake.<p>
-[View Supported Cipher Suites](/netverify/supported-cipher-suites.md)
+
 
 ---
 &copy; Jumio Corp. 268 Lambert Avenue, Palo Alto, CA 94306

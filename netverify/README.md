@@ -5,12 +5,13 @@ The list below provides information on the changes to Netverify features and imp
 
 ## Contact
 
-The implementation guides below will assist you with integrating Jumio products.<p>
-The Jumio Knowledge Base contains a wealth of information regarding our services including FAQs, best practices, demo videos, product descriptions and additional information which will be helpful to get you started with Jumio.<p>
+If you have any questions regarding our implementation guides please contact Jumio Support at support@jumio.com.<p>
+
+The Jumio Knowledge Base also contains a wealth of information regarding our services: FAQs, best practices, demo videos, product descriptions, and additional information to help get you started with Jumio.<p>
 
 [Jumio Knowledge Base](https://support.jumio.com)
 
-If you have any questions regarding our implementation guides please contact Jumio Support at support@jumio.com.
+
 
 ---
 ## Netverify Web and Document Verification
@@ -19,6 +20,7 @@ If you have any questions regarding our implementation guides please contact Jum
 
 | Date           | Description       |
 |:---------------|:------------------|
+| 2019-01-30   |Formatting and grammar edits|
 | 2019-01-15   |Added response parameter "livenessImages" for Netverify|
 | 2018-11-29     | Added address extraction for Indonesian ID cards |
 | 2018-11-20     | Added property "tokenLifetimeInMinutes" to Netverify Web version 4 initiate request |
