@@ -49,6 +49,7 @@ Use the HTTP `DELETE` method to call the RESTful API endpoint below. Specify the
 **REST URL (US)**: `https://netverify.com/api/netverify/v2/scans/<scanReference>`<br>
 **REST URL (EU)**: `https://lon.netverify.com/api/netverify/v2/scans/<scanReference>`<br>
 <br>
+
 ---
 # Using the Delete API to delete a Document Verification transaction
 
