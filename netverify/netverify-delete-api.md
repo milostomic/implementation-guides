@@ -68,8 +68,9 @@ You can generate a separate set of API credentials in the Customer Portal to use
 
 |⚠️ Never share your API token, API secret, or Basic Auth credentials with *anyone* — not even Jumio Support.
 |:----------|
-<br> 
-The [TLS Protocol](https://tools.ietf.org/html/rfc5246) is required to securely transmit your data, and we strongly recommend using the latest version. For information on cipher suites supported by Jumio during the TLS handshake see [Supported cipher suites](/netverify/supported-cipher-suites.md).<br>	
+
+The [TLS Protocol](https://tools.ietf.org/html/rfc5246) is required to securely transmit your data, and we strongly recommend using the latest version. For information on cipher suites supported by Jumio during the TLS handshake see [Supported cipher suites](/netverify/supported-cipher-suites.md).
+	
 <br>
 
 ## Request headers
