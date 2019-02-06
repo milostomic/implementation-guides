@@ -830,7 +830,36 @@ Successful requests will return HTTP status code `200 OK` along with a JSON obje
 
 # Supported documents
 
-Several standard document types are supported for upload and data extraction. You can also create your own [custom document types](/netverify/portal-settings.md#multi-documents) in the Customer Portal.
+Several standard document types are supported for upload and data extraction.
+
+- BC (Birth certificate)
+- BS (Bank statement)
+- CAAP (Cash advance application)
+- CB (Council bill)
+- CC (Credit card)
+- CCS (Credit card statement)
+- CRC (Corporate resolution certificate)
+- CUSTOM (Custom document type - see below)
+- HCC (Health care card)
+- IC (Insurance card)
+- LAG (Lease agreement)
+- LOAP (Loan application)
+- MEDC (Medicare card)
+- MOAP (Mortgage application)
+- PB (Phone bill)
+- SEL (School enrolment letter)
+- SENC (Seniors card)
+- SS (Superannuation statement)
+- SSC (Social security card)
+- STUC (Student card)
+- TAC (Trade association card)
+- TR (Tax return)
+- UB (Utility bill)
+- VC (Voided check)
+- VT (Vehicle title)
+- WWCC (Working with children check)
+
+You can also create your own [custom document types](/netverify/portal-settings.md#multi-documents) in the Customer Portal.
 
 ## Data extraction
 

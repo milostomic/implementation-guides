@@ -161,6 +161,7 @@ The TLS protocol is required during the TLS handshake (see [Supported cipher sui
 |Country    |ID card    |Driving license    |Passport    |Callback format |
 |:------------|:-------|:--------------|:--------------|:-------|
 |Australia|No|Yes|No|US|
+|Bahrain|No|Yes|No|Raw|
 |Canada|No|Yes|No|US|
 |France|Yes|Yes|Yes|Raw|
 |Germany|Yes|No|No|EU|
@@ -239,13 +240,13 @@ The TLS protocol is required during the TLS handshake (see [Supported cipher sui
 |:---------------|:--------|:------------|
 |**similarity**   |  |Possible values:<br/> •	MATCH<br />•	NO\_MATCH<br />•	NOT\_POSSIBLE|
 |**validity**   |  |Possible values:<br/> •	TRUE<br />•	FALSE |
-|reason   |  |Provided if validity = FALSE<br/>Possible values:<br />• SELFIE\_CROPPED\_FROM\_ID<br />•	ENTIRE\_ID\_USED\_AS\_SELFIE<br />•	MULTIPLE\_PEOPLE<br />•	SELFIE\_IS\_SCREEN\_PAPER\_VIDEO<br />•	SELFIE\_MANIPULATED<br />• AGE\_DIFFERENCE\_TOO\_BIG<br />•	NO\_FACE\_PRESENT<br />•	FACE\_NOT\_FULLY\_VISIBLE<br />•	BAD\_QUALITY<br />•	BLACK\_AND\_WHITE|
+|reason   |  |Provided if validity = FALSE<br/>Possible values:<br />• SELFIE\_CROPPED\_FROM\_ID<br />•	ENTIRE\_ID\_USED\_AS\_SELFIE<br />•	MULTIPLE\_PEOPLE<br />•	SELFIE\_IS\_SCREEN\_PAPER\_VIDEO<br />•	SELFIE\_MANIPULATED<br />• AGE\_DIFFERENCE\_TOO\_BIG<br />•	NO\_FACE\_PRESENT<br />•	FACE\_NOT\_FULLY\_VISIBLE<br />•	BAD\_QUALITY<br />•	BLACK\_AND\_WHITE<br />•	LIVENESS\_FAILED|
 |handwrittenNoteMatches	|	|Only visible if setting is turned on within your account. For questions about this feature, please contact your Support. <br/><br/>Possible values:<br/> •	TRUE<br />•	FALSE|
 
 ### Driver License Categories
 
-**Required items appear in bold type.** 
- 
+**Required items appear in bold type.**
+
 |Parameter "dlCategories"       | Max. Length    | Description|
 |:---------------|:--------|:------------|
 |**category**  | 10 |Possible values:<br/> •	B1<br />•	B<br />•	BE|

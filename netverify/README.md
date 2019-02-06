@@ -20,7 +20,10 @@ The Jumio Knowledge Base also contains a wealth of information regarding our ser
 
 | Date           | Description       |
 |:---------------|:------------------|
+| 2019-02-06   |Updated supported document types section to list all available "types" |
+| 2019-01-31   |Added new validity reason LIVENESS\_FAILED|
 | 2019-01-30   |Formatting and grammar edits|
+| 2019-01-29   |Added address extraction for Bahrain driver licenses|
 | 2019-01-15   |Added response parameter "livenessImages" for Netverify|
 | 2018-11-29     | Added address extraction for Indonesian ID cards |
 | 2018-11-20     | Added property "tokenLifetimeInMinutes" to Netverify Web version 4 initiate request |
