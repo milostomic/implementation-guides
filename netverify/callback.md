@@ -130,7 +130,7 @@ The following parameters are posted to your callback URL for Netverify Web embed
 |presetCountry   | 3  |Possible countries:<br />•	[ISO 3166-1 alpha-3](http://en.wikipedia.org/wiki/ISO_3166-1_alpha-3) country code <br /> • XKX (Kosovo)| |
 |presetIdType   |    |Possible ID types: PASSPORT, DRIVING\_LICENSE, ID\_CARD| |
 |dlCarPermission|255 |Only available if:<br/> •Extraction supported for specific country<br/>•verificationStatus = APPROVED\_VERIFIED<br/><br/>Possible values:<br /> • YES<br /> • NO<br /> • NOT\_READABLE|activation required|
-|dlCategories   | JSON object  |Driver license categories as JSON object if verificationStatus = APPROVED\_VERIFIED, see table below <br /><br />Supported Countries:<br />• France<br />• Belgium<br />• Germany<br />• Italy<br />• Spain<br />• Austria<br />• Netherlands<br />• Great Britain|activation required |
+|dlCategories   | JSON object  |Driver license categories as JSON object if verificationStatus = APPROVED\_VERIFIED, see table below <br /><br />Supported Countries:<br />• Austria<br />• Belgium<br />• France<br />• Germany<br />• Great Britain<br />• Italy<br />• Netherlands<br />• Spain<br />• Taiwan|activation required |
 |nationality |3|Nationality if idType = VISA and additional extraction for Visa enabled. Possible countries: <br>• [ISO 3166-1 alpha-3](http://en.wikipedia.org/wiki/ISO_3166-1_alpha-3) country code <br />• XKX (Kosovo)|activation required |
 |passportNumber|255|Passport number if idType = VISA and additional extraction for Visa enabled|activation required |
 |durationOfStay|255|Duration of stay if idType = VISA and additional extraction for Visa enabled|activation required |
@@ -249,10 +249,11 @@ The TLS protocol is required during the TLS handshake (see [Supported cipher sui
 
 |Parameter "dlCategories"       | Max. Length    | Description|
 |:---------------|:--------|:------------|
-|**category**  | 10 |Possible values:<br/> •	B1<br />•	B<br />•	BE|
+|**category**  | 10 |String in Latin or Traditional Chinese characters|
 |issueDate   |  |Issue date in the format YYYY-MM-DD|
 |expiryDate   |  |Date of expiry in the format YYYY-MM-DD as available on the driver license|
 |isReadable   |  |Possible value:<br>• FALSE |
+|availability   |  |Possible values:<br>• yes<br />• no<br />• not readable|
 
 
 ## Netverify Masking
@@ -326,7 +327,7 @@ The following parameters are posted to your callback URL for Document Verificati
 |:-------------------------|:--------|:----------:|:------------|
 |**status**  	| String  |    |Possible states: <br/> ⦁ UPLOADED (default) <br/> ⦁	EXTRACTED if supported document for data extraction provided <br/> ⦁	DISCARDED if no supported document for data extraction provided |
 |**country**  | String  |3   |Possible countries: <br/> ⦁ [ISO 3166-1 alpha-3](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-3) country code <br/> ⦁	XKX (Kosovo) |
-|**type**     | String  |    |Possible types: <br>⦁ CC (Credit card, front and back side)<br/>⦁	BS (Bank statement, front side) <br/>⦁	IC (Insurance card, front side) <br/>⦁	UB (Utility bill, front side) <br/>⦁	CAAP (Cash advance application, front and back side) <br/>⦁	CRC (Corporate resolution certificate, front and back side) <br/>⦁	CCS (Credit card statement, front and back side) <br/>⦁	LAG (Lease agreement, front and back side) <br/>⦁	LOAP (Loan application, front and back side) <br/>⦁	MOAP (Mortgage application, front and back side) <br/>⦁	TR (Tax return, front and back side) <br/>⦁	VT (Vehicle title, front side) <br/>⦁	VC (Voided check, front side) <br/>⦁	STUC (Student card, front side) <br/>⦁	HCC (Health care card, front side) <br/>⦁	CB (Council bill, front side) <br/>⦁	SENC (Seniors card, front side) <br/>⦁	MEDC (Medicare card, front side) <br/>⦁	BC (Birth certificate, front side) <br/>⦁	WWCC (Working with children check, front side) <br/>⦁	SS (Superannuation statement, front side) <br/>⦁	TAC (Trade association card, front side) <br/>⦁	SEL (School enrolment letter, front side) <br/>⦁	PB (Phone bill, front side) <br/>⦁	USSS (US social security card, front side) <br/>⦁	SSC (Social security card, front side) <br/>⦁	CUSTOM (Custom document type)|
+|**type**     | String  |    |Possible types: <br>⦁ CC (Credit card, front and back side)<br/>⦁	BS (Bank statement, front side) <br/>⦁	IC (Insurance card, front side) <br/>⦁	UB (Utility bill, front side) <br/>⦁	CAAP (Cash advance application, front and back side) <br/>⦁	CRC (Corporate resolution certificate, front and back side) <br/>⦁	CCS (Credit card statement, front and back side) <br/>⦁	LAG (Lease agreement, front and back side) <br/>⦁	LOAP (Loan application, front and back side) <br/>⦁	MOAP (Mortgage application, front and back side) <br/>⦁	TR (Tax return, front and back side) <br/>⦁	VT (Vehicle title, front side) <br/>⦁	VC (Voided check, front side) <br/>⦁	STUC (Student card, front side) <br/>⦁	HCC (Health care card, front side) <br/>⦁	CB (Council bill, front side) <br/>⦁	SENC (Seniors card, front side) <br/>⦁	MEDC (Medicare card, front side) <br/>⦁	BC (Birth certificate, front side) <br/>⦁	WWCC (Working with children check, front side) <br/>⦁	SS (Superannuation statement, front side) <br/>⦁	TAC (Trade association card, front side) <br/>⦁	SEL (School enrolment letter, front side) <br/>⦁	PB (Phone bill, front side) <br/>⦁	SSC (Social security card, front side) <br/>⦁	CUSTOM (Custom document type)|
 |**images** 	| JSON array  |  |URLs to the images of the scan (JPEG or PNG)<sup>1</sup> |
 |originalDocument |String | | URL to the originally submitted document of the scan (PDF) if available<sup>1</sup> |
 |customDocumentCode | String  |100 |Your custom document code (maintained in your Jumio customer portal) if type = CUSTOM |
