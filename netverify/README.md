@@ -20,7 +20,7 @@ The Jumio Knowledge Base also contains a wealth of information regarding our ser
 
 | Date           | Description       |
 |:---------------|:------------------|
-| 2019-02-08   |Added parameter "availability" to dlCategories <br>Added extraction of motorcycle permission from Tainwan driving licenses|
+| 2019-02-08   |Added parameter "availability" to dlCategories <br>Added extraction of motorcycle permission from Taiwan driving licenses|
 | 2019-02-06   |Updated supported document types section to list all available "types" |
 | 2019-01-31   |Added new validity reason LIVENESS\_FAILED|
 | 2019-01-30   |Formatting and grammar edits|
