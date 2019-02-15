@@ -9,6 +9,8 @@ This guide illustrates how to implement the Netverify Retrieval API.
 
 | Date    | Description|
 |:--------|:------------|
+| 2019-02-15  |Added value "OTHER" to parameter "type" for Document Verification|
+| 2019-01-31   |Added new validity reason "LIVENESS\_FAILED"|
 | 2019-01-15  |Added response parameter "livenessImages" for Netverify|
 | 2018-11-12   |Added response parameter "issuingAuthority", "issuingPlace", and value "PUBLIC\_SAFETY\_ID" to <br/>parameter "idSubtype", updated idSubtype "MILITARY\_ID"|
 | 2018-10-31   |Updated usage guidelines|
@@ -434,7 +436,7 @@ You receive a JSON response in case of success, or HTTP status code **404 Not Fo
 |:---------------|:--------|:------------|
 |similarity |  |Possible values:<br/>• MATCH<br />• NO\_MATCH<br />• NOT\_POSSIBLE|
 |validity  |  |Possible values:<br/>• TRUE<br />• FALSE |
-|reason   |  |Provided if validity = FALSE<br/>Possible values:<br />• SELFIE\_CROPPED\_FROM\_ID<br />•	ENTIRE\_ID\_USED\_AS\_SELFIE<br />•	MULTIPLE\_PEOPLE<br />•	SELFIE\_IS\_SCREEN\_PAPER\_VIDEO<br />•	SELFIE\_MANIPULATED<br />• AGE\_DIFFERENCE\_TOO\_BIG<br />•	NO\_FACE\_PRESENT<br />•	FACE\_NOT\_FULLY\_VISIBLE<br />• BAD\_QUALITY<br />• BLACK\_AND\_WHITE|
+|reason   |  |Provided if validity = FALSE<br/>Possible values:<br />• SELFIE\_CROPPED\_FROM\_ID<br />•	ENTIRE\_ID\_USED\_AS\_SELFIE<br />•	MULTIPLE\_PEOPLE<br />•	SELFIE\_IS\_SCREEN\_PAPER\_VIDEO<br />•	SELFIE\_MANIPULATED<br />• AGE\_DIFFERENCE\_TOO\_BIG<br />•	NO\_FACE\_PRESENT<br />•	FACE\_NOT\_FULLY\_VISIBLE<br />• BAD\_QUALITY<br />• BLACK\_AND\_WHITE<br />• LIVENESS\_FAILED|
 |handwrittenNoteMatches	|	|Only visible if setting is turned on within your account. For questions about this feature, please contact your Support. <br/><br/>Possible values:<br/> •	TRUE<br />•	FALSE|
 
 
@@ -699,7 +701,7 @@ You receive a JSON response in case of success, or HTTP status code **404 Not Fo
 |**timestamp** *|String||Timestamp of the response in the format YYYY-MM-DDThh:mm:ss.SSSZ|
 |**scanReference** *| String|36|Jumio’s reference number for each scan|
 |**status** *|String||Possible states:<br>•	UPLOADED (default)<br>•	EXTRACTED if supported document for data extraction provided<br>•	DISCARDED if no supported document for data extraction provided |
-|type|String||Possible types:<br>• CC (Credit card, front and back side)<br>• BS (Bank statement, front side)<br>•	IC (Insurance card, front side)<br>•	UB (Utility bill, front side)<br>•	CAAP (Cash advance application, front and back side)<br>•	CRC (Corporate resolution certificate, front and back side)<br>•	CCS (Credit card statement, front and back side)<br>•	LAG (Lease agreement, front and back side)<br>•	LOAP (Loan application, front and back side)<br>•	MOAP (Mortgage application, front and back side)<br>•	TR (Tax return, front and back side)<br>•	VT (Vehicle title, front side)<br>•	VC (Voided check, front side)<br>•	STUC (Student card, front side)<br>•	HCC (Health care card, front side)<br>•	CB (Council bill, front side)<br>•	SENC (Seniors card, front side)<br>•	MEDC (Medicare card, front side)<br>•	BC (Birth certificate, front side)<br>•	WWCC (Working with children check, front side)<br>•	SS (Superannuation statement, front side)<br>•	TAC (Trade association card, front side)<br>•	SEL (School enrolment letter, front side)<br>•	PB (Phone bill, front side)<br>•	USSS (US social security card, front side)<br>•	SSC (Social security card, front side)<br>•	CUSTOM (Custom document type) |
+|type|String||Possible types:<br>• CC (Credit card, front and back side)<br>• BS (Bank statement, front side)<br>•	IC (Insurance card, front side)<br>•	UB (Utility bill, front side)<br>•	CAAP (Cash advance application, front and back side)<br>•	CRC (Corporate resolution certificate, front and back side)<br>•	CCS (Credit card statement, front and back side)<br>•	LAG (Lease agreement, front and back side)<br>•	LOAP (Loan application, front and back side)<br>•	MOAP (Mortgage application, front and back side)<br>•	TR (Tax return, front and back side)<br>•	VT (Vehicle title, front side)<br>•	VC (Voided check, front side)<br>•	STUC (Student card, front side)<br>•	HCC (Health care card, front side)<br>•	CB (Council bill, front side)<br>•	SENC (Seniors card, front side)<br>•	MEDC (Medicare card, front side)<br>•	BC (Birth certificate, front side)<br>•	WWCC (Working with children check, front side)<br>•	SS (Superannuation statement, front side)<br>•	TAC (Trade association card, front side)<br>•	SEL (School enrolment letter, front side)<br>•	PB (Phone bill, front side)<br>•	SSC (Social security card, front side)<br>•	CUSTOM (Custom document type)<br>•	OTHER (Other document type)|
 |country|String|3|Possible countries:<br>• [ISO 3166-1 alpha-3](http://en.wikipedia.org/wiki/ISO_3166-1_alpha-3) country code<br>•	XKX (Kosovo)|
 |originalDocument|String|255|URL to the originally submitted document of the scan (PDF) if available |
 |customDocumentCode|String|100|Your custom document code (maintained in your Jumio customer portal) if type = CUSTOM|
