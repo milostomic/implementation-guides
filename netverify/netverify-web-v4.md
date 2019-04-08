@@ -17,6 +17,8 @@ Information about changes to features and improvements documented in each releas
 	- [Request body](#request-body)
 		- [Supported workflowId values](#supported-workflowid-values)
 		- [Supported presets values](#supported-presets-values)
+			- [ID verification presets](#id-verification-presets)
+			- [Identity Verification presets](#identity-verification-presets)
 		- [Supported locale values](#supported-locale-values)
 	- [Response](#response)
 	- [Examples](#examples)
@@ -142,7 +144,9 @@ Acquisition workflows allow you to set a combination of verification and capture
 It is possible to specify presets for **ID Verification**, for **Identity Verification**, for both together, or for neither. For each preset you use, all values must be passed together as a JSON array (see [Sample request](#sample-request)) for the request to be valid.
 <br>
 
-### ID Verification: preset country and document type
+### ID Verification presets
+
+#### Preset country and document type
 Preset the country and document type to bypass the selection screen.
 
 **Required items appear in bold type.**
@@ -154,10 +158,47 @@ Preset the country and document type to bypass the selection screen.
 |**type**|string|15|Possible values:<br>• `PASSPORT`<br>•	`DRIVING_LICENSE`<br>•	`ID_CARD`|
 <br>
 
-### Identity Verification: Liveness Detection for Web
+### Identity Verification presets 
 
-|⚠️ In order to use this preset, Identity Verification and Liveness Detection for Web must be enabled for your account. Jumio Support will ask you to provide a default custom phrase to be submitted by your users on a handwritten note during the Identity Verification process. After the default custom phrase has been configured for your account, this preset can be used to change the phrase for any transaction.
-|:----------|
+Identity Verification in Netverify allows you to make sure the person submitting the ID for verification is the same person in the ID photo. This comprises two steps: the **Face Match** step and the optional **Liveness Check** step. The Face Match step allows us to compare the face in the ID photo with the face of the person submitting the transaction for similarity, and the additional Liveness Check ensures that person is present during the transaction.
+
+Identity Verification can be enabled with the Face Match step only or in conjunction with a Liveness Check.
+
+There are currently two options to check for liveness:
+
+* 3D Liveness for Web
+* Liveness Detection (with handwritten note)
+
+#### 3D Liveness for Web (no preset available)
+
+Netverify's new ISO 30107-3 Level 1 compliant 3D face liveness detection technology creates a 3D map of your user's face, providing unprecedented accuracy for the Liveness Check, and creates an enrollment transaction for the use of the Authentication feature (currently available in the Jumio iOS and Android SDK, and coming soon to NVW4).
+
+|ℹ️ To use 3D Liveness, Identity Verification and 3D Liveness must be enabled for your account by Jumio Support. 
+|:----------| 
+
+3D Liveness requires that the user has access to a camera. In order to ensure that 3D Liveness is always used for the Liveness Check, your users must be restricted to using their camera either for the entire transaction, or for the Identity Verification step. This can be accomplished by: 
+
+* changing your **Capture method** in the **Settings** area of the [Customer Portal](/netverify/portal-settings.md) to **Webcam only** for the entire transaction.
+* including [workflowId 201](#supported-workflowid-values) to specify "ID + Identity, camera only" in the API request when you initate a Netverify transaction.
+* asking Jumio Support to enable **Force Camera for Identity** to allow upload of the ID image, but force the user to use a camera for the Identity Verification step.
+
+|capture method|when|result|
+|:---|:---|:---|
+|upload only|always|user asked to upload selfie
+|camera + upload|user uploads ID image|user asked to upload selfie
+|camera + upload|camera not available|user asked to upload selfie
+|camera + upload|browser not supported|user asked to upload selfie
+|camera only|camera not available|error 9820
+|camera only|browser not supported|error 9820
+
+<br>
+
+#### Liveness Detection (with handwritten note): preset custom phrase 
+
+In order to use this preset, Identity Verification and Liveness Detection (with handwritten note) must be enabled for your account. Jumio Support will ask you to provide a default custom phrase to be submitted by your users on a handwritten note during the Identity Verification process. After the default custom phrase has been configured for your account, this preset can be used to change the phrase for any transaction.
+
+|⚠️Enabling Liveness Detection (with handwritten note) for your account will override all other Identity Verification options.
+|:---|
 <br>
 
 **Required items appear in bold type.**
@@ -510,7 +551,6 @@ All data is encoded with [UTF-8](https://tools.ietf.org/html/rfc3629).
 |Property|Type|Description|
 |:-------|:---|:----------|
 |**code**|integer|[see **errorCode** values](#after-the-user-journey)|
-Note: The property is currently called `codeExternal` but will be updated within the next release (begin of January)
 <br>
 
 ### Example iFrame logging code
@@ -572,7 +612,7 @@ Jumio offers guaranteed support for Netverify on the following browsers and the 
 
 ### Desktop
 
-|Browser|Major version|Operating system |Supports<br>image upload |Supports<br>HTML5 video stream |
+|Browser|Major version|Operating system |Supports<br>image upload |Supports<br>camera capture|
 |:---|:---|:---|:---:|:---:|
 |Google Chrome|current +<br> 1 previous|Windows + Mac|X|X|
 |Mozilla Firefox|current +<br>1 previous|Windows + Mac|X|X|
@@ -585,7 +625,7 @@ Jumio offers guaranteed support for Netverify on the following browsers and the 
 
 Netverify Web v4 does not support WebViews.
 
-|Browser name|Major browser version|Operating system |Supports<br>image upload |Supports<br>HTML5 video stream |
+|Browser name|Major browser version|Operating system |Supports<br>image upload |Supports<br>camera capture |
 |:---|:---|:---|:---:|:---:|
 |Google Chrome |current |Android|X|X|
 |Apple Safari |current |iOS|X|X|

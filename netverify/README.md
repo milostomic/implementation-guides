@@ -20,6 +20,7 @@ The Jumio Knowledge Base also contains a wealth of information regarding our ser
 
 | Date           | Description       |
 |:---------------|:------------------|
+| 2019-04-08  |Added 3D Liveness for Web|
 | 2019-02-15  |Added value "OTHER" to callback parameter "type" for Document Verification|
 | 2019-02-08   |Added parameter "availability" to dlCategories <br>Added extraction of motorcycle permission from Taiwan driving licenses|
 | 2019-02-06   |Updated supported document types section to list all available "types" |
