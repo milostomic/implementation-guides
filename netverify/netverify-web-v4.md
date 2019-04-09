@@ -158,7 +158,7 @@ Preset the country and document type to bypass the selection screen.
 |**type**|string|15|Possible values:<br>• `PASSPORT`<br>•	`DRIVING_LICENSE`<br>•	`ID_CARD`|
 <br>
 
-### Identity Verification presets 
+### Identity Verification presets
 
 Identity Verification in Netverify allows you to make sure the person submitting the ID for verification is the same person in the ID photo. This comprises two steps: the **Face Match** step and the optional **Liveness Check** step. The Face Match step allows us to compare the face in the ID photo with the face of the person submitting the transaction for similarity, and the additional Liveness Check ensures that person is present during the transaction.
 
@@ -173,10 +173,10 @@ There are currently two options to check for liveness:
 
 Netverify's new ISO 30107-3 Level 1 compliant 3D face liveness detection technology creates a 3D map of your user's face, providing unprecedented accuracy for the Liveness Check, and creates an enrollment transaction for the use of the Authentication feature (currently available in the Jumio iOS and Android SDK, and coming soon to NVW4).
 
-|ℹ️ To use 3D Liveness, Identity Verification and 3D Liveness must be enabled for your account by Jumio Support. 
-|:----------| 
+|ℹ️ To use 3D Liveness, Identity Verification and 3D Liveness must be enabled for your account by Jumio Support.
+|:----------|
 
-3D Liveness requires that the user has access to a camera. In order to ensure that 3D Liveness is always used for the Liveness Check, your users must be restricted to using their camera either for the entire transaction, or for the Identity Verification step. This can be accomplished by: 
+3D Liveness requires that the user has access to a camera. In order to ensure that 3D Liveness is always used for the Liveness Check, your users must be restricted to using their camera either for the entire transaction, or for the Identity Verification step. This can be accomplished by:
 
 * changing your **Capture method** in the **Settings** area of the [Customer Portal](/netverify/portal-settings.md) to **Webcam only** for the entire transaction.
 * including [workflowId 201](#supported-workflowid-values) to specify "ID + Identity, camera only" in the API request when you initate a Netverify transaction.
@@ -193,7 +193,7 @@ Netverify's new ISO 30107-3 Level 1 compliant 3D face liveness detection technol
 
 <br>
 
-#### Liveness Detection (with handwritten note): preset custom phrase 
+#### Liveness Detection (with handwritten note): preset custom phrase
 
 In order to use this preset, Identity Verification and Liveness Detection (with handwritten note) must be enabled for your account. Jumio Support will ask you to provide a default custom phrase to be submitted by your users on a handwritten note during the Identity Verification process. After the default custom phrase has been configured for your account, this preset can be used to change the phrase for any transaction.
 
@@ -586,7 +586,7 @@ To display relevant information on your success or error page, you can use the f
 |**transactionStatus**|Possible values:<br>• `SUCCESS` for successful submissions. <br> • `ERROR`for errors and failure after 3 attempts.|
 |**customerInternalReference**|Your internal reference for the transaction.|
 |**transactionReference**|Jumio reference number for the transaction.|
-|errorCode|Displayed when `transactionStatus` is `ERROR`.<br>Possible values: <br>• `9100` (Error occurred on our server.)<br>• `9200` (Authorization token missing, invalid, or expired.)<br>• `9210` (Session expired after the user journey started.)<br>• `9300` (Error occurred transmitting image to our server.)<br>• `9400` (Error occurred during verification step.)<br>• `9800` (User has no network connection.)<br>• `9801` (Unexpected error occurred in the client.)<br>• `9810` (Problem while communicating with our server.)<br>• `9820` (File upload not enabled and camera unavailable.)<br>• `9835` (No acceptable submission in 3 attempts.)|
+|errorCode|Displayed when `transactionStatus` is `ERROR`.<br>Possible values: <br>• `9100` (Error occurred on our server.)<br>• `9200` (Authorization token missing, invalid, or expired.)<br>• `9210` (Session expired after the user journey started.)<br>• `9300` (Error occurred transmitting image to our server.)<br>• `9400` (Error occurred during verification step.)<br>• `9800` (User has no network connection.)<br>• `9801` (Unexpected error occurred in the client.)<br>• `9810` (Problem while communicating with our server.)<br>• `9820` (File upload not enabled and camera unavailable.)<br>• `9821` (The 3D liveness face capture process failed after 3 attempts.)<br>• `9835` (No acceptable submission in 3 attempts.)|
 
 <sup>1</sup> Because HTTP `GET` parameters can be manipulated on the client side, they may be used for display purposes only.
 
