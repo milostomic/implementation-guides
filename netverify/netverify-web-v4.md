@@ -171,7 +171,7 @@ There are currently two options to check for liveness:
 
 #### 3D Liveness for Web (no preset available)
 
-Netverify's new ISO 30107-3 Level 1 compliant 3D face liveness detection technology creates a 3D map of your user's face, providing unprecedented accuracy for the Liveness Check, and creates an enrollment transaction for the use of the Authentication feature (currently available in the Jumio iOS and Android SDK, and coming soon to NVW4).
+Netverify's new 3D face liveness detection technology creates a three-dimensional map of your user's face, providing unprecedented accuracy for the Liveness Check, and creates an enrollment transaction for the use of the Authentication feature (currently available in the Jumio iOS and Android SDK, and coming soon to NVW4).
 
 |ℹ️ To use 3D Liveness, Identity Verification and 3D Liveness must be enabled for your account by Jumio Support.
 |:----------|
