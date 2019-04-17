@@ -28,9 +28,6 @@ Information about changes to features and improvements documented in each releas
     - [Calling your landing page](#calling-your-landing-page)
     - [Redirecting the customer after the user journey](#redirect-redirecting-the-customer-after-the-user-journey)
 - [Using performNetverify](#using-performnetverify)
-- [Global Netverify APIs](#global-netverify-apis)
-    - [Supported IDs](#supported-ids)
-    - [Accepted IDs](#accepted-ids)
 - [Netverify Delete API](#netverify-delete-api)
 - [Global Netverify Settings](#global-netverify-settings)
 - [Supported Cipher Suites](#supported-cipher-suites)
@@ -111,7 +108,19 @@ The following fields are required in the header section of your request:<br>
 
 #### Supported documents for address extraction
 
-See our Callback guide for information on [Supported documents for address extraction](/netverify/callback.md#supported-documents-for-address-extraction)
+|Country    |ID card    |Driving license    |Passport    |Callback format |
+|:------------|:-------|:--------------|:--------------|:-------|
+|Australia|No|Yes|No|US|
+|Canada|No|Yes|No|US|
+|France|Yes|Yes|Yes|Raw|
+|Germany|Yes|No|No|EU|
+|Ireland|No|Yes|No|Raw|
+|Mexico|Yes|No|No|US|
+|Romania|Yes|No|No|Raw|
+|Singapore|Yes|No|No|Raw|
+|Spain|Yes|No|No|EU|
+|United Kingdom|No|Yes|No|Raw|
+|United States|No|Yes|No|US|
 
 ### Response Parameters
 
@@ -261,7 +270,7 @@ The callback is the authoritative answer from Jumio. Specify a callback URL (for
 
 ## Customizing your landing page
 
-In the Customer Portal, you can customize and brand your Netverify redirect page. (For more detailed information on configurable settings in the Customer Portal, see [Portal Settings](/netverify/portal-settings.md).)
+In your Jumio portal, you can customize and brand your Netverify redirect page.
 
 ### Application Settings
 
@@ -476,246 +485,6 @@ See [performNetverify](/netverify/performNetverify.md)
 
 ---
 
-# Global Netverify APIs
-
-## Supported IDs
-
-Call the RESTful HTTP GET API **supportedIdTypes** to receive a JSON response including all Jumio supported IDs.
-
-**HTTP Request Method:** `GET`<br>
-**REST URL (US)**: `https://netverify.com/api/netverify/v2/supportedIdTypes`<br>
-**REST URL (EU)**: `https://lon.netverify.com/api/netverify/v2/supportedIdTypes`<br>
-
-**Authentication**:
-Netverify API calls are protected using [HTTP Basic Authentication](https://tools.ietf.org/html/rfc7617). Your Basic Auth credentials are constructed using your API token as the user-id and your API secret as the password. You can view and manage your API token and secret in the Customer Portal under **Settings > API credentials**.
-<br>
-
-|⚠️ Never share your API token, API secret, or Basic Auth credentials with *anyone* — not even Jumio Support.
-|:----------|
-
-The [TLS Protocol](https://tools.ietf.org/html/rfc5246) is required to securely transmit your data, and we strongly recommend using the latest version. For information on cipher suites supported by Jumio during the TLS handshake see [Supported cipher suites](/netverify/supported-cipher-suites.md). <br>Note: Calls with missing or suspicious headers, suspicious parameter values, or without HTTP Basic Authentication will result in HTTP status code 403 Forbidden.
-
-**Header:**
-The following fields are required in the header section of your request:<br>
-
-`Accept: application/json`<br>
-`Authorization:` (see [RFC 7617](https://tools.ietf.org/html/rfc7617))<br>
-`User-Agent: YourCompany YourApp/v1.0`<br>
-
-|ℹ️ Jumio requires the `User-Agent` value to reflect your business or entity name for API troubleshooting.|
-|:---|
-
-<br>
-
-### Response Parameters
-
-|Parameter|Type|Description|
-|:----|:----|:----|
-|supportedIdTypes|Array|Array of supported IDs|
-|timestamp|String|Timestamp of the response. <br> Format: *YYYY-MM-DDThh:mm:ss.SSSZ*|
-
-|Parameter "supportedIdTypes"|Type|Max. length|Description|
-|:----|:----|:----|:----|
-|countryName|String|100|Possible names:<br>•	[ISO 3166-1](http://en.wikipedia.org/wiki/ISO_3166-1) country name<br>•	Kosovo|
-|countryCode|String|3|Possible codes:<br>• [ISO 3166-1 alpha-3](http://en.wikipedia.org/wiki/ISO_3166-1_alpha-3) country code<br>•	`XKX` (Kosovo)|
-|idTypes|Array||Array of supported ID types for this country|
-
-|Parameter "idTypes"|Type|Max. length|Description|
-|:----|:----|:----|:----|
-|idType|String|255|Possible values:<br>•	`PASSPORT`<br>•	`DRIVING_LICENSE`<br>•	`ID_CARD`|
-|acquisitionConfig|Object||Object containing acquisition configuration for this ID type|
-
-|Parameter "acquisitionConfig"|Type|Max. length|Description|
-|:----|:----|:----|:----|
-|backSide|Boolean||True if back side required, otherwise false|
-
-### Sample Request
-
-```
-GET https://netverify.com/api/netverify/v2/supportedIdTypes HTTP/1.1
-Accept: application/json
-User-Agent: Example Corp SampleApp/1.0.1
-Authorization: Basic
-```
-
-### Sample Response
-```
-{
-"supportedIdTypes": [
-  {
-  "countryName": "Austria",
-  "countryCode": "AUT",
-  "idTypes": [
-    {
-    "idType": "ID_CARD",
-    "acquisitionConfig": {
-      "backSide": true
-      }
-    },
-    {
-    "idType": "DRIVER_LICENSE",
-    "acquisitionConfig": {
-      "backSide": false
-      }
-    },
-    {
-    "idType":"PASSPORT",
-    "acquisitionConfig": {
-      "backSide": false
-      }
-    }
-    ]
-  },
-  {
-  "countryName": "United states",
-  "countryCode": "USA",
-  "idTypes": [
-    {
-    "idType": "ID_CARD",
-    "acquisitionConfig": {
-      "backSide": false
-      }
-    },
-    {
-    "idType": "DRIVER_LICENSE",
-    "acquisitionConfig": {
-      "backSide": false
-      }
-    },
-    {
-    "idType": "PASSPORT",
-    "acquisitionConfig": {
-      "backSide": false
-      }
-    }
-    ]
-  }
-  ],
-"timestamp": "2013-04-10T07:38:25.332Z"
-}
-```
-
-## Accepted IDs
-
-Call the RESTful HTTP GET API **acceptedIdTypes** to receive a JSON response including all accepted IDs, as specified in your Jumio portal settings.
-
-**HTTP Request Method:** `GET`<br>
-**REST URL (US)**: `https://netverify.com/api/netverify/v2/acceptedIdTypes`<br>
-**REST URL (EU)**: `https://lon.netverify.com/api/netverify/v2/acceptedIdTypes`<br>
-
-**Authentication**:
-Netverify API calls are protected using [HTTP Basic Authentication](https://tools.ietf.org/html/rfc7617). Your Basic Auth credentials are constructed using your API token as the user-id and your API secret as the password. You can view and manage your API token and secret in the Customer Portal under **Settings > API credentials**.
-<br>
-
-|⚠️ Never share your API token, API secret, or Basic Auth credentials with *anyone* — not even Jumio Support.
-|:----------|
-
-The [TLS Protocol](https://tools.ietf.org/html/rfc5246) is required to securely transmit your data, and we strongly recommend using the latest version. For information on cipher suites supported by Jumio during the TLS handshake see [Supported cipher suites](/netverify/supported-cipher-suites.md). <br>Note: Calls with missing or suspicious headers, suspicious parameter values, or without HTTP Basic Authentication will result in HTTP status code 403 Forbidden.
-
-**Header:**
-The following fields are required in the header section of your request:<br>
-
-`Accept: application/json`<br>
-`Authorization:` (see [RFC 7617](https://tools.ietf.org/html/rfc7617))<br>
-`User-Agent: YourCompany YourApp/v1.0`<br>
-
-|ℹ️ Jumio requires the `User-Agent` value to reflect your business or entity name for API troubleshooting.|
-|:---|
-
-<br>
-
-### Response Parameters
-
-|Parameter|Type|Description|
-|:--------|:---|:----------|
-|accepteddIdTypes|Array|Array of accepted IDs, as specified in your Jumio portal settings|
-|timestamp|String|Timestamp of the response. <br>Format: *YYYY-MM-DDThh:mm:ss.SSSZ*|
-
-|Parameter "accepteddIdTypes"|Type|Max. length|Description|
-|:----|:----|:----|:----|
-|countryName|String|100|Possible names:<br>•	[ISO 3166-1](http://en.wikipedia.org/wiki/ISO_3166-1) country name<br>•	Kosovo|
-|countryCode|String|3|Possible codes:<br>• [ISO 3166-1 alpha-3](http://en.wikipedia.org/wiki/ISO_3166-1_alpha-3) country code<br>• `XKX (Kosovo)`|
-|idTypes|Array||Array of your accepted ID types for this country|
-
-|Parameter "idTypes"|Type|Max. length|Description|
-|:----|:----|:----|:----|
-|idType|String|255|Possible values: <br>• `PASSPORT`<br>• `DRIVING_LICENSE`<br>• `ID_CARD`|
-|acquisitionConfig|Object||Object containing acquisition configuration for this ID type|
-
-|Parameter "acquisitionConfig"|Type|Max. length|Description|
-|:----|:----|:----|:----|
-|backSide|Boolean||`true` if back side required, otherwise `false`|
-
-
-### Sample Request
-
-```
-GET https://netverify.com/api/netverify/v2/acceptedIdTypes HTTP/1.1
-Accept: application/json
-User-Agent: Example Corp SampleApp/1.0.1
-Authorization: Basic
-```
-
-
-### Sample Response
-
-```
-{
-"acceptedIdTypes": [
-  {
-  "countryName": "Austria",
-  "countryCode": "AUT",
-  "idTypes": [
-    {
-    "idType": "ID_CARD",
-    "acquisitionConfig": {
-      "backSide": true
-      }
-    },
-    {
-    "idType": "DRIVER_LICENSE",
-    "acquisitionConfig": {
-      "backSide": false
-      }
-    },
-    {
-    "idType":"PASSPORT",
-    "acquisitionConfig": {
-      "backSide": false
-      }
-    }
-    ]
-  },
-  {
-  "countryName": "United states",
-  "countryCode": "USA",
-  "idTypes": [
-    {
-    "idType": "ID_CARD",
-    "acquisitionConfig": {
-      "backSide": false
-      }
-    },
-    {
-    "idType": "DRIVER_LICENSE",
-    "acquisitionConfig": {
-      "backSide": false
-      }
-    },
-    {
-    "idType": "PASSPORT",
-    "acquisitionConfig": {
-      "backSide": false
-      }
-    }
-    ]
-  }
-  ],
-"timestamp": "2013-04-10T07:38:25.332Z"
-}
-```
-
----
 # Netverify Delete API
 
 You can implement the RESTful DELETE API to remove sensitive data (e.g. name, address, date of birth, document number, etc.) and image(s) of a finished scan. Find the Implementation Guide at the link below.
@@ -725,7 +494,7 @@ You can implement the RESTful DELETE API to remove sensitive data (e.g. name, ad
 ---
 # Global Netverify Settings
 
-In the Customer Portal you can configure your settings. Find the description of the settings at the link below.
+In your Jumio customer portal you can configure your settings. Find the description of the settings at the link below.
 
 [View portal settings](/netverify/portal-settings.md)
 
@@ -760,15 +529,14 @@ Capture methods:
 
 |Browser name|Major browser version|Operating system |Image upload |HTML<br>video stream |Flash  <sup>1</sup><br> video stream|
 |:---|:---|:---|:---|:---|:---|
-|Google Chrome<sup>2</sup> |current |Android|X|X| |
-|Apple Safari |current |iOS|X|X<sup>3</sup>| |
+|Google Chrome |current |Android|X|X| |
+|Apple Safari |current |iOS|X|X<sup>2</sup>| |
 
 X - Supported<br>
 O - Support turned off by default but can be enabled by the end-user<br>
 <br>
 <sup>1</sup> Fallback method for HTML5 video streaming<br>
-<sup>2</sup> Google Chrome does not support direct camera capture on iOS devices.<br>
-<sup>3</sup> Netverify redirect only<br>
+<sup>2</sup> Netverify redirect only
 
 ---
 # Test IDs

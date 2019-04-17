@@ -2,13 +2,14 @@
 
 # Netverify Retrieval API Implementation Guide
 
-This guide illustrates how to implement the Netverify Retrieval API.
+This guide describes how to implement the Netverify Retrieval API.
 
 
 ### Revision history
 
 | Date    | Description|
 |:--------|:------------|
+| 2019-04-17  |Formatting and corrections|
 | 2019-02-15  |Added value "OTHER" to parameter "type" for Document Verification|
 | 2019-01-31   |Added new validity reason "LIVENESS\_FAILED"|
 | 2019-01-15  |Added response parameter "livenessImages" for Netverify|
@@ -17,7 +18,7 @@ This guide illustrates how to implement the Netverify Retrieval API.
 | 2018-10-02   |Add swiftCode to Parameter "extractedData" for BS, removed deprecated faceMatch percentages|
 | 2018-02-01   |Added response parameter "originalDocument" for Document Verification Retrieval <br />Retrieving document data only<br />Added Australia and Canada states to response parameter "usState" |
 | 2018-01-17   |Added new validity reason BLACK\_AND\_WHITE<br> Updated supported countries for idSubtype LEARNING\_DRIVING\_LICENSE|
-| 2017-11-23   |Added value "Visa" to response parameter "type" for Netverify Retrieval - Retrieving Document Data only|
+| 2017-11-23   |Added value "Visa" to response parameter "type" for Netverify Retrieval - Retrieving Document <br>Data only|
 | 2017-09-21   |Removed response parameter "additionalInformation"|
 | 2017-08-24   |Added response parameter "identityVerification"|
 | 2017-05-23   |Added response parameter "issuingDate" for retrieving scan details and<br />document data only|
@@ -44,854 +45,1078 @@ This guide illustrates how to implement the Netverify Retrieval API.
 ## Table of Contents
 
 - [Usage](#usage)
-- [Authentication and header](#authentication-and-header)
+	- [Authentication and encryption](#authentication-and-encryption)
+	- [Request headers](#request-headers)
 - [Netverify Retrieval](#netverify-retrieval)
-    - [Retrieving scan status](#retrieving-scan-status)
-    - [Retrieving scan details](#retrieving-scan-details)
+    - [Retrieving status](#retrieving-status)
+    - [Retrieving details](#retrieving-details)
     - [Retrieving document data only](#retrieving-document-data-only)
     - [Retrieving transaction data only](#retrieving-transaction-data-only)
     - [Retrieving verification data only](#retrieving-verification-data-only)
     - [Retrieving available images](#retrieving-available-images)
-    - [Retrieving specific image](#retrieving-specific-image)
+    - [Retrieving a specific image](#retrieving-a-specific-image)
 - [Document Verification Retrieval](#document-verification-retrieval)
-    - [Retrieving scan status ](#multi-retrieving-scan-status)
-    - [Retrieving scan details](#multi-retrieving-scan-details)
-    - [Retrieving document data only](#multi-retrieving-document-data-only)
-    - [Retrieving transaction data only](#multi-retrieving-transaction-data-only)
-    - [Retrieving available images](#multi-retrieving-available-images)
-    - [Retrieving specific image](#multi-retrieving-specific-image)
-- [Supported Cipher Suites](#supported-cipher-suites)
+    - [Retrieving status ](#retrieving-status-1)
+    - [Retrieving details](#retrieving-details-1)
+    - [Retrieving document data only](#retrieving-document-data-only-1)
+    - [Retrieving transaction data only](#retrieving-transaction-data-only-1)
+    - [Retrieving available images](#retrieving-available-images-1)
+    - [Retrieving a specific image](#retrieving-a-specific-image)
 
 
 ---
 # Usage
 
-The Retrieval API is an alternative way to retrieve the results of a Jumio transaction for customers who choose not to implement our callback functionality or in cases where a callback could not be received or processed.
+The Retrieval API is an alternative way to retrieve the results of a Jumio transaction for customers who choose not to implement our callback functionality, or in cases where a callback could not be received or processed.
 
 Please contact Jumio Support at support@jumio.com to coordinate bulk requests to the Retrieval API.
 
 ### Best Practice:
 
-- You must use [Scan Status Retrieval](/netverify/netverify-retrieval-api.md#retrieving-scan-status) for all requests until the scan is no longer in PENDING status.
-- If the scan status is DONE or FAILED (not pending), retrieve scan details and image(s) once.
+- You must use the [status retrieval](/netverify/netverify-retrieval-api.md#retrieving-status) for all requests until the transaction is no longer in PENDING status.
+- If the transaction status is DONE or FAILED (not pending), retrieve details and image(s) once.
 -  Maximum of 10 consecutive retrieval attempts after successful image acquisition <br />(SDK/Web: User journey finshed; API: after performNetverify API call)<br />
-  * In case a final result is not available after 10 attempts, you are allowed to perform an additional retrieval call once a day.
+  * If a final result is not available after 10 attempts, you are allowed to perform an additional retrieval call once per day.
 - Request timings recommendation:
   * 40, 60, 100, 160, 240, 340, 460, 600, 760, 940 seconds
   * You are also allowed to set your own definition.
 
-# Authentication and Header
+## Authentication and encryption
+Netverify API calls are protected using [HTTP Basic Authentication](https://tools.ietf.org/html/rfc7617). Your Basic Auth credentials are constructed using your API token as the user-id and your API secret as the password.
+<br>
 
-**Authentication:** Each API call is protected. To access it, use HTTP Basic Authentication with your API token as the "userid" and your API secret as the "password". You can find your API token and API secret by logging into your Jumio customer portal and navigating to the "Settings" page and clicking on the "API credentials" tab.
+You can view and manage your API token and secret in the Customer Portal under **Settings** > **API credentials**. You can create a separate set of API credentials to be used specifically with the Retrieval API and [Delete API] (/netverify/netverify-delete-api.md) in the Customer Portal under **Settings** > **API credentials** > **Transaction administration APIs**.
 
-**Note:** You have the opportunity to generate a second set of API credentials for retrieving transaction data in your customer portal under "API credentials - Transaction administration APIs".
 
-**Header:** The following parameters are mandatory in the "header" section of your request.<br/>
--	`Accept: application/json` **or** `image/jpeg, image/png` for "Retrieving specific image"<br/>
--	`User-Agent: YOURCOMPANYNAME YOURAPPLICATIONNAME/VERSION`<br /><br/>
-The value for **User-Agent** must contain a reference to your business or entity for Jumio to be able to identify your requests. (e.g. YourCompanyName YourAppName/1.0.0). Without a proper User-Agent header, Jumio will take longer to diagnose API issues.
+|⚠️ Never share your API token, API secret, or Basic Auth credentials with *anyone* — not even Jumio Support.
+|:----------|
 
-**TLS handshake:** The TLS protocol is required (see [Supported cipher suites](/netverify/supported-cipher-suites.md)) and we strongly recommend using the latest version.
 
-**Note:** Calls with missing or suspicious headers, suspicious parameter values, or without HTTP Basic Authentication result in HTTP status code 403 Forbidden.
+The [TLS Protocol](https://tools.ietf.org/html/rfc5246) is required to securely transmit your data, and we strongly recommend using the latest version. For information on cipher suites supported by Jumio during the TLS handshake see [Supported cipher suites](/netverify/supported-cipher-suites.md).
+
+<br>
+
+## Request headers
+
+The following fields are required in the header section of your request:<br>
+
+`Accept: application/json` **or** `image/jpeg, image/png` when retrieving a specific image<br>
+`Authorization:` (see [RFC 7617](https://tools.ietf.org/html/rfc7617))<br>
+`User-Agent: YourCompany YourApp/v1.0`<br>
+
+|ℹ️ Jumio requires the `User-Agent` value to reflect your business or entity name for API troubleshooting.|
+|:---|
+
+|⚠️ Sample requests cannot be run as-is. Replace example data with your own values.
+|:----------|
+
+<br>
 
 ---
 
-# Netverify Retrieval
+# Netverify retrieval
 
-## Retrieving Scan Status
+## Retrieving status
 
-Call the RESTful HTTP GET API below to receive the status of a scan by specifying the Jumio scan reference as a path parameter.
+Call the RESTful API GET endpoint below to retrieve the status of a Netverify transaction by specifying the Jumio transaction reference (scan reference) of an existing transaction from your account as a path parameter.
 
-HTTP request method: **GET<br>
-REST URL:** `https://netverify.com/api/netverify/v2/scans/<scanReference>`<br>
-If your customer account is in the EU data center, use `lon.netverify.com` instead of `netverify.com`.
+**HTTP Request Method:** `GET`<br>
+**REST URL (US)**: `https://netverify.com/api/netverify/v2/scans/<scanReference>`<br>
+**REST URL (EU)**: `https://lon.netverify.com/api/netverify/v2/scans/<scanReference>`<br>
 
-### Request Parameter
-
-**Note:** Mandatory parameters are marked with an asterisk * and highlighted bold.
-
-|Parameter       | Type    | Max. Length| Description|
-|:---------------|:--------|:------------|:------------|
-|**scanReference <br>(path parameter)** *| String|36|Jumio’s reference number of an existing scan from your account|
+<br>
 
 ### Response
 
-You receive a JSON response in case of success, or HTTP status code **404 Not Found** if the scan is not available or deleted.
+Unsuccessful requests will return the relevant [HTTP status code](https://tools.ietf.org/html/rfc7231#section-6) and information about the cause of the error. HTTP status code `404 Not Found` will be returned if the transaction is not available or has been deleted.
 
-|Parameter       | Type    | Max. Length| Description|
-|:---------------|:--------|:------------|:------------|
-|timestamp| String| |Timestamp of the response in the format YYYY-MM-DDThh:mm:ss.SSSZ|
-|scanReference| String|36|Jumio’s reference number for each scan|
-|status| String| |Possible states:<br />•	PENDING<br />•	DONE<br />•	FAILED|
+Successful requests will return HTTP status code `200 OK` along with a JSON object containing the information described below.
 
-### Sample Request
+**Required items appear in bold type.**
+
+|Name|Type|Max. length|Description|
+|:----|:----|:----|:----|
+|**timestamp** |string| |Timestamp of the response in the format YYYY-MM-DDThh:mm:ss.SSSZ|
+|**scanReference** |string|36|Jumio’s reference number for the transaction|
+|**status** |string| |Possible states:<br />•	PENDING<br />•	DONE<br />•	FAILED|
+
+## Examples
+### Sample request
 
 ```
 GET https://netverify.com/api/netverify/v2/scans/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx HTTP/1.1
 Accept: application/json
-User-Agent: YOURCOMPANYNAME YOURAPPLICATIONNAME/x.x.x
-Authorization: Basic
-```
+User-Agent: Example Corp SampleApp/1.0.1
+Authorization: Basic xxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
-### Sample Response
+```
+|⚠️ Sample requests cannot be run as-is. Replace example data with your own values.
+|:----------|
+<br>
+
+### Sample response
 
 ```
 {
-"timestamp": "2014-08-13T12:08:02.068Z",
-"scanReference": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
-"status": "DONE"
+    "timestamp": "2019-01-01T16:23:55.039Z",
+    "scanReference": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
+    "status": "DONE"
 }
-
 ```
 
-## Retrieving Scan Details
+<br>
 
-Call the RESTful HTTP GET API below to receive document, transaction and verification details of a scan by specifying the Jumio scan reference as a path parameter.
+## Retrieving details
 
-HTTP request method: **GET<br>
-REST URL:** `https://netverify.com/api/netverify/v2/scans/<scanReference>/data`<br>
-If your customer account is in the EU data center, use `lon.netverify.com` instead of `netverify.com`.
+Call the RESTful API GET endpoint below to retrieve document, transaction, and verification details by specifying the Jumio transaction reference (scan reference) as a path parameter.
 
-### Request Parameter
+**HTTP Request Method:** `GET`<br>
+**REST URL (US)**: `https://netverify.com/api/netverify/v2/scans/<scanReference>/data`<br>
+**REST URL (EU)**: `https://lon.netverify.com/api/netverify/v2/scans/<scanReference>/data`<br>
 
-**Note:** Mandatory parameters are marked with an asterisk * and highlighted bold.
-
-|Parameter       | Type    | Max. Length| Description|
-|:---------------|:--------|:------------|:------------|
-|**scanReference <br>(path parameter)** *| String|36|Jumio’s reference number of an existing scan from your account|
 
 ### Response
 
-You receive a JSON response in case of success, or HTTP status code **404 Not Found** if the scan is not available or deleted.
+Unsuccessful requests will return the relevant [HTTP status code](https://tools.ietf.org/html/rfc7231#section-6) and information about the cause of the error. HTTP status code `404 Not Found` will be returned if the transaction is not available or has been deleted.
 
-**Note:** Mandatory parameters are marked with an asterisk * and highlighted bold.
+Successful requests will return HTTP status code `200 OK` along with a JSON object containing the information described below.
 
-|Parameter       | Type    | Max. Length| Description|
-|:---------------|:--------|:------------|:------------|
-|**timestamp** *| String| |Timestamp of the response in the format YYYY-MM-DDThh:mm:ss.SSSZ|
-|**scanReference** *| String|36|Jumio’s reference number for each scan|
-|**document** *| Object| |Same parameters as listed in the section [Retrieving document data only](#retrieving-document-data-only) but without timestamp and scanReference|
-|**transaction** *| Object| |Same parameters as listed in the section [Retrieving transaction data only](#retrieving-transaction-data-only) but without timestamp and scanReference|
-|verification| Object| |Same parameters as listed in the section [Retrieving verification data only](#retrieving-verification-data-only) but without timestamp and scanReference|
+**Required items appear in bold type.**
 
-### Sample Request
+|Name|Type|Max. length|Description|
+|:----|:----|:----|:----|
+|**timestamp** |string| |Timestamp of the response in the format YYYY-MM-DDThh:mm:ss.SSSZ|
+|**scanReference** |string|36|Jumio’s reference number for the transaction|
+|**document**| object| |As listed in the section [Retrieving document data only](#retrieving-document-data-only) <br> without timestamp and scanReference|
+|**transaction**|object| |As listed in the section [Retrieving transaction data only](#retrieving-transaction-data-only) <br> without timestamp and scanReference|
+|verification|object| |As listed in the section [Retrieving verification data only](#retrieving-verification-data-only) <br> without timestamp and scanReference|
+
+## Examples
+### Sample request
 
 ```
 GET https://netverify.com/api/netverify/v2/scans/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/data HTTP/1.1
 Accept: application/json
-User-Agent: YOURCOMPANYNAME YOURAPPLICATIONNAME/x.x.x
-Authorization: Basic
+User-Agent: Example Corp SampleApp/1.0.1
+Authorization: Basic xxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 ```
+|⚠️ Sample requests cannot be run as-is. Replace example data with your own values.
+|:----------|
+<br>
 
-### Sample Response
+### Sample response
 
 ```
 {
-"timestamp": "2014-08-14T08:16:20.845Z",
-"scanReference": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
-"document": {
-  "type": "PASSPORT",
-  "dob": "1990-01-01",
-  "expiry": "2022-12-31",
-  "firstName": "FIRSTNAME",
-  "issuingCountry": "USA",
-  "lastName": "LASTNAME",
-  "number": "P1234",
-  "status": "APPROVED_VERIFIED"
-  },
-"transaction": {
-  "clientIp": "xxx.xxx.xxx.xxx",
-  "customerId": "CUSTOMERID",
-  "date": "2014-08-10T10:27:29.494Z",
-  "source": "WEB_UPLOAD",
-  "status": "DONE"
-  },
-"verification": {
-  "mrzCheck": "OK"
-  }
+    "timestamp": "2019-03-20T16:25:38.663Z",
+    "scanReference": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
+    "document": {
+        "type": "DRIVING_LICENSE",
+        "dob": "1990-01-01",
+        "expiry": "2022-12-31",
+        "firstName": "FIRST NAME",
+        "issuingCountry": "AUT",
+        "issuingDate": "2013-01-01",
+        "lastName": "LAST NAME",
+        "number": "123456789",
+        "status": "APPROVED_VERIFIED"
+    },
+    "transaction": {
+        "clientIp": "XX.XX.X.XX",
+        "customerId": "CUSTOMERID",
+        "date": "2019-01-01T11:01:10.227Z",
+        "merchantReportingCriteria": "YOURREPORTINGCRITERIA",
+        "merchantScanReference": "YOURSCANREFERENCE",
+        "source": "WEB_UPLOAD",
+        "status": "DONE"
+    },
+    "verification": {
+        "identityVerification": {
+            "similarity": "MATCH",
+            "validity": "true"
+        },
+        "mrzCheck": "NOT_AVAILABLE"
+    }
 }
 ```
 
-## Retrieving Document Data Only
+<br>
 
-Call the RESTful HTTP GET API below to receive document related data of a scan by specifying the Jumio scan reference as a path parameter.
+## Retrieving document data only
 
-HTTP request method: **GET**<br>
-**REST URL:** `https://netverify.com/api/netverify/v2/scans/<scanReference>/data/document`<br>
-If your customer account is in the EU data center, use `lon.netverify.com` instead of `netverify.com`.
+Call the RESTful API GET endpoint below to retrieve document data by specifying the Jumio transaction reference (scan reference) as a path parameter.
 
-### Request Parameter
+**HTTP Request Method:** `GET`<br>
+**REST URL (US)**: `https://netverify.com/api/netverify/v2/scans/<scanReference>/data/document`<br>
+**REST URL (EU)**: `https://lon.netverify.com/api/netverify/v2/scans/<scanReference>/data/document`<br>
 
-**Note:** Mandatory parameters are marked with an asterisk * and highlighted bold.
-
-|Parameter       | Type    | Max. Length| Description|
-|:---------------|:--------|:------------|:------------|
-|**scanReference <br>(path parameter)** \*| String|36|Jumio’s reference number of an existing scan from your account|
 
 ### Response
 
-You receive a JSON response in case of success, or HTTP status code **404 Not Found** if the scan is not available, pending or deleted.
+Unsuccessful requests will return the relevant [HTTP status code](https://tools.ietf.org/html/rfc7231#section-6) and information about the cause of the error. HTTP status code `404 Not Found` will be returned if the transaction is not available or has been deleted.
 
-**Note:** Mandatory parameters are marked with an asterisk * and highlighted bold.
+Successful requests will return HTTP status code `200 OK` along with a JSON object containing the information described below.
 
-|Parameter       | Type    | Max. Length| Description|
-|:---------------|:--------|:------------|:------------|
-|**timestamp** \*| String| |Timestamp of the response in the format YYYY-MM-DDThh:mm:ss.SSSZ|
-|**scanReference** \*| String|36|Jumio’s reference number for each scan|
-|**status** \*| String| |Netverify:<br>• APPROVED\_VERIFIED<br>• DENIED\_FRAUD<br>• DENIED\_UNSUPPORTED\_ID\_TYPE<br>• DENIED\_UNSUPPORTED\_ID\_COUNTRY<br>• ERROR\_NOT\_READABLE\_ID<br>• NO\_ID\_UPLOADED |
-|type| String| |Netverify:<br>•	PASSPORT<br>• DRIVING\_LICENSE<br>• ID\_CARD<br>• VISA<br>• UNSUPPORTED |
-|idSubtype| String|255|Possible subtypes if type = ID\_CARD<br>•	NATIONAL\_ID<br>• CONSULAR\_ID<br>• ELECTORAL\_ID<br>• RESIDENT\_PERMIT\_ID<br>• TAX\_ID <br>• STUDENT\_ID <br>• PASSPORT\_CARD\_ID <br>• MILITARY\_ID <br>• PUBLIC\_SAFETY\_ID<br>• OTHER\_ID<br>• VISA <br>• UNKNOWN<br><br>Possible subtypes if type = DRIVING\_LICENSE<br>• LEARNING\_DRIVING\_LICENSE <br><br>Possible subtypes if type = PASSPORT<br>• E\_PASSPORT (only for mobile)|
-|issuingCountry|String|3|Possible countries:<br>• [ISO 3166-1 alpha-3](http://en.wikipedia.org/wiki/ISO_3166-1_alpha-3) country code<br>- XKX (Kosovo)|
-|firstName|String|255|First name of the customer|
-|lastName|String|255|Last name of the customer|
-|dob|String||Date of birth in the format YYYY-MM-DD|
-|expiry|String||Date of expiry in the format YYYY-MM-DD|
-|issuingDate|String|10|Issue date in the format YYYY-MM-DD (if issuing date extraction is enabled)|
-|number|String|255|Identification number of the document|
-|usState|String|255|Possible values:<br/>•	Last two characters of [ISO 3166-2:US](http://en.wikipedia.org/wiki/ISO_3166-2:US) state code<br/>•	Last 2-3 characters of [ISO 3166-2:AU](http://en.wikipedia.org/wiki/ISO_3166-2:AU) state code<br/>•	Last two characters of [ISO 3166-2:CA](http://en.wikipedia.org/wiki/ISO_3166-2:CA) state code<br/>• [ISO 3166-1](http://en.wikipedia.org/wiki/ISO_3166-1_alpha-3) country name<br/>• XKX (Kosovo)<br/>• Free text - if it can't be mapped to a state/country code<br/>|
-|personalNumber|String|255|Personal number of the document|
-|optionalData1|String|255|Optional field of MRZ line 1|
-|optionalData2|String|255|Optional field of MRZ line 2|
-|address|Object||Address in US, EU or Raw format, see tables below|
-|issuingAuthority|String|50|Issuing authority of the document (if issuing authority extraction is enabled)|
-|issuingPlace|String|50|Issuing place of the document (if issuing place extraction is enabled)|
+**Required items appear in bold type.**
+
+|Name|Type|Max. length|Description|
+|:----|:----|:----|:----|
+|**timestamp**| string| |Timestamp of the response in the format YYYY-MM-DDThh:mm:ss.SSSZ|
+|**scanReference**| string|36|Jumio’s reference number for the transaction|
+|**status**| string| |Netverify:<br>• APPROVED\_VERIFIED<br>• DENIED\_FRAUD<br>• DENIED\_UNSUPPORTED\_ID\_TYPE<br>• DENIED\_UNSUPPORTED\_ID\_COUNTRY<br>• ERROR\_NOT\_READABLE\_ID<br>• NO\_ID\_UPLOADED |
+|type| string| |Netverify:<br>•	PASSPORT<br>• DRIVING\_LICENSE<br>• ID\_CARD<br>• VISA<br>• UNSUPPORTED |
+|idSubtype| string|255|Possible subtypes if type = ID\_CARD:<br>•	NATIONAL\_ID<br>• CONSULAR\_ID<br>• ELECTORAL\_ID<br>• RESIDENT\_PERMIT\_ID<br>• TAX\_ID <br>• STUDENT\_ID <br>• PASSPORT\_CARD\_ID <br>• MILITARY\_ID <br>• PUBLIC\_SAFETY\_ID<br>• OTHER\_ID<br>• VISA <br>• UNKNOWN<br><br>Possible subtypes if type = DRIVING\_LICENSE:<br>• LEARNING\_DRIVING\_LICENSE <br><br>Possible subtypes if type = PASSPORT:<br>• E\_PASSPORT (only for mobile)|
+|issuingCountry|string|3|Possible countries:<br>• [ISO 3166-1 alpha-3](http://en.wikipedia.org/wiki/ISO_3166-1_alpha-3) country code<br>- XKX (Kosovo)|
+|firstName|string|255|Customer's first name|
+|lastName|string|255|Customer's last name|
+|dob|string||Date of birth in the format YYYY-MM-DD|
+|expiry|string||Date of expiry in the format YYYY-MM-DD|
+|issuingDate|string|10|Issue date in the format YYYY-MM-DD (if issuing date extraction is enabled)|
+|number|string|255|Identification number of the document|
+|usState|string|255|Possible values:<br/>•	Last two characters of [ISO 3166-2:US](http://en.wikipedia.org/wiki/ISO_3166-2:US) state code<br/>•	Last 2-3 characters of [ISO 3166-2:AU](http://en.wikipedia.org/wiki/ISO_3166-2:AU) state code<br/>•	Last two characters of [ISO 3166-2:CA](http://en.wikipedia.org/wiki/ISO_3166-2:CA) state code<br/>• [ISO 3166-1](http://en.wikipedia.org/wiki/ISO_3166-1_alpha-3) country name<br/>• XKX (Kosovo)<br/>• Free text - if it can't be mapped to a state/country code<br/>|
+|personalNumber|string|255|Personal number of the document|
+|optionalData1|string|255|Optional field of MRZ line 1|
+|optionalData2|string|255|Optional field of MRZ line 2|
+|address|object||Address in US, EU or Raw format, see tables below|
+|issuingAuthority|string|50|Issuing authority of the document (if issuing authority extraction is enabled)|
+|issuingPlace|string|50|Issuing place of the document (if issuing place extraction is enabled)|
 
 #### US Address Format
 
-|Parameter       | Type    | Max. Length| Description|
+|Name      | Type    | Max. Length| Description|
 |:---------------|:--------|:------------|:------------|
-|city| String|255 |City|
-|stateCode| String|6 |[ISO 3166-2](http://en.wikipedia.org/wiki/ISO_3166-2) state code|
-|streetName| String|255 |Street name|
-|streetSuffix|String|255 |Street suffix abbreviation<br>Examples: [US](http://www.gis.co.clay.mn.us/USPS.htm#suffix), [Canada](http://www.canadapost.ca/tools/pg/manual/PGaddress-e.asp#1423617), [Australia](https://auspost.com.au/media/documents/australia-post-addressing-standards-1999.pdf)|
-|streetDirection| String|255 |Street direction abbreviation<br>Examples: US (E=EAST, W=WEST, N=NORTH, S=SOUTH), [Canada](http://www.canadapost.ca/tools/pg/manual/PGaddress-e.asp#1403220), [Australia](https://auspost.com.au/media/documents/australia-post-addressing-standards-1999.pdf)|
-|streetNumber| String|255 |Street number|
-|unitDesignator| String|255 |Unit designator abbreviation<br>Examples: [US](http://www.gis.co.clay.mn.us/USPS.htm#secunitdesig), [Canada](http://www.canadapost.ca/tools/pg/manual/PGaddress-e.asp#1380473), [Australia](https://auspost.com.au/media/documents/australia-post-addressing-standards-1999.pdf)|
-|unitNumber| String|255 |Unit number|
-|zip| String|255 |Zip code|
-|zipExtension| String|255 |Zip extension|
-|country| String|3 |Possible countries:<br>• [ISO 3166-1 alpha-3](http://en.wikipedia.org/wiki/ISO_3166-1_alpha-3) country code<br>• XKX (Kosovo)|
+|city| string|255 |City|
+|stateCode| string|6 |[ISO 3166-2](http://en.wikipedia.org/wiki/ISO_3166-2) state code|
+|streetName| string|255 |Street name|
+|streetSuffix|string|255 |Street suffix abbreviation<br>Examples: [US](http://www.gis.co.clay.mn.us/USPS.htm#suffix), [Canada](http://www.canadapost.ca/tools/pg/manual/PGaddress-e.asp#1423617), [Australia](https://auspost.com.au/media/documents/australia-post-addressing-standards-1999.pdf)|
+|streetDirection| string|255 |Street direction abbreviation<br>Examples: US (E=EAST, W=WEST, N=NORTH, S=SOUTH), [Canada](http://www.canadapost.ca/tools/pg/manual/PGaddress-e.asp#1403220), [Australia](https://auspost.com.au/media/documents/australia-post-addressing-standards-1999.pdf)|
+|streetNumber| string|255 |Street number|
+|unitDesignator| string|255 |Unit designator abbreviation<br>Examples: [US](http://www.gis.co.clay.mn.us/USPS.htm#secunitdesig), [Canada](http://www.canadapost.ca/tools/pg/manual/PGaddress-e.asp#1380473), [Australia](https://auspost.com.au/media/documents/australia-post-addressing-standards-1999.pdf)|
+|unitNumber| string|255 |Unit number|
+|zip| string|255 |Zip code|
+|zipExtension| string|255 |Zip extension|
+|country| string|3 |Possible countries:<br>• [ISO 3166-1 alpha-3](http://en.wikipedia.org/wiki/ISO_3166-1_alpha-3) country code<br>• XKX (Kosovo)|
 
 #### EU Address Format
 
-|Parameter       | Type    | Max. Length| Description|
+|Name     | Type    | Max. Length| Description|
 |:---------------|:--------|:------------|:------------|
-|city| String|255 |City|
-|province| String|255 |Province|
-|streetName| String|255 |Street name|
-|streetNumber| String|255 |Street number|
-|unitDetails| String|255 |Unit details|
-|postalCode| String|255 |Postal code|
-|country| String|3 |Possible countries:<br>- [ISO 3166-1 alpha-3](http://en.wikipedia.org/wiki/ISO_3166-1_alpha-3) country code<br>- XKX (Kosovo)|
+|city| string|255 |City|
+|province| string|255 |Province|
+|streetName| string|255 |Street name|
+|streetNumber| string|255 |Street number|
+|unitDetails| string|255 |Unit details|
+|postalCode| string|255 |Postal code|
+|country| string|3 |Possible countries:<br>- [ISO 3166-1 alpha-3](http://en.wikipedia.org/wiki/ISO_3166-1_alpha-3) country code<br>- XKX (Kosovo)|
 
 #### Raw Address Format
 
-|Parameter       | Type    | Max. Length| Description|
+|Name      | Type    | Max. Length| Description|
 |:---------------|:--------|:------------|:------------|
-|line1| String|255 |Line item1|
-|line2| String|255 |Line item2|
-|line3| String|255 |Line item3|
-|line4| String|255 |Line item4|
-|line5| String|255 |Line item5|
-|country|String|3|Possible countries:<br>• [ISO 3166-1 alpha-3](http://en.wikipedia.org/wiki/ISO_3166-1_alpha-3) country code<br>• XKX (Kosovo)|
-|postalCode|String|255|Postal code|
-|city|String|255|City|
+|line1| string|255 |Line item1|
+|line2| string|255 |Line item2|
+|line3| string|255 |Line item3|
+|line4| string|255 |Line item4|
+|line5| string|255 |Line item5|
+|country|string|3|Possible countries:<br>• [ISO 3166-1 alpha-3](http://en.wikipedia.org/wiki/ISO_3166-1_alpha-3) country code<br>• XKX (Kosovo)|
+|postalCode|string|255|Postal code|
+|city|string|255|City|
 
 
-### Sample Request
+## Examples
+### Sample request
 
 ```
 GET https://netverify.com/api/netverify/v2/scans/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/data/document HTTP/1.1
 Accept: application/json
-User-Agent: YOURCOMPANYNAME YOURAPPLICATIONNAME/x.x.x
-Authorization: Basic
+User-Agent: Example Corp SampleApp/1.0.1
+Authorization: Basic xxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 ```
+|⚠️ Sample requests cannot be run as-is. Replace example data with your own values.
+|:----------|
+<br>
 
-### Sample Response
+### Sample response
 
 ```
 {
-"type": "PASSPORT",
-"dob": "1990-01-01",
-"expiry": "2022-12-31",
-"firstName": "FIRSTNAME",
-"issuingCountry": "USA",
-"lastName": "LASTNAME",
-"number": "P1234",
-"issuingDate": "2015-11-01",
-"status": "APPROVED_VERIFIED"
-"scanReference": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
-"timestamp": "2014-08-14T09:05:47.394Z"
+    "type": "DRIVING_LICENSE",
+    "dob": "1990-01-01",
+    "expiry": "2022-12-31",
+    "firstName": "FIRST NAME",
+    "issuingCountry": "AUT",
+    "issuingDate": "2013-01-01",
+    "lastName": "LAST NAME",
+    "number": "123456789",
+    "status": "APPROVED_VERIFIED",
+    "scanReference": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
+    "timestamp": "2019-03-01T11:44:56.741Z"
 }
 ```
 
-## Retrieving Transaction Data Only
+<br>
 
-Call the RESTful HTTP GET API below to receive transaction related data of a scan by specifying the Jumio scan reference as a path parameter.
+## Retrieving transaction data only
 
-HTTP request method: **GET**<br>
-**REST URL:** `https://netverify.com/api/netverify/v2/scans/<scanReference>/data/transaction`<br>
-If your customer account is in the EU data center, use `lon.netverify.com` instead of `netverify.com`.
+Call the RESTful API GET endpoint below to retrieve transaction metadata by specifying the Jumio transaction reference (scan reference) as a path parameter.
 
-### Request Parameter
+**HTTP Request Method:** `GET`<br>
+**REST URL (US)**: `https://netverify.com/api/netverify/v2/scans/<scanReference>/data/transaction`<br>
+**REST URL (EU)**: `https://lon.netverify.com/api/netverify/v2/scans/<scanReference>/data/transaction`<br>
 
-**Note:** Mandatory parameters are marked with an asterisk * and highlighted bold.
-
-|Parameter       | Type    | Max. Length| Description|
-|:---------------|:--------|:------------|:------------|
-|**scanReference <br>(path parameter)** *| String|36|Jumio’s reference number of an existing scan from your account|
 
 ### Response
 
-You receive a JSON response in case of success, or HTTP status code **404 Not Found** if the scan is not available, pending or deleted.
+Unsuccessful requests will return the relevant [HTTP status code](https://tools.ietf.org/html/rfc7231#section-6) and information about the cause of the error. HTTP status code `404 Not Found` will be returned if the transaction is not available or has been deleted.
 
-**Note:** Mandatory parameters are marked with an asterisk * and highlighted bold.
+Successful requests will return HTTP status code `200 OK` along with a JSON object containing the information described below.
 
-|Parameter       | Type    | Max. Length| Description|
-|:---------------|:--------|:------------|:------------|
-|**timestamp** *| String| |Timestamp of the response in the format YYYY-MM-DDThh:mm:ss.SSSZ|
-|**scanReference** *| String|36 |Jumio’s reference number for each scan|
-|**status** *| String| |Possible states:<br>• PENDING<br>• DONE<br>• FAILED|
-|**source** *| String| |Netverify Web embedded:<br>• WEB<br>• WEB-CAM<br>• WEB-UPLOAD<br><br>Netverify Web redirect:<br>• REDIRECT<br>• REDIRECT-CAM<br>• REDIRECT-UPLOAD<br><br>performNetverify:<br>• API<br><br>Netverify Mobile:<br>• SDK |
-|**date** *| String| |Timestamp of the scan creation in the format YYYY-MM-DDThh:mm:ss.SSSZ|
-|clientIp| String| |IP address of the client in the format xxx.xxx.xxx.xxx|
-|customerId| String|255 |ID of the customer|
-|merchantScanReference| String|255 |Your reference for each scan|
-|merchantReportingCriteria| String|255 |Your reporting criteria for each scan|
+**Required items appear in bold type.**
 
-### Sample Request
+|Name|Type|Max. length|Description|
+|:----|:----|:----|:----|
+|**timestamp**| string| |Timestamp of the response in the format YYYY-MM-DDThh:mm:ss.SSSZ|
+|**scanReference**| string|36 |Jumio’s reference number for the transaction|
+|**status**| string| |Possible states:<br>• PENDING<br>• DONE<br>• FAILED|
+|**source**| string| |Netverify Web embedded:<br>• WEB<br>• WEB-CAM<br>• WEB-UPLOAD<br><br>Netverify Web redirect:<br>• REDIRECT<br>• REDIRECT-CAM<br>• REDIRECT-UPLOAD<br><br>performNetverify:<br>• API<br><br>Netverify Mobile:<br>• SDK |
+|**date**| string| |Timestamp of the scan creation in the format YYYY-MM-DDThh:mm:ss.SSSZ|
+|clientIp| string| |IP address of the client in the format xxx.xxx.xxx.xxx|
+|customerId| string|255 |Your internal reference for the user.|
+|merchantScanReference| string|255 |Your internal reference for each transaction|
+|merchantReportingCriteria| string|255 |Your internal reporting criteria for each transaction|
+
+## Examples
+### Sample request
 
 ```
 GET https://netverify.com/api/netverify/v2/scans/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/data/transaction HTTP/1.1
 Accept: application/json
-User-Agent: YOURCOMPANYNAME YOURAPPLICATIONNAME/x.x.x
-Authorization: Basic
+User-Agent: Example Corp SampleApp/1.0.1
+Authorization: Basic xxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 ```
+|⚠️ Sample requests cannot be run as-is. Replace example data with your own values.
+|:----------|
+<br>
 
-### Sample Response
+### Sample response
 
 ```
 {
-"clientIp": "xxx.xxx.xxx.xxx",
-"customerId": "CUSTOMERID",
-"date": "2014-08-10T10:27:29.494Z",
-"source": "WEB_UPLOAD",
-"status": "DONE"
-"scanReference": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
-"timestamp": "2014-08-14T10:06:13.610Z"
+    "clientIp": "xxx.xxx.xxx.xxx",
+    "customerId": "CUSTOMERID",
+    "date": "2019-02-01T11:01:10.227Z",
+    "merchantReportingCriteria": "YOURMERCHANTREPORTINGCRITERIA",
+    "merchantScanReference": "YOURSCANREFERENCE",
+    "source": "WEB_UPLOAD",
+    "status": "DONE",
+    "scanReference": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
+    "timestamp": "2019-03-01T11:46:57.127Z"
 }
 ```
 
+<br>
 
-## Retrieving Verification Data Only
+## Retrieving verification data only
 
-Call the RESTful HTTP GET API below to receive verification related data of a scan by specifying the Jumio scan reference as a path parameter.
+Call the RESTful API GET endpoint below to retrieve verification data by specifying the Jumio transaction reference (scan reference) as a path parameter.
 
-HTTP request method: **GET**<br>
-**REST URL:** `https://netverify.com/api/netverify/v2/scans/<scanReference>/data/verification`<br>
-If your customer account is in the EU data center, use `lon.netverify.com` instead of `netverify.com`.
+**HTTP Request Method:** `GET`<br>
+**REST URL (US)**: `https://netverify.com/api/netverify/v2/scans/<scanReference>/data/verification`<br>
+**REST URL (EU)**: `https://lon.netverify.com/api/netverify/v2/scans/<scanReference>/data/verification`<br>
 
-### Request Parameter
-
-**Note:** Mandatory parameters are marked with an asterisk * and highlighted bold.
-
-|Parameter       | Type    | Max. Length| Description|
-|:---------------|:--------|:------------|:------------|
-|**scanReference <br>(path parameter)** *| String|36|Jumio’s reference number of an existing scan from your account|
 
 ### Response
 
-You receive a JSON response in case of success, or HTTP status code **404 Not Found** if the scan is not available, pending, deleted or of source Netverify Multi Document Legacy.
+Unsuccessful requests will return the relevant [HTTP status code](https://tools.ietf.org/html/rfc7231#section-6) and information about the cause of the error. HTTP status code `404 Not Found` will be returned if the transaction is not available or has been deleted.
 
-**Note:** Mandatory parameters are marked with an asterisk * and highlighted bold.
+Successful requests will return HTTP status code `200 OK` along with a JSON object containing the information described below.
 
-|Parameter       | Type    | Max. Length| Description|
-|:---------------|:--------|:------------|:------------|
-|**timestamp** \*| String| |Timestamp of the response in the format YYYY-MM-DDThh:mm:ss.SSSZ|
-|**scanReference** \*| String|36 |Jumio’s reference number for each scan|
-|mrzCheck|String||Possible values:<br>• OK<br>• NOT\_AVAILABLE|
-|rejectReason|Object||Reject reason, see tables below|
-|identityVerification|Object||Identity verification, see table below|
+**Required items appear in bold type.**
 
-### Reject Reason
+|Name|Type|Max. length|Description|
+|:----|:----|:----|:----|
+|**timestamp**| string| |Timestamp of the response in the format YYYY-MM-DDThh:mm:ss.SSSZ|
+|**scanReference**| string|36 |Jumio’s reference number for the transaction|
+|mrzCheck|string||Possible values:<br>• OK<br>• NOT\_AVAILABLE|
+|rejectReason|object||Reject reason, see tables below|
+|identityVerification|object||Identity verification, see table below|
 
-|Parameter "rejectReason" | Type   | Max. Length    | Description|
+<!-- |additionalChecks|object||Additional checks, see watchlistScreening guide|-->
+
+<br>
+
+#### Parameter `rejectReason`
+
+|Name| Type   | Max. Length    | Description|
 |:------------------------|:--------|:--------|:------------|
-|rejectReasonCode |String| 5  |see below |
-|rejectReasonDescription |String |255  |Possible codes and descriptions for verification status DENIED\_FRAUD:<br>100	MANIPULATED\_DOCUMENT<br/>105	FRAUDSTER<br/>106	FAKE<br/>107	PHOTO\_MISMATCH<br/>108	MRZ\_CHECK\_FAILED<br/>109	PUNCHED\_DOCUMENT<br/>110	CHIP\_DATA\_MANIPULATED (only available for ePassport)<br/>111	MISMATCH\_PRINTED\_BARCODE_DATA<br><br>Possible codes and descriptions for verificationStatus = ERROR\_NOT\_READABLE\_ID:<br/>102	PHOTOCOPY\_BLACK\_WHITE<br/>103	PHOTOCOPY\_COLOR<br/>104	DIGITAL\_COPY<br/>200	NOT\_READABLE\_DOCUMENT<br/>201	NO\_DOCUMENT<br/>202	SAMPLE\_DOCUMENT<br/>206	MISSING\_BACK<br/>207	WRONG\_DOCUMENT\_PAGE<br/>209	MISSING\_SIGNATURE<br/>210	CAMERA\_BLACK\_WHITE<br/>211	DIFFERENT\_PERSONS\_SHOWN<br/>300	MANUAL\_REJECTION|
-|rejectReasonDetails |Object  |   |Reject reason details as JSON array containing JSON objects if rejectReasonCode = 100 or 200, see table below |
+|rejectReasonCode |string| 5  |see below |
+|rejectReasonDescription |string |255  |Possible codes and descriptions for verification status DENIED\_FRAUD:<br>100	MANIPULATED\_DOCUMENT<br/>105	FRAUDSTER<br/>106	FAKE<br/>107	PHOTO\_MISMATCH<br/>108	MRZ\_CHECK\_FAILED<br/>109	PUNCHED\_DOCUMENT<br/>110	CHIP\_DATA\_MANIPULATED (only available for ePassport)<br/>111	MISMATCH\_PRINTED\_BARCODE_DATA<br><br>Possible codes and descriptions for verificationStatus = ERROR\_NOT\_READABLE\_ID:<br/>102	PHOTOCOPY\_BLACK\_WHITE<br/>103	PHOTOCOPY\_COLOR<br/>104	DIGITAL\_COPY<br/>200	NOT\_READABLE\_DOCUMENT<br/>201	NO\_DOCUMENT<br/>202	SAMPLE\_DOCUMENT<br/>206	MISSING\_BACK<br/>207	WRONG\_DOCUMENT\_PAGE<br/>209	MISSING\_SIGNATURE<br/>210	CAMERA\_BLACK\_WHITE<br/>211	DIFFERENT\_PERSONS\_SHOWN<br/>300	MANUAL\_REJECTION|
+|rejectReasonDetails |object  |   |Reject reason details as JSON array containing JSON objects if rejectReasonCode = 100 or 200, see table below |
 
+<br>
 
-### Reject Reason Details
+#### Parameter `rejectReasonDetails`
 
-|Parameter "rejectReasonDetails" |  Type    | Max. Length    | Description|
+|Name |  Type    | Max. Length    | Description|
 |:-------------------------------|:---------|:---------------|:------------|
-|detailsCode   |String | 5 | see below |
-|detailsDescription|String|255| Possible codes and description details for rejectReasonCode = 100:<br/>1001	PHOTO<br/>1002	DOCUMENT\_NUMBER<br>1003	EXPIRY<br/>1004	DOB<br/>1005	NAME<br/>1006	ADDRESS<br/>1007	SECURITY\_CHECKS<br/>1008	SIGNATURE<br>1009	PERSONAL\_NUMBER<br><br>Possible codes and description details for rejectReasonCode = 200:<br/>2001	BLURRED<br/>2002	BAD\_QUALITY<br/>2003	MISSING\_PART\_DOCUMENT<br/>2004	HIDDEN\_PART\_DOCUMENT<br/>2005	DAMAGED\_DOCUMENT |
+|detailsCode   |string | 5 | see below |
+|detailsDescription|string|255| Possible codes and description details for rejectReasonCode = 100:<br/>1001	PHOTO<br/>1002	DOCUMENT\_NUMBER<br>1003	EXPIRY<br/>1004	DOB<br/>1005	NAME<br/>1006	ADDRESS<br/>1007	SECURITY\_CHECKS<br/>1008	SIGNATURE<br>1009	PERSONAL\_NUMBER<br><br>Possible codes and description details for rejectReasonCode = 200:<br/>2001	BLURRED<br/>2002	BAD\_QUALITY<br/>2003	MISSING\_PART\_DOCUMENT<br/>2004	HIDDEN\_PART\_DOCUMENT<br/>2005	DAMAGED\_DOCUMENT |
 
-### Identity Verification
+<br>
 
-|Parameter "identityVerification"       | Max. Length    | Description|
-|:---------------|:--------|:------------|
-|similarity |  |Possible values:<br/>• MATCH<br />• NO\_MATCH<br />• NOT\_POSSIBLE|
-|validity  |  |Possible values:<br/>• TRUE<br />• FALSE |
-|reason   |  |Provided if validity = FALSE<br/>Possible values:<br />• SELFIE\_CROPPED\_FROM\_ID<br />•	ENTIRE\_ID\_USED\_AS\_SELFIE<br />•	MULTIPLE\_PEOPLE<br />•	SELFIE\_IS\_SCREEN\_PAPER\_VIDEO<br />•	SELFIE\_MANIPULATED<br />• AGE\_DIFFERENCE\_TOO\_BIG<br />•	NO\_FACE\_PRESENT<br />•	FACE\_NOT\_FULLY\_VISIBLE<br />• BAD\_QUALITY<br />• BLACK\_AND\_WHITE<br />• LIVENESS\_FAILED|
-|handwrittenNoteMatches	|	|Only visible if setting is turned on within your account. For questions about this feature, please contact your Support. <br/><br/>Possible values:<br/> •	TRUE<br />•	FALSE|
+#### Parameter `identityVerification`
+
+|Name      | Description|
+|:---------------|:------------|
+|similarity |Possible values:<br/>• MATCH<br />• NO\_MATCH<br />• NOT\_POSSIBLE|
+|validity  |Possible values:<br/>• TRUE<br />• FALSE |
+|reason   |Provided if validity = FALSE<br/>Possible values:<br />• SELFIE\_CROPPED\_FROM\_ID<br />•	ENTIRE\_ID\_USED\_AS\_SELFIE<br />•	MULTIPLE\_PEOPLE<br />•	SELFIE\_IS\_SCREEN\_PAPER\_VIDEO<br />•	SELFIE\_MANIPULATED<br />• AGE\_DIFFERENCE\_TOO\_BIG<br />•	NO\_FACE\_PRESENT<br />•	FACE\_NOT\_FULLY\_VISIBLE<br />• BAD\_QUALITY<br />• BLACK\_AND\_WHITE<br />• LIVENESS\_FAILED|
+|handwrittenNoteMatches	|Only visible if **Liveness Detection (with handwritten note)** setting is turned on within your account. For questions about this feature, please contact Jumio Support. <br/><br/>Possible values:<br/> •	TRUE<br />•	FALSE|
 
 
-### Sample Request
+## Examples
+### Sample request
 
 ```
 GET https://netverify.com/api/netverify/v2/scans/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/data/verification HTTP/1.1
 Accept: application/json
-User-Agent: YOURCOMPANYNAME YOURAPPLICATIONNAME/x.x.x
-Authorization: Basic
+User-Agent: Example Corp SampleApp/1.0.1
+Authorization: Basic xxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 ```
+|⚠️ Sample requests cannot be run as-is. Replace example data with your own values.
+|:----------|
+<br>
 
-### Sample Response
+### Sample response
+
+#### Approved Verified
 
 ```
 {
-"mrzCheck": "OK",
-"scanReference": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
-"timestamp": "2014-08-14T10:56:19.088Z"
+    "identityVerification": {
+        "similarity": "MATCH",
+        "validity": "true"
+    },
+    "mrzCheck": "OK",
+    "scanReference": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
+    "timestamp": "2019-03-01T11:48:31.331Z"
 }
 ```
 
-## Retrieving Available Images
+#### Error (Not readable ID)
 
-Call the RESTful HTTP GET API below to receive available images of a scan by specifying the Jumio scan reference as a path parameter.
+```
+{
+    "mrzCheck": "OK",
+    "rejectReason": {
+        "rejectReasonCode": "201",
+        "rejectReasonDescription": "NO_DOCUMENT"
+    },
+    "scanReference": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
+    "timestamp": "2019-03-01T11:51:39.876Z"
+}
+```
 
-HTTP request method: **GET<br>
-REST URL:** `https://netverify.com/api/netverify/v2/scans/<scanReference>/images`<br>
-If your customer account is in the EU data center, use `lon.netverify.com` instead of `netverify.com`.
+<br>
 
-### Request Parameter
+## Retrieving available images
 
-**Note:** Mandatory parameters are marked with an asterisk * and highlighted bold.
+Call the RESTful API GET endpoint below to retrieve a list of the available images for a transaction by specifying the Jumio transaction reference (scan reference) as a path parameter.
 
-|Parameter       | Type    | Max. Length| Description|
-|:---------------|:--------|:------------|:------------|
-|**scanReference <br>(path parameter)** *| String|36|Jumio’s reference number of an existing scan from your account|
+**HTTP Request Method:** `GET`<br>
+**REST URL (US)**: `https://netverify.com/api/netverify/v2/scans/<scanReference>/images`<br>
+**REST URL (EU)**: `https://lon.netverify.com/api/netverify/v2/scans/<scanReference>/images`<br>
 
 
 ### Response
 
-You receive a JSON response in case of success, or HTTP status code **404 Not Found** if the scan is not available or deleted.
+Unsuccessful requests will return the relevant [HTTP status code](https://tools.ietf.org/html/rfc7231#section-6) and information about the cause of the error. HTTP status code `404 Not Found` will be returned if the transaction is not available or has been deleted.
 
-**Note:** Mandatory parameters are marked with an asterisk * and highlighted bold.
+Successful requests will return HTTP status code `200 OK` along with a JSON object containing the information described below.
 
-|Parameter       | Type    | Max. Length| Description|
+
+**Required items appear in bold type.**
+
+|Name|Type|Max. length|Description|
 |:---------------|:--------|:------------|:------------|
-|**timestamp** *| String| |Timestamp of the response in the format YYYY-MM-DDThh:mm:ss.SSSZ|
-|**scanReference** *| String|36 |Jumio’s reference number for each scan|
-|images|JSON Array/Object||Available image/s see table below|
-|livenessImages| JSON Array | | Available liveness images|
+|**timestamp**| string| |Timestamp of the response in the format <br>YYYY-MM-DDThh:mm:ss.SSSZ|
+|**scanReference** | string|36 | |Jumio’s reference number for the transaction|
+|images|JSON array/object||See table below|
+|livenessImages| JSON array | | List of REST URLs to retrieve specific liveness images|
 
+<br>
 
-|Parameter "images"       | Type    | Description|
+#### Parameter `images`
+**Required items appear in bold type.**
+
+|Name| Type    | Description|
 |:---------------|:--------|:------------|
-|**classifier** *| String| Netverify:<br/>•	front<br/>•	face<br/>•	back|
-|**href** *| String |REST URL to retrieve specific image (see [Retrieving specific image](#retrieving-specific-image) section)|
-|maskhint| String |For credit cards:<br />•	masked<br>•	unmasked<br/>|
+|**classifier**| string| Netverify:<br/>•	front<br/>•	face<br/>•	back|
+|**href** | string |REST URL to retrieve specific image (see [Retrieving a specific image](#retrieving-a-specific-image) section)|
 
-### Sample Request
+
+## Examples
+### Sample request
 
 ```
 GET https://netverify.com/api/netverify/v2/scans/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/images HTTP/1.1
 Accept: application/json
-User-Agent: YOURCOMPANYNAME YOURAPPLICATIONNAME/x.x.x
-Authorization: Basic
+User-Agent: Example Corp SampleApp/1.0.1
+Authorization: Basic xxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
 ```
+|⚠️ Sample requests cannot be run as-is. Replace example data with your own values.
+|:----------|
+<br>
 
-### Sample Response
+### Sample response
 
 ```
 {
-"timestamp": "2014-08-14T11:22:20.182Z",
-"images": [
-  {
-  "classifier": "back",
-  "href": "https://netverify.com/api/netverify/v2/scans/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/images/back"
-  },
-  {
-  "classifier": "front",
-  "href": "https://netverify.com/api/netverify/v2/scans/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/images/front"
-  },
-  {
-  "classifier": "face",
-  "href": "https://netverify.com/api/netverify/v2/scans/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/images/face"
-  }
-  ],
-"scanReference": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+    "timestamp": "2019-03-01T11:53:52.878Z",
+    "images": [
+        {
+            "classifier": "back",
+            "href": "https://netverify.com/api/netverify/v2/scans/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/images/back"
+        },
+        {
+            "classifier": "front",
+            "href": "https://netverify.com/api/netverify/v2/scans/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/images/front"
+        },
+        {
+            "classifier": "face",
+            "href": "https://netverify.com/api/netverify/v2/scans/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/images/face"
+        }
+    ],
+		"livenessImages": [
+	        	"https://netverify.com/api/netverify/v2/scans/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/images/liveness/7",
+        		"https://netverify.com/api/netverify/v2/scans/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/images/liveness/5",
+        		"https://netverify.com/api/netverify/v2/scans/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/images/liveness/6",
+        		"https://netverify.com/api/netverify/v2/scans/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/images/liveness/3",
+        		"https://netverify.com/api/netverify/v2/scans/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/images/liveness/4",
+		        "https://netverify.com/api/netverify/v2/scans/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/images/liveness/1",
+        		"https://netverify.com/api/netverify/v2/scans/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/images/liveness/2"
+    ],
+    "scanReference": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
 }
 ```
 
-## Retrieving Specific Image
+<br>
 
-Call the RESTful HTTP GET API below to receive a specific image of a scan by specifying the Jumio scan reference as a path parameter.
+## Retrieving a specific image
 
-To receive the unmasked credit card image, append the query parameter `maskhint=unmasked`. By default, retrieval of unmasked credit card images is disabled (HTTP status code **403 Forbidden**). If you want to enable it please contact Jumio Support. Retrieving unmasked credit card images might impose additional security requirements on your systems depending if you already store/transmit/process credit card data on your systems.
+Call the RESTful GET API endpoint below to retrieve a specific image from a transaction by specifying the image classifier and the Jumio transaction reference (scan reference) of an existing transaction from your account as path parameters.
 
-In case you are unsure about the ramifications of retrieving unmasked images regarding PCI DSS please refer to "[Information Supplement: PCI DSS E-commerce Guidelines, version 2.0, January 2013](https://www.pcisecuritystandards.org/pdfs/PCI_DSS_v2_eCommerce_Guidelines.pdf)" and/or contact your acquirer and/or contact a PCI DSS QSA (Qualified Security Assessor).
+**HTTP Request Method:** `GET`<br>
+**REST URL (US)**: `https://netverify.com/api/netverify/v2/scans/<scanReference>/images/<classifier>`<br>
+**REST URL (EU)**: `https://lon.netverify.com/api/netverify/v2/scans/<scanReference>/images/<classifier>`<br>
 
-HTTP request method: **GET<br>
-REST URL:** `https://netverify.com/api/netverify/v2/scans/<scanReference>/images/<classifier>`<br>
-If your customer account is in the **EU** data center, use `lon.netverify.com` instead of `netverify.com`.
 
-### Request Parameter
+### Request path parameters
 
-**Note:** Mandatory parameters are marked with an asterisk * and highlighted bold.
+**Required items appear in bold type.**
 
-|Parameter       | Type    | Max. Length| Description|
+|Name|Type|Max. length|Description|
 |:---------------|:--------|:------------|:------------|
-|**scanReference <br>(path parameter)** *| String|36|Jumio’s reference number of an existing scan from your account|
-|**classifier** * (path parameter)| String| |Netverify:<br/>•	front<br/>•	face<br/>•	back|
-|maskhint (path parameter)| String| |For credit cards:<br/>•	masked (default)<br/>•	unmasked|
+|**scanReference**| string|36|Jumio’s reference number for the transaction|
+|**classifier**| string| |Netverify:<br/>•	front<br/>•	face<br/>•	back|
+
 
 ### Response
 
-You receive a JPG or PNG image in case of success with the according header (e.g. `Content-Type: image/jpeg`), or HTTP status code **404 Not Found** if the scan is not available, deleted or not containing the specified image.
+Unsuccessful requests will return the relevant [HTTP status code](https://tools.ietf.org/html/rfc7231#section-6) and information about the cause of the error. HTTP status code `404 Not Found` will be returned if the transaction is not available, has been deleted, or does not contain the image you requested.
 
-### Sample Request
+Successful requests will return HTTP status code `200 OK` along with a JPG or PNG image and the appropriate header (e.g. `Content-Type: image/jpeg`).
+
+## Examples
+### Sample request
 
 ```
 GET https://netverify.com/api/netverify/v2/scans/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/images/front HTTP/1.1
-User-Agent: YOURCOMPANYNAME YOURAPPLICATIONNAME/x.x.x
-Authorization: Basic
+User-Agent: Example Corp SampleApp/1.0.1
+Authorization: Basic xxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 ```
+
+|⚠️ Sample requests cannot be run as-is. Replace example data with your own values.
+|:----------|
+<br>
 
 ---
 
 # Document Verification Retrieval
 
 
-## <a name="multi-retrieving-scan-status"></a>Retrieving Scan Status
+## Retrieving status
 
-Call the RESTful HTTP GET API below to receive the status of a scan by specifying the Jumio scan reference as a path parameter.
+Call the RESTful API GET endpoint below to retrieve the status of a Document Verification transaction by specifying the Jumio transaction reference (scan reference) of an existing transaction from your account as a path parameter.
 
-HTTP request method: **GET**<br>
-**REST URL:** `https://retrieval.netverify.com/api/netverify/v2/documents/<scanReference>`<br>
-If your customer account is in the **EU** data center, use `retrieval.lon.netverify.com` instead of `retrieval.netverify.com`.
+**HTTP Request Method:** `GET`<br>
+**REST URL (US)**: `https://retrieval.netverify.com/api/netverify/v2/documents/<scanReference>`<br>
+**REST URL (EU)**: `https://lon.retrieval.netverify.com/api/netverify/v2/documents/<scanReference>`<br>
 
-### Request Parameter
-
-**Note:** Mandatory parameters are marked with an asterisk * and highlighted bold.
-
-|Parameter       | Type    | Max. Length| Description|
-|:---------------|:--------|:------------|:------------|
-|**scanReference <br>(path parameter)** *| String|36|Jumio’s reference number of an existing scan from your account|
+<br>
 
 ### Response
 
-You receive a JSON response in case of success, or HTTP status code **404 Not Found** if the scan is not available or deleted.
+Unsuccessful requests will return the relevant [HTTP status code](https://tools.ietf.org/html/rfc7231#section-6) and information about the cause of the error. HTTP status code `404 Not Found` will be returned if the transaction is not available or has been deleted.
 
-|Parameter       | Type    | Max. Length| Description|
+Successful requests will return HTTP status code `200 OK` along with a JSON object containing the information described below.
+
+**Required items appear in bold type.**
+
+|Name|Type|Max. length|Description|
 |:---------------|:--------|:------------|:------------|
-|timestamp| String||Timestamp of the response in the format YYYY-MM-DDThh:mm:ss.SSSZ|
-|scanReference|String|36|Jumio’s reference number for each scan|
-|status|String||Possible states:<br>• DONE<br>• FAILED|
+|**timestamp** | string||Timestamp of the response in the format YYYY-MM-DDThh:mm:ss.SSSZ|
+|**scanReference** |string|36|Jumio’s reference number for the transaction|
+|**status** |string||Possible states:<br>• DONE<br>• FAILED|
 
-### Sample Request
+## Examples
+### Sample request
 ```
 GET https://retrieval.netverify.com/api/netverify/v2/documents/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx HTTP/1.1
 Accept: application/json
-User-Agent: YOURCOMPANYNAME YOURAPPLICATIONNAME/x.x.x
-Authorization: Basic
+User-Agent: Example Corp SampleApp/1.0.1
+Authorization: Basic xxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 ```
+|⚠️ Sample requests cannot be run as-is. Replace example data with your own values.
+|:----------|
+<br>
 
-### Sample Response
+### Sample response
 ```
 {
-"scanReference": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
-"timestamp": "2015-08-13T12:08:02.068Z",
-"status": "DONE"
+    "scanReference": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
+    "timestamp": "2019-01-01T15:52:48.864Z",
+    "status": "DONE"
 }
 ```
+<br>
 
-## <a name="multi-retrieving-scan-details"></a>Retrieving scan details
+## Retrieving details
 
-Call the RESTful HTTP GET API below to receive document and transaction details of a scan by specifying the Jumio scan reference as a path parameter.
+Call the RESTful API GET endpoint below to retrieve the document and transaction details of a Document Verification transaction by specifying the Jumio transaction reference (scan reference) as a path parameter.
 
-HTTP request method: **GET**<br>
-**REST URL:** `https://retrieval.netverify.com/api/netverify/v2/documents/<scanReference>/data`<br>
-If your customer account is in the **EU** data center, use `retrieval.lon.netverify.com` instead of `retrieval.netverify.com`.
+**HTTP Request Method:** `GET`<br>
+**REST URL (US)**: `https://retrieval.netverify.com/api/netverify/v2/documents/<scanReference>/data`<br>
+**REST URL (EU)**: `https://lon.retrieval.netverify.com/api/netverify/v2/documents/<scanReference>/data`<br>
 
-### Request Parameter
-
-**Note:** Mandatory parameters are marked with an asterisk * and highlighted bold.
-
-|Parameter       | Type    | Max. Length| Description|
-|:---------------|:--------|:------------|:------------|
-|**scanReference <br>(path parameter)** *| String|36|Jumio’s reference number of an existing scan from your account|
 
 ### Response
 
-You receive a JSON response in case of success, or HTTP status code **404 Not Found** if the scan is not available, pending or deleted.
+Unsuccessful requests will return the relevant [HTTP status code](https://tools.ietf.org/html/rfc7231#section-6) and information about the cause of the error. HTTP status code `404 Not Found` will be returned if the transaction is not available or has been deleted.
 
-**Note:** Mandatory parameters are marked with an asterisk * and highlighted bold.
+Successful requests will return HTTP status code `200 OK` along with a JSON object containing the information described below.
 
-|Parameter       | Type    | Max. Length| Description|
+**Required items appear in bold type.**
+
+|Name|Type|Max. length|Description|
 |:---------------|:--------|:------------|:------------|
-|timestamp|String||Timestamp of the response in the format YYYY-MM-DDThh:mm:ss.SSSZ|
-|scanReference|String|36|Jumio’s reference number for each scan|
-|document|Object||Same parameters as listed in the section [Retrieving document data only](#multi-retrieving-document-data-only) but without timestamp and scanReference|
-|transaction|Object||Same parameters as listed in the section [Retrieving transaction data only](#multi-retrieving-transaction-data-only) but without timestamp and scanReference|
+|**timestamp**|string||Timestamp of the response in the format YYYY-MM-DDThh:mm:ss.SSSZ|
+|**scanReference**|string|36|Jumio’s reference number for the transaction|
+|document|object||Same parameters as listed in the section [Retrieving document data only](#multi-retrieving-document-data-only) but without timestamp and scanReference|
+|transaction|object||Same parameters as listed in the section [Retrieving transaction data only](#multi-retrieving-transaction-data-only) but without timestamp and scanReference|
 
-### Sample Request
+## Examples
+### Sample request
 ```
 GET https://retrieval.netverify.com/api/netverify/v2/documents/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/data HTTP/1.1
 Accept: application/json
-User-Agent: YOURCOMPANYNAME YOURAPPLICATIONNAME/x.x.x
-Authorization: Basic
+User-Agent: Example Corp SampleApp/1.0.1
+Authorization: Basic xxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 ```
+|⚠️ Sample requests cannot be run as-is. Replace example data with your own values.
+|:----------|
+<br>
 
+### Sample response
 
-### Sample Response
+#### Credit Card (CC)
 ```
 {
-"scanReference": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
-"timestamp": "2015-08-14T08:16:20.845Z",
-"document": {
-  "status": "EXTRACTED",
-  "type": "SSC",
-  "extractedData": {
-    "firstName": "FIRSTNAME",
-    "lastName": "LASTNAME",
-    "ssn": "12341234",
-    "signatureAvailable": true
+    "scanReference": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
+    "timestamp": "2019-01-01T15:42:31.858Z",
+    "document": {
+        "status": "EXTRACTED",
+        "type": "CC",
+        "extractedData": {
+            "firstName": "FULL NAME",
+            "signatureAvailable": false,
+            "extractedData": "{\"expiryDate\":\"01/22\",\"firstName\":\"FULL NAME\",\"pan\":\"XXXXXXXXXXXX1234\"
+            }"
+        },
+        "country": "AUT"
+    },
+    "transaction": {
+        "status": "DONE",
+        "merchantScanReference": "YOURSCANREFERENCE",
+        "customerId": "CUSTOMERID",
+        "source": "DOC_UPLOAD"
     }
-  },
-"transaction": {
-  "status": "DONE",
-  "merchantReportingCriteria": "YOURMERCHANTREPORTINGCRITERIA",
-  "merchantScanReference": "YOURSCANREFERENCE",
-  "customerId": "CUSTOMERID",
-  "source": "DOC_UPLOAD"
-  }
-}  
+}
 ```
 
-## <a name="multi-retrieving-document-data-only"></a>Retrieving Document Data Only
+#### Social Security Card (SSC)
+```
+{
+    "scanReference": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
+    "timestamp": "2019-01-01T15:40:49.124Z",
+    "document": {
+        "status": "EXTRACTED",
+        "type": "SSC",
+        "extractedData": {
+            "firstName": "FIRST NAME",
+            "lastName": "LAST NAME",
+            "ssn": "123-45-6789",
+            "signatureAvailable": false,
+            "extractedData": "{\"lastName\":\"LAST NAME\",\"firstName\":\"FIRST NAME\",\"signaturePresent\":\"true\",\"ssn\":\"123-45-6789\"
+            }"
+        },
+        "country": "USA"
+    },
+    "transaction": {
+        "status": "DONE",
+        "merchantScanReference": "YOURSCANREFERENCE",
+        "customerId": "CUSTOMERID",
+        "source": "DOC_UPLOAD"
+    }
+}
+```
 
-Call the RESTful HTTP GET API below to receive document related data of a scan by specifying the Jumio scan reference as a path parameter.
+#### Bank Statement (BS)
+```
+{
+    "scanReference": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
+    "timestamp": "2019-01-01T15:32:22.606Z",
+    "document": {
+        "status": "EXTRACTED",
+        "type": "BS",
+        "extractedData": {
+            "firstName": "FULL NAME",
+            "signatureAvailable": false,
+            "extractedData": "{\"city\":\"CITY\",\"addressFormat\":\"RAW\",\"postalCode\":\"12345\",\"accountNumber\":\"123456789\",\"subdivision\":\"XX\",\"firstName\":\"FULL NAME\",\"issueDate\":\"2019-01-01\",\"line1\":\"12345 EASY STREET\"}"
+        },
+        "country": "USA",
+        "originalDocument": "https://retrieval.netverify.com/api/netverify/v2/documents/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/original"
+    },
+    "transaction": {
+        "status": "DONE",
+        "merchantScanReference": "YOURSCANREFERENCE",
+        "customerId": "CUSTOMERID",
+        "source": "DOC_UPLOAD"
+    }
+}
+```
 
-HTTP request method: **GET**<br>
-**REST URL:** `https://retrieval.netverify.com/api/netverify/v2/documents/<scanReference>/data/document`<br>
-If your customer account is in the **EU** data center, use `retrieval.lon.netverify.com` instead of `retrieval.netverify.com`.
+<br>
 
-### Request Parameter
+## Retrieving document data only
 
-**Note:** Mandatory parameters are marked with an asterisk * and highlighted bold.
+Call the RESTful API GET endpoint below to retrieve the document data of a Document Verification transaction by specifying the Jumio transaction reference (scan reference) as a path parameter.
 
-|Parameter       | Type    | Max. Length| Description|
-|:---------------|:--------|:------------|:------------|
-|**scanReference <br>(path parameter)** *| String|36|Jumio’s reference number of an existing scan from your account|
+**HTTP Request Method:** `GET`<br>
+**REST URL (US)**: `https://retrieval.netverify.com/api/netverify/v2/documents/<scanReference>/data/document`<br>
+**REST URL (EU)**: `https://lon.retrieval.netverify.com/api/netverify/v2/documents/<scanReference>/data/document`<br>
+
 
 ### Response
 
-You receive a JSON response in case of success, or HTTP status code **404 Not Found** if the scan is not available, pending or deleted.
+Unsuccessful requests will return the relevant [HTTP status code](https://tools.ietf.org/html/rfc7231#section-6) and information about the cause of the error. HTTP status code `404 Not Found` will be returned if the transaction is not available or has been deleted.
 
-**Note:** Mandatory parameters are marked with an asterisk * and highlighted bold.
+Successful requests will return HTTP status code `200 OK` along with a JSON object containing the information described below.
 
-|Parameter       | Type    | Max. Length| Description|
+**Required items appear in bold type.**
+
+|Name|Type|Max. length|Description|
 |:---------------|:--------|:------------|:------------|
-|**timestamp** *|String||Timestamp of the response in the format YYYY-MM-DDThh:mm:ss.SSSZ|
-|**scanReference** *| String|36|Jumio’s reference number for each scan|
-|**status** *|String||Possible states:<br>•	UPLOADED (default)<br>•	EXTRACTED if supported document for data extraction provided<br>•	DISCARDED if no supported document for data extraction provided |
-|type|String||Possible types:<br>• CC (Credit card, front and back side)<br>• BS (Bank statement, front side)<br>•	IC (Insurance card, front side)<br>•	UB (Utility bill, front side)<br>•	CAAP (Cash advance application, front and back side)<br>•	CRC (Corporate resolution certificate, front and back side)<br>•	CCS (Credit card statement, front and back side)<br>•	LAG (Lease agreement, front and back side)<br>•	LOAP (Loan application, front and back side)<br>•	MOAP (Mortgage application, front and back side)<br>•	TR (Tax return, front and back side)<br>•	VT (Vehicle title, front side)<br>•	VC (Voided check, front side)<br>•	STUC (Student card, front side)<br>•	HCC (Health care card, front side)<br>•	CB (Council bill, front side)<br>•	SENC (Seniors card, front side)<br>•	MEDC (Medicare card, front side)<br>•	BC (Birth certificate, front side)<br>•	WWCC (Working with children check, front side)<br>•	SS (Superannuation statement, front side)<br>•	TAC (Trade association card, front side)<br>•	SEL (School enrolment letter, front side)<br>•	PB (Phone bill, front side)<br>•	SSC (Social security card, front side)<br>•	CUSTOM (Custom document type)<br>•	OTHER (Other document type)|
-|country|String|3|Possible countries:<br>• [ISO 3166-1 alpha-3](http://en.wikipedia.org/wiki/ISO_3166-1_alpha-3) country code<br>•	XKX (Kosovo)|
-|originalDocument|String|255|URL to the originally submitted document of the scan (PDF) if available |
-|customDocumentCode|String|100|Your custom document code (maintained in your Jumio customer portal) if type = CUSTOM|
-|extractedData|Object||Extracted data if supported document for data extraction provided, see table below|
+|**timestamp** |string||Timestamp of the response in the format YYYY-MM-DDThh:mm:ss.SSSZ|
+|**scanReference**| string|36|Jumio’s reference number for the transaction|
+|**status**|string||Possible states:<br>•	UPLOADED (default)<br>•	EXTRACTED if the document provided is supported for data extraction<br>•	DISCARDED if the document provided is not supported for data extraction|
+|type|string||Possible types:<br>• CC (Credit card, front and back side)<br>• BS (Bank statement, front side)<br>•	IC (Insurance card, front side)<br>•	UB (Utility bill, front side)<br>•	CAAP (Cash advance application, front and back side)<br>•	CRC (Corporate resolution certificate, front and back side)<br>•	CCS (Credit card statement, front and back side)<br>•	LAG (Lease agreement, front and back side)<br>•	LOAP (Loan application, front and back side)<br>•	MOAP (Mortgage application, front and back side)<br>•	TR (Tax return, front and back side)<br>•	VT (Vehicle title, front side)<br>•	VC (Voided check, front side)<br>•	STUC (Student card, front side)<br>•	HCC (Health care card, front side)<br>•	CB (Council bill, front side)<br>•	SENC (Seniors card, front side)<br>•	MEDC (Medicare card, front side)<br>•	BC (Birth certificate, front side)<br>•	WWCC (Working with children check, front side)<br>•	SS (Superannuation statement, front side)<br>•	TAC (Trade association card, front side)<br>•	SEL (School enrolment letter, front side)<br>•	PB (Phone bill, front side)<br>•	SSC (Social security card, front side)<br>•	CUSTOM (Custom document type)<br>•	OTHER (Other document type)|
+|country|string|3|Possible countries:<br>• [ISO 3166-1 alpha-3](http://en.wikipedia.org/wiki/ISO_3166-1_alpha-3) country code<br>•	XKX (Kosovo)|
+|originalDocument|string|255|URL to retrieve the original document (PDF), if available |
+|customDocumentCode|string|100|Your custom document code (configured in the [Customer Portal](/netverify/portal-settings.md#multi-documents)) if type = CUSTOM|
+|extractedData|object||Extracted data when the document provided is supported for data extraction, see table below|
 
+<br>
 
-|Parameter "extractedData" | Type    | Max. Length| Description|
+#### `extractedData` object
+|Name| Type    | Max. Length| Description|
 |:-------------------------|:--------|:------------|:------------|
-|signatureAvailable |String ||"true" if signature available, otherwise "false"|
-|ssn |String |255|Social security number if readable|
-|firstName |String |255|First name if readable|
-|lastName |String |255|Last name if readable|
-|swiftCode |String |20|BIC/SWIFT code|
+|signatureAvailable |Boolean ||true if signature available, otherwise false|
+|ssn |string |255|Social security number (if readable)|
+|firstName |string |255|First name if readable for SSC type, full name if readable for all other types|
+|lastName |string |255|Last name if readable (SSC type only).|
+|extractedData |object||Extracted data when the document provided is supported for data extraction, see table below|
 
+<br>
 
-### Sample Request
+#### Nested `extractedData` object
+|Name| Type    | Max. Length| Description|
+|:-------------------------|:--------|:------------|:------------|
+|addressFormat |string |255|RAW|  
+|line1 |string |100 |Address line 1 |
+|line2 |string |100 |Address line 2 |
+|countryCode |string |3|Possible countries of residence: <br />• [ISO 3166-1 alpha-3](http://en.wikipedia.org/wiki/ISO_3166-1_alpha-3) country code<br />• XKX (Kosovo)|
+|postalCode |string |15 |Postal code|
+|city |string |64 |City |
+|subdivision |string |50 |Name of subdivision (US state is returned in this field) |
+|firstName |string |255|First name if readable for SSC type, full name if readable for all other types|
+|lastName |string |255|Last name if readable (SSC type only)|
+|ssn |string |255|Social security number if readable (SSC type only)|
+|signaturePresent |string |255|"true" if signature is present, otherwise "false"|
+|accountNumber |string | |IBAN or account number|
+|swiftCode |string |20|BIC/SWIFT code|
+|issueDate  | string  |  |Issue date in the format YYYY-MM-DD|
+|expiryDate |string | |Date of expiry in the format MM/YY (CC type only)|
+|pan |string |20 |Personal account number of credit card (CC type only)|
+
+<br>
+
+## Examples
+### Sample request
 ```
 GET https://retrieval.netverify.com/api/netverify/v2/documents/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/data/document HTTP/1.1
 Accept: application/json
-User-Agent: YOURCOMPANYNAME YOURAPPLICATIONNAME/x.x.x
-Authorization: Basic
+User-Agent: Example Corp SampleApp/1.0.1
+Authorization: Basic xxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 ```
+|⚠️ Sample requests cannot be run as-is. Replace example data with your own values.
+|:----------|
+<br>
 
-### Sample Response
+### Sample response
+
+#### Credit Card (CC)
 ```
 {
-"scanReference": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
-"timestamp": "2015-08-14T09:05:47.394Z",
-"status": "EXTRACTED",
-"type": "SSC",
-"country": "USA",
-"extractedData": {
-  "firstName": "FIRSTNAME",
-  "lastName": "LASTNAME",
-  "ssn": "12341234",
-  "signatureAvailable": true
-  }
+    "scanReference": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
+    "timestamp": "2019-01-01T15:02:43.691Z",
+    "status": "EXTRACTED",
+    "type": "CC",
+    "extractedData": {
+        "firstName": "FULL NAME",
+        "signatureAvailable": false,
+        "extractedData": "{\"expiryDate\":\"01/22\",\"firstName\":\"FULL NAME\",\"pan\":\"XXXXXXXXXXXX1234\"}"
+    },
+    "country": "AUT"
 }
 ```
 
+#### Social Security Card (SSC)
+```
+{
+    "scanReference": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
+    "timestamp": "2019-01-01T15:05:21.904Z",
+    "status": "EXTRACTED",
+    "type": "SSC",
+    "extractedData": {
+        "firstName": "FIRST NAME",
+        "lastName": "LAST NAME",
+        "ssn": "123-45-6789",
+        "signatureAvailable": false,
+        "extractedData": "{\"lastName\":\"LAST NAME\",\"firstName\":\"FIRST NAME\",\"signaturePresent\":\"true\",\"ssn\":\"123-45-6789\"}"
+    },
+    "country": "USA"
+}
+```
 
+#### Bank Statement (BS)
+```
+{
+    "scanReference": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
+    "timestamp": "2019-01-01T15:07:25.098Z",
+    "status": "EXTRACTED",
+    "type": "BS",
+    "extractedData": {
+        "firstName": "FULL NAME",
+        "signatureAvailable": false,
+        "extractedData": "{\"city\":\"CITY\",\"addressFormat\":\"RAW\",\"postalCode\":\"12345\",\"accountNumber\":\"123456789\",\"subdivision\":\"XX\",\"firstName\":\"FULL NAME\",\"issueDate\":\"2019-01-01\",\"line1\":\"12345 EASY STREET\"}"
+    },
+    "country": "USA",
+    "originalDocument": "https://retrieval.netverify.com/api/netverify/v2/documents/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/original"
+}
+```
 
-## <a name="multi-retrieving-transaction-data-only"></a>Retrieving Transaction Data Only
+<br>
 
-Call the RESTful HTTP GET API below to receive transaction related data of a scan by specifying the Jumio scan reference as a path parameter.
+## Retrieving transaction data only
 
-HTTP request method: **GET**<br>
-**REST URL:** `https://retrieval.netverify.com/api/netverify/v2/documents/<scanReference>/data/transaction`<br>
-If your customer account is in the **EU** data center, use `retrieval.lon.netverify.com` instead of `retrieval.netverify.com`.
+Call the RESTful API GET endpoint below to retrieve the transaction metadata of a Document Verification transaction by specifying the Jumio transaction reference (scan reference) as a path parameter.
 
-### Request Parameter
+**HTTP Request Method:** `GET`<br>
+**REST URL (US)**: `https://retrieval.netverify.com/api/netverify/v2/documents/<scanReference>/data/transaction`<br>
+**REST URL (EU)**: `https://lon.retrieval.netverify.com/api/netverify/v2/documents/<scanReference>/data/transaction`<br>
 
-**Note:** Mandatory parameters are marked with an asterisk * and highlighted bold.
-
-|Parameter       | Type    | Max. Length| Description|
-|:---------------|:--------|:------------|:------------|
-|**scanReference <br>(path parameter)** *| String|36|Jumio’s reference number of an existing scan from your account|
 
 ### Response
 
-You will receive a JSON response in case of success, or HTTP status code **404 Not Found** if the scan is not available, pending or deleted.
+Unsuccessful requests will return the relevant [HTTP status code](https://tools.ietf.org/html/rfc7231#section-6) and information about the cause of the error. HTTP status code `404 Not Found` will be returned if the transaction is not available or has been deleted.
 
-**Note:** Mandatory parameters are marked with an asterisk * and highlighted bold.
+Successful requests will return HTTP status code `200 OK` along with a JSON object containing the information described below.
 
-|Parameter       | Type    | Max. Length| Description|
+**Required items appear in bold type.**
+
+|Name|Type|Max. length|Description|
 |:---------------|:--------|:------------|:------------|
-|**timestamp** *| String||Timestamp of the response in the format YYYY-MM-DDThh:mm:ss.SSSZ|
-|**scanReference** *|String|36|Jumio’s reference number for each scan|
-|**status** *|String||Possible states:<br>•	DONE<br>•	FAILED |
-|**source** *|String||Possible status:<br>•	DOC\_API<br>• DOC\_UPLOAD |
-|merchantReportingCriteria|String|255|Your reporting criteria for each scan|
-|merchantScanReference|String|255|Your reference for each scan|
-|customerId|String|255|ID of the customer|
+|**timestamp**| string||Timestamp of the response in the format YYYY-MM-DDThh:mm:ss.SSSZ|
+|**scanReference**|string|36|Jumio’s reference number for each transaction|
+|**status**|string||Possible states:<br>•	DONE<br>•	FAILED |
+|**source**|string||Possible status:<br>•	DOC\_API<br>• DOC\_UPLOAD |
+|merchantReportingCriteria|string|255|Your internal reporting criteria for each transaction|
+|merchantScanReference|string|255|Your internal reference for each transaction|
+|customerId|string|255|Your internal reference for the user.|
 
-### Sample Request
+## Examples
+### Sample request
 ```
 GET https://retrieval.netverify.com/api/netverify/v2/documents/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/data/transaction HTTP/1.1
 Accept: application/json
-User-Agent: YOURCOMPANYNAME YOURAPPLICATIONNAME/x.x.x
-Authorization: Basic
+User-Agent: Example Corp SampleApp/1.0.1
+Authorization: Basic xxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 ```
+|⚠️ Sample requests cannot be run as-is. Replace example data with your own values.
+|:----------|
+<br>
 
-### Sample Response
+### Sample response
 ```
 {
-"scanReference": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
-"timestamp": "2015-08-14T10:06:13.610Z",
-"status": "DONE",
-"merchantReportingCriteria": "YOURMERCHANTREPORTINGCRITERIA",
-"merchantScanReference": "YOURSCANREFERENCE",
-"customerId": "CUSTOMERID",
-"source": "DOC_UPLOAD"
+    "scanReference": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
+    "timestamp": "2019-01-01T16:02:25.646Z",
+    "status": "DONE",
+    "merchantScanReference": "YOURSCANREFERENCE",
+    "customerId": "CUSTOMERID",
+    "source": "DOC_UPLOAD"
 }
 ```
 
-## <a name="multi-retrieving-available-images"></a>Retrieving Available Images
+<br>
 
-Call the RESTful HTTP GET API below to receive available images of a scan by specifying the Jumio scan reference as a path parameter.
+## Retrieving available images
 
-HTTP request method: **GET<br>
-REST URL:** `https://retrieval.netverify.com/api/netverify/v2/documents/<scanReference>/pages`<br>
-If your customer account is in the **EU** data center, use `retrieval.lon.netverify.com` instead of `retrieval.netverify.com`.
+Call the RESTful API GET endpoint below to retrieve a list of the available images for a Document Verification transaction by specifying the Jumio transaction reference (scan reference) as a path parameter.
 
-### Request Parameter
-
-**Note:** Mandatory parameters are marked with an asterisk * and highlighted bold.
-
-|Parameter       | Type    | Max. Length| Description|
-|:---------------|:--------|:------------|:------------|
-|**scanReference <br>(path parameter)** *| String|36|Jumio’s reference number of an existing scan from your account|
+**HTTP Request Method:** `GET`<br>
+**REST URL (US)**: `https://retrieval.netverify.com/api/netverify/v2/documents/<scanReference>/pages`<br>
+**REST URL (EU)**: `https://lon.retrieval.netverify.com/api/netverify/v2/documents/<scanReference>/pages`<br>
 
 ### Response
 
-You will receive a JSON response in case of success, or HTTP status code **404 Not Found** if the scan is not available, pending, deleted or of source Netverify Multi Document Legacy.
+Unsuccessful requests will return the relevant [HTTP status code](https://tools.ietf.org/html/rfc7231#section-6) and information about the cause of the error. HTTP status code `404 Not Found` will be returned if the transaction is not available or has been deleted.
 
-**Note:** Mandatory parameters are marked with an asterisk * and highlighted bold.
+Successful requests will return HTTP status code `200 OK` along with a JSON object containing the information described below.
 
-|Parameter       | Type    | Max. Length| Description|
+**Required items appear in bold type.**
+
+|Name|Type|Max. length|Description|
 |:---------------|:--------|:------------|:------------|
-|**timestamp** *| String| |Timestamp of the response in the format YYYY-MM-DDThh:mm:ss.SSSZ|
-|**scanReference** *| String|36 |Jumio’s reference number for each scan|
-|images|JSON Array/Object||Available image/s see table below|
+|**timestamp**| string| |Timestamp of the response in the format <br>YYYY-MM-DDThh:mm:ss.SSSZ|
+|**scanReference**| string|36 |Jumio’s reference number for the transaction|
+|images|JSON array/object||See table below|
 
-|Parameter "images"       | Type    | Description|
+<br>
+
+#### Parameter `images`
+**Required items appear in bold type.**
+
+|Name| Type    | Description|
 |:---------------|:--------|:------------|
-|**classifier** *| Integer| Page number specified when uploading the page|
-|**href** *| String |REST URL to retrieve specific image (see [Retrieving specific image section](#multi-retrieving-specific-image))|
+|**classifier**| integer|Page number specifed when uploading the image|
+|**href** | string |REST URL to retrieve specific image (see [Retrieving a specific image section](#multi-retrieving-a-specific-image))|
 
-### Sample Request
+<br>
+
+## Examples
+### Sample request
 
 ```
 GET https://retrieval.netverify.com/api/netverify/v2/documents/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/pages HTTP/1.1
 Accept: application/json
-User-Agent: YOURCOMPANYNAME YOURAPPLICATIONNAME/x.x.x
-Authorization: Basic
+User-Agent: Example Corp SampleApp/1.0.1
+Authorization: Basic xxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 ```
+|⚠️ Sample requests cannot be run as-is. Replace example data with your own values.
+|:----------|
+<br>
 
-### Sample Request
+### Sample response
 
+#### Bank Statement (BS)
 ```
 {
-"timestamp": "2015-08-14T11:22:20.182Z",
-"images": [
-  {
-  "classifier": 1,
-  "href": "https://retrieval.netverify.com/api/netverify/v2/documents/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/pages/1"
-  },
-  {
-  "classifier": 2,
-  "href": "https://retrieval.netverify.com/api/netverify/v2/documents/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/pages/2"
-  }
-  ],
-"scanReference": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+    "timestamp": "2019-01-01T16:04:07.751Z",
+    "images": [
+        {
+            "classifier": 1,
+            "href": "https://retrieval.netverify.com/api/netverify/v2/documents/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/pages/1"
+        }
+        {
+            "classifier": 2,
+            "href": "https://retrieval.netverify.com/api/netverify/v2/documents/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/pages/2"
+        }
+    ],
+    "scanReference": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
 }
 ```
 
-## <a name="multi-retrieving-specific-image"></a>Retrieving Specific Image
+#### Credit Card (CC)
 
-Call the RESTful HTTP GET API below to receive a specific image of a scan by specifying the Jumio scan reference as a path parameter.
+```
+{
+    "timestamp": "2019-01-01T16:10:42.368Z",
+    "images": [
+        {
+            "classifier": 101,
+            "href": "https://retrieval.netverify.com/api/netverify/v2/documents/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/pages/101"
+        }
+    ],
+    "scanReference": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+}
+```
 
-HTTP request method: **GET**<br>
-**REST URL:**  `https://retrieval.netverify.com/api/netverify/v2/documents/<scanReference>/pages/<page_number>`<br>
-If your customer account is in the **EU** data center, use `lon.netverify.com` instead of `netverify.com`.
+<br>
 
-### Request Parameter
+## Retrieving a specific image
 
-**Note:** Mandatory parameters are marked with an asterisk * and highlighted bold.
+Call the RESTful HTTP GET API below to receive a specific image from a Document Verification transaction by specifying the Jumio scan reference as a path parameter.
 
-|Parameter       | Type    | Max. Length| Description|
+To retrieve an unmasked credit card image, append the query parameter `maskhint=unmasked`. By default, retrieval of unmasked credit card images is disabled, and will return HTTP status code `403 Forbidden`. If you want to enable it please contact Jumio Support. Retrieving unmasked credit card images might impose additional security requirements on your systems depending on whether you already store/transmit/process credit card data on your systems.
+
+If you are unsure about the PCI DSS ramifications of retrieving unmasked credit card images, please refer to [Information Supplement: PCI DSS E-commerce Guidelines, version 2.0, January 2013](https://www.pcisecuritystandards.org/pdfs/PCI_DSS_v2_eCommerce_Guidelines.pdf), and/or contact your acquirer or a PCI DSS QSA (Qualified Security Assessor).
+
+**HTTP Request Method:** `GET`<br>
+**REST URL (US)**: `https://retrieval.netverify.com/api/netverify/v2/documents/<scanReference>/pages/<page_number>`<br>
+**REST URL (EU)**: `https://lon.retrieval.netverify.com/api/netverify/v2/documents/<scanReference>/pages/<page_number>`<br>
+
+### Request path parameters
+
+**Required items appear in bold type.**
+
+|Name     | Type    | Max. Length| Description|
 |:---------------|:--------|:------------|:------------|
-|**scanReference <br>(path parameter)** *| String|36|Jumio’s reference number of an existing scan from your account|
-|**page_number** *| String|36|Page number specified when uploading the page|
+|**scanReference** | string|36|Jumio’s reference number for the transaction|
+|**page_number** | string|36|Page number specified when uploading the image|
+|maskhint| string| |For credit cards:<br/>•	masked (default)<br/>•	unmasked|
 
 ### Response
 
-You will receive a JPG or PNG image in case of success with the according header (e.g. `Content-Type: image/jpeg`), or HTTP status code **404 Not Found** if the scan is not available, pending, deleted or not containing the specified image.
+Unsuccessful requests will return the relevant [HTTP status code](https://tools.ietf.org/html/rfc7231#section-6) and information about the cause of the error. HTTP status code `404 Not Found` will be returned if the transaction is not available, has been deleted, or does not contain the image you requested.
 
-### Sample Request
+Successful requests will return HTTP status code `200 OK` along with a JPG or PNG image and the appropriate header (e.g. `Content-Type: image/jpeg`).
+
+## Examples
+### Sample request
 
 ```
 GET https://retrieval.netverify.com/api/netverify/v2/documents/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/pages/1 HTTP/1.1
-User-Agent: YOURCOMPANYNAME YOURAPPLICATIONNAME/x.x.x
-Authorization: Basic
+User-Agent: Example Corp SampleApp/1.0.1
+Authorization: Basic xxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 ```
 
----
+|⚠️ Sample requests cannot be run as-is. Replace example data with your own values.
+|:----------|
+<br>
 
-# Supported Cipher Suites
-Jumio supported cipher suites during the TLS handshake.<p>
-[View Supported Cipher Suites](/netverify/supported-cipher-suites.md)
 
 ---
 &copy; Jumio Corp. 268 Lambert Avenue, Palo Alto, CA 94306

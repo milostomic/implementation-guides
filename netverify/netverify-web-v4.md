@@ -481,6 +481,9 @@ If you want to embed Netverify on a web page, place the iFrame tag in your HTML 
 |⚠️ The `allow="camera"` attribute must be included to enable the camera for image capture in [supported browsers](#supported-browsers).
 |:----------|
 
+|⚠️ In case you are nesting the iFrame in another iFrame the `allow="camera"` attribute must be added to every iFrame.
+|:----------|
+
 ### Width and height
 We recommend adhering to the responsive breaking points in the table below. The Netverify Web client will responsively fill the dimensions of your iFrame.
 

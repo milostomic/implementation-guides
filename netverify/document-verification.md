@@ -706,7 +706,7 @@ Call the RESTful API POST endpoint **/complete** with a JSON object containing t
 
 **HTTP request method:** `POST`<br>
 **REST URL (US):** `https://acquisition.netverify.com/api/netverify/v2/acquisitions/complete`<br>
-**REST URL (US):** `https://acquisition.lon.netverify.com/api/netverify/v2/acquisitions/complete`<br>
+**REST URL (EU):** `https://acquisition.lon.netverify.com/api/netverify/v2/acquisitions/complete`<br>
 
 <br>
 

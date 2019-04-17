@@ -5,10 +5,13 @@
 This is a reference manual and configuration guide for the performNetverify product. It illustrates how to implement the performNetverify API.
 
 ---
-### Revision history
+## Revision history
+
+
 
 Information about changes to features and improvements documented in each release is available in our [Revision history](/netverify/README.md).
-<br>
+
+
 ---
 
 ## Table of Contents
@@ -94,8 +97,8 @@ The following fields are required in the header section of your request:<br>
 |dob|String||Date of birth in the format YYYY-MM-DD|
 |callbackGranularity|String|255|Possible values:<br>• onFinish (default): Callback is only sent after the whole verification<br>• onAllSteps: Additional callback is sent when the images are received|
 |personalNumber|String|14|Personal number of the document|
-
 <br>
+
 ### Supported documents for address extraction
 
 |Country    |ID card    |Driving license    |Passport    |Callback format |
