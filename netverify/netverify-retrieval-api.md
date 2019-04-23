@@ -652,7 +652,7 @@ Call the RESTful API GET endpoint below to retrieve the status of a Document Ver
 
 **HTTP Request Method:** `GET`<br>
 **REST URL (US)**: `https://retrieval.netverify.com/api/netverify/v2/documents/<scanReference>`<br>
-**REST URL (EU)**: `https://lon.retrieval.netverify.com/api/netverify/v2/documents/<scanReference>`<br>
+**REST URL (EU)**: `https://retrieval.lon.netverify.com/api/netverify/v2/documents/<scanReference>`<br>
 
 <br>
 
@@ -698,7 +698,7 @@ Call the RESTful API GET endpoint below to retrieve the document and transaction
 
 **HTTP Request Method:** `GET`<br>
 **REST URL (US)**: `https://retrieval.netverify.com/api/netverify/v2/documents/<scanReference>/data`<br>
-**REST URL (EU)**: `https://lon.retrieval.netverify.com/api/netverify/v2/documents/<scanReference>/data`<br>
+**REST URL (EU)**: `https://retrieval.lon.netverify.com/api/netverify/v2/documents/<scanReference>/data`<br>
 
 
 ### Response
@@ -815,7 +815,7 @@ Call the RESTful API GET endpoint below to retrieve the document data of a Docum
 
 **HTTP Request Method:** `GET`<br>
 **REST URL (US)**: `https://retrieval.netverify.com/api/netverify/v2/documents/<scanReference>/data/document`<br>
-**REST URL (EU)**: `https://lon.retrieval.netverify.com/api/netverify/v2/documents/<scanReference>/data/document`<br>
+**REST URL (EU)**: `https://retrieval.lon.netverify.com/api/netverify/v2/documents/<scanReference>/data/document`<br>
 
 
 ### Response
@@ -945,7 +945,7 @@ Call the RESTful API GET endpoint below to retrieve the transaction metadata of 
 
 **HTTP Request Method:** `GET`<br>
 **REST URL (US)**: `https://retrieval.netverify.com/api/netverify/v2/documents/<scanReference>/data/transaction`<br>
-**REST URL (EU)**: `https://lon.retrieval.netverify.com/api/netverify/v2/documents/<scanReference>/data/transaction`<br>
+**REST URL (EU)**: `https://retrieval.lon.netverify.com/api/netverify/v2/documents/<scanReference>/data/transaction`<br>
 
 
 ### Response
@@ -998,7 +998,7 @@ Call the RESTful API GET endpoint below to retrieve a list of the available imag
 
 **HTTP Request Method:** `GET`<br>
 **REST URL (US)**: `https://retrieval.netverify.com/api/netverify/v2/documents/<scanReference>/pages`<br>
-**REST URL (EU)**: `https://lon.retrieval.netverify.com/api/netverify/v2/documents/<scanReference>/pages`<br>
+**REST URL (EU)**: `https://retrieval.lon.netverify.com/api/netverify/v2/documents/<scanReference>/pages`<br>
 
 ### Response
 
@@ -1086,7 +1086,7 @@ If you are unsure about the PCI DSS ramifications of retrieving unmasked credit 
 
 **HTTP Request Method:** `GET`<br>
 **REST URL (US)**: `https://retrieval.netverify.com/api/netverify/v2/documents/<scanReference>/pages/<page_number>`<br>
-**REST URL (EU)**: `https://lon.retrieval.netverify.com/api/netverify/v2/documents/<scanReference>/pages/<page_number>`<br>
+**REST URL (EU)**: `https://retrieval.lon.netverify.com/api/netverify/v2/documents/<scanReference>/pages/<page_number>`<br>
 
 ### Request path parameters
 
@@ -1120,3 +1120,4 @@ Authorization: Basic xxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
 ---
 &copy; Jumio Corp. 268 Lambert Avenue, Palo Alto, CA 94306
+retrieval.lon.
