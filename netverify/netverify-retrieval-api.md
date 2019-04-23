@@ -1120,4 +1120,3 @@ Authorization: Basic xxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
 ---
 &copy; Jumio Corp. 268 Lambert Avenue, Palo Alto, CA 94306
-retrieval.lon.
