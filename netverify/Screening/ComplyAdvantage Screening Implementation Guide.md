@@ -41,21 +41,9 @@ Once you've logged into ComplyAdvantage's portal you will have a menu on the lef
 
 Under **API**, select **API Keys**
 
-<!-- awaiting Comply approval
-![Jumio](/images/screening/screening_01.jpeg)
--->
-
 From this page, you will be able to manage all of the API keys that are associated with your ComplyAdvantage account.
 
-<!-- awaiting Comply approval
-![Jumio](/images/screening/screening_02.jpeg)
--->
-
 To create a new API key, enter a **New Key Label** and click *Create*.
-
-<!-- awaiting Comply approval
-![Jumio](/images/screening/screening_03.jpeg)
--->
 
 ## Creating a screening profile
 
@@ -64,10 +52,6 @@ Next, you'll need to create a screening profile. Profiles are a collection of th
 (link to something to help them pick list)
 
 To begin, select **Search Profiles** under **Settings** from the main page menu.
-
-<!-- awaiting Comply approval
-![Jumio](/images/screening/screening_04.jpeg)
--->
 
 You can manage all of your search profiles from this page.
 
@@ -79,9 +63,15 @@ On this page, you will be asked to
 - Select source list by type and/or location
 - Select group
 
-<!-- awaiting Comply approval
-![Jumio](/images/screening/screening_05.jpeg)
--->
+## Creating Netverify Tag
+
+For full functionality, you will want to enable the Netverify tags. To do so, you will have to create a tag within the ComplyAdvantage portal.
+
+From the main portal, you will need to navigate to Tags, under Settings on the left menu bar.
+
+Enter "netverify-link" as the name of the tag and select "Tag: Name combination" for Case Management Display.
+
+Save the new tag.
 
 # Netverify portal setup
 
@@ -100,6 +90,8 @@ Another optional setting is the **Search enabled for approved IDs**.
 If enabled, this setting will make it so all transactions that are approved will be screened. Rejected documents will never be screened.
 
 If you do not define the profile to screen against within the API call, transactions will be screened against the default profile which you can define within the portal.
+
+Finally, you will want to turn on 
 
 # Include screening in Netverify API
 
