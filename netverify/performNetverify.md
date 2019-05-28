@@ -77,17 +77,17 @@ The following fields are required in the header section of your request:<br>
 |Parameter|Type|Max. length|Description|
 |:---|:---|:---|:---|
 |**merchantIdScanReference** \*|String|100|Your reference for each scan must not contain sensitive data like PII (Personally Identifiable Information) or account login|
-|**frontsideImage** \*|String|Max. 5MB & <8000 pixels per side|Base64 encoded image of ID front side|
-|**faceImage** \*|String|Max. 5MB & <8000 pixels per side|Base64 encoded image of face<br> **\*Mandatory if Face match enabled**|
+|**frontsideImage** \*|String|Max. 15MB & <8000 pixels per side|Base64 encoded image of ID front side|
+|**faceImage** \*|String|Max. 15MB & <8000 pixels per side|Base64 encoded image of face<br> **\*Mandatory if Face match enabled**|
 |**country** \*|String|3|Possible countries:<br>• [ISO 3166-1 alpha-3](http://en.wikipedia.org/wiki/ISO_3166-1_alpha-3) country code<br>• XKX (Kosovo)|
 |**idType** \*|String|255|PASSPORT, DRIVING\_LICENSE, ID\_CARD, VISA|
 |frontsideImageMimeType|String||Mime type of front side image<br>Possible values: image/jpeg (default), image/png|
 |faceImageMimeType|String||Mime type of face image<br>Possible values: image/jpeg (default), image/png|
-|backsideImage|String|Max. 5MB & <8000 pixels per side|Base64 encoded image of ID back side |
+|backsideImage|String|Max. 15MB & <8000 pixels per side|Base64 encoded image of ID back side |
 |backsideImageMimeType|String||Mime type of back side image<br>Possible values: image/jpeg (default), image/png|
 |enabledFields|String|100|Defines fields which will be extracted during the ID verification. If a field is not listed in this parameter, it will not be processed for this transaction, regardless of customer portal settings.<br> **Note:** Face match and Address extraction will not be processed unless enabled for your account. If you want to enable them, please contact your Customer Success Manager, or reach out to Jumio Support.<br>See [supported documents for address extraction](#supported-documents-for-address-extraction).<br>Possible values:<br>"idNumber,idFirstName,idLastName,idDob, idExpiry,idUsState,idPersonalNumber,idFaceMatch,idAddress"|
 |merchantReportingCriteria|String|100|Your reporting criteria for each scan|
-|customerId|String|100|Identification of the customer must not contain sensitive data like PII (Personally Identificable Information) or account login|
+|customerId|String|100|Identification of the customer must not contain sensitive data like PII (Personally Identificable Information) or account login <br>***Mandatory if using Jumio Screening**|
 |callbackUrl|String|255|Callback URL for the confirmation after the verification is completed (for constraints see [Callback URL](/netverify/portal-settings.md#callback-url))|
 |firstName|String|100|First name of the customer|
 |lastName|String|100|Last name of the customer|

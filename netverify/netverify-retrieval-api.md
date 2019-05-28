@@ -9,10 +9,11 @@ This guide describes how to implement the Netverify Retrieval API.
 
 | Date    | Description|
 |:--------|:------------|
-| 2019-04-17  |Formatting and corrections|
-| 2019-02-15  |Added value "OTHER" to parameter "type" for Document Verification|
+| 2019-05-28   |Added Retrieval API for Authentication|
+| 2019-04-17   |Formatting and corrections|
+| 2019-02-15   |Added value "OTHER" to parameter "type" for Document Verification|
 | 2019-01-31   |Added new validity reason "LIVENESS\_FAILED"|
-| 2019-01-15  |Added response parameter "livenessImages" for Netverify|
+| 2019-01-15   |Added response parameter "livenessImages" for Netverify|
 | 2018-11-12   |Added response parameter "issuingAuthority", "issuingPlace", and value "PUBLIC\_SAFETY\_ID" to <br/>parameter "idSubtype", updated idSubtype "MILITARY\_ID"|
 | 2018-10-31   |Updated usage guidelines|
 | 2018-10-02   |Add swiftCode to Parameter "extractedData" for BS, removed deprecated faceMatch percentages|
@@ -47,7 +48,7 @@ This guide describes how to implement the Netverify Retrieval API.
 - [Usage](#usage)
 	- [Authentication and encryption](#authentication-and-encryption)
 	- [Request headers](#request-headers)
-- [Netverify Retrieval](#netverify-retrieval)
+- [Netverify retrieval](#netverify-retrieval)
     - [Retrieving status](#retrieving-status)
     - [Retrieving details](#retrieving-details)
     - [Retrieving document data only](#retrieving-document-data-only)
@@ -55,13 +56,18 @@ This guide describes how to implement the Netverify Retrieval API.
     - [Retrieving verification data only](#retrieving-verification-data-only)
     - [Retrieving available images](#retrieving-available-images)
     - [Retrieving a specific image](#retrieving-a-specific-image)
-- [Document Verification Retrieval](#document-verification-retrieval)
+	- [Retrieving liveness images](#retrieving-liveness-images)
+- [Authentication retrieval](#authentication-retrieval)
+	- [Retrieving details](#retrieving-details-1)
+	- [Retrieving a specific image](#retrieving-a-specific-image-1)
+	- [Retrieving liveness images](#retrieving-liveness-images-1)
+- [Document Verification retrieval](#document-verification-retrieval)
     - [Retrieving status ](#retrieving-status-1)
-    - [Retrieving details](#retrieving-details-1)
+    - [Retrieving details](#retrieving-details-2)
     - [Retrieving document data only](#retrieving-document-data-only-1)
     - [Retrieving transaction data only](#retrieving-transaction-data-only-1)
     - [Retrieving available images](#retrieving-available-images-1)
-    - [Retrieving a specific image](#retrieving-a-specific-image)
+    - [Retrieving a specific image](#retrieving-a-specific-image-2)
 
 
 ---
@@ -120,7 +126,7 @@ The following fields are required in the header section of your request:<br>
 
 Call the RESTful API GET endpoint below to retrieve the status of a Netverify transaction by specifying the Jumio transaction reference (scan reference) of an existing transaction from your account as a path parameter.
 
-**HTTP Request Method:** `GET`<br>
+**HTTP request method:** `GET`<br>
 **REST URL (US)**: `https://netverify.com/api/netverify/v2/scans/<scanReference>`<br>
 **REST URL (EU)**: `https://lon.netverify.com/api/netverify/v2/scans/<scanReference>`<br>
 
@@ -139,6 +145,8 @@ Successful requests will return HTTP status code `200 OK` along with a JSON obje
 |**timestamp** |string| |Timestamp of the response in the format YYYY-MM-DDThh:mm:ss.SSSZ|
 |**scanReference** |string|36|Jumio’s reference number for the transaction|
 |**status** |string| |Possible states:<br />•	PENDING<br />•	DONE<br />•	FAILED|
+
+<br>
 
 ## Examples
 ### Sample request
@@ -170,10 +178,11 @@ Authorization: Basic xxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
 Call the RESTful API GET endpoint below to retrieve document, transaction, and verification details by specifying the Jumio transaction reference (scan reference) as a path parameter.
 
-**HTTP Request Method:** `GET`<br>
+**HTTP request method:** `GET`<br>
 **REST URL (US)**: `https://netverify.com/api/netverify/v2/scans/<scanReference>/data`<br>
 **REST URL (EU)**: `https://lon.netverify.com/api/netverify/v2/scans/<scanReference>/data`<br>
 
+<br>
 
 ### Response
 
@@ -190,6 +199,8 @@ Successful requests will return HTTP status code `200 OK` along with a JSON obje
 |**document**| object| |As listed in the section [Retrieving document data only](#retrieving-document-data-only) <br> without timestamp and scanReference|
 |**transaction**|object| |As listed in the section [Retrieving transaction data only](#retrieving-transaction-data-only) <br> without timestamp and scanReference|
 |verification|object| |As listed in the section [Retrieving verification data only](#retrieving-verification-data-only) <br> without timestamp and scanReference|
+
+<br>
 
 ## Examples
 ### Sample request
@@ -246,10 +257,11 @@ Authorization: Basic xxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
 Call the RESTful API GET endpoint below to retrieve document data by specifying the Jumio transaction reference (scan reference) as a path parameter.
 
-**HTTP Request Method:** `GET`<br>
+**HTTP request method:** `GET`<br>
 **REST URL (US)**: `https://netverify.com/api/netverify/v2/scans/<scanReference>/data/document`<br>
 **REST URL (EU)**: `https://lon.netverify.com/api/netverify/v2/scans/<scanReference>/data/document`<br>
 
+<br>
 
 ### Response
 
@@ -281,7 +293,7 @@ Successful requests will return HTTP status code `200 OK` along with a JSON obje
 |issuingAuthority|string|50|Issuing authority of the document (if issuing authority extraction is enabled)|
 |issuingPlace|string|50|Issuing place of the document (if issuing place extraction is enabled)|
 
-#### US Address Format
+#### US address format
 
 |Name      | Type    | Max. Length| Description|
 |:---------------|:--------|:------------|:------------|
@@ -297,7 +309,7 @@ Successful requests will return HTTP status code `200 OK` along with a JSON obje
 |zipExtension| string|255 |Zip extension|
 |country| string|3 |Possible countries:<br>• [ISO 3166-1 alpha-3](http://en.wikipedia.org/wiki/ISO_3166-1_alpha-3) country code<br>• XKX (Kosovo)|
 
-#### EU Address Format
+#### EU address format
 
 |Name     | Type    | Max. Length| Description|
 |:---------------|:--------|:------------|:------------|
@@ -309,7 +321,7 @@ Successful requests will return HTTP status code `200 OK` along with a JSON obje
 |postalCode| string|255 |Postal code|
 |country| string|3 |Possible countries:<br>- [ISO 3166-1 alpha-3](http://en.wikipedia.org/wiki/ISO_3166-1_alpha-3) country code<br>- XKX (Kosovo)|
 
-#### Raw Address Format
+#### Raw address format
 
 |Name      | Type    | Max. Length| Description|
 |:---------------|:--------|:------------|:------------|
@@ -322,6 +334,7 @@ Successful requests will return HTTP status code `200 OK` along with a JSON obje
 |postalCode|string|255|Postal code|
 |city|string|255|City|
 
+<br>
 
 ## Examples
 ### Sample request
@@ -360,10 +373,11 @@ Authorization: Basic xxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
 Call the RESTful API GET endpoint below to retrieve transaction metadata by specifying the Jumio transaction reference (scan reference) as a path parameter.
 
-**HTTP Request Method:** `GET`<br>
+**HTTP request method:** `GET`<br>
 **REST URL (US)**: `https://netverify.com/api/netverify/v2/scans/<scanReference>/data/transaction`<br>
 **REST URL (EU)**: `https://lon.netverify.com/api/netverify/v2/scans/<scanReference>/data/transaction`<br>
 
+<br>
 
 ### Response
 
@@ -384,6 +398,8 @@ Successful requests will return HTTP status code `200 OK` along with a JSON obje
 |customerId| string|255 |Your internal reference for the user.|
 |merchantScanReference| string|255 |Your internal reference for each transaction|
 |merchantReportingCriteria| string|255 |Your internal reporting criteria for each transaction|
+
+<br>
 
 ## Examples
 ### Sample request
@@ -420,10 +436,11 @@ Authorization: Basic xxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
 Call the RESTful API GET endpoint below to retrieve verification data by specifying the Jumio transaction reference (scan reference) as a path parameter.
 
-**HTTP Request Method:** `GET`<br>
+**HTTP request method:** `GET`<br>
 **REST URL (US)**: `https://netverify.com/api/netverify/v2/scans/<scanReference>/data/verification`<br>
 **REST URL (EU)**: `https://lon.netverify.com/api/netverify/v2/scans/<scanReference>/data/verification`<br>
 
+<br>
 
 ### Response
 
@@ -473,6 +490,7 @@ Successful requests will return HTTP status code `200 OK` along with a JSON obje
 |reason   |Provided if validity = FALSE<br/>Possible values:<br />• SELFIE\_CROPPED\_FROM\_ID<br />•	ENTIRE\_ID\_USED\_AS\_SELFIE<br />•	MULTIPLE\_PEOPLE<br />•	SELFIE\_IS\_SCREEN\_PAPER\_VIDEO<br />•	SELFIE\_MANIPULATED<br />• AGE\_DIFFERENCE\_TOO\_BIG<br />•	NO\_FACE\_PRESENT<br />•	FACE\_NOT\_FULLY\_VISIBLE<br />• BAD\_QUALITY<br />• BLACK\_AND\_WHITE<br />• LIVENESS\_FAILED|
 |handwrittenNoteMatches	|Only visible if **Liveness Detection (with handwritten note)** setting is turned on within your account. For questions about this feature, please contact Jumio Support. <br/><br/>Possible values:<br/> •	TRUE<br />•	FALSE|
 
+<br>
 
 ## Examples
 ### Sample request
@@ -489,7 +507,7 @@ Authorization: Basic xxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
 ### Sample response
 
-#### Approved Verified
+#### Approved verified
 
 ```
 {
@@ -503,7 +521,7 @@ Authorization: Basic xxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 }
 ```
 
-#### Error (Not readable ID)
+#### Error (not readable ID)
 
 ```
 {
@@ -523,10 +541,11 @@ Authorization: Basic xxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
 Call the RESTful API GET endpoint below to retrieve a list of the available images for a transaction by specifying the Jumio transaction reference (scan reference) as a path parameter.
 
-**HTTP Request Method:** `GET`<br>
+**HTTP request method:** `GET`<br>
 **REST URL (US)**: `https://netverify.com/api/netverify/v2/scans/<scanReference>/images`<br>
 **REST URL (EU)**: `https://lon.netverify.com/api/netverify/v2/scans/<scanReference>/images`<br>
 
+<br>
 
 ### Response
 
@@ -554,6 +573,7 @@ Successful requests will return HTTP status code `200 OK` along with a JSON obje
 |**classifier**| string| Netverify:<br/>•	front<br/>•	face<br/>•	back|
 |**href** | string |REST URL to retrieve specific image (see [Retrieving a specific image](#retrieving-a-specific-image) section)|
 
+<br>
 
 ## Examples
 ### Sample request
@@ -607,7 +627,7 @@ Authorization: Basic xxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
 Call the RESTful GET API endpoint below to retrieve a specific image from a transaction by specifying the image classifier and the Jumio transaction reference (scan reference) of an existing transaction from your account as path parameters.
 
-**HTTP Request Method:** `GET`<br>
+**HTTP request method:** `GET`<br>
 **REST URL (US)**: `https://netverify.com/api/netverify/v2/scans/<scanReference>/images/<classifier>`<br>
 **REST URL (EU)**: `https://lon.netverify.com/api/netverify/v2/scans/<scanReference>/images/<classifier>`<br>
 
@@ -621,12 +641,15 @@ Call the RESTful GET API endpoint below to retrieve a specific image from a tran
 |**scanReference**| string|36|Jumio’s reference number for the transaction|
 |**classifier**| string| |Netverify:<br/>•	front<br/>•	face<br/>•	back|
 
+<br>
 
 ### Response
 
 Unsuccessful requests will return the relevant [HTTP status code](https://tools.ietf.org/html/rfc7231#section-6) and information about the cause of the error. HTTP status code `404 Not Found` will be returned if the transaction is not available, has been deleted, or does not contain the image you requested.
 
 Successful requests will return HTTP status code `200 OK` along with a JPG or PNG image and the appropriate header (e.g. `Content-Type: image/jpeg`).
+
+<br>
 
 ## Examples
 ### Sample request
@@ -641,16 +664,234 @@ Authorization: Basic xxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 |:----------|
 <br>
 
+## Retrieving liveness images
+
+Call the RESTful API GET endpoint below to retrieve liveness images from a transaction by specifying the liveness number and the Jumio transaction reference (scan reference) of an existing transaction from your account as a path parameter.
+
+**HTTP request method:** `GET`<br>
+**REST URL (US)**: `https://netverify.com/api/netverify/v2/scans/<scanReference>/images/liveness/<livenessNumber>`<br>
+**REST URL (EU)**: `https://netverify.com/api/netverify/v2/scans/<scanReference>/images/liveness/<livenessNumber>`<br>
+
+
+### Request path parameters
+
+**Required items appear in bold type.**
+
+|Name|Type|Max. length|Description|
+|:---------------|:--------|:------------|:------------|
+|**scanReference**| string|36|Jumio’s reference number for the transaction|
+|**livenessNumber**| integer| |Number of image from the liveness sequence|
+
+<br>
+
+### Response
+
+Unsuccessful requests will return the relevant [HTTP status code](https://tools.ietf.org/html/rfc7231#section-6) and information about the cause of the error. HTTP status code `404 Not Found` will be returned if the transaction is not available or has been deleted.
+
+Successful requests will return HTTP status code `200 OK` along with a JPG or PNG image and the appropriate header (e.g. `Content-Type: image/jpeg`).
+
+<br>
+
+## Examples
+### Sample request
+
+```
+GET https://netverify.com/api/netverify/v2/scans/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/images/liveness/1 HTTP/1.1
+Accept: image/jpeg
+User-Agent: Example Corp SampleApp/1.0.1
+Authorization: Basic xxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+```
+
+|⚠️ Sample requests cannot be run as-is. Replace example data with your own values.
+|:----------|
+<br>
+
 ---
 
-# Document Verification Retrieval
+# Authentication retrieval
+
+
+## Retrieving details
+
+Call the RESTful API GET endpoint below to retrieve the details of an Authentication transaction by specifying the Jumio transaction reference of an existing Authentication transaction from your account as a path parameter.
+
+**HTTP request method:** `GET`<br>
+**REST URL (US)**: `https://netverify.com/api/netverify/v2/authentications/<transactionReference>`<br>
+**REST URL (EU)**: `https://lon.netverify.com/api/netverify/v2/authentications/<transactionReference>`<br>
+
+<br>
+
+### Response
+
+Unsuccessful requests will return the relevant [HTTP status code](https://tools.ietf.org/html/rfc7231#section-6) and information about the cause of the error. HTTP status code `404 Not Found` will be returned if the transaction is not available or has been deleted.
+
+Successful requests will return HTTP status code `200 OK` along with a JSON object containing the information described below.
+
+**Required items appear in bold type.**
+<!---
+|**timestamp** | string||Timestamp of the response in the format YYYY-MM-DDThh:mm:ss.SSSZ|
+-->
+
+|Name|Type|Max. length|Description|
+|:---------------|:--------|:------------|:------------|
+|**transactionReference** |string|36|Jumio’s reference number for the Authentication transaction|
+|**transactionResult** |string||Possible values:<br>• CREATED<br>• STARTED<br>• PASSED<br>• FAILED<br>• INVALID|
+|**transactionDate** |string||Timestamp of the transaction in the format YYYY-MM-DDThh:mm:ss.SSSZ|
+|**scanSource** |string||Possible value:<br>• SDK|
+|images |JSON array/object||See table below|
+|livenessImages |JSON array||List of REST URLs to retrieve specific liveness images|
+
+<br>
+
+#### Parameter `images`
+**Required items appear in bold type.**
+
+|Name| Type    | Description|
+|:---------------|:--------|:------------|
+|**classifier**| string|Possible value:<br>• face |
+|**href** | string |REST URL to retrieve specific image (see [Retrieving a specific image](#retrieving-a-specific-image-1))|
+
+<br>
+
+## Examples
+### Sample request
+```
+GET https://netverify.com/api/netverify/v2/authentications/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx HTTP/1.1
+Accept: application/json
+User-Agent: Example Corp SampleApp/1.0.1
+Authorization: Basic xxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+```
+|⚠️ Sample requests cannot be run as-is. Replace example data with your own values.
+|:----------|
+<br>
+
+### Sample response
+<!---
+timestamp will be added with the next release to be consistent with the other API calls
+
+"timestamp": "2019-06-01T16:10:42.368Z",
+-->
+```
+{
+	"transactionReference": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
+	"transactionResult": "PASSED",
+    "scanSource": "SDK",
+    "transactionDate": "2019-05-23T14:32:27.534",
+    "images": [
+        {
+            "classifier": "face",
+            "href": "https://netverify.com/api/netverify/v2/authentications/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/images/face"
+        }
+    ],
+    "livenessImages": [
+        "https://netverify.com/api/netverify/v2/authentications/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/images/liveness/1",
+        "https://netverify.com/api/netverify/v2/authentications/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/images/liveness/2",
+        "https://netverify.com/api/netverify/v2/authentications/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/images/liveness/3",
+        "https://netverify.com/api/netverify/v2/authentications/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/images/liveness/4",
+        "https://netverify.com/api/netverify/v2/authentications/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/images/liveness/5",
+        "https://netverify.com/api/netverify/v2/authentications/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/images/liveness/6",
+        "https://netverify.com/api/netverify/v2/authentications/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/images/liveness/7"
+    ]
+}
+```
+<br>
+
+## Retrieving a specific image
+
+Call the RESTful API GET endpoint below to retrieve the face image from an Authentication transaction by specifying the Jumio transaction reference of an existing Authentication transaction from your account as a path parameter.
+
+**HTTP request method:** `GET`<br>
+**REST URL (US)**: `https://netverify.com/api/netverify/v2/authentications/<transactionReference>/images/<classifier>`<br>
+**REST URL (EU)**: `https://lon.netverify.com/api/netverify/v2/authentications/<transactionReference>/images/<classifier>`<br>
+
+
+### Request path parameters
+
+**Required items appear in bold type.**
+
+|Name|Type|Max. length|Description|
+|:---------------|:--------|:------------|:------------|
+|**transactionReference**| string|36|Jumio’s reference number for the Authentication transaction|
+|**classifier**| string| |Possible value:<br/>•	face|
+
+<br>
+
+### Response
+
+Unsuccessful requests will return the relevant [HTTP status code](https://tools.ietf.org/html/rfc7231#section-6) and information about the cause of the error. HTTP status code `404 Not Found` will be returned if the transaction is not available or has been deleted.
+
+Successful requests will return HTTP status code `200 OK` along with a JPG or PNG image and the appropriate header (e.g. `Content-Type: image/jpeg`).
+
+<br>
+
+## Examples
+### Sample request
+
+```
+GET https://netverify.com/api/netverify/v2/authentications/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/images/face HTTP/1.1
+Accept: image/jpeg
+User-Agent: Example Corp SampleApp/1.0.1
+Authorization: Basic xxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+```
+
+|⚠️ Sample requests cannot be run as-is. Replace example data with your own values.
+|:----------|
+<br>
+
+<br>
+
+## Retrieving liveness images
+
+Call the RESTful API GET endpoint below to retrieve liveness images from an Authentication transaction by specifying the liveness number and the Jumio transaction reference of an existing Authentication transaction from your account as a path parameter.
+
+**HTTP request method:** `GET`<br>
+**REST URL (US)**: `https://netverify.com/api/netverify/v2/authentications/<transactionReference>/images/liveness/<livenessNumber>`<br>
+**REST URL (EU)**: `https://lon.netverify.com/api/netverify/v2/authentications/<transactionReference>/images/liveness/<livenessNumber>`<br>
+
+
+### Request path parameters
+
+**Required items appear in bold type.**
+
+|Name|Type|Max. length|Description|
+|:---------------|:--------|:------------|:------------|
+|**transactionReference**| string|36|Jumio’s reference number for the Authentication transaction|
+|**livenessNumber**| integer| |Number of image from the liveness sequence|
+
+<br>
+
+### Response
+
+Unsuccessful requests will return the relevant [HTTP status code](https://tools.ietf.org/html/rfc7231#section-6) and information about the cause of the error. HTTP status code `404 Not Found` will be returned if the transaction is not available or has been deleted.
+
+Successful requests will return HTTP status code `200 OK` along with a JPG or PNG image and the appropriate header (e.g. `Content-Type: image/jpeg`).
+
+<br>
+
+## Examples
+### Sample request
+
+```
+GET https://netverify.com/api/netverify/v2/authentications/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/images/liveness/1 HTTP/1.1
+Accept: image/jpeg
+User-Agent: Example Corp SampleApp/1.0.1
+Authorization: Basic xxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+```
+
+|⚠️ Sample requests cannot be run as-is. Replace example data with your own values.
+|:----------|
+<br>
+
+---
+
+# Document Verification retrieval
 
 
 ## Retrieving status
 
 Call the RESTful API GET endpoint below to retrieve the status of a Document Verification transaction by specifying the Jumio transaction reference (scan reference) of an existing transaction from your account as a path parameter.
 
-**HTTP Request Method:** `GET`<br>
+**HTTP request method:** `GET`<br>
 **REST URL (US)**: `https://retrieval.netverify.com/api/netverify/v2/documents/<scanReference>`<br>
 **REST URL (EU)**: `https://retrieval.lon.netverify.com/api/netverify/v2/documents/<scanReference>`<br>
 
@@ -669,6 +910,8 @@ Successful requests will return HTTP status code `200 OK` along with a JSON obje
 |**timestamp** | string||Timestamp of the response in the format YYYY-MM-DDThh:mm:ss.SSSZ|
 |**scanReference** |string|36|Jumio’s reference number for the transaction|
 |**status** |string||Possible states:<br>• DONE<br>• FAILED|
+
+<br>
 
 ## Examples
 ### Sample request
@@ -696,10 +939,11 @@ Authorization: Basic xxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
 Call the RESTful API GET endpoint below to retrieve the document and transaction details of a Document Verification transaction by specifying the Jumio transaction reference (scan reference) as a path parameter.
 
-**HTTP Request Method:** `GET`<br>
+**HTTP request method:** `GET`<br>
 **REST URL (US)**: `https://retrieval.netverify.com/api/netverify/v2/documents/<scanReference>/data`<br>
 **REST URL (EU)**: `https://retrieval.lon.netverify.com/api/netverify/v2/documents/<scanReference>/data`<br>
 
+<br>
 
 ### Response
 
@@ -716,6 +960,8 @@ Successful requests will return HTTP status code `200 OK` along with a JSON obje
 |document|object||Same parameters as listed in the section [Retrieving document data only](#multi-retrieving-document-data-only) but without timestamp and scanReference|
 |transaction|object||Same parameters as listed in the section [Retrieving transaction data only](#multi-retrieving-transaction-data-only) but without timestamp and scanReference|
 
+<br>
+
 ## Examples
 ### Sample request
 ```
@@ -730,7 +976,7 @@ Authorization: Basic xxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
 ### Sample response
 
-#### Credit Card (CC)
+#### Credit card (CC)
 ```
 {
     "scanReference": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
@@ -755,7 +1001,7 @@ Authorization: Basic xxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 }
 ```
 
-#### Social Security Card (SSC)
+#### Social Security card (SSC)
 ```
 {
     "scanReference": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
@@ -782,7 +1028,7 @@ Authorization: Basic xxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 }
 ```
 
-#### Bank Statement (BS)
+#### Bank statement (BS)
 ```
 {
     "scanReference": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
@@ -813,10 +1059,11 @@ Authorization: Basic xxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
 Call the RESTful API GET endpoint below to retrieve the document data of a Document Verification transaction by specifying the Jumio transaction reference (scan reference) as a path parameter.
 
-**HTTP Request Method:** `GET`<br>
+**HTTP request method:** `GET`<br>
 **REST URL (US)**: `https://retrieval.netverify.com/api/netverify/v2/documents/<scanReference>/data/document`<br>
 **REST URL (EU)**: `https://retrieval.lon.netverify.com/api/netverify/v2/documents/<scanReference>/data/document`<br>
 
+<br>
 
 ### Response
 
@@ -886,7 +1133,7 @@ Authorization: Basic xxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
 ### Sample response
 
-#### Credit Card (CC)
+#### Credit card (CC)
 ```
 {
     "scanReference": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
@@ -902,7 +1149,7 @@ Authorization: Basic xxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 }
 ```
 
-#### Social Security Card (SSC)
+#### Social Security card (SSC)
 ```
 {
     "scanReference": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
@@ -920,7 +1167,7 @@ Authorization: Basic xxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 }
 ```
 
-#### Bank Statement (BS)
+#### Bank statement (BS)
 ```
 {
     "scanReference": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
@@ -943,10 +1190,11 @@ Authorization: Basic xxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
 Call the RESTful API GET endpoint below to retrieve the transaction metadata of a Document Verification transaction by specifying the Jumio transaction reference (scan reference) as a path parameter.
 
-**HTTP Request Method:** `GET`<br>
+**HTTP request method:** `GET`<br>
 **REST URL (US)**: `https://retrieval.netverify.com/api/netverify/v2/documents/<scanReference>/data/transaction`<br>
 **REST URL (EU)**: `https://retrieval.lon.netverify.com/api/netverify/v2/documents/<scanReference>/data/transaction`<br>
 
+<br>
 
 ### Response
 
@@ -965,6 +1213,8 @@ Successful requests will return HTTP status code `200 OK` along with a JSON obje
 |merchantReportingCriteria|string|255|Your internal reporting criteria for each transaction|
 |merchantScanReference|string|255|Your internal reference for each transaction|
 |customerId|string|255|Your internal reference for the user.|
+
+<br>
 
 ## Examples
 ### Sample request
@@ -996,9 +1246,11 @@ Authorization: Basic xxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
 Call the RESTful API GET endpoint below to retrieve a list of the available images for a Document Verification transaction by specifying the Jumio transaction reference (scan reference) as a path parameter.
 
-**HTTP Request Method:** `GET`<br>
+**HTTP request method:** `GET`<br>
 **REST URL (US)**: `https://retrieval.netverify.com/api/netverify/v2/documents/<scanReference>/pages`<br>
 **REST URL (EU)**: `https://retrieval.lon.netverify.com/api/netverify/v2/documents/<scanReference>/pages`<br>
+
+<br>
 
 ### Response
 
@@ -1022,7 +1274,7 @@ Successful requests will return HTTP status code `200 OK` along with a JSON obje
 |Name| Type    | Description|
 |:---------------|:--------|:------------|
 |**classifier**| integer|Page number specifed when uploading the image|
-|**href** | string |REST URL to retrieve specific image (see [Retrieving a specific image section](#multi-retrieving-a-specific-image))|
+|**href** | string |REST URL to retrieve specific image (see [Retrieving a specific image section](#retrieving-a-specific-image-2))|
 
 <br>
 
@@ -1041,7 +1293,7 @@ Authorization: Basic xxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
 ### Sample response
 
-#### Bank Statement (BS)
+#### Bank statement (BS)
 ```
 {
     "timestamp": "2019-01-01T16:04:07.751Z",
@@ -1059,7 +1311,7 @@ Authorization: Basic xxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 }
 ```
 
-#### Credit Card (CC)
+#### Credit card (CC)
 
 ```
 {
@@ -1084,7 +1336,7 @@ To retrieve an unmasked credit card image, append the query parameter `maskhint=
 
 If you are unsure about the PCI DSS ramifications of retrieving unmasked credit card images, please refer to [Information Supplement: PCI DSS E-commerce Guidelines, version 2.0, January 2013](https://www.pcisecuritystandards.org/pdfs/PCI_DSS_v2_eCommerce_Guidelines.pdf), and/or contact your acquirer or a PCI DSS QSA (Qualified Security Assessor).
 
-**HTTP Request Method:** `GET`<br>
+**HTTP request method:** `GET`<br>
 **REST URL (US)**: `https://retrieval.netverify.com/api/netverify/v2/documents/<scanReference>/pages/<page_number>`<br>
 **REST URL (EU)**: `https://retrieval.lon.netverify.com/api/netverify/v2/documents/<scanReference>/pages/<page_number>`<br>
 
@@ -1098,11 +1350,15 @@ If you are unsure about the PCI DSS ramifications of retrieving unmasked credit 
 |**page_number** | string|36|Page number specified when uploading the image|
 |maskhint| string| |For credit cards:<br/>•	masked (default)<br/>•	unmasked|
 
+<br>
+
 ### Response
 
 Unsuccessful requests will return the relevant [HTTP status code](https://tools.ietf.org/html/rfc7231#section-6) and information about the cause of the error. HTTP status code `404 Not Found` will be returned if the transaction is not available, has been deleted, or does not contain the image you requested.
 
 Successful requests will return HTTP status code `200 OK` along with a JPG or PNG image and the appropriate header (e.g. `Content-Type: image/jpeg`).
+
+<br>
 
 ## Examples
 ### Sample request
