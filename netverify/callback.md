@@ -2,18 +2,19 @@
 
 # Callback
 
-The callback is the authoritative answer from Jumio. Specify a callback URL (for constraints see [Configuring Settings in the Customer Portal](/netverify/portal-settings.md#callback-error-and-success-urls)) to recieve the ID verification result for each scan.
+The callback is the authoritative answer from Jumio. Specify a callback URL (for constraints see [Configuring Settings in the Customer Portal](/netverify/portal-settings.md#callback-error-and-success-urls)) to automatically recieve the result for each transaction.
 
 ### Revision history
 
 Information about changes to features and improvements documented in each release is available in our [Revision history](/netverify/README.md).
 
-## Table of Contents
+## Table of contents
 
 - [Jumio Callback IP List](#jumio-callback-ip-List)
 - [Callback for Netverify](#callback-for-netverify)
   - [Supported Documents for Address Extraction](#supported-documents-for-address-extraction)
   - [Netverify masking](#netverify-masking)
+- [Callback for Authentication](#callback-for-authentication)
 - [Callback for Document Verification](#callback-for-document-verification)
   - [Supported Documents for Data Extraction](#supported-documents-for-data-extraction)
 - [Netverify Retrieval API](#netverify-retrieval-api)
@@ -22,7 +23,7 @@ Information about changes to features and improvements documented in each releas
 
 ---
 
-## Jumio Callback IP List
+## Jumio callback IP list
 
 Whitelist these IP addresses for callbacks, and use them to verify that the callback originated from Jumio.
 
@@ -58,22 +59,26 @@ Use the hostname `callback.lon.jumio.com` to look up the most current IP address
 
 ## Callback for Netverify
 
-An HTTP POST request is sent to your specified callback URL (see [Configuring Settings in the Customer Portal](/netverify/portal-settings.md#callback-error-and-success-urls)) containing an `application/x-www-form-urlencoded` formatted string with the result.
+An HTTP POST request is sent to your specified callback URL containing an `application/x-www-form-urlencoded` formatted string with the transaction result.
 
-For mobile: ID verification must be enabled to receive the callback.
+To specify a global callback URL in the Customer Portal, see [Configuring Settings in the Customer Portal](/netverify/portal-settings.md#callback-error-and-success-urls).
+
+A callback URL can also be specified per transaction. See instructions for [Netverify Web v4](/netverify/netverify-web-v4.md#request-body), [performNetverify](/netverify/performNetverify.md#request-body), and our SDK for [Android](https://github.com/Jumio/mobile-sdk-android/blob/master/docs/integration_authentication.md#callback) and [iOS](https://github.com/Jumio/mobile-sdk-ios/blob/master/docs/integration_authentication.md#configuration).
+
+For Android/iOS: ID verification must be enabled to receive the callback.
 
 #### Netverify Web
 
-|User journey state       | Scan state    | Callback|
+|User journey state       | transaction state    | Callback|
 |:---------------|:--------|:------------|
 |Not started |Pending => Failed|Transaction will be cleaned-up from pending to failed after the authorization token lifetime expires<br>Callback: Verification status NO\_ID\_UPLOADED |
 |Drop off during first attept| Pending => Failed| Transaction will be finished 15 minutes after the last update<br>Callback: Verification status NO\_ID\_UPLOADED|
 |Drop off during second or third attempt  | Done  |Transaction will be finished 15 minutes after the last update<br>Callback: Verification status ERROR\_NOT\_READABLE\_ID with previous reject reason |
 |Finished       | Done  |Callback: Verification status depends on the result |
 
-#### Netverify Mobile
+#### Netverify Mobile (Android/iOS)
 
-|User journey state       | Scan state    | Callback|
+|User journey state       | transaction state    | Callback|
 |:---------------|:--------|:------------|
 |Drop off   | Pending => Failed  |Transaction will be cleaned-up from pending to failed 15 minutes after last update<br/>Callback: verification status NO\_ID\_UPLOADED|
 |Finished   | Done  |ID verification will be performed<br/>Callback: verification status depends on the result (see table below)|
@@ -81,47 +86,47 @@ For mobile: ID verification must be enabled to receive the callback.
 
 ### Parameters
 
-The following parameters are posted to your callback URL for Netverify Web embedded, redirect, performNetverify and Netverify Mobile iOS/Android.
+The following parameters are posted to your callback URL for Netverify Web, performNetverify and Netverify Mobile iOS/Android.
 
 **Required items appear in bold type.**  
 
 |Parameter       | Max. Length    | Description| Notes |
 |:---------------|:--------|:------------| ------ |
 |**callBackType**   |   |NETVERIFYID | |
-|**jumioIdScanReference**   |36  |Jumio’s reference number for each scan | |
+|**jumioIdScanReference**   |36  |Jumio’s reference number for each transaction | |
 |**verificationStatus**   |   |Possible states:<br/>•	APPROVED\_VERIFIED<br/> •	DENIED\_FRAUD<br/>•	DENIED\_UNSUPPORTED\_ID\_TYPE<sup>1</sup><br/> •	DENIED\_UNSUPPORTED\_ID\_COUNTRY<sup>1</sup><br/>•	ERROR\_NOT\_READABLE\_ID<br/> •	NO\_ID\_UPLOADED | |
 |**idScanStatus**  |   |SUCCESS if verificationStatus = APPROVED\_VERIFIED, otherwise ERROR | |
-|**idScanSource**  |   |Possible values:<br>•	WEB (if Netverify Web embedded and no camera or upload started)<br>•	WEB\_CAM (if Netverify Web embedded via camera)<br>•	WEB\_UPLOAD (if Netverify Web embedded via upload)<br>•	REDIRECT (if Netverify Web redirect and no camera or upload started)<br>•	REDIRECT\_CAM (if Netverify Web redirect via camera)<br>•	REDIRECT\_UPLOAD (if Netverify Web redirect via upload)<br>•	API (if performNetverify)<br>• SDK (if mobile) | |
-|**idCheckDataPositions**   |   |"OK" if verificationStatus = APPROVED\_VERIFIED, otherwise "N/A" | |
-|**idCheckDocumentValidation**   |   |"OK" if verificationStatus = APPROVED\_VERIFIED, otherwise "N/A" | |
-|**idCheckHologram**   |   |"OK" if verificationStatus = APPROVED\_VERIFIED, otherwise "N/A" | |
-|**idCheckMRZcode**  |   |"OK" for passports and supported ID cards if verificationStatus = APPROVED\_VERIFIED and MRZ check is enabled, otherwise "N/A" |not returned for NLD, DEU, KOR if NV masking is enabled <sup>4</sup>|
-|**idCheckMicroprint** |   |"OK" if verificationStatus = APPROVED\_VERIFIED, otherwise "N/A" | |
-|**idCheckSecurityFeatures**   |   |"OK" if verificationStatus = APPROVED\_VERIFIED, otherwise "N/A" | |
-|**idCheckSignature**  |   |"OK" if verificationStatus = APPROVED\_VERIFIED, otherwise "N/A" | |
-|**transactionDate**   |   |Timestamp (UTC) of the scan creation<br>format: YYYY-MM-DDThh:mm:ss.SSSZ | |
+|**idScanSource**  |   |Possible values:<br>•	WEB (NVW3 / NVW4 before capture method is selected)<br>•	WEB\_CAM (NVW3 / NVW4 with camera capture)<br>•	WEB\_UPLOAD (NVW3 / NVW4 with file upload)<br>•	REDIRECT (NVW3 redirect before capture method is selected)<br>•	REDIRECT\_CAM (NVW3 redirect with camera capture)<br>•	REDIRECT\_UPLOAD (NVW3 redirect with file upload)<br>•	API (performNetverify)<br>• SDK (mobile) | |
+|**idCheckDataPositions**   |   |•	OK if verificationStatus = APPROVED\_VERIFIED<br> •	otherwise N/A | |
+|**idCheckDocumentValidation**   |   |•	OK if verificationStatus = APPROVED\_VERIFIED<br> •	otherwise N/A  | |
+|**idCheckHologram**   |   |•	OK if verificationStatus = APPROVED\_VERIFIED<br> •	otherwise N/A | |
+|**idCheckMRZcode**  |   |•	OK for passports and supported ID cards if verificationStatus = APPROVED\_VERIFIED and MRZ check is enabled<br> •	otherwise N/A  |not returned for NLD, DEU, KOR if NV masking is enabled <sup>4</sup>|
+|**idCheckMicroprint** |   |•	OK if verificationStatus = APPROVED\_VERIFIED<br> •	otherwise N/A | |
+|**idCheckSecurityFeatures**   |   |•	OK if verificationStatus = APPROVED\_VERIFIED<br> •	otherwise N/A  | |
+|**idCheckSignature**  |   |•	OK if verificationStatus = APPROVED\_VERIFIED<br> •	otherwise N/A | |
+|**transactionDate**   |   |Timestamp (UTC) of the transaction creation<br>format: YYYY-MM-DDThh:mm:ss.SSSZ | |
 |**callbackDate** |   |Timestamp  (UTC) of the callback creation <br>format: YYYY-MM-DDThh:mm:ss.SSSZ | |
 |identityVerification   |   |Identity verification as JSON object, <br /> **ONLY** if verificationStatus = APPROVED\_VERIFIED <br/><br/> see table [Identity Verification](#identity-verification) below|activation required |
-|idType   |   |Possible types:<br/>•	PASSPORT<br/>•	DRIVING\_LICENSE<br/>•	ID\_CARD<br>•	VISA *<br/><br/>* Currently, Jumio only supports US and China visas in certain cases. However, visas from other countries will be rejected as unsupported with idType = VISA | |
+|idType   |   |Possible types:<br/>•	PASSPORT<br/>•	DRIVING\_LICENSE<br/>•	ID\_CARD<br>•	VISA *<br/><br/>* Currently, Jumio only supports US and China visas in certain cases. Visas from other countries will be rejected as unsupported with idType = VISA | |
 |idSubtype   |255  |Possible subtypes if idType = ID\_CARD<br/>•	NATIONAL\_ID<br/>•	CONSULAR\_ID<br/>•	ELECTORAL\_ID<br/>•	RESIDENT\_PERMIT\_ID<br/>•	TAX\_ID <br/>•	STUDENT\_ID <br/>•	PASSPORT\_CARD\_ID <br/>•	MILITARY\_ID <br/>•	PUBLIC\_SAFETY\_ID <br/>• OTHER\_ID<br/>•	VISA <br/>•	UNKNOWN<br/><br/>Possible subtypes if idType = DRIVING\_LICENSE<br/>•	LEARNING\_DRIVING\_LICENSE <br/><br/>Possible subtypes if idType = PASSPORT<br/>•	E\_PASSPORT (only for mobile) | |
 |idCountry   |3  |Possible countries:<br/>•	[ISO 3166-1 alpha-3](http://en.wikipedia.org/wiki/ISO_3166-1_alpha-3) country code<br/>•	XKX (Kosovo)| |
 |rejectReason   |   |Reject reason as JSON object if verificationStatus = DENIED\_FRAUD or ERROR\_NOT\_READABLE\_ID, see tables below  | |
-|idScanImage   |255  |URL to retrieve the image of the scan (JPEG or PNG) if available<sup>2</sup> | |
-|idScanImageFace   |255  |URL to retrieve the face image of the scan (JPEG or PNG) if available<sup>2</sup>| |
-|idScanImageBackside   |255  |URL to retrieve the back	side image of the scan (JPEG or PNG) if available<sup>2</sup>| |
+|idScanImage   |255  |URL to retrieve the image of the transaction (JPEG or PNG) if available<sup>2</sup> | |
+|idScanImageFace   |255  |URL to retrieve the face image of the transaction (JPEG or PNG) if available<sup>2</sup>| |
+|idScanImageBackside   |255  |URL to retrieve the back	side image of the transaction (JPEG or PNG) if available<sup>2</sup>| |
 |idNumber   |200  |Identification number of the document as available on the ID if verificationStatus = APPROVED\_VERIFIED and enabled, otherwise if provided | |
-|idFirstName   |200  |•	First name of the customer as available on the ID if verificationStatus = APPROVED\_VERIFIED and enabled, otherwise if provided<br/><br>•	For following documents, N/A returned (if name contains non-Latin characters)<br /> -	if idCountry = CHN and idType = DRIVING\_LICENSE or ID\_CARD<br> -	if idCountry = KOR and idType = DRIVING\_LICENSE or ID\_CARD<br> -	if idCountry = JPN and idType = DRIVING\_LICENSE<br> -	if idCountry = RUS and idType = ID\_CARD| |
-|idLastName   |200  |•	Last name of the customer as available on the ID if verificationStatus = APPROVED\_VERIFIED and enabled, otherwise if provided<br/><br>•	For following documents, Chinese name as printed on the document returned (if enabled) <br /> -	if idCountry = CHN and idType = DRIVING\_LICENSE or ID\_CARD <br>(first name and last name)<br><br>•	Only if full name is printed in Latin characters<br /> - if idCountry = KOR and idType = DRIVING\_LICENSE <br>(first name and last name)<br /><br> •	For following documents, N/A returned (if name contains non-Latin characters) <br /> -	if idCountry = CHN and idType = DRIVING\_LICENSE or ID\_CARD<br> -	if idCountry = KOR and idType = DRIVING\_LICENSE or ID\_CARD<br> -	if idCountry = JPN and idType = DRIVING\_LICENSE<br> -	if idCountry = RUS and idType = ID\_CARD |activation required for Chinese name extraction |
-|idDob   |10  |Date of birth in the format YYYY-MM-DD as available on the ID if verificationStatus = APPROVED\_VERIFIED and enabled, otherwise if provided <br /><br />If idCountry = IND date of birth can be incomplete, possible values e.g.:<br />•	Year-Month-Day: 1990-12-09 <br />•	Year only: 1990-01-01 <br />•	Year-Month: 1990-12-01 <br />•	Year-Day: 1990-01-09<br />Additional parameter "originDob" will be provided|not returned for KOR if NV masking is enabled |
+|idFirstName   |200  |•	First name of the customer as available on the ID if verificationStatus = APPROVED\_VERIFIED and enabled, otherwise if provided<br/><br>•	For following documents, `N/A` returned (if name contains non-Latin characters)<br /> -	if idCountry = CHN and idType = DRIVING\_LICENSE or ID\_CARD<br> -	if idCountry = KOR and idType = DRIVING\_LICENSE or ID\_CARD<br> -	if idCountry = JPN and idType = DRIVING\_LICENSE<br> -	if idCountry = RUS and idType = ID\_CARD| |
+|idLastName   |200  |•	Last name of the customer as available on the ID if verificationStatus = APPROVED\_VERIFIED and enabled, otherwise if provided<br/><br>•	For following documents, Chinese name as printed on the document returned (if enabled) <br /> -	if idCountry = CHN and idType = DRIVING\_LICENSE or ID\_CARD <br>(first name and last name)<br><br>•	Only if full name is printed in Latin characters<br /> - if idCountry = KOR and idType = DRIVING\_LICENSE <br>(first name and last name)<br /><br> •	For following documents, `N/A` returned (if name contains non-Latin characters) <br /> -	if idCountry = CHN and idType = DRIVING\_LICENSE or ID\_CARD<br> -	if idCountry = KOR and idType = DRIVING\_LICENSE or ID\_CARD<br> -	if idCountry = JPN and idType = DRIVING\_LICENSE<br> -	if idCountry = RUS and idType = ID\_CARD |activation required for Chinese name extraction |
+|idDob   |10  |Date of birth in the format YYYY-MM-DD as available on the ID if verificationStatus = APPROVED\_VERIFIED and enabled, otherwise if provided <br /><br />If idCountry = IND date of birth can be incomplete, possible values e.g.:<br />•	Year-Month-Day: 1990-12-09 <br />•	Year only: 1990-01-01 <br />•	Year-Month: 1990-12-01 <br />•	Year-Day: 1990-01-09<br />Additional parameter `originDob` will be provided|not returned for KOR if NV masking is enabled <sup>4</sup>|
 |idExpiry   |10  |Date of expiry in the format YYYY-MM-DD as available on the ID if verificationStatus = APPROVED\_VERIFIED and enabled, otherwise if provided | |
 |idUsState   |255  |Possible values if idType = PASSPORT or ID\_CARD:<br/>•	Last two characters of [ISO 3166-2:US](http://en.wikipedia.org/wiki/ISO_3166-2:US) state code<br/>•	Last 2-3 characters of [ISO 3166-2:AU](http://en.wikipedia.org/wiki/ISO_3166-2:AU) state code<br/>•	Last two characters of [ISO 3166-2:CA](http://en.wikipedia.org/wiki/ISO_3166-2:CA) state code<br/>• [ISO 3166-1](http://en.wikipedia.org/wiki/ISO_3166-1_alpha-3) country name<br/>• XKX (Kosovo)<br/>• Free text - if it can't be mapped to a state/country code<br/><br/>If idType = DRIVING\_LICENSE:<br/>•	Last two characters of [ISO 3166-2:US](http://en.wikipedia.org/wiki/ISO_3166-2:US) state code<br/>•	Last 2-3 characters of [ISO 3166-2:AU](http://en.wikipedia.org/wiki/ISO_3166-2:AU) state code<br/>•	Last two characters of [ISO 3166-2:CA](http://en.wikipedia.org/wiki/ISO_3166-2:CA) state code| |
 |personalNumber   |14  |Personal number of the document <br />• if verificationStatus = APPROVED\_VERIFIED and <br />• if idType = PASSPORT and if data available on the document |not returned for NLD, DEU, KOR if NV masking is enabled <sup>4</sup> |
 |idAddress   |   |Address as JSON object in US, EU or raw format if verificationStatus = APPROVED, see tables below<sup>3</sup> |activation required |
-|merchantIdScanReference   |100  |Your reference for each scan | |
-|merchantReportingCriteria   |100  |Your reporting criteria for each scan | |
+|merchantIdScanReference   |100  |Your reference for each transaction | |
+|merchantReportingCriteria   |100  |Your reporting criteria for each transaction | |
 |customerId   |100  |ID of the customer as provided | |
 |clientIp   |   |IP address of the client in the format xxx.xxx.xxx.xxx | |
-|firstAttemptDate   |  |Timestamp (UTC) of the first scan attempt <br>format: YYYY-MM-DDThh:mm:ss.SSSZ | |
+|firstAttemptDate   |  |Timestamp (UTC) of the first transaction attempt <br>format: YYYY-MM-DDThh:mm:ss.SSSZ | |
 |optionalData1   |255  |Optional field of MRZ line 1 | not returned for NLD ID if NV masking is enabled <sup>4</sup>|
 |optionalData2   |255  |Optional field of MRZ line 2 | |
 |dni   |255  |DNI as available on the ID if idCountry = ESP and idSubtype = NATIONAL\_ID  | |
@@ -137,26 +142,26 @@ The following parameters are posted to your callback URL for Netverify Web embed
 |numberOfEntries|255|Number of entries if idType = VISA and additional extraction for Visa enabled|activation required |
 |visaCategory|255|Visa category if idType = VISA and additional extraction for Visa enabled|activation required |
 |originDob|10|Original format of date of birth if idCountry = IND <br/>Possible values e.g.: <br />• Year/Month/Day: 1990/12/09 <br />• Year only: 1990// <br />• Year/Month: 1990/12/ <br />• Year/Day: 1990//09|<br /> |
-|issuingAuthority|50|Issuing authority of the document (if issuing authority extraction is enabled) |activation required |
+|issuingAuthority|50|Issuing authority of the document (if issuing authority extraction is enabled) <br><br>Supported Country:<br />• Italy|activation required |
 |issuingDate|10|Issuing date of the document (if issuing date extraction enabled) |activation required |
 |issuingPlace|50|Issuing place of the document (if issuing place extraction is enabled) |activation required |
-|livenessImages| |URLs to the liveness images of the transaction (JPEG or PNG) if available<sup>5</sup> ||
+|livenessImages| |URLs to the liveness images of the transaction (JPEG or PNG) if available<sup>5</sup> | |
 
-<sup>1</sup> Scan is declined as unsupported if the provided ID is not supported by Jumio, or not accepted in your Netverify settings.<br/> <sup>2</sup> For ID types that are configured to support a separate scan of the front side and back side, there is a separate image of the front side (idScanImage) and the back side (idScanImageBackside). If face match is enabled, there is also a picture of the face (idScanImageFace).<br>
+<sup>1</sup> Transaction is declined as unsupported if the ID is not supported by Jumio, or not marked as accepted in your customer portal settings.<br/> <sup>2</sup> For ID types that are configured to support a separate scan of the front side and back side, there is a separate image of the front side (idScanImage) and the back side (idScanImageBackside). If Identity Verification is enabled, there is also a picture of the face (idScanImageFace).<br>
 <sup>3</sup> Address recognition is performed for supported IDs, if enabled. Please note, there are three different address formats (US, EU, Raw). Please check [Supported documents for Address Extraction](#supported-documents-for-address-extraction) to see which format applies to specific IDs. The different address parameters are a part of the JSON object, if they are available on the ID.<br>
 <sup>4</sup> Fields containing certain kinds of personally identifying information are not returned if NV masking is enabled for the Netherlands, Germany, or South Korea. See [Netverify masking](#netverify-masking) for more information.<br>
-<sup>5</sup> Liveness images are returned only for transactions containing Identity Verification submitted via the Android and iOS SDKs. The number of images can vary from scan to scan and might not be returned in chronological order.
+<sup>5</sup> Liveness images are returned only for transactions containing Identity Verification submitted via the Android and iOS SDKs. The number of images can vary and may not be returned in chronological order.
 
-#### Retrieving Images
-Use HTTP: **GET** with **Basic Authorization** using your API token and secret, as userid and password.<br>
-**Header**: The following parameters are mandatory in the "header" section of your request.
-- `Accept: image/jpeg, image/png`
+#### Retrieving images
+Use HTTP: **GET** with **Basic Authorization** using your API token and secret as userid and password.<br>
+**Header**: The following parameters are mandatory in the header section of your request.<br>
+- `Accept: image/jpeg, image/png`<br>
 - `User-Agent: YOURCOMPANYNAME YOURAPPLICATIONNAME/VERSION`<br /><br />
 The value for **User-Agent** must contain a reference to your business or entity for Jumio to be able to identify your requests. (e.g. YourCompanyName YourAppName/1.0.0). Without a proper User-Agent header, Jumio will take longer to diagnose API issues.<br>
 
 The TLS protocol is required during the TLS handshake (see [Supported cipher suites](/netverify/supported-cipher-suites.md)) and we strongly recommend using the latest version.<br/><br>
 
-### Supported Documents for Address Extraction
+### Supported documents for address extraction
 
 |Country    |ID card    |Driving license    |Passport    |Callback format |
 |:------------|:-------|:--------------|:--------------|:-------|
@@ -174,9 +179,9 @@ The TLS protocol is required during the TLS handshake (see [Supported cipher sui
 |United Kingdom|No|Yes|No|Raw|
 |United States|No|Yes|No|US|
 
-#### US Address Format
+#### US address format
 
-|Parameter "idAddress"       | Max. Length    | Description|
+|Parameter `idAddress`       | Max. Length    | Description|
 |:---------------|:--------|:------------|
 |city   |64  |City |
 |stateCode   |6  |[ISO 3166-2](http://en.wikipedia.org/wiki/ISO_3166-2) state code |
@@ -190,9 +195,9 @@ The TLS protocol is required during the TLS handshake (see [Supported cipher sui
 |zipExtension   |20  |Zip extension |
 |country   |3  |Possible countries:<br/>•	[ISO 3166-1 alpha-3](http://en.wikipedia.org/wiki/ISO_3166-1_alpha-3) country code<br/>•	XKX (Kosovo) |
 
-#### EU Address Format
+#### EU address format
 
-|Parameter "idAddress"       | Max. Length    | Description|
+|Parameter `idAddress`       | Max. Length    | Description|
 |:---------------|:--------|:------------|
 |city   |64  |City |
 |province   |64  |Province |
@@ -202,9 +207,9 @@ The TLS protocol is required during the TLS handshake (see [Supported cipher sui
 |postalCode   |15  |Postal code |
 |country   |3  |Possible countries:<br/>•	[ISO 3166-1 alpha-3](http://en.wikipedia.org/wiki/ISO_3166-1_alpha-3) country code<br/>•	XKX (Kosovo) |
 
-#### Raw Address Format
+#### Raw address format
 
-|Parameter "idAddress"       | Max. Length    | Description|
+|Parameter `idAddress`      | Max. Length    | Description|
 |:---------------|:--------|:------------|
 |line1   |100  |Line item 1 |
 |line2   |100  |Line item 2 |
@@ -215,18 +220,18 @@ The TLS protocol is required during the TLS handshake (see [Supported cipher sui
 |postalCode   |15  |Postal code |
 |city   |64  |City |
 
-### Reject Reason
+### Reject reason
 
-|Parameter "rejectReason" | Type   | Max. Length    | Description|
+|Parameter `rejectReason` | Type   | Max. Length    | Description|
 |:------------------------|:--------|:--------|:------------|
 |rejectReasonCode |String| 5  |see below |
 |rejectReasonDescription |String |64  |Possible codes and descriptions for verification status DENIED\_FRAUD:<br>100	MANIPULATED\_DOCUMENT<br/>105	FRAUDSTER<br/>106	FAKE<br/>107	PHOTO\_MISMATCH<br/>108	MRZ\_CHECK\_FAILED<br/>109	PUNCHED\_DOCUMENT<br/>110	CHIP\_DATA\_MANIPULATED (only available for ePassport)<br/>111	MISMATCH\_PRINTED\_BARCODE_DATA<br><br>Possible codes and descriptions for verificationStatus = ERROR\_NOT\_READABLE\_ID:<br/>102	PHOTOCOPY\_BLACK\_WHITE<br/>103	PHOTOCOPY\_COLOR (for sources WEB\_CAM and REDIRECT\_CAM)<br/>104	DIGITAL\_COPY<br/>200	NOT\_READABLE\_DOCUMENT<br/>201	NO\_DOCUMENT<br/>202	SAMPLE\_DOCUMENT<br/>206	MISSING\_BACK<br/>207	WRONG\_DOCUMENT\_PAGE<br/>209	MISSING\_SIGNATURE<br/>210	CAMERA\_BLACK\_WHITE<br/>211	DIFFERENT\_PERSONS\_SHOWN (documents of multiple people in one image)<br/>300	MANUAL\_REJECTION|
 |rejectReasonDetails |Object  |   |Reject reason details as JSON array containing JSON objects if rejectReasonCode = 100 or 200, see table below |
 
 
-### Reject Reason Details
+### Reject reason details
 
-|Parameter "rejectReasonDetails" |  Type    | Max. Length    | Description|
+|Parameter `rejectReasonDetails` |  Type    | Max. Length    | Description|
 |:-------------------------------|:---------|:---------------|:------------|
 |detailsCode   |String | 5 | see below |
 |detailsDescription|String|32| Possible codes and descriptions for rejectReasonCode = 100:<br/>1001	PHOTO<br/>1002	DOCUMENT\_NUMBER<br>1003	EXPIRY<br/>1004	DOB<br/>1005	NAME<br/>1006	ADDRESS<br/>1007	SECURITY\_CHECKS<br/>1008	SIGNATURE<br>1009	PERSONAL\_NUMBER<br>10011 PLACE_OF_BIRTH<br><br>Possible codes and descriptions for rejectReasonCode = 200:<br/>2001	BLURRED<br/>2002	BAD\_QUALITY<br/>2003	MISSING\_PART\_DOCUMENT<br/>2004	HIDDEN\_PART\_DOCUMENT<br/>2005	DAMAGED\_DOCUMENT |
@@ -236,7 +241,7 @@ The TLS protocol is required during the TLS handshake (see [Supported cipher sui
 
 **Required items appear in bold type.**  
 
-|Parameter "identityVerification"       | Max. Length    | Description|
+|Parameter `identityVerification`       | Max. Length    | Description|
 |:---------------|:--------|:------------|
 |**similarity**   |  |Possible values:<br/> •	MATCH<br />•	NO\_MATCH<br />•	NOT\_POSSIBLE|
 |**validity**   |  |Possible values:<br/> •	TRUE<br />•	FALSE |
@@ -247,7 +252,7 @@ The TLS protocol is required during the TLS handshake (see [Supported cipher sui
 
 **Required items appear in bold type.**
 
-|Parameter "dlCategories"       | Max. Length    | Description|
+|Parameter `dlCategories`       | Max. Length    | Description|
 |:---------------|:--------|:------------|
 |**category**  | 10 |String in Latin or Traditional Chinese characters|
 |issueDate   |  |Issue date in the format YYYY-MM-DD|
@@ -289,6 +294,53 @@ idType=PASSPORT&idCheckSignature=N%2FA&rejectReason=%7B%20%22rejectReasonCode%22
 
 ---
 
+## Callback for Authentication
+
+An HTTP POST request is sent to your specified callback URL containing an `application/x-www-form-urlencoded` formatted string with the transaction result.
+
+To specify a global callback URL in the Customer Portal, see [Configuring Settings in the Customer Portal](/netverify/portal-settings.md#callback-error-and-success-urls).
+
+A callback URL can also be specified per transaction in our [Android](https://github.com/Jumio/mobile-sdk-android/blob/master/docs/integration_authentication.md#callback) and [iOS](https://github.com/Jumio/mobile-sdk-ios/blob/master/docs/integration_authentication.md#configuration) SDK.
+
+
+### Parameters
+
+**Required items appear in bold type.**  
+
+|Parameter       | Type    | Max. Length|  Description|
+|:---------------|:--------|:----------: |:------------|
+|**callbackDate**| string  |  | Timestamp of the callback in the format: <br>YYYY-MM-DDThh:mm:ss.SSSZ|
+|**transactionReference**| string  |36 |Jumio’s reference number for the Authentication transaction|
+|**transactionResult**| string  | |Possible values:<br>•	PASSED<br>•	FAILED<br>•	INVALID|
+|**transactionDate**| string  |  |Timestamp of the transaction in the format: <br>YYYY-MM-DDThh:mm:ss.SSSZ|
+|**scanSource**|string||Possible value:<br>•	SDK|
+|**callBackType**|string ||NETVERIFY_AUTHENTICATION|
+|**idScanImageFace**  | JSON array/object | |URL to retrieve the face image of the transaction (JPEG or PNG)<sup>1</sup> |
+|**livenessImages**| JSON array  |  | URLs to the liveness images of the transaction (JPEG or PNG)<sup>1</sup> <sup>2</sup>|
+|userReference |string  |  |Your internal reference for the user. |
+
+<sup>1</sup> Retrieve the images of the transaction.<br>
+<sup>2</sup> The number of images can vary and may not be returned in chronological order.
+
+#### Retrieving Images
+Use HTTP: **GET** with **Basic Authorization** using your API token and secret, as userid and password.<br>
+**Header**: The following parameters are mandatory in the header section of your request.<br>
+- `Accept: image/jpeg, image/png`<br>
+- `User-Agent: YOURCOMPANYNAME YOURAPPLICATIONNAME/VERSION`<br /><br />
+The value for **User-Agent** must contain a reference to your business or entity for Jumio to be able to identify your requests. (e.g. YourCompanyName YourAppName/1.0.0). Without a proper User-Agent header, Jumio will take longer to diagnose API issues.<br>
+
+The TLS protocol is required during the TLS handshake (see [Supported cipher suites](/netverify/supported-cipher-suites.md)) and we strongly recommend using the latest version.<br/><br>
+
+### Sample Callback
+
+#### Sample callback (URL-encoded POST): Passed
+
+```
+scanSource=SDK&transactionReference=xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx&callBackType=NETVERIFY_AUTHENTICATION&livenessImages=%5B%22https%3A%2F%2Fnetverify.com%2Fapi%2Fnetverify%2Fv2%2Fauthentications%2Fxxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx%2Fimages%2Fliveness%2F1%22%2C%22https%3A%2F%2Fnetverify.com%2Fapi%2Fnetverify%2Fv2%2Fauthentications%2Fxxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx%2Fimages%2Fliveness%2F2%22%2C%22https%3A%2F%2Fnetverify.com%2Fapi%2Fnetverify%2Fv2%2Fauthentications%2Fxxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx%2Fimages%2Fliveness%2F3%22%2C%22https%3A%2F%2Fnetverify.com%2Fapi%2Fnetverify%2Fv2%2Fauthentications%2Fxxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx%2Fimages%2Fliveness%2F4%22%2C%22https%3A%2F%2Fnetverify.com%2Fapi%2Fnetverify%2Fv2%2Fauthentications%2Fxxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx%2Fimages%2Fliveness%2F5%22%2C%22https%3A%2F%2Fnetverify.com%2Fapi%2Fnetverify%2Fv2%2Fauthentications%2Fxxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx%2Fimages%2Fliveness%2F6%22%2C%22https%3A%2F%2Fnetverify.com%2Fapi%2Fnetverify%2Fv2%2Fauthentications%2Fxxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx%2Fimages%2Fliveness%2F7%22%5D&idScanImageFace=https%3A%2F%2Fnetverify.com%2Fapi%2Fnetverify%2Fv2%2Fauthentications%2Fxxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx%2Fimages%2Fface&callbackDate=2019-05-30T08%3A37%3A35.822Z&transactionDate=2019-05-29T08%3A37%3A24.344Z&transactionResult=PASSED
+```
+
+---
+
 ## Callback for Document Verification
 (formerly Netverify Multi Document)
 
@@ -300,7 +352,7 @@ The following parameters are posted to your callback URL for Document Verificati
 
 |Parameter       | Type    | Max. Length|  Description|
 |:---------------|:--------|:----------: |:------------|
-|**scanReference**| String  |36 |Jumio's reference number for each scan|
+|**scanReference**| String  |36 |Jumio's reference number for each transaction|
 |**timestamp**| String  |  |Timestamp (UTC) of the response <br>format: YYYY-MM-DDThh:mm:ss.SSSZ|
 |**transaction**| JSON object  |  |Transaction related data, see table below|
 |document   | JSON object  |       |Document related data if transaction status = DONE, see table |
@@ -309,27 +361,27 @@ The following parameters are posted to your callback URL for Document Verificati
 
 **Required items appear in bold type.**  
 
-|Parameter "transaction"       | Type    | Max. Length|  Description|
+|Parameter `transaction`       | Type    | Max. Length|  Description|
 |:---------------|:--------|:----------:|:------------|
-|**date**    					        | String  |    |Timestamp (UTC) of the scan creation<br>format: YYYY-MM-DDThh:mm:ss.SSSZ|
+|**date**    					        | String  |    |Timestamp (UTC) of the transaction creation<br>format: YYYY-MM-DDThh:mm:ss.SSSZ|
 |**status**   | String  |    |Possible states:<br>•	DONE<br>•	FAILED (if initialized acquisition is not successfully finalized within 5 minutes after creation/last update)|
 |**source**      							| String  |    |Possible values: <br>• DOC\_UPLOAD (Document Verification)<br>• DOC\_API (Document Verification API)<br>• DOC\_SDK (Document Verification Mobile)|
-|**merchantScanReference** 	| String  |255 |Your reference for each scan |
+|**merchantScanReference** 	| String  |255 |Your reference for each transaction |
 |**customerId**       				| String  |255 |ID of the customer|
-|merchantReportingCriteria    | String  |255 |Your reporting criteria for each scan|
+|merchantReportingCriteria    | String  |255 |Your reporting criteria for each transaction|
 |clientIp       	| String  |100  |IP address of the client if provided for the Document Verification API |
 
 ### Document
 
 **Required items appear in bold type.**  
 
-|Parameter "document"      | Type    | Max. Length|  Description|
+|Parameter `document`      | Type    | Max. Length|  Description|
 |:-------------------------|:--------|:----------:|:------------|
 |**status**  	| String  |    |Possible states: <br/> ⦁ UPLOADED (default) <br/> ⦁	EXTRACTED if supported document for data extraction provided <br/> ⦁	DISCARDED if no supported document for data extraction provided |
 |**country**  | String  |3   |Possible countries: <br/> ⦁ [ISO 3166-1 alpha-3](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-3) country code <br/> ⦁	XKX (Kosovo) |
 |**type**     | String  |    |Possible types: <br>⦁ CC (Credit card, front and back side)<br/>⦁	BS (Bank statement, front side) <br/>⦁	IC (Insurance card, front side) <br/>⦁	UB (Utility bill, front side) <br/>⦁	CAAP (Cash advance application, front and back side) <br/>⦁	CRC (Corporate resolution certificate, front and back side) <br/>⦁	CCS (Credit card statement, front and back side) <br/>⦁	LAG (Lease agreement, front and back side) <br/>⦁	LOAP (Loan application, front and back side) <br/>⦁	MOAP (Mortgage application, front and back side) <br/>⦁	TR (Tax return, front and back side) <br/>⦁	VT (Vehicle title, front side) <br/>⦁	VC (Voided check, front side) <br/>⦁	STUC (Student card, front side) <br/>⦁	HCC (Health care card, front side) <br/>⦁	CB (Council bill, front side) <br/>⦁	SENC (Seniors card, front side) <br/>⦁	MEDC (Medicare card, front side) <br/>⦁	BC (Birth certificate, front side) <br/>⦁	WWCC (Working with children check, front side) <br/>⦁	SS (Superannuation statement, front side) <br/>⦁	TAC (Trade association card, front side) <br/>⦁	SEL (School enrolment letter, front side) <br/>⦁	PB (Phone bill, front side) <br/>⦁	SSC (Social security card, front side) <br/>⦁	CUSTOM (Custom document type)<br/>⦁	OTHER (Other document type)|
-|**images** 	| JSON array  |  |URLs to the images of the scan (JPEG or PNG)<sup>1</sup> |
-|originalDocument |String | | URL to the originally submitted document of the scan (PDF) if available<sup>1</sup> |
+|**images** 	| JSON array  |  |URLs to the images of the transaction (JPEG or PNG)<sup>1</sup> |
+|originalDocument |String | | URL to the originally submitted document of the transaction (PDF) if available<sup>1</sup> |
 |customDocumentCode | String  |100 |Your custom document code (maintained in your Jumio customer portal) if type = CUSTOM |
 |extractedData | JSON object  | |Extracted data if status = EXTRACTED, see [Supported documents for Data Extraction](#supported-documents-for-data-extraction)|
 
@@ -338,8 +390,8 @@ The following parameters are posted to your callback URL for Document Verificati
 
 #### Retrieving Images
 Use HTTP: **GET** with **Basic Authorization** using your API token and secret, as userid and password.<br>
-**Header**: The following parameters are mandatory in the "header" section of your request.
-- `Accept: image/jpeg, image/png`
+**Header**: The following parameters are mandatory in the header section of your request.<br>
+- `Accept: image/jpeg, image/png`<br>
 - `User-Agent: YOURCOMPANYNAME YOURAPPLICATIONNAME/VERSION`<br /><br />
 The value for **User-Agent** must contain a reference to your business or entity for Jumio to be able to identify your requests. (e.g. YourCompanyName YourAppName/1.0.0). Without a proper User-Agent header, Jumio will take longer to diagnose API issues.<br>
 
@@ -347,7 +399,7 @@ The TLS protocol is required during the TLS handshake (see [Supported cipher sui
 
 ### Extracted Data
 
-|Parameter "extractedData"      | Type    | Max. Length|  Description|
+|Parameter `extractedData`      | Type    | Max. Length|  Description|
 |:---------------|:--------|:----------:|:------------|
 |firstName  | String  |255    |First name if readable|
 |lastName |String |255 |Last name if readable|
@@ -357,13 +409,13 @@ The TLS protocol is required during the TLS handshake (see [Supported cipher sui
 |issueDate  | String  |  |Issue date in the format YYYY-MM-DD|
 |expiryDate |String | |Date of expiry in the format YYYY-MM-DD|
 |ssn   | String  |255 |Social security number if readable|
-|signatureAvailable  | String  |   |"true" if signature available, otherwise "false"|
+|signatureAvailable  | String  |   |`true` if signature available, otherwise `false`|
 |swiftCode	| String  | 20  | BIC/SWIFT code |
 |address	| JSON object  |  | Address as JSON object in raw format if status = EXTRACTED, see table below |
 
-### Raw Address Format
+### Raw address format
 
-|Parameter "address"      | Max. Length|  Description|
+|Parameter `address`      | Max. Length|  Description|
 |:---------------|:----------:|:------------|
 |line1 |100 |Line item 1 |
 |line2 |100 |Line item 2 |
@@ -375,7 +427,7 @@ The TLS protocol is required during the TLS handshake (see [Supported cipher sui
 |city |64 |City |
 |subdivision |50 |Name of subdivision |
 
-### Supported Documents for Data Extraction
+### Supported documents for data extraction
 
 <!-- removed with R151
 |Country      | Type | Extracted data |
@@ -434,9 +486,7 @@ timestamp=2017-06-06T12%3A06%3A49.016Z&scanReference=xxxxxxxx-xxxx-xxxx-xxxx-xxx
 
 ---
 ## Netverify Retrieval API
-If your server was not able to process the callback, which is the authoritative answer from Jumio, you can implement RESTful HTTP GET APIs to retrieve the status, details and image(s) for a specific scan. The implementation guide can be viewed via the link below.
-
-[View Guide](/netverify/netverify-retrieval-api.md)
+If your server was not able to receive or process the callback, you can use the [Retrieval API](/netverify/netverify-retrieval-api.md) to retrieve the results of your transaction.
 
 
 ---
