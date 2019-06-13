@@ -91,7 +91,7 @@ Please contact Jumio Support at support@jumio.com to coordinate bulk requests to
 Netverify API calls are protected using [HTTP Basic Authentication](https://tools.ietf.org/html/rfc7617). Your Basic Auth credentials are constructed using your API token as the user-id and your API secret as the password.
 <br>
 
-You can view and manage your API token and secret in the Customer Portal under **Settings** > **API credentials**. You can create a separate set of API credentials to be used specifically with the Retrieval API and [Delete API] (/netverify/netverify-delete-api.md) in the Customer Portal under **Settings** > **API credentials** > **Transaction administration APIs**.
+You can view and manage your API token and secret in the Customer Portal under **Settings** > **API credentials**. You can create a separate set of API credentials to be used specifically with the Retrieval API and [Delete API](/netverify/netverify-delete-api.md) in the Customer Portal under **Settings** > **API credentials** > **Transaction administration APIs**.
 
 
 |⚠️ Never share your API token, API secret, or Basic Auth credentials with *anyone* — not even Jumio Support.

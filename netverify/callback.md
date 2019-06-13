@@ -404,7 +404,7 @@ The TLS protocol is required during the TLS handshake (see [Supported cipher sui
 |firstName  | String  |255    |First name if readable|
 |lastName |String |255 |Last name if readable|
 |name |String | 100 | Full name if readable|
-|accountNumber |String |28|Bank account number of the customer from a bank statement|
+|accountNumber |String |34|Bank account number of the customer from a bank statement|
 |pan |String |20 |Personal account number of credit card|
 |issueDate  | String  |  |Issue date in the format YYYY-MM-DD|
 |expiryDate |String | |Date of expiry in the format YYYY-MM-DD|

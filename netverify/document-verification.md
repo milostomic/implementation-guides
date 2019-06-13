@@ -438,7 +438,7 @@ Successful requests will return HTTP status code `200 OK` along with a JSON obje
 
 ## Multi-page upload: adding a page
 
-Call the RESTful API POST endpoint **/pages** with a newly-created or recently updated scan reference and page number to add a JPEG, PNG, or PDF file with a maximum size of 10 MB.
+Call the RESTful API POST endpoint **/pages** with a newly-created or recently updated scan reference and page number to add a JPEG, PNG, or PDF file with a maximum size of 10 MB and a maximum image resolution of 8000 x 8000.
 <br>
 
 **HTTP request method:** `POST`<br>
@@ -482,7 +482,7 @@ The following fields are required in the header section of your request:<br>
 
 |Key				|Value				|
 |:------			|:------			|
-|**Image**		|JPEG, PNG, PDF file (max. size 10 MB)|
+|**Image**		|JPEG, PNG, PDF file (max. size 10 MB and max resolution of 8000 x 8000)|
 
 <br>
 
@@ -702,7 +702,7 @@ Successful requests will return HTTP status code `200 OK` along with a JSON obje
 
 ## Single-page upload
 
-Call the RESTful API POST endpoint **/complete** with a JSON object containing the properties described below to initialize, upload, and finalize a single-page document in one API call. You can add a JPEG, PNG, or a single-page PDF file with a maximum size of 10 MB.<br>
+Call the RESTful API POST endpoint **/complete** with a JSON object containing the properties described below to initialize, upload, and finalize a single-page document in one API call. You can add a JPEG, PNG, or a single-page PDF file with a maximum size of 10 MB and a maximum image resolution of 8000 x 8000.<br>
 
 **HTTP request method:** `POST`<br>
 **REST URL (US):** `https://acquisition.netverify.com/api/netverify/v2/acquisitions/complete`<br>
@@ -731,7 +731,7 @@ The following fields are required in the header section of your request:<br>
 
 |Key			|Value				|
 |:------		|:------			|
-|**image**	|JPEG, PNG, PDF file with max size of 10 MB|
+|**image**	|JPEG, PNG, PDF file with max size of 10 MB and max resolution of 8000 x 8000|
 |**metadata**	|Details of the user's document specified as a JSON object|
 
 The `metadata` object in the body of your single-page **complete** API request allows you to

@@ -631,6 +631,7 @@ Netverify Web v4 does not support WebViews.
 |Browser name|Major browser version|Operating system |Supports<br>image upload |Supports<br>camera capture |
 |:---|:---|:---|:---:|:---:|
 |Google Chrome |current |Android|X|X|
+|Samsung Internet |current |Android|X|X|
 |Apple Safari |current |iOS|X|X|
 
 

@@ -241,7 +241,7 @@ If you update your data retention settings to a shorter span of time, records fa
 You can create your own custom document types for Document Verification transactions. When submitting a new custom document type, it may take up to five minutes for your new custom document to appear in the Customer Portal.
 
 Specify all three of the following:
-* A unique document code (constraint: blanks are not allowed)
+* A unique document code (constraint: blanks are not allowed; max. length: 10 characters)
 * A name
 * A default label name in English
 
