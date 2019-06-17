@@ -172,12 +172,13 @@ The TLS protocol is required during the TLS handshake (see [Supported cipher sui
 |Germany|Yes|No|No|EU|
 |Indonesia|Yes|No|No|Raw|
 |Ireland|No|Yes|No|Raw|
+|Malaysia|Yes|No|No|
 |Mexico|Yes|No|No|US|
 |Romania|Yes|No|No|Raw|
 |Singapore|Yes|No|No|Raw|
 |Spain|Yes|No|No|EU|
 |United Kingdom|No|Yes|No|Raw|
-|United States|No|Yes|No|US|
+|United States|Yes|Yes|No|US|
 
 #### US address format
 

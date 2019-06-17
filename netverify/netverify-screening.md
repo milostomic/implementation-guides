@@ -18,6 +18,7 @@ This is a reference manual and configuration guide for the ComplyAdvantage PEPs/
 - [How to review results](#How-to-review-results)
 	- [Callback with screening](#Callback-with-screening)
 	- [Retrieval API with screening](#Retrieval-API-with-screening)
+	- [Ongoing Monitoring](#Ongoing-Monitoring)
 
 ____
 
@@ -290,6 +291,18 @@ The following fields may be additional to the original callback fields, if they 
   }
 }
 ~~~
+
+## Ongoing Monitoring
+
+This is an additional service that is offered that will notify you if your search appears in a list **after** the original search was executed.
+
+For more information about including this in your contract, please contact your **Jumio Account Manager**.
+
+If you have **Ongoing Monitoring** included in your contract, you have to turn on *'Auto monitor'* in your ComplyAdvantage portal, additional settings can be found there as well.
+
+[ComplyAdvantage](https://app.complyadvantage.com/#/settings/monitor)
+
+When monitoring is turned on, the transactions which have monitoring will be searched against the database and list each night. If a new entry is found, the admin users from the ComplyAdvantage portal will be notified through email.
 
 ---
 &copy; Jumio Corp. 268 Lambert Avenue, Palo Alto, CA 94306
