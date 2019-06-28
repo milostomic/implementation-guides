@@ -20,6 +20,7 @@ The Jumio Knowledge Base also contains a wealth of information regarding our ser
 
 | Date           | Description       |
 |:---------------|:------------------|
+| 2019-06-27  |Added full screen mode for 3D Liveness|
 | 2019-06-13  |Added support for Samsung Internet Browser on Android for Netverify Web|
 | 2019-05-29  |Added Callback for Authentication|
 | 2019-05-28  |Updated max. size for frontsideImage, faceImage and backsideImage to 15MB|

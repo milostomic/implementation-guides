@@ -353,10 +353,11 @@ Jumio appends the following parameters to your Success or Error URL to redirect 
 |Name|Description|
 |:---|:---|
 |transactionStatus| • `SUCCESS` for successful submissions. <br> • `ERROR`for errors and failure after 3 attempts.|
-|customerInternalReference|Your internal reference for the transaction.|
+|customerInternalReference<sup>1</sup>|Your internal reference for the transaction.|
 |transactionReference|Jumio reference number for the transaction.|
 |errorCode|Displayed when `transactionStatus` is `ERROR`.|
 
+<sup>1</sup> Values **must not** contain Personally Identifiable Information (PII) or other sensitive data such as email addresses.
 <br>
 
 ### Capture method
@@ -485,7 +486,7 @@ If you want to embed Netverify on a web page, place the iFrame tag in your HTML 
 |:----------|
 
 ### Width and height
-We recommend adhering to the responsive breaking points in the table below. The Netverify Web client will responsively fill the dimensions of your iFrame.
+We recommend adhering to the responsive breaking points in the table below.
 
 |Size class |Width|Height|
 |:-------|---:|-------:|
@@ -494,11 +495,34 @@ We recommend adhering to the responsive breaking points in the table below. The 
 |Small|560 px|600 px|
 |X-Small|≤ 480 px|≤ 535 px|
 
-### Example HTML  
+Note: When specifying the width and height of your iFrame you may prefer to use percentage values so that the iFrame behaves responsively on your page.
+
+|⚠️The Netverify Web client itself will responsively fill the iFrame that it is loaded into.
+|:----------|
+
+### 3D Liveness
+
+For a better user experience when creating a three-dimensional map of your user's face, you must allow full screen mode. This will address the positioning and distance between the capture interface and the camera.
+
+|⚠️ The `allow="camera;fullscreen" allowfullscreen` attributes must be included to enable the camera for image capture in [supported browsers](#supported-browsers) in full screen mode.
+|:----------|
+
+### Example HTML
+
+#### Absolute sizing example
 ```
 <iframe src="https://yourcompany.netverify.com/web/v4/app?locale=en-GB&authorizationToken=xxx" width="930" height="750" allow="camera"></iframe>
 ```
 
+#### Responsive sizing example
+```
+<iframe src="https://yourcompany.netverify.com/web/v4/app?locale=en-GB&authorizationToken=xxx" width="70%" height="80%" allow="camera"></iframe>
+```
+
+#### 3D Liveness example
+```
+<iframe src="https://yourcompany.netverify.com/web/v4/app?locale=en-GB&authorizationToken=xxx" width="70%" height="80%" allow="camera;fullscreen" allowfullscreen></iframe>
+```
 
 
 <!---
@@ -529,10 +553,12 @@ All data is encoded with [UTF-8](https://tools.ietf.org/html/rfc3629).
 |:-------|:---|:----------|
 |**authorizationToken**|string|Authorization token, valid for a specified duration.|
 |**transactionReference**|string|Jumio reference number for the transaction.|
-|**customerInternalReference**|string|Your internal reference for the transaction.|
+|**customerInternalReference**<sup>1</sup>|string|Your internal reference for the transaction.|
 |**eventType**|integer|Type of event that has occurred.<br>Possible values: <br>• `510` (application state-change)|
 |**dateTime**|string|UTC timestamp of the event in the browser.<br>Format: *YYYY-MM-DDThh:mm:ss.SSSZ*|
 |**payload**|JSON object|Information specific to the event generated. <br>(see [`event.data.payload` object](#eventdatapayload-object))|
+
+<sup>1</sup> Values **must not** contain Personally Identifiable Information (PII) or other sensitive data such as email addresses.
 
 <br>
 
@@ -587,11 +613,12 @@ To display relevant information on your success or error page, you can use the f
 |Name|Description|
 |:---|:---|
 |**transactionStatus**|Possible values:<br>• `SUCCESS` for successful submissions. <br> • `ERROR`for errors and failure after 3 attempts.|
-|**customerInternalReference**|Your internal reference for the transaction.|
+|**customerInternalReference**<sup>2</sup>|Your internal reference for the transaction.|
 |**transactionReference**|Jumio reference number for the transaction.|
 |errorCode|Displayed when `transactionStatus` is `ERROR`.<br>Possible values: <br>• `9100` (Error occurred on our server.)<br>• `9200` (Authorization token missing, invalid, or expired.)<br>• `9210` (Session expired after the user journey started.)<br>• `9300` (Error occurred transmitting image to our server.)<br>• `9400` (Error occurred during verification step.)<br>• `9800` (User has no network connection.)<br>• `9801` (Unexpected error occurred in the client.)<br>• `9810` (Problem while communicating with our server.)<br>• `9820` (File upload not enabled and camera unavailable.)<br>• `9821` (The 3D liveness face capture process failed after 3 attempts.)<br>• `9835` (No acceptable submission in 3 attempts.)|
 
-<sup>1</sup> Because HTTP `GET` parameters can be manipulated on the client side, they may be used for display purposes only.
+<sup>1</sup> Because HTTP `GET` parameters can be manipulated on the client side, they may be used for display purposes only.<br>
+<sup>2</sup> Values **must not** contain Personally Identifiable Information (PII) or other sensitive data such as email addresses.
 
 ### Sample success redirect
 
@@ -615,26 +642,25 @@ Jumio offers guaranteed support for Netverify on the following browsers and the 
 
 ### Desktop
 
-|Browser|Major version|Operating system |Supports<br>image upload |Supports<br>camera capture|
-|:---|:---|:---|:---:|:---:|
-|Google Chrome|current +<br> 1 previous|Windows + Mac|X|X|
-|Mozilla Firefox|current +<br>1 previous|Windows + Mac|X|X|
-|Apple Safari|current|Mac|X|X|
-|Microsoft Internet Explorer|current|Windows|X| |
-|Microsoft Edge|current|Windows|X|X|
-
+|Browser|Major version|Operating system |Supports<br>image upload |Supports<br>camera capture|Supports<br>3D Liveness|
+|:---|:---|:---|:---:|:---:|:---:|
+|Google Chrome|current +<br> 1 previous|Windows + Mac|X|X|X|
+|Mozilla Firefox|current +<br>1 previous|Windows + Mac|X|X|X|
+|Apple Safari|current|Mac|X|X|X|
+|Microsoft Internet Explorer|current|Windows|X| | |
+|Microsoft Edge|current|Windows|X|X|X|
 
 ### Mobile
 
 Netverify Web v4 does not support WebViews.
 
-|Browser name|Major browser version|Operating system |Supports<br>image upload |Supports<br>camera capture |
-|:---|:---|:---|:---:|:---:|
-|Google Chrome |current |Android|X|X|
-|Samsung Internet |current |Android|X|X|
-|Apple Safari |current |iOS|X|X|
+|Browser name|Major browser version|Operating system |Supports<br>image upload |Supports<br>camera capture|Supports<br>3D Liveness|
+|:---|:---|:---|:---:|:---:|:---:|
+|Google Chrome |current |Android|X|X|X|
+|Samsung Internet |current |Android|X|X|X|
+|Apple Safari |current |iOS|X|X|X<sup>1</sup>|
 
-
+<sup>1</sup>Partial support refers to supporting only iPad, not iPhone. Shows an overlay button which can not be disabled.
 
 
 ---

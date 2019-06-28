@@ -95,9 +95,9 @@ The body of your **acquisitions** API request allows you to
 - localize the display language.
 <br>
 
-|⚠️ Credit cards uploaded with incorrect `type` may pose a risk to your customers and your business!
+|⚠️ Credit cards and Credit card statements uploaded with incorrect `type` may pose a risk to your customers and your business!
 |:----------|
-|Jumio applies appropriate security controls to credit cards correctly uploaded as the `CC` document type, which was designed with sensitive credit card data in mind.<br><br>Submission of credit card data with any other **non-`CC`** document type is **not supported**. Any such transactions may present a risk to your business and are subject to deletion.|
+|Jumio applies appropriate security controls to credit cards correctly uploaded as the `CC` document type, which was designed with sensitive credit card data in mind.<br><br>Submission of credit card data with any other **non-`CC`** document type is **not supported**. Any such transactions may present a risk to your business and are subject to deletion.<br><br>The same applies to Credit card statements, which are not uploaded as the `CCS ` document type.|
 
 |ℹ️ Values set in your API request will override the corresponding settings configured in the Customer Portal.
 |:----------|
