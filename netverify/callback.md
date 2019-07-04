@@ -131,21 +131,22 @@ The following parameters are posted to your callback URL for Netverify Web, perf
 |optionalData2   |255  |Optional field of MRZ line 2 | |
 |dni   |255  |DNI as available on the ID if idCountry = ESP and idSubtype = NATIONAL\_ID  | |
 |curp   |255  |CURP as available on the ID if idCountry = MEX and idSubtype = ELECTORAL\_ID  |activation required |
-|gender   |2  |Possible values: M, F<br>• if idCountry = FRA and idSubtype = NATIONAL\_ID (MRZ type CNIS)<br/>•	if idType = VISA and additional extraction for Visa enabled | |
+|gender   |2  |Possible values: M, F<br>• if idCountry = FRA and idSubtype = NATIONAL\_ID (MRZ type CNIS)<br>• if idCountry = HKG and idSubtype = NATIONAL\_ID (MRZ type CNIS)<br/>•	if idType = VISA and additional extraction for Visa enabled | |
 |presetCountry   | 3  |Possible countries:<br />•	[ISO 3166-1 alpha-3](http://en.wikipedia.org/wiki/ISO_3166-1_alpha-3) country code <br /> • XKX (Kosovo)| |
 |presetIdType   |    |Possible ID types: PASSPORT, DRIVING\_LICENSE, ID\_CARD| |
 |dlCarPermission|255 |Only available if:<br/> •Extraction supported for specific country<br/>•verificationStatus = APPROVED\_VERIFIED<br/><br/>Possible values:<br /> • YES<br /> • NO<br /> • NOT\_READABLE|activation required|
-|dlCategories   | JSON object  |Driver license categories as JSON object if verificationStatus = APPROVED\_VERIFIED, see table below <br /><br />Supported Countries:<br />• Austria<br />• Belgium<br />• France<br />• Germany<br />• Great Britain<br />• Italy<br />• Netherlands<br />• Spain<br />• Taiwan|activation required |
+|dlCategories   | JSON object  |Driver license categories as JSON object if verificationStatus = APPROVED\_VERIFIED, see table below <br /><br />Supported Countries:<br />• Austria<br />• Belgium<br />• Bulgaria<br />• France<br />• Germany<br />• Great Britain<br />• Italy<br />• Latvia<br />• Lithuania<br />• Netherlands<br />• Romania<br />• Spain<br />• Taiwan|activation required |
 |nationality |3|Nationality if idType = VISA and additional extraction for Visa enabled. Possible countries: <br>• [ISO 3166-1 alpha-3](http://en.wikipedia.org/wiki/ISO_3166-1_alpha-3) country code <br />• XKX (Kosovo)|activation required |
 |passportNumber|255|Passport number if idType = VISA and additional extraction for Visa enabled|activation required |
 |durationOfStay|255|Duration of stay if idType = VISA and additional extraction for Visa enabled|activation required |
 |numberOfEntries|255|Number of entries if idType = VISA and additional extraction for Visa enabled|activation required |
 |visaCategory|255|Visa category if idType = VISA and additional extraction for Visa enabled|activation required |
 |originDob|10|Original format of date of birth if idCountry = IND <br/>Possible values e.g.: <br />• Year/Month/Day: 1990/12/09 <br />• Year only: 1990// <br />• Year/Month: 1990/12/ <br />• Year/Day: 1990//09|<br /> |
-|issuingAuthority|50|Issuing authority of the document (if issuing authority extraction is enabled) <br><br>Supported Country:<br />• Italy|activation required |
+|issuingAuthority|50|Issuing authority of the document (if issuing authority extraction is enabled) <br>• if idCountry = ITA|activation required |
 |issuingDate|10|Issuing date of the document (if issuing date extraction enabled) |activation required |
-|issuingPlace|50|Issuing place of the document (if issuing place extraction is enabled) |activation required |
+|issuingPlace|50|Issuing place of the document (if issuing place extraction is enabled)<br>• if idCountry = ITA |activation required |
 |livenessImages| |URLs to the liveness images of the transaction (JPEG or PNG) if available<sup>5</sup> | |
+|placeOfBirth|256|Place of birth of document holder<br>• if idCountry = HKG | |
 
 <sup>1</sup> Transaction is declined as unsupported if the ID is not supported by Jumio, or not marked as accepted in your customer portal settings.<br/> <sup>2</sup> For ID types that are configured to support a separate scan of the front side and back side, there is a separate image of the front side (idScanImage) and the back side (idScanImageBackside). If Identity Verification is enabled, there is also a picture of the face (idScanImageFace).<br>
 <sup>3</sup> Address recognition is performed for supported IDs, if enabled. Please note, there are three different address formats (US, EU, Raw). Please check [Supported documents for Address Extraction](#supported-documents-for-address-extraction) to see which format applies to specific IDs. The different address parameters are a part of the JSON object, if they are available on the ID.<br>

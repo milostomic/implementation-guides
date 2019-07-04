@@ -670,7 +670,7 @@ Call the RESTful API GET endpoint below to retrieve liveness images from a trans
 
 **HTTP request method:** `GET`<br>
 **REST URL (US)**: `https://netverify.com/api/netverify/v2/scans/<scanReference>/images/liveness/<livenessNumber>`<br>
-**REST URL (EU)**: `https://netverify.com/api/netverify/v2/scans/<scanReference>/images/liveness/<livenessNumber>`<br>
+**REST URL (EU)**: `https://lon.netverify.com/api/netverify/v2/scans/<scanReference>/images/liveness/<livenessNumber>`<br>
 
 
 ### Request path parameters

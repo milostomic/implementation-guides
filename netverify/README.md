@@ -20,6 +20,7 @@ The Jumio Knowledge Base also contains a wealth of information regarding our ser
 
 | Date           | Description       |
 |:---------------|:------------------|
+| 2019-07-04  |Added Bulgaria, Latvia, Lithuania and Romania to extract DL categories<br>Added new callback parameter "placeOfBirth" for Netverify<br>Added gender extraction for Hongkong ID<br>Added place of birth extraction for Hongkong ID|
 | 2019-06-27  |Added full screen mode for 3D Liveness|
 | 2019-06-13  |Added support for Samsung Internet Browser on Android for Netverify Web|
 | 2019-05-29  |Added Callback for Authentication|
