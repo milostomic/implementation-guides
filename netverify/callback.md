@@ -313,12 +313,12 @@ A callback URL can also be specified per transaction in our [Android](https://gi
 |:---------------|:--------|:----------: |:------------|
 |**callbackDate**| string  |  | Timestamp of the callback in the format: <br>YYYY-MM-DDThh:mm:ss.SSSZ|
 |**transactionReference**| string  |36 |Jumio’s reference number for the Authentication transaction|
-|**transactionResult**| string  | |Possible values:<br>•	PASSED<br>•	FAILED<br>•	INVALID|
+|**transactionResult**| string  | |Possible values:<br>•	PASSED<br>•	FAILED<br>•	INVALID<br>•	EXPIRED|
 |**transactionDate**| string  |  |Timestamp of the transaction in the format: <br>YYYY-MM-DDThh:mm:ss.SSSZ|
-|**scanSource**|string||Possible value:<br>•	SDK|
+|**scanSource**|string||Possible values:<br>•	SDK<br>•	WEB|
 |**callBackType**|string ||NETVERIFY_AUTHENTICATION|
-|**idScanImageFace**  | JSON array/object | |URL to retrieve the face image of the transaction (JPEG or PNG)<sup>1</sup> |
-|**livenessImages**| JSON array  |  | URLs to the liveness images of the transaction (JPEG or PNG)<sup>1</sup> <sup>2</sup>|
+|idScanImageFace | JSON array/object | |URL to retrieve the face image of the transaction (JPEG or PNG)<sup>1</sup> |
+|livenessImages| JSON array  |  | URLs to the liveness images of the transaction (JPEG or PNG)<sup>1</sup> <sup>2</sup>|
 |userReference |string  |  |Your internal reference for the user. |
 
 <sup>1</sup> Retrieve the images of the transaction.<br>

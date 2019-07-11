@@ -735,7 +735,7 @@ Successful requests will return HTTP status code `200 OK` along with a JSON obje
 |Name|Type|Max. length|Description|
 |:---------------|:--------|:------------|:------------|
 |**transactionReference** |string|36|Jumio’s reference number for the Authentication transaction|
-|**transactionResult** |string||Possible values:<br>• CREATED<br>• STARTED<br>• PASSED<br>• FAILED<br>• INVALID|
+|**transactionResult** |string||Possible values:<br>• CREATED<br>• STARTED<br>• PASSED<br>• FAILED<br>• INVALID<br>• EXPIRED|
 |**transactionDate** |string||Timestamp of the transaction in the format YYYY-MM-DDThh:mm:ss.SSSZ|
 |**scanSource** |string||Possible value:<br>• SDK|
 |images |JSON array/object||See table below|
