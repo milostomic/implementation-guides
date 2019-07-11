@@ -660,7 +660,7 @@ Netverify Web v4 does not support WebViews.
 |Samsung Internet |current |Android|X|X|X|
 |Apple Safari |current |iOS|X|X|X<sup>1</sup>|
 
-<sup>1</sup>Partial support refers to supporting only iPad, not iPhone. Shows an overlay button which can not be disabled.
+<sup>1</sup>Fullscreen functionality during capture only supported for iPads. iPhone process works, but fullscreen is limited and capture may be less accurate.
 
 
 ---

@@ -130,9 +130,9 @@ The Fastfill API supports:
 
 - All Netverify supported passports
 
-- ID cards from the following countries: Albania, Argentina, Austria, Belgium, Bosnia & Herzegovina, Bulgaria, Cameroon, Chile, Czech Republic, Denmark, Dominican Republic, Ecuador, El Salvador, Estonia, Finland, France, Georgia, Germany, Guatemala, Hungary, Italy, Kazakhstan, Kenya, Latvia, Liechtenstein, Macedonia, Malta, Mexico, Moldova, Montenegro, Netherlands, Pakistan, Paraguay, Peru, Poland, Portugal, Romania, Serbia, Slovakia, Slovenia, Spain, Sweden, Switzerland, Turkey, United Arab Emirates, United Kingdom.
+- ID cards from the following countries: Albania, Argentina, Austria, Belgium, Bosnia & Herzegovina, Bulgaria, Canada, Cameroon, Chile, Czech Republic, Denmark, Dominican Republic, Ecuador, El Salvador, Estonia, Finland, France, Georgia, Germany, Guatemala, Hungary, Italy, Kazakhstan, Kenya, Latvia, Liechtenstein, Macedonia, Malta, Mexico, Moldova, Montenegro, Netherlands, Pakistan, Paraguay, Peru, Poland, Portugal, Romania, Serbia, Slovakia, Slovenia, Spain, Sweden, Switzerland, Turkey, United Arab Emirates, United Kingdom.
 
-- Driver licenses from the following countries: Austria, Belgium, Czech Republic, Denmark, Finland, France, Germany, Ireland, Italy, Netherlands, Poland, Portugal, Romania, Slovakia, Spain, Sweden, United Kingdom, United States.<br>
+- Driver licenses from the following countries: Austria, Belgium, Canada, Czech Republic, Denmark, Finland, France, Germany, Ireland, Italy, Netherlands, Poland, Portugal, Romania, Slovakia, Spain, Sweden, United Kingdom, United States.<br>
 PDF417 bar code extraction from driver licenses back side from USA and Canada.
 
 ---
