@@ -20,14 +20,15 @@ The Jumio Knowledge Base also contains a wealth of information regarding our ser
 
 | Date           | Description       |
 |:---------------|:------------------|
+| 2019-07-18  |Added Armenian and Georgian localizations for Netverify Web|
 | 2019-07-11  |Added Authentication for Web (Beta)|
 | 2019-07-10  |Added value "EXPIRED" to callback parameter transactionResult|
 | 2019-07-04  |Added Bulgaria, Latvia, Lithuania and Romania to extract DL categories<br>Added new callback parameter "placeOfBirth" for Netverify<br>Added gender extraction for Hongkong ID<br>Added place of birth extraction for Hongkong ID|
-| 2019-06-27  |Added full screen mode for 3D Liveness|
+| 2019-06-27  |Added full screen mode for 3D Liveness (Beta)|
 | 2019-06-13  |Added support for Samsung Internet Browser on Android for Netverify Web|
 | 2019-05-29  |Added Callback for Authentication|
 | 2019-05-28  |Updated max. size for frontsideImage, faceImage and backsideImage to 15MB|
-| 2019-04-08  |Added 3D Liveness for Web|
+| 2019-04-08  |Added 3D Liveness for Web (Beta)|
 | 2019-02-15  |Added value "OTHER" to callback parameter "type" for Document Verification|
 | 2019-02-08   |Added parameter "availability" to dlCategories <br>Added extraction of motorcycle permission from Taiwan driving licenses|
 | 2019-02-06   |Updated supported document types section to list all available "types" |
@@ -35,8 +36,8 @@ The Jumio Knowledge Base also contains a wealth of information regarding our ser
 | 2019-01-30   |Formatting and grammar edits|
 | 2019-01-29   |Added address extraction for Bahrain driver licenses|
 | 2019-01-15   |Added response parameter "livenessImages" for Netverify|
-| 2018-11-29     | Added address extraction for Indonesian ID cards |
-| 2018-11-20     | Added property "tokenLifetimeInMinutes" to Netverify Web version 4 initiate request |
+| 2018-11-29   | Added address extraction for Indonesian ID cards |
+| 2018-11-20   | Added property "tokenLifetimeInMinutes" to Netverify Web version 4 initiate request |
 | 2018-11-12 |Added callback parameters "issuingAuthority" and "issuingPlace", value "PUBLIC\_SAFETY\_ID" to <br>parameter "idSubtype", clarified browser support|
 | 2018-10-24 |Added possibility for Netverify Web version 4 to use a Jumio redirectUrl (NV) or <br/>clientRedirectUrl (DV) as the successUrl for your transaction, allowing to daisy-chain multiple <br /> verifications together in your user journey|
 | 2018-10-05 |Added Place of Birth extraction for France, address extraction for Romanian ID cards<br>Document Verification: Added data extraction of BIC/SWIFT code and callback parameter "swiftCode",<br> added data extraction for all document types with Latin-script characters<br>|

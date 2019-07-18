@@ -232,8 +232,10 @@ Hyphenated combination of [ISO 639-1:2002 alpha-2](https://en.wikipedia.org/wiki
 |fi|Finnish|
 |fr|French|
 |hu|Hungarian|
+|hy|Armenian|
 |it|Italian|
 |ja|Japanese|
+|ka|Georgian|
 |ko|Korean|
 |lt|Lithuanian|
 |nl|Dutch|
