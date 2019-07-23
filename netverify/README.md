@@ -1,4 +1,4 @@
-![Jumio](/images/netverify.png)
+![Jumio](/images/netverify.jpg)
 
 # Revision history
 The list below provides information on the changes to Netverify features and improvements documented in each release.
@@ -20,6 +20,7 @@ The Jumio Knowledge Base also contains a wealth of information regarding our ser
 
 | Date           | Description       |
 |:---------------|:------------------|
+| 2019-07-23  |Added response parameter "facemap" for Netverify |
 | 2019-07-18  |Added Armenian and Georgian localizations for Netverify Web|
 | 2019-07-11  |Added Authentication for Web (Beta)|
 | 2019-07-10  |Added value "EXPIRED" to callback parameter transactionResult|

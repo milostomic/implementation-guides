@@ -1,4 +1,4 @@
-![Jumio](/images/authentication.png)
+![Jumio](/images/authentication.jpg)
 
 # Authentication for Web (Beta)
 

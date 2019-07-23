@@ -1,4 +1,4 @@
-![Jumio](/images/netverify.png)
+![Jumio](/images/document_verification.jpg)
 
 # Document Verification implementation guide
 

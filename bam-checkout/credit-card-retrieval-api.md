@@ -1,5 +1,5 @@
 
-![Jumio](/images/bam_checkout.png)
+![Jumio](/images/bam_checkout.jpg)
 
 # Credit Card Retrieval API Implementation Guide
 

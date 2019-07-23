@@ -1,4 +1,4 @@
-![Jumio](/images/netverify.png)
+![Jumio](/images/netverify.jpg)
 
 # Netverify Retrieval API Implementation Guide
 
@@ -9,6 +9,7 @@ This guide describes how to implement the Netverify Retrieval API.
 
 | Date    | Description|
 |:--------|:------------|
+| 2019-07-23   |Added response parameter "facemap" for Netverify |
 | 2019-05-28   |Added Retrieval API for Authentication|
 | 2019-04-17   |Formatting and corrections|
 | 2019-02-15   |Added value "OTHER" to parameter "type" for Document Verification|
@@ -199,8 +200,37 @@ Successful requests will return HTTP status code `200 OK` along with a JSON obje
 |**document**| object| |As listed in the section [Retrieving document data only](#retrieving-document-data-only) <br> without timestamp and scanReference|
 |**transaction**|object| |As listed in the section [Retrieving transaction data only](#retrieving-transaction-data-only) <br> without timestamp and scanReference|
 |verification|object| |As listed in the section [Retrieving verification data only](#retrieving-verification-data-only) <br> without timestamp and scanReference|
+|facemap|object| |facemap (if download of facemap is enabled), see table below|
 
 <br>
+
+#### Parameter `facemap`
+
+**Required items appear in bold type.**
+
+|Name| Type   | Max. Length    | Description|
+|:------------------------|:--------|:--------|:------------|
+|**classifier** |string| 5  |Possible value:<br/>•	facemap |
+|**href** |string| 5  |REST URL which can be used to retrieve facemap content |
+
+
+##### Retrieving facemap
+
+Call the RESTful API GET endpoint to retrieve a raw facemap which will be returned in a binary format.
+
+Use HTTP **GET** with **Basic Authorization** using your API token and secret, as userid and password.<br>
+**Header**: The following parameters are mandatory in the header section of your request.<br>
+- `User-Agent: YOURCOMPANYNAME YOURAPPLICATIONNAME/VERSION`<br /><br />
+The value for **User-Agent** must contain a reference to your business or entity for Jumio to be able to identify your requests. (e.g. YourCompanyName YourAppName/1.0.0). Without a proper User-Agent header, Jumio will take longer to diagnose API issues.<br>
+
+The TLS protocol is required during the TLS handshake (see [Supported cipher suites](/netverify/supported-cipher-suites.md)) and we strongly recommend using the latest version.<br/><br>
+
+###### Response
+
+Unsuccessful requests will return the relevant [HTTP status code](https://tools.ietf.org/html/rfc7231#section-6) and information about the cause of the error. HTTP status code `404 Not Found` will be returned if the transaction is not available, does not conain a valid facemap or has been deleted.
+
+Successful requests will return HTTP status code `200 OK` along with a JSON object containing requested the information.
+
 
 ## Examples
 ### Sample request
@@ -247,6 +277,10 @@ Authorization: Basic xxxxxxxxxxxxxxxxxxxxxxxxxxxxx
             "validity": "true"
         },
         "mrzCheck": "NOT_AVAILABLE"
+    },
+		"facemap": {
+        "classifier": "facemap",
+        "href": "https://netverify.com/api/netverify/v2/scans/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/data/facemap"
     }
 }
 ```

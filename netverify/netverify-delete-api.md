@@ -1,4 +1,4 @@
-![Jumio](/images/netverify.png)
+![Jumio](/images/netverify.jpg)
 
 # Netverify Delete API Implementation Guide
 
@@ -18,8 +18,8 @@ This guide illustrates how to implement the Netverify Delete API.
 ## Table of Contents
 
 - [About deleting transactions](#about-deleting-transactions)
-- [Using the Delete API to delete a Netverify transaction](#using-the-delete-api-to-delete-a-netverify-transaction) 
-- [Using the Delete API to delete a Document Verification transaction](#using-the-delete-api-to-delete-a-document-verification-transaction) 
+- [Using the Delete API to delete a Netverify transaction](#using-the-delete-api-to-delete-a-netverify-transaction)
+- [Using the Delete API to delete a Document Verification transaction](#using-the-delete-api-to-delete-a-document-verification-transaction)
 	- [Authentication and encryption](#authentication-and-encryption)
 	- [Request headers](#request-headers)
 	- [Request path parameter](#request-path-parameter)
@@ -60,15 +60,15 @@ Use the HTTP `DELETE` method to call the RESTful API endpoint below. Specify the
 <br>
 
 ## Authentication and encryption
-Netverify API calls are protected using [HTTP Basic Authentication](https://tools.ietf.org/html/rfc7617). Your Basic Auth credentials are constructed using your API token as the user-id and your API secret as the password. You can view and manage your API token and secret in the Customer Portal under **Settings > API credentials**. 
+Netverify API calls are protected using [HTTP Basic Authentication](https://tools.ietf.org/html/rfc7617). Your Basic Auth credentials are constructed using your API token as the user-id and your API secret as the password. You can view and manage your API token and secret in the Customer Portal under **Settings > API credentials**.
 
 You can generate a separate set of API credentials in the Customer Portal to use when retrieving or deleting transaction data under **Settings > API credentials > Transaction administration APIs**.
 <br>
 
 |⚠️ Never share your API token, API secret, or Basic Auth credentials with *anyone* — not even Jumio Support.
 |:----------|
-<br> 
-The [TLS Protocol](https://tools.ietf.org/html/rfc5246) is required to securely transmit your data, and we strongly recommend using the latest version. For information on cipher suites supported by Jumio during the TLS handshake see [Supported cipher suites](/netverify/supported-cipher-suites.md).<br>	
+<br>
+The [TLS Protocol](https://tools.ietf.org/html/rfc5246) is required to securely transmit your data, and we strongly recommend using the latest version. For information on cipher suites supported by Jumio during the TLS handshake see [Supported cipher suites](/netverify/supported-cipher-suites.md).<br>
 <br>
 
 ## Request headers
