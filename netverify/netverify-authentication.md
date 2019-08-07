@@ -4,8 +4,8 @@
 
 This is a reference manual and configuration guide for Jumio Authentication for Web. It describes how to initiate a transaction, how to customize your settings and branding, and how to display Authentication to your users.
 <br><br>
-Biometric-based Jumio Authentication establishes the digital identities of your users through the simple act of taking a selfie. Advanced 3D face map technology quickly and securely authenticates users and unlocks their digital identities.
-<br>
+Biometric-based Jumio Authentication establishes the digital identities of your users through the simple act of taking a selfie. Advanced 3D facemap technology quickly and securely authenticates users and unlocks their digital identities.<br>
+
 ### Revision history
 
 Information about changes to features and improvements documented in each release is available in our [Revision history](/netverify/README.md).
@@ -49,7 +49,7 @@ Information about changes to features and improvements documented in each releas
 ---
 # Initiating an Authentication transaction
 
-Call the RESTful API POST endpoint **/initiate** with a JSON object containing the properties described below to create a transaction for each user. You will receive a JSON object in the response containing a timestamp, Jumio transaction reference, and a URL which you can use to present Authentication to your user.
+Call the RESTful API POST endpoint **/initiate** with a JSON object containing the properties described below to create a transaction for each user. You will receive a JSON object in the response containing a timestamp, a Jumio transaction reference and a URL which you can use to present Authentication to your user.
 
 **HTTP Request Method:** `POST`<br>
 **REST URL (US)**: `https://netverify.com/api/auth/v1/initiate`<br>
@@ -65,7 +65,6 @@ Authentication API calls are protected using [HTTP Basic Authentication](https:/
 |:----------|
 
 The [TLS Protocol](https://tools.ietf.org/html/rfc5246) is required to securely transmit your data, and we strongly recommend using the latest version. For information on cipher suites supported by Jumio during the TLS handshake see [Supported cipher suites](/netverify/supported-cipher-suites.md).
-
 <br>
 
 ## Request headers
@@ -96,7 +95,7 @@ The body of your **initiate** API request allows you to
 
 <br>
 
-**Required items appear in bold type.**  
+**Required items appear in bold font.**  
 
 |Name               |Type   | Max. length|Description                                                                                                  |
 |:---                      |:---    |:---        |:---                                                                                                          |

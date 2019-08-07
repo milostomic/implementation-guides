@@ -20,6 +20,7 @@ The Jumio Knowledge Base also contains a wealth of information regarding our ser
 
 | Date           | Description       |
 |:---------------|:------------------|
+| 2019-08-05  |Added Authentication with Facemap Storage on Customer Premise |
 | 2019-07-23  |Added response parameter "facemap" for Netverify |
 | 2019-07-18  |Added Armenian and Georgian localizations for Netverify Web|
 | 2019-07-11  |Added Authentication for Web (Beta)|
