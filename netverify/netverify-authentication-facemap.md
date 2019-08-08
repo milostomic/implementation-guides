@@ -135,10 +135,9 @@ The following fields are required in the header section of your request:<br>
 |Value  |enrollmentMetadata|
 |:--------------|:--------------|
 |**enrollmentTransactionReference**|The transaction reference from the onboarding ID verification to be used for authentication. <br><br> This is the Jumio scan reference of the original Netverify transaction.|
-|userReference<sup>1</sup>|Your internal reference for the user.|
-|callbackUrl<sup>1</sup>|Sends verification result to this URL upon completion. Overrides Callback URL in the Customer Portal.|
+|userReference	|Your internal reference for the user.|
+|callbackUrl 	|Sends verification result to this URL upon completion. Overrides Callback URL in the Customer Portal.|
 
-<sup>1</sup> The value gets ignored if defined at a later step via Authentication.
 
 <br>
 

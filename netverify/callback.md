@@ -130,7 +130,7 @@ The following parameters are posted to your callback URL for Netverify Web, perf
 |optionalData1   |255  |Optional field of MRZ line 1 | not returned for NLD ID if NV masking is enabled <sup>4</sup>|
 |optionalData2   |255  |Optional field of MRZ line 2 | |
 |dni   |255  |DNI as available on the ID if idCountry = ESP and idSubtype = NATIONAL\_ID  | |
-|curp   |255  |CURP as available on the ID if idCountry = MEX and idSubtype = ELECTORAL\_ID  |activation required |
+|curp   |255  |CURP is available if idCountry = MEX and idType = PASSPORT, DRIVING\_LICENSE, or ID\_CARD and idSubtype = ELECTORAL\_ID  |activation required |
 |gender   |2  |Possible values: M, F<br>• if idCountry = FRA and idSubtype = NATIONAL\_ID (MRZ type CNIS)<br>• if idCountry = HKG and idSubtype = NATIONAL\_ID (MRZ type CNIS)<br/>•	if idType = VISA and additional extraction for Visa enabled | |
 |presetCountry   | 3  |Possible countries:<br />•	[ISO 3166-1 alpha-3](http://en.wikipedia.org/wiki/ISO_3166-1_alpha-3) country code <br /> • XKX (Kosovo)| |
 |presetIdType   |    |Possible ID types: PASSPORT, DRIVING\_LICENSE, ID\_CARD| |
