@@ -150,7 +150,6 @@ Successful requests will return HTTP status code `200 OK` along with a JSON obje
 
 |Name|Type|Max. length|Description|
 |:----|:----|:----|:----|
-|**timestamp**|String|24|Timestamp (UTC) of the response.<br>Format: *YYYY-MM-DDThh:mm:ss.SSSZ*|
 |**authenticationTransactionReference**|String|36|Jumio reference number for the Authentication transaction.|
 
 <br>
