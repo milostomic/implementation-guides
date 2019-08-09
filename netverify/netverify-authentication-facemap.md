@@ -64,13 +64,13 @@ You must use either the callback or Retrieval API to get the facemap of a Netver
 
 The callback parameter `facemap` contains an URL to the facemap of the transaction.
 
-See [Callback for Netverify](https://github.com/Jumio/implementation-guides-develop/blob/master/netverify/callback.md#callback-for-netverify) for further information.
+See [Callback for Netverify](https://github.com/Jumio/implementation-guides/blob/master/netverify/callback.md#callback-for-authentication) for further information.
 
 ### Netverify Retrieval API
 
 The response parameter `facemap` will be returned when retrieving the details of a transaction.
 
-See the [Netverify Retrieval API Implementation Guide](https://github.com/Jumio/implementation-guides-develop/blob/master/netverify/netverify-retrieval-api.md) for further details.
+See the [Netverify Retrieval API Implementation Guide](https://github.com/Jumio/implementation-guides/blob/master/netverify/netverify-retrieval-api.md#authentication-retrieval) for further details.
 
 <br>
 
