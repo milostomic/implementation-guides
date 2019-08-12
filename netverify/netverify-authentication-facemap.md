@@ -164,14 +164,22 @@ Accept: application/json
 Content-Type: multipart/form-data
 User-Agent: Example Corp SampleApp/1.0.1
 Authorization: Basic xxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+------WebKitFormBoundary7MA4YWxkTrZu0gW--,
+Content-Disposition: form-data; name="facemap"; filename="facemap.bin"
+
+
+------WebKitFormBoundary7MA4YWxkTrZu0gW--
+Content-Disposition: form-data; name="enrollmentMetadata"
+
 {
 	"enrollmentMetadata": {
 		"enrollmentTransactionReference": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
   		"userReference": "user_1234",
 		"callbackUrl": "https://www.yourcompany.com/callback"
-	},
-	"facemap": "transaction_1234"
+	}
 }
+------WebKitFormBoundary7MA4YWxkTrZu0gW--
 
 ~~~
 
