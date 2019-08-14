@@ -81,8 +81,8 @@ See the [Netverify Retrieval API Implementation Guide](https://github.com/Jumio/
 Call the RESTful API POST endpoint **/initiateAuthentication** with a JSON object containing the properties described below to create a transaction for each user. You will receive a JSON object in the response containing a new authentication transaction reference to start authentication.
 
  **HTTP Request Method:** `POST`<br>
- **REST URL (US)**: `https://netverify.com/api/authentication/v1/initiateAuthentication`<br>
- **REST URL (EU)**: `https://lon.netverify.com/api/authentication/v1/initiateAuthentication`<br>
+ **REST URL (US)**: `https://netverify.com/api/authentication/v1/facemap/initiate`<br>
+ **REST URL (EU)**: `https://lon.netverify.com/api/authentication/v1/facemap/initiate`<br>
 
 
 |⚠️ A new transaction will be created and the facemap will be temporarily stored until the transaction reaches a final state (max. 15 minutes).

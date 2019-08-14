@@ -52,8 +52,8 @@ Information about changes to features and improvements documented in each releas
 Call the RESTful API POST endpoint **/initiate** with a JSON object containing the properties described below to create a transaction for each user. You will receive a JSON object in the response containing a timestamp, a Jumio transaction reference and a URL which you can use to present Authentication to your user.
 
 **HTTP Request Method:** `POST`<br>
-**REST URL (US)**: `https://netverify.com/api/auth/v1/initiate`<br>
-**REST URL (EU)**: `https://lon.netverify.com/api/auth/v1/initiate`<br>
+**REST URL (US)**: `https://netverify.com/api/authentication/v1/web/initiate`<br>
+**REST URL (EU)**: `https://lon.netverify.com/api/authentication/v1/web/initiate`<br>
 
 <br>
 
