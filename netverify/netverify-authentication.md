@@ -1,6 +1,6 @@
 ![Jumio](/images/authentication.jpg)
 
-# Authentication for Web (Beta)
+# Authentication for Web (Pilot)
 
 This is a reference manual and configuration guide for Jumio Authentication for Web. It describes how to initiate a transaction, how to customize your settings and branding, and how to display Authentication to your users.
 <br><br>
