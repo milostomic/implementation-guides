@@ -233,11 +233,14 @@ Hyphenated combination of [ISO 639-1:2002 alpha-2](https://en.wikipedia.org/wiki
 |fr|French|
 |hu|Hungarian|
 |hy|Armenian|
+|id|Indonesian|
 |it|Italian|
 |ja|Japanese|
 |ka|Georgian|
+|km|Khmer|
 |ko|Korean|
 |lt|Lithuanian|
+|ms|Malay|
 |nl|Dutch|
 |no|Norwegian|
 |pl|Polish|
@@ -247,6 +250,7 @@ Hyphenated combination of [ISO 639-1:2002 alpha-2](https://en.wikipedia.org/wiki
 |ru|Russian|
 |sk|Slovak|
 |sv|Swedish|
+|th|Thai|
 |tr|Turkish|
 |vi|Vietnamese|
 |zh-CN|Simplified Chinese|

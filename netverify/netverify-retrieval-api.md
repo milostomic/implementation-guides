@@ -227,7 +227,7 @@ The TLS protocol is required during the TLS handshake (see [Supported cipher sui
 
 ###### Response
 
-Unsuccessful requests will return the relevant [HTTP status code](https://tools.ietf.org/html/rfc7231#section-6) and information about the cause of the error. HTTP status code `404 Not Found` will be returned if the transaction is not available, does not conain a valid facemap or has been deleted.
+Unsuccessful requests will return the relevant [HTTP status code](https://tools.ietf.org/html/rfc7231#section-6) and information about the cause of the error. HTTP status code `404 Not Found` will be returned if the transaction is not available, does not contain a valid facemap or has been deleted.
 
 Successful requests will return HTTP status code `200 OK` along with a JSON object containing requested the information.
 
