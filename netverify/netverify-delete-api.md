@@ -8,6 +8,7 @@ This guide illustrates how to implement the Netverify Delete API.
 
 | Date    | Description|
 |:--------|:------------|
+| 2019-08-27  |Added Delete API for Authentication|
 | 2019-01-30  |Document formatting|
 | 2016-05-18  |Removed TLS\_DHE ciphers|
 | 2015-10-20  |Added ECDHE ciphers to supported cipher suites|
@@ -17,46 +18,31 @@ This guide illustrates how to implement the Netverify Delete API.
 
 ## Table of Contents
 
-- [About deleting transactions](#about-deleting-transactions)
-- [Using the Delete API to delete a Netverify transaction](#using-the-delete-api-to-delete-a-netverify-transaction)
-- [Using the Delete API to delete a Document Verification transaction](#using-the-delete-api-to-delete-a-document-verification-transaction)
+- [Usage](#usage)
 	- [Authentication and encryption](#authentication-and-encryption)
 	- [Request headers](#request-headers)
-	- [Request path parameter](#request-path-parameter)
+- [Delete API for Netverify](#delete-api-for-netverify)
+	- [Request body](#request-body)
 	- [Response](#response)
-	- [Examples](#examples)
-		- [Sample Netverify delete request](#sample-netverify-delete-request)
-		- [Sample Document Verification delete request](#sample-document-verification-delete-request)
-
-
+	- [Example](#example)
+- [Delete API for Authentication](#delete-api-for-authentication)
+	- [Request body](#request-body-1)
+	- [Response](#response-1)
+	- [Example](#example-1)
+- [Delete API for Document Verification](#delete-api-for-document-verification)
+	- [Request body](#request-body-2)
+	- [Response](#response-2)
+	- [Example](#example-2)
 
 
 ---
-# About deleting transactions
+
+# Usage
 
 If you do not wish to store sensitive customer data after a verification has been completed, you can delete the image(s) and any extracted data in a transaction record either directly in the Customer Portal or via the Delete API.
 
 |⚠️ Deletion is immediate and irreversible. Jumio cannot perform any quality or technical support investigations on transactions that have been deleted.
 |:----------|
-<br>
-
----
-# Using the Delete API to delete a Netverify transaction
-
-Use the HTTP `DELETE` method to call the RESTful API endpoint below. Specify the Jumio transaction reference you want to delete as a path parameter.
-
-**HTTP Request Method:** `DELETE`<br>
-**REST URL (US)**: `https://netverify.com/api/netverify/v2/scans/<scanReference>`<br>
-**REST URL (EU)**: `https://lon.netverify.com/api/netverify/v2/scans/<scanReference>`<br>
-<br>
----
-# Using the Delete API to delete a Document Verification transaction
-
-Use the HTTP `DELETE` method to call the RESTful API endpoint below. Specify the Jumio transaction reference you want to delete as a path parameter.
-
-**HTTP Request Method:** `DELETE`<br>
-**REST URL (US)**: `https://retrieval.netverify.com/api/netverify/v2/documents/<scanReference>`<br>
-**REST URL (EU)**: `https://retrieval.lon.netverify.com/api/netverify/v2/documents/<scanReference>`<br>
 <br>
 
 ## Authentication and encryption
@@ -83,13 +69,24 @@ The following fields are required in the header section of your request:<br>
 |:---|
 <br>
 
-## Request path parameter
+---
+
+# Delete API for Netverify
+
+Use the HTTP `DELETE` method to call the RESTful API endpoint below. Specify the Netverify transaction reference you want to delete as a path parameter.
+
+**HTTP Request Method:** `DELETE`<br>
+**REST URL (US)**: `https://netverify.com/api/netverify/v2/scans/<transactionReference>`<br>
+**REST URL (EU)**: `https://lon.netverify.com/api/netverify/v2/scans/<transactionReference>`<br>
+<br>
+
+## Request body
 
 **Required items appear in bold type.**  
 
 |Name       | Type    | Max. Length| Description|
 |:---------------|:--------|:------------|:------------|
-|**scanReference**| String|36|Jumio reference number for an existing transaction in your account.|
+|**transactionReference**| String|36|Jumio reference number for an existing Netverify transaction in your account.|
 <br>
 
 ## Response
@@ -99,7 +96,7 @@ Unsuccessful requests will return the relevant [HTTP status code](https://tools.
 Successful requests will return HTTP status code `200 OK` as confirmation that you have successfully deleted the image(s) and extracted data from the specified transaction record.<br>
 <br>
 
-## Examples
+## Example
 ### Sample Netverify delete request
 
 ~~~
@@ -108,8 +105,82 @@ Accept: application/json
 User-Agent: Example Corp SampleApp/1.0.1
 Authorization: Basic xxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 ~~~
+<br>
 
+|⚠️ Sample requests cannot be run as-is. Replace example data with your own values.
+|:----------|
+<br>
 
+---
+
+# Delete API for Authentication
+
+Use the HTTP `DELETE` method to call the RESTful API endpoint below. Specify the Authentication transaction reference you want to delete as a path parameter.
+
+**HTTP Request Method:** `DELETE`<br>
+**REST URL (US)**: `https://netverify.com/api/netverify/v2/authentications/<transactionReference>`<br>
+**REST URL (EU)**: `https://lon.netverify.com/api/netverify/v2/authentications/<transactionReference>`<br>
+<br>
+
+## Request body
+
+**Required items appear in bold type.**  
+
+|Name       | Type    | Max. Length| Description|
+|:---------------|:--------|:------------|:------------|
+|**transactionReference**| String|36|Jumio reference number for an existing Authentication transaction in your account.|
+<br>
+
+## Response
+
+Unsuccessful requests will return the relevant [HTTP status code](https://tools.ietf.org/html/rfc7231#section-6) and information about the cause of the error.
+
+Successful requests will return HTTP status code `200 OK` as confirmation that you have successfully deleted PII data, images and facemap from the specified authentication transaction record.<br>
+<br>
+
+## Example
+### Sample Authentication delete request
+
+~~~
+DELETE https://netverify.com/api/netverify/v2/authentications/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/ HTTP/1.1
+Accept: application/json
+User-Agent: Example Corp SampleApp/1.0.1
+Authorization: Basic xxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+~~~
+<br>
+
+|⚠️ Sample requests cannot be run as-is. Replace example data with your own values.
+|:----------|
+<br>
+
+---
+
+# Delete API for Document Verification
+
+Use the HTTP `DELETE` method to call the RESTful API endpoint below. Specify the Document Verification transaction reference you want to delete as a path parameter.
+
+**HTTP Request Method:** `DELETE`<br>
+**REST URL (US)**: `https://retrieval.netverify.com/api/netverify/v2/documents/<transactionReference>`<br>
+**REST URL (EU)**: `https://retrieval.lon.netverify.com/api/netverify/v2/documents/<transactionReference>`<br>
+<br>
+
+## Request body
+
+**Required items appear in bold type.**  
+
+|Name       | Type    | Max. Length| Description|
+|:---------------|:--------|:------------|:------------|
+|**transactionReference**| String|36|Jumio reference number for an existing Document Verification transaction in your account.|
+<br>
+
+## Response
+
+Unsuccessful requests will return the relevant [HTTP status code](https://tools.ietf.org/html/rfc7231#section-6) and information about the cause of the error.
+
+Successful requests will return HTTP status code `200 OK` as confirmation that you have successfully deleted the image(s) and extracted data from the specified transaction record.<br>
+<br>
+
+## Example
 ### Sample Document Verification delete request
 
 ~~~
