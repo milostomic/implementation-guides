@@ -100,15 +100,15 @@ The body of your **initiate** API request allows you to
 |Name               |Type   | Max. length|Description                                                                                                  |
 |:---                      |:---    |:---        |:---                                                                                                          |
 |**enrollmentTransactionReference**|string |36        |The transaction reference from the onboarding ID verification to be used for authentication.<br><br>ℹ️ Transaction has to be<br> •	verificationStatus = APPROVED_VERIFIED<br> •	similarity = MATCH<br> •	validity = TRUE 		|
-|**customerInternalReference**<sup>1</sup>|string |100        |Your internal reference for the transaction.		|
-|**callbackUrl**<sup>2</sup>              |string |255        |Sends verification result to this URL upon completion.<br>Overrides [Callback URL](#callback-error-and-success-urls) in the Customer Portal.		|
-|successUrl<sup>2</sup>               |string |2047        |Redirects to this URL after a successful transaction.<br>Overrides [Success URL](#callback-error-and-success-urls) in the Customer Portal.		|
-|errorUrl<sup>2</sup>                 |string |255        |Redirects to this URL after an unsuccessful transaction.<br>Overrides [Error URL](#callback-error-and-success-urls) in the Customer Portal.		|
+|**callbackUrl**<sup>1</sup>              |string |255        |Sends verification result to this URL upon completion.<br>Overrides [Callback URL](#callback-error-and-success-urls) in the Customer Portal.		|
+|successUrl<sup>1</sup>               |string |2047        |Redirects to this URL after a successful transaction.<br>Overrides [Success URL](#callback-error-and-success-urls) in the Customer Portal.		|
+|errorUrl<sup>1</sup>                 |string |255        |Redirects to this URL after an unsuccessful transaction.<br>Overrides [Error URL](#callback-error-and-success-urls) in the Customer Portal.		|
+|userReference<sup>2</sup>|string |100        |Your internal reference for the user.|
 |tokenLifetimeInMinutes  |number 	|Max. value: 86400 |Time in minutes until the authorization token expires. (minimum: 5, maximum: 86400)<br>Overrides [Authorization token lifetime](#authorization-token-lifetime) in the Customer Portal.		|
 |locale                   |string |5          |Renders content in the specified language.<br>Overrides [Default locale](#default-locale) in the Customer Portal.<br>See [supported locale values](#supported-locale-values).		|
 
-<sup>1</sup> Values **must not** contain Personally Identifiable Information (PII) or other sensitive data such as email addresses.<br>
-<sup>2</sup> See URL constraints for [Callback, Error, and Success URLs](#callback-error-and-success-urls).
+<sup>1</sup> See URL constraints for [Callback, Error, and Success URLs](#callback-error-and-success-urls).<br>
+<sup>2</sup> Values **must not** contain Personally Identifiable Information (PII) or other sensitive data such as email addresses.<br>
 
 <br>
 
@@ -170,7 +170,7 @@ Successful requests will return HTTP status code `200 OK` along with a JSON obje
 ### Sample request
 
 ~~~
-POST https://netverify.com/api/v4/initiate/ HTTP/1.1
+POST https://netverify.com/api/authentication/v1/web/initiate HTTP/1.1
 Accept: application/json
 Content-Type: application/json
 Content-Length: 1234
@@ -178,7 +178,7 @@ User-Agent: Example Corp SampleApp/1.0.1
 Authorization: Basic xxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 {
 	"enrollmentTransactionReference": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
-	"customerInternalReference": "transaction_1234",
+	"userReference": "transaction_1234",
 	"callbackUrl": "https://www.yourcompany.com/callback",
 	"successUrl" : "https://www.yourcompany.com/success",
 	"errorUrl" : "https://www.yourcompany.com/error",
@@ -242,7 +242,6 @@ Jumio appends the following parameters to your Success or Error URL to redirect 
 |Name|Description|
 |:---|:---|
 |transactionStatus| • `SUCCESS` for successful submissions. <br> • `ERROR`for errors and failure after 3 attempts.|
-|customerInternalReference<sup>1</sup>|Your internal reference for the transaction.|
 |transactionReference|Jumio reference number for the transaction.|
 |errorCode|Displayed when `transactionStatus` is `ERROR`.|
 
@@ -390,7 +389,6 @@ All data is encoded with [UTF-8](https://tools.ietf.org/html/rfc3629).
 |:-------|:---|:----------|
 |**authorizationToken**|string|Authorization token, valid for a specified duration.|
 |**transactionReference**|string|Jumio reference number for the transaction.|
-|**customerInternalReference**<sup>1</sup>|string|Your internal reference for the transaction.|
 |**eventType**|integer|Type of event that has occurred.<br>Possible values: <br>• `510` (application state-change)|
 |**dateTime**|string|UTC timestamp of the event in the browser.<br>Format: *YYYY-MM-DDThh:mm:ss.SSSZ*|
 |**payload**|JSON object|Information specific to the event generated. <br>(see [`event.data.payload` object](#eventdatapayload-object))|
@@ -426,7 +424,6 @@ function receiveMessage(event) {
 	console.log('Netverify Web was loaded in an iframe.');
 	console.log('auth token:', data.authorizationToken);
 	console.log('transaction reference:', data.transactionReference);
-	console.log('customer internal reference:', data.customerInternalReference);
 	console.log('event type:', data.eventType);
 	console.log('date-time:', data.dateTime);
 	console.log('event value:', data.payload.value);
@@ -450,7 +447,6 @@ To display relevant information on your success or error page, you can use the f
 |Name|Description|
 |:---|:---|
 |**transactionStatus**|Possible values:<br>• `SUCCESS` for successful submissions. <br> • `ERROR`for errors and failure after 3 attempts.|
-|**customerInternalReference**<sup>2</sup>|Your internal reference for the transaction.|
 |**transactionReference**|Jumio reference number for the transaction.|
 |errorCode|Displayed when `transactionStatus` is `ERROR`.<br>Possible values: <br>• `9100` (Error occurred on our server.)<br>• `9200` (Authorization token missing, invalid, or expired.)<br>• `9210` (Session expired after the user journey started.)<br>• `9300` (Error occurred transmitting image to our server.)<br>• `9400` (Error occurred during verification step.)<br>• `9800` (User has no network connection.)<br>• `9801` (Unexpected error occurred in the client.)<br>• `9810` (Problem while communicating with our server.)<br>• `9820` (Camera unavailable.)<br>• `9821` (The Authentication capture process failed after 3 attempts.)<br>• `9836` (No acceptable submission in 3 attempts.)|
 
@@ -460,13 +456,13 @@ To display relevant information on your success or error page, you can use the f
 ### Sample success redirect
 
 ```
-https://www.yourcompany.com/success/?transactionStatus=SUCCESS&customerInternalReference=YOUR_REF&transactionReference=xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+https://www.yourcompany.com/success/?transactionStatus=SUCCESS&transactionReference=xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
 ```
 
 ### Sample error redirect
 
 ```
-https://www.yourcompany.com/error/?transactionStatus=ERROR&customerInternalReference=YOUR_REF&transactionReference=xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx&errorCode=9820
+https://www.yourcompany.com/error/?transactionStatus=ERROR&transactionReference=xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx&errorCode=9820
 ```
 
 

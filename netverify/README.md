@@ -20,6 +20,7 @@ The Jumio Knowledge Base also contains a wealth of information regarding our ser
 
 | Date           | Description       |
 |:---------------|:------------------|
+| 2019-08-28  |Renaming parameter for Authentication for Web from customerInternalReference (mandatory) to <br>userReference (optional) |
 | 2019-08-22  |Added Indonesian, Khmer, Malay and Thai localizations for Netverify Web |
 | 2019-08-14  |Renaming endpoints for Authentication for Web and Authentication with Facemap<br>Storage on Customer Premise |
 | 2019-08-05  |Added Authentication with Facemap Storage on Customer Premise |
@@ -146,7 +147,7 @@ The Jumio Knowledge Base also contains a wealth of information regarding our ser
 | 2011-03-06  |Introduced "showIntroductionText" parameter|
 | 2011-03-01  |Initial release|
 <!---
-| 2019-08-22  |Renaming parameter for Authentication for Web from customerInternalReference (mandatory) to userReference (optional)|
+
 --->
 ---
 &copy; Jumio Corp. 268 Lambert Avenue, Palo Alto, CA 94306
