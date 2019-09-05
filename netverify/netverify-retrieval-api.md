@@ -311,7 +311,7 @@ Successful requests will return HTTP status code `200 OK` along with a JSON obje
 |**scanReference**| string|36|Jumio’s reference number for the transaction|
 |**status**| string| |Netverify:<br>• APPROVED\_VERIFIED<br>• DENIED\_FRAUD<br>• DENIED\_UNSUPPORTED\_ID\_TYPE<br>• DENIED\_UNSUPPORTED\_ID\_COUNTRY<br>• ERROR\_NOT\_READABLE\_ID<br>• NO\_ID\_UPLOADED |
 |type| string| |Netverify:<br>•	PASSPORT<br>• DRIVING\_LICENSE<br>• ID\_CARD<br>• VISA<br>• UNSUPPORTED |
-|idSubtype| string|255|Possible subtypes if type = ID\_CARD:<br>•	NATIONAL\_ID<br>• CONSULAR\_ID<br>• ELECTORAL\_ID<br>• RESIDENT\_PERMIT\_ID<br>• TAX\_ID <br>• STUDENT\_ID <br>• PASSPORT\_CARD\_ID <br>• MILITARY\_ID <br>• PUBLIC\_SAFETY\_ID<br>• OTHER\_ID<br>• VISA <br>• UNKNOWN<br><br>Possible subtypes if type = DRIVING\_LICENSE:<br>• LEARNING\_DRIVING\_LICENSE <br><br>Possible subtypes if type = PASSPORT:<br>• E\_PASSPORT (only for mobile)|
+|idSubtype| string|255|Possible subtypes if type = ID\_CARD:<br>•	NATIONAL\_ID<br>• CONSULAR\_ID<br>• ELECTORAL\_ID<br>• RESIDENT\_PERMIT\_ID<br>• TAX\_ID <br>• STUDENT\_ID <br>• PASSPORT\_CARD\_ID <br>• MILITARY\_ID <br>• PUBLIC\_SAFETY\_ID<br/>•	HEALTH\_ID <br>• OTHER\_ID<br>• VISA <br>• UNKNOWN<br><br>Possible subtypes if type = DRIVING\_LICENSE:<br>• LEARNING\_DRIVING\_LICENSE <br><br>Possible subtypes if type = PASSPORT:<br>• E\_PASSPORT (only for mobile)|
 |issuingCountry|string|3|Possible countries:<br>• [ISO 3166-1 alpha-3](http://en.wikipedia.org/wiki/ISO_3166-1_alpha-3) country code<br>- XKX (Kosovo)|
 |firstName|string|255|Customer's first name|
 |lastName|string|255|Customer's last name|
@@ -326,6 +326,10 @@ Successful requests will return HTTP status code `200 OK` along with a JSON obje
 |address|object||Address in US, EU or Raw format, see tables below|
 |issuingAuthority|string|50|Issuing authority of the document (if issuing authority extraction is enabled)|
 |issuingPlace|string|50|Issuing place of the document (if issuing place extraction is enabled)|
+|curp|string|18|CURP (if CURP extraction is enabled)|
+|gender|string|1|Possible values: M, F|
+|placeOfBirth|string|255|Place of birth of document holder|
+|taxNumber|string|255|Tax number of the document<br>• if idCountry = ITA and idType = HEALTH\_ID or TAX\_ID <br> (if Tax number extraction is enabled)|
 
 #### US address format
 
@@ -772,6 +776,7 @@ Successful requests will return HTTP status code `200 OK` along with a JSON obje
 |**transactionResult** |string||Possible values:<br>• CREATED<br>• STARTED<br>• PASSED<br>• FAILED<br>• INVALID<br>• EXPIRED|
 |**transactionDate** |string||Timestamp of the transaction in the format YYYY-MM-DDThh:mm:ss.SSSZ|
 |**scanSource** |string||Possible value:<br>• SDK|
+|userReference |string||Your internal reference for the user|
 |images |JSON array/object||See table below|
 |livenessImages |JSON array||List of REST URLs to retrieve specific liveness images|
 

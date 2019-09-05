@@ -10,7 +10,12 @@ Information about changes to features and improvements documented in each releas
 
 ## Table of Contents
 
+- [Authentication and encryption](#authentication-and-encryption)
 - [Using the Fastfill API](#using-the-fastfill-api)
+  - [Request headers](#request-headers)
+  - [Request body](#request-body)
+  - [Response Parameter](#response-parameter)
+  - [Examples](#examples)
 - [Supported IDs](#supported-ids)
 - [Supported Cipher Suites](#supported-cipher-suites)
 
@@ -18,41 +23,72 @@ Information about changes to features and improvements documented in each releas
 
 
 ---
+# Authentication and encryption
+
+All Document Verification API calls are protected using [HTTP Basic Authentication](https://tools.ietf.org/html/rfc7617). Your Basic Auth credentials are constructed using your API token as the user-id and your API secret as the password. You can view and manage your API token and secret in the Customer Portal under **Settings > API credentials**.
+<br>
+
+|⚠️ Never share your API token, API secret, or Basic Auth credentials with *anyone* — not even Jumio Support.
+|:----------|
+
+The [TLS Protocol](https://tools.ietf.org/html/rfc5246) is required to securely transmit your data, and we strongly recommend using the latest version. For information on cipher suites supported by Jumio during the TLS handshake see [supported cipher suites](/netverify/supported-cipher-suites.md).
+
+<br>
+
 # Using the Fastfill API
 
 Call the RESTful HTTP POST API **fastfill** from your server with the below parameters to create a transaction for each user. Simply submit front and/or back side image(s) of the user's document with a maximum file size of 5 MB and you will immediately receive the ID information as a JSON response.<br />
 **Note:** Requests originating from the client are not supported (CORS is disabled) and the API credentials must never be exposed on the client side.
 
-HTTP request method: **POST**<br>
-**REST URL:** `https://netverify.com/api/netverify/v2/fastfill`<br>
-If your customer account is in the EU data center, use `lon.netverify.com` instead of `netverify.com`.
+**HTTP request method:** `POST`<br>
+**REST URL (US):** `https://netverify.com/api/netverify/v2/fastfill`<br>
+**REST URL (EU):** `https://lon.netverify.com/api/netverify/v2/fastfill`<br>
 
-**Authentication:** The API call is protected. To access it, use HTTP Basic Authentication with your API token as the "userid" and your API secret as the "password". You can find your API token and API secret by logging into your Jumio customer portal and navigating to the "Settings" page and clicking on the "API credentials" tab.
+## Request headers
 
-**Header:** The following parameters are mandatory in the "header" section of your request.<br>
-- `Accept: application/json`<br />
-- `Content-Type: multipart/form-data`<br />
-- `Content-Length: xxx` (RFC-2616)<br />
-- `User-Agent: YOURCOMPANYNAME YOURAPPLICATIONNAME/VERSION` <br><br>
-The value for **User-Agent** must contain a reference to your business or entity for Jumio to be able to identify your requests. (e.g. YourCompanyName YourAppName/1.0.0). Without a proper User-Agent header, Jumio will take longer to diagnose API issues.
+The following fields are required in the header section of your request:<br>
 
-**TLS handshake:** The TLS protocol is required (see [Supported Cipher Suites](/netverify/supported-cipher-suites.md)) and we strongly recommend using the latest version.
+`Accept: application/json`<br>
+`Content-Type: multipart/form-data`<br>
+`Content-Length:`  (see [RFC-7230](https://tools.ietf.org/html/rfc7230#section-3.3.2))<br>
+`Authorization:` (see [RFC 7617](https://tools.ietf.org/html/rfc7617))<br>
+`User-Agent: YourCompany YourApp/v1.0`<br>
+
+|ℹ️ Jumio requires the `User-Agent` value to reflect your business or entity name for API troubleshooting.|
+|:---|
+
+<br>
 
 **Note:** Calls with missing or suspicious headers, suspicious parameter values, or without HTTP Basic Authentication will result in HTTP status code, **403 Forbidden**.
 
-### Request Parameter
+## Request body
 
-**Note:** Mandatory parameters are marked with an asterisk * and highlighted bold.
+### Request body — `multipart/form-data`
 
-|Parameter       | Type    | Max. Length| Description|
-|:---------------|:--------|:------------|:------------|
-|**metadata** *|JSON||Metadata of the customer's document as JSON objects, see table below|
-|**frontsideImage** *|JPEG or PNG|Max. 5 MB|Front side image of the customer's document<br> <strong>Mandatory<br>-	if type = PASSPORT<br>-	If type = ID\_CARD or DRIVING\_LICENSE and backsideImage not provided</strong> |
-|**backsideImage** *|JPEG or PNG|Max. 5 MB|Back side image of the customer's document if type = ID\_CARD or DRIVING\_LICENSE<br><strong>Mandatory if frontsideImage not provided</strong>|
-|**type** *|String||Possible types:<br>-	PASSPORT<br>-	ID\_CARD<br>- DRIVING\_LICENSE |
-|**country** *|String|3|Possible countries:<br>- [ISO 3166-1 alpha-3](http://en.wikipedia.org/wiki/ISO_3166-1_alpha-3) country code<br>-	XKX (Kosovo) |
+|Key			|Value				|
+|:------		|:------			|
+|**frontsideImage**	|JPEG, PNG file with max size of 5 MB<br>Front side image of the customer's document<br> <strong>Mandatory<br>-	if type = PASSPORT<br>-	If type = ID\_CARD or DRIVING\_LICENSE and backsideImage not provided</strong>|
+|**backsideImage**|JPEG, PNG file with max size of 5 MB<br>Back side image of the customer's document if type = ID\_CARD or DRIVING\_LICENSE<br><strong>Mandatory if frontsideImage not provided</strong>|
+|**metadata**	|Details of the user's document specified as a JSON object|
 
-### Response Parameter
+
+The `metadata` object in the body of your single-page **complete** API request allows you to
+
+- specify what type of document is being submitted
+- set the country of the uploaded document type.
+
+<br>
+
+**Required items appear in bold type.**  
+
+### Request body — `metadata`
+
+|Name               |Type   |Max. length|Description|
+|:---               |:---   |:--        |:--        |             
+|**type**|string||Possible types:<br>-	PASSPORT<br>-	ID\_CARD<br>- DRIVING\_LICENSE|
+|**country**|string|3|Possible values:<br>• [ISO 3166-1 alpha-3](http://en.wikipedia.org/wiki/ISO_3166-1_alpha-3) country code<br>•	XKX (Kosovo)|
+
+## Response Parameter
 
 **Note:** Mandatory parameters are marked with an asterisk * and highlighted bold.
 
@@ -82,6 +118,8 @@ Optional parameters are returned:
 -	If readable
 -	As readable (can be invalid)
 
+## Examples
+
 ### Sample Request
 
 ```
@@ -95,13 +133,13 @@ Authorization: Basic
 Content-Disposition: form-data; name="metadata"
 Content-Type: application/json
 {
-"type": "PASSPORT",
-"country": "USA"
+  "type": "PASSPORT",
+  "country": "USA"
 }
 ----xxxx
 Content-Disposition: form-data; name="frontsideImage"
 Content-Type: image/jpeg
-// Your image
+  // Your image
 ----xxxx
 ```
 
@@ -109,17 +147,17 @@ Content-Type: image/jpeg
 
 ```
 {
-"dob": "1990-01-01",
-"expiry": "2022-12-31",
-"firstName": "FIRSTNAME",
-"issueDate": "2012-12-31",
-"issuingCountry": "USA",
-"lastName": "LASTNAME",
-"number": "P1234",
-"originatingCountry": "USA",
-"personalNumber": "12345",
-"scanReference": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
-"type": "PASSPORT"
+  "dob": "1990-01-01",
+  "expiry": "2022-12-31",
+  "firstName": "FIRSTNAME",
+  "issueDate": "2012-12-31",
+  "issuingCountry": "USA",
+  "lastName": "LASTNAME",
+  "number": "P1234",
+  "originatingCountry": "USA",
+  "personalNumber": "12345",
+  "scanReference": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
+  "type": "PASSPORT"
 }
 ```
 ---

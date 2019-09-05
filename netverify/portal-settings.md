@@ -50,6 +50,7 @@ Define an **Error URL** to direct your customer when the verification process en
 
 * IP addresses, ports, certain query parameters used by Jumio, and fragment identifiers are not allowed.
 * Personally identifiable information (PII) is not allowed in any form.
+* Domains that do not belong to the customer (Using a callback URL that does not belong to the customer will expose PII data to an unknown endpoint. Using domains that do not belong to the customer will spam third party services which is not allowed by our policies.)
 
 Jumio appends the following parameters to your Success or Error URL to redirect your user at the conclusion of the user journey. These cannot be used as part of your Success or Error URL:
 
