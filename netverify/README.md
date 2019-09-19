@@ -20,11 +20,12 @@ The Jumio Knowledge Base also contains a wealth of information regarding our ser
 
 | Date           | Description       |
 |:---------------|:------------------|
+| 2019-09-19  |Added Authentication with Facemap Storage on Customer Premise for Web|
 | 2019-09-04  |Added callback parameter "taxNumber", value "HEALTH\_ID" to <br>parameter "idSubtype"|
 | 2019-08-28  |Renaming parameter for Authentication for Web from customerInternalReference (mandatory) to <br>userReference (optional) |
 | 2019-08-22  |Added Indonesian, Khmer, Malay and Thai localizations for Netverify Web |
 | 2019-08-14  |Renaming endpoints for Authentication for Web and Authentication with Facemap<br>Storage on Customer Premise |
-| 2019-08-05  |Added Authentication with Facemap Storage on Customer Premise |
+| 2019-08-05  |Added Authentication with Facemap Storage on Customer Premise for Mobile |
 | 2019-07-23  |Added response parameter "facemap" for Netverify |
 | 2019-07-18  |Added Armenian and Georgian localizations for Netverify Web|
 | 2019-07-11  |Added Authentication for Web (Beta)|
