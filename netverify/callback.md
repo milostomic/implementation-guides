@@ -146,9 +146,13 @@ The following parameters are posted to your callback URL for Netverify Web, perf
 |issuingDate|10|Issuing date of the document (if issuing date extraction enabled) |activation required |
 |issuingPlace|50|Issuing place of the document (if issuing place extraction is enabled)<br>• if idCountry = ITA |activation required |
 |livenessImages| |URLs to the liveness images of the transaction (JPEG or PNG) if available<sup>5</sup> | |
-|placeOfBirth|256|Place of birth of document holder<br>• if idCountry = HKG | |
+|placeOfBirth|256|Place of birth of document holder<br>• if idCountry = FRA, HKG, IDN or ITA | |
 |facemap|255|URL to the facemap of the transaction if available |activation required |
 |taxNumber|255|Tax number of the document<br>• if idCountry = ITA and idType = HEALTH\_ID or TAX\_ID |activation required |
+|cpf|255|CPF number of the document|activation required |
+|registrationNumber|255|Registration number of the document |activation required |
+|mothersName|255|Name of the document holder's mother |activation required |
+|fathersName|255|Name of the document holder's father |activation required |
 
 <sup>1</sup> Transaction is declined as unsupported if the ID is not supported by Jumio, or not marked as accepted in your customer portal settings.<br/> <sup>2</sup> For ID types that are configured to support a separate scan of the front side and back side, there is a separate image of the front side (idScanImage) and the back side (idScanImageBackside). If Identity Verification is enabled, there is also a picture of the face (idScanImageFace).<br>
 <sup>3</sup> Address recognition is performed for supported IDs, if enabled. Please note, there are three different address formats (US, EU, Raw). Please check [Supported documents for Address Extraction](#supported-documents-for-address-extraction) to see which format applies to specific IDs. The different address parameters are a part of the JSON object, if they are available on the ID.<br>

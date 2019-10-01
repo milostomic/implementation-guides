@@ -98,6 +98,9 @@ Call the RESTful API POST endpoint **/initiateAuthentication** with a JSON objec
 |⚠️ A new transaction will be created and the facemap will be temporarily stored until the transaction reaches a final state (max. 15 minutes).
 |:----------|
 
+|⚠️ If multiple transactions has been created for the same `enrollmentTransactionReference` within 15 minutes only the last one will successfully work. For the first ones the user will not be able to finish them, they will get a final state of `EXPIRED`.
+|:----------|
+
 <br>
 
 
@@ -218,6 +221,9 @@ Call the RESTful API POST endpoint **/initiateAuthentication** with a JSON objec
 
 
 |⚠️ A new transaction will be created and the facemap will be temporarily stored until the transaction reaches a final state (max. 15 minutes).
+|:----------|
+
+|⚠️ If multiple transactions has been created for the same `enrollmentTransactionReference` within 15 minutes only the last one will successfully work. For the first ones the user will not be able to finish them, they will get a final state of `EXPIRED`.
 |:----------|
 
 <br>

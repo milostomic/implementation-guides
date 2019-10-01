@@ -330,6 +330,10 @@ Successful requests will return HTTP status code `200 OK` along with a JSON obje
 |gender|string|1|Possible values: M, F|
 |placeOfBirth|string|255|Place of birth of document holder|
 |taxNumber|string|255|Tax number of the document<br>• if idCountry = ITA and idType = HEALTH\_ID or TAX\_ID <br> (if Tax number extraction is enabled)|
+|cpf|string|255|CPF number of the document<br> (if CPF number extraction is enabled)|
+|registrationNumber|string|255|Registration number of the document <br> (if Registration number extraction is enabled)|
+|mothersName|string|255|Name of the document holder's mother <br> (if extraction is enabled)|
+|fathersName|string|255|Name of the document holder's father <br> (if extraction is enabled)|
 
 #### US address format
 

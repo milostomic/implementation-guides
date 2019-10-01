@@ -20,6 +20,7 @@ The Jumio Knowledge Base also contains a wealth of information regarding our ser
 
 | Date           | Description       |
 |:---------------|:------------------|
+| 2019-10-01  |Added callback parameter "cpf", "registrationNumber", "mothersName", and "fathersName"|
 | 2019-09-19  |Added Authentication with Facemap Storage on Customer Premise for Web|
 | 2019-09-04  |Added callback parameter "taxNumber", value "HEALTH\_ID" to <br>parameter "idSubtype"|
 | 2019-08-28  |Renaming parameter for Authentication for Web from customerInternalReference (mandatory) to <br>userReference (optional) |
