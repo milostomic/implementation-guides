@@ -23,6 +23,7 @@ Jumio's Netverify ID Verification, lets customers easily and securely capture an
 - [Netverify Retrieval API](/netverify/netverify-retrieval-api.md)
 - [Netverify Delete API](/netverify/netverify-delete-api.md)
 - [Callback Guide](/netverify/callback.md)
+- [Netverify Authentication
 
 ## Document Verification
 
