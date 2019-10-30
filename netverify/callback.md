@@ -34,11 +34,7 @@ Whitelist these IP addresses for callbacks, and use them to verify that the call
 34.226.254.127<br>
 52.52.51.178<br>
 52.53.95.123<br>
-54.67.101.173<br>
-104.130.61.196<br>
-146.20.77.156<br>
-184.106.91.66<br>
-184.106.91.67<br>
+54.67.101.173
 
 Use the hostname `callback.jumio.com` to look up the most current IP addresses.<p>
 
@@ -49,11 +45,7 @@ Use the hostname `callback.jumio.com` to look up the most current IP addresses.<
 52.48.0.25<br>
 52.57.194.92<br>
 52.58.113.86<br>
-52.209.180.134<br>
-162.13.228.132<br>
-162.13.228.134<br>
-162.13.229.103<br>
-162.13.229.104<br>
+52.209.180.134
 
 Use the hostname `callback.lon.jumio.com` to look up the most current IP addresses.<p>
 
@@ -146,7 +138,7 @@ The following parameters are posted to your callback URL for Netverify Web, perf
 |issuingDate|10|Issuing date of the document (if issuing date extraction enabled) |activation required |
 |issuingPlace|50|Issuing place of the document (if issuing place extraction is enabled)<br>• if idCountry = ITA |activation required |
 |livenessImages| |URLs to the liveness images of the transaction (JPEG or PNG) if available<sup>5</sup> | |
-|placeOfBirth|256|Place of birth of document holder<br>• if idCountry = FRA, HKG, IDN or ITA | |
+|placeOfBirth|256|Place of birth of document holder<br>• if idCountry = FRA, HKG, IDN, ITA, or SGP | |
 |facemap|255|URL to the facemap of the transaction if available |activation required |
 |taxNumber|255|Tax number of the document<br>• if idCountry = ITA and idType = HEALTH\_ID or TAX\_ID |activation required |
 |cpf|255|CPF number of the document|activation required |
