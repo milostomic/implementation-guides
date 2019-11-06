@@ -106,7 +106,7 @@ However, the portal setting can be overwritten in the API calls by including add
 
 The `additionalChecks` field must be included within the `presets` of the **Netverify Web v4** API call with the following, under `watchlistScreening`.
 
-Additionally, `userReference` will be used to associate Jumio Screening with Netverify transactions and **must be included** in API calls.
+Additionally, `userReference` will be used to associate Jumio Screening with Netverify transactions and **must be included and populated** in API calls.
 
 More information regarding the Netverify Web v4 can be found here:
 [Netverify Web v4 Implementation Guide](https://github.com/Jumio/implementation-guides/blob/master/netverify/netverify-web-v4.md)
@@ -120,8 +120,8 @@ More information regarding the Netverify Web v4 can be found here:
 
 ~~~
 {
- "customerInternalReference": "",
- "userReference": "",
+ "customerInternalReference": "transaction_1234",
+ "userReference": "user_1234",
  "workflowId": 100,
  "presets": [
      {
@@ -145,7 +145,7 @@ More information regarding the Netverify Web v4 can be found here:
 
 The `additionalChecks` field must be included within the body of the **performNetverify** API call with the following, under `watchlistScreening`.
 
-Additionally, `customerId` will be used to associate Jumio Screening to Netverify transactions and **must be included** in API calls.
+Additionally, `customerId` will be used to associate Jumio Screening to Netverify transactions and **must be included and populated** in API calls.
 
 More information regarding the performNetverify API can be found here:
 [performNetverify Implementation Guide](https://github.com/Jumio/implementation-guides/blob/master/netverify/performNetverify.md)
@@ -160,8 +160,8 @@ More information regarding the performNetverify API can be found here:
 
 ~~~
 {
-   "merchantIdScanReference": "",
-   "customerId": "",
+   "merchantIdScanReference": "YOURSCANREFERENCE",
+   "customerId": "customer_1234",
    "country": "USA",
    "idType": "DRIVING_LICENSE",
    "additionalChecks": {
