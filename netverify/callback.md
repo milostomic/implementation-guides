@@ -34,7 +34,7 @@ Whitelist these IP addresses for callbacks, and use them to verify that the call
 34.226.254.127<br>
 52.52.51.178<br>
 52.53.95.123<br>
-54.67.101.173
+54.67.101.173<br>
 
 Use the hostname `callback.jumio.com` to look up the most current IP addresses.<p>
 
@@ -45,7 +45,7 @@ Use the hostname `callback.jumio.com` to look up the most current IP addresses.<
 52.48.0.25<br>
 52.57.194.92<br>
 52.58.113.86<br>
-52.209.180.134
+52.209.180.134<br>
 
 Use the hostname `callback.lon.jumio.com` to look up the most current IP addresses.<p>
 
@@ -146,7 +146,12 @@ The following parameters are posted to your callback URL for Netverify Web, perf
 |mothersName|255|Name of the document holder's mother |activation required |
 |fathersName|255|Name of the document holder's father |activation required |
 
-<sup>1</sup> Transaction is declined as unsupported if the ID is not supported by Jumio, or not marked as accepted in your customer portal settings.<br/> <sup>2</sup> For ID types that are configured to support a separate scan of the front side and back side, there is a separate image of the front side (idScanImage) and the back side (idScanImageBackside). If Identity Verification is enabled, there is also a picture of the face (idScanImageFace).<br>
+<!--
+|personalIdentificationNumber|255|Personal identification number as available on the ID if idCountry = GEO and idSubtype = PASSPORT |activation required |
+-->
+
+<sup>1</sup> Transaction is declined as unsupported if the ID is not supported by Jumio, or not marked as accepted in your customer portal settings.<br/>
+<sup>2</sup> For ID types that are configured to support a separate scan of the front side and back side, there is a separate image of the front side (idScanImage) and the back side (idScanImageBackside). If Identity Verification is enabled, there is also a picture of the face (idScanImageFace).<br>
 <sup>3</sup> Address recognition is performed for supported IDs, if enabled. Please note, there are three different address formats (US, EU, Raw). Please check [Supported documents for Address Extraction](#supported-documents-for-address-extraction) to see which format applies to specific IDs. The different address parameters are a part of the JSON object, if they are available on the ID.<br>
 <sup>4</sup> Fields containing certain kinds of personally identifying information are not returned if NV masking is enabled for the Netherlands, Germany, or South Korea. See [Netverify masking](#netverify-masking) for more information.<br>
 <sup>5</sup> Liveness images are returned only for transactions containing Identity Verification submitted via the Android and iOS SDKs. The number of images can vary and may not be returned in chronological order.
@@ -245,8 +250,22 @@ The TLS protocol is required during the TLS handshake (see [Supported cipher sui
 |:---------------|:--------|:------------|
 |**similarity**   |  |Possible values:<br/> •	MATCH<br />•	NO\_MATCH<br />•	NOT\_POSSIBLE|
 |**validity**   |  |Possible values:<br/> •	TRUE<br />•	FALSE |
-|reason   |  |Provided if validity = FALSE<br/>Possible values:<br />• SELFIE\_CROPPED\_FROM\_ID<br />•	ENTIRE\_ID\_USED\_AS\_SELFIE<br />•	MULTIPLE\_PEOPLE<br />•	SELFIE\_IS\_SCREEN\_PAPER\_VIDEO<br />•	SELFIE\_MANIPULATED<br />• AGE\_DIFFERENCE\_TOO\_BIG<br />•	NO\_FACE\_PRESENT<br />•	FACE\_NOT\_FULLY\_VISIBLE<br />•	BAD\_QUALITY<br />•	BLACK\_AND\_WHITE<br />•	LIVENESS\_FAILED|
+|reason   |  |Provided if validity = FALSE<br/>Possible values:<br />• SELFIE\_CROPPED\_FROM\_ID<br />•	ENTIRE\_ID\_USED\_AS\_SELFIE<br />•	MULTIPLE\_PEOPLE<br />•	SELFIE\_IS\_SCREEN\_PAPER\_VIDEO<br />•	SELFIE\_MANIPULATED<br />• AGE\_DIFFERENCE\_TOO\_BIG<br />•	NO\_FACE\_PRESENT<br />•	FACE\_NOT\_FULLY\_VISIBLE<br />•	BAD\_QUALITY<br />•	BLACK\_AND\_WHITE<br />•	LIVENESS\_FAILED<sup>1</sup>|
 |handwrittenNoteMatches	|	|Only visible if setting is turned on within your account. For questions about this feature, please contact your Support. <br/><br/>Possible values:<br/> •	TRUE<br />•	FALSE|
+|similarityDecision   |  |Only visible if setting is turned on within your account. For questions about this feature, please contact your Support. <br/><br/>Possible values:<br/> •	MANUAL<br />•	AUTOMATED|
+|similarityScore   |  |Only visible if setting is turned on within your account. For questions about this feature, please contact your Support. <br/><br/>Possible value:<br/> •	Range from 0 to 1|
+
+<sup>1</sup> Potential reasons `LIVENESS_FAILED`:
+- User tries to spoof the system
+- User does not want to show his face at all but wants to complete the onboarding
+- User does not look straight into the camera
+- User does not finish the the Identity Verification process
+- User has bad lighting conditions (too dark, too bright, reflections on face, not enough contrast, …)
+- User is covering (parts) of his face with a scarf, hat, or something similar
+- User is not able to align his face with the oval
+- A different person is performing the Identity Verification in the second step than in the first one
+
+<br/>
 
 ### Driver License Categories
 

@@ -335,6 +335,10 @@ Successful requests will return HTTP status code `200 OK` along with a JSON obje
 |mothersName|string|255|Name of the document holder's mother <br> (if extraction is enabled)|
 |fathersName|string|255|Name of the document holder's father <br> (if extraction is enabled)|
 
+<!--
+|personalIdentificationNumber|string|255|National personal identification number of the document <br> (if extraction is enabled) |
+-->
+
 #### US address format
 
 |Name      | Type    | Max. Length| Description|
@@ -531,6 +535,8 @@ Successful requests will return HTTP status code `200 OK` along with a JSON obje
 |validity  |Possible values:<br/>• TRUE<br />• FALSE |
 |reason   |Provided if validity = FALSE<br/>Possible values:<br />• SELFIE\_CROPPED\_FROM\_ID<br />•	ENTIRE\_ID\_USED\_AS\_SELFIE<br />•	MULTIPLE\_PEOPLE<br />•	SELFIE\_IS\_SCREEN\_PAPER\_VIDEO<br />•	SELFIE\_MANIPULATED<br />• AGE\_DIFFERENCE\_TOO\_BIG<br />•	NO\_FACE\_PRESENT<br />•	FACE\_NOT\_FULLY\_VISIBLE<br />• BAD\_QUALITY<br />• BLACK\_AND\_WHITE<br />• LIVENESS\_FAILED|
 |handwrittenNoteMatches	|Only visible if **Liveness Detection (with handwritten note)** setting is turned on within your account. For questions about this feature, please contact Jumio Support. <br/><br/>Possible values:<br/> •	TRUE<br />•	FALSE|
+|similarityDecision   |Only visible if setting is turned on within your account. For questions about this feature, please contact Jumio Support. <br/><br/>Possible values:<br/> •	MANUAL<br />•	AUTOMATED|
+|similarityScore   |Only visible if setting is turned on within your account. For questions about this feature, please contact Jumio Support. <br/><br/>Possible value:<br/> •	Range from 0 to 1|
 
 <br>
 
