@@ -145,10 +145,7 @@ The following parameters are posted to your callback URL for Netverify Web, perf
 |registrationNumber|255|Registration number of the document |activation required |
 |mothersName|255|Name of the document holder's mother |activation required |
 |fathersName|255|Name of the document holder's father |activation required |
-
-<!--
 |personalIdentificationNumber|255|Personal identification number as available on the ID if idCountry = GEO and idSubtype = PASSPORT |activation required |
--->
 
 <sup>1</sup> Transaction is declined as unsupported if the ID is not supported by Jumio, or not marked as accepted in your customer portal settings.<br/>
 <sup>2</sup> For ID types that are configured to support a separate scan of the front side and back side, there is a separate image of the front side (idScanImage) and the back side (idScanImageBackside). If Identity Verification is enabled, there is also a picture of the face (idScanImageFace).<br>
