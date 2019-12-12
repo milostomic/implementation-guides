@@ -38,7 +38,7 @@ The ComplyAdvantage customer portal will allow you to **update new users**, **ma
 
 API keys are used to allow access to ComplyAdvantage's APIs and to run searches. You can create as many as you want from the ComplyAdvantage portal and they can be deleted at any time, as an admin user.
 
-Once you've logged into ComplyAdvantage's portal you will have a menu on the left side. 
+Once you've logged into ComplyAdvantage's portal you will have a menu on the left side.
 
 Under **API**, select **API Keys**
 
@@ -92,7 +92,7 @@ If enabled, this setting will make it so all transactions that are approved will
 
 If you do not define the profile to screen against within the API call, transactions will be screened against the default profile which you can define within the portal.
 
-Finally, you will want to turn on 
+Finally, you will want to turn on
 
 # Include screening in Netverify API
 
@@ -223,7 +223,7 @@ The following fields may be additional to the original callback fields, if they 
 ~~~
 {
     "timestamp": "2018-10-25T13:53:17.050Z",
-    "scanReference": "08680580-7b0c-498d-8715-07a9fe5ad123",
+    "scanReference": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
     "document": {
         "type": "DRIVING_LICENSE",
         "dob": "1984-08-20",
@@ -234,9 +234,9 @@ The following fields may be additional to the original callback fields, if they 
         "status": "APPROVED_VERIFIED"
     },
     "transaction": {
-        "customerId": "98e59b44-aadf-4395-9982-36d07834f22c",
+        "customerId": "customer_1234",
         "date": "2018-10-25T13:43:11.412Z",
-        "merchantScanReference": "feb924fe-5377-4493-b660-8dc246c0a07a",
+        "merchantScanReference": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
         "source": "API",
         "status": "DONE"
     },
@@ -244,9 +244,9 @@ The following fields may be additional to the original callback fields, if they 
         "additionalChecks": {
             "watchlistScreening": {
                 "searchDate": "2018-10-25T14:43:20Z",
-                "searchId": "81536971",
-                "searchReference": "1540475000-PyxBXf9K",
-                "searchResultUrl": "https://app.complyadvantage.com/public/search/1540475000-PyxBXf9K/af58b6eeda81",
+                "searchId": "12345678",
+                "searchReference": "xxxxxxxxxx-xxxxxxxx",
+                "searchResultUrl": "https://app.complyadvantage.com/public/search/xxxxxxxxxx-xxxxxxxx/12345678",
                 "searchResults": "0",
                 "searchStatus": "DONE"
             }
@@ -262,7 +262,7 @@ The following fields may be additional to the original callback fields, if they 
 ~~~
 {
   "timestamp": "2018-11-05T14:28:38.899Z",
-  "scanReference": "90b3d816-1fdc-418c-870c-4a925cd68d60",
+  "scanReference": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
   "document": {
     "type": "PASSPORT",
     "dob": "1956-10-11",
@@ -270,8 +270,8 @@ The following fields may be additional to the original callback fields, if they 
     "firstName": "",
     "issuingCountry": "USA",
     "lastName": "",
-    "number": "PZ218WMJN",
-    "personalNumber": "2450413502041",
+    "number": "P12345678",
+    "personalNumber": "123456789",
     "status": "APPROVED_VERIFIED"
   },
   "transaction": {

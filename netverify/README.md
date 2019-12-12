@@ -20,6 +20,7 @@ The Jumio Knowledge Base also contains a wealth of information regarding our ser
 
 | Date           | Description       |
 |:---------------|:------------------|
+| 2019-12-12  |Added new error code 9822 for Netverify Web|
 | 2019-12-02  |Added callback parameter "personalIdentificationNumber"|
 | 2019-11-25  |Added callback parameter "similarityDecision", "similarityScore" to "identityVerification"|
 | 2019-10-01  |Added callback parameter "cpf", "registrationNumber", "mothersName", and "fathersName"|
