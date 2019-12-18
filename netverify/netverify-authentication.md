@@ -51,6 +51,12 @@ Information about changes to features and improvements documented in each releas
 
 Call the RESTful API POST endpoint **/initiate** with a JSON object containing the properties described below to create a transaction for each user. You will receive a JSON object in the response containing a timestamp, a Jumio transaction reference and a URL which you can use to present Authentication to your user.
 
+|⚠️ A new transaction will be created and the facemap will be temporarily stored until the transaction reaches a final state (max. 15 minutes).
+|:----------|
+
+|⚠️ If multiple transactions has been created for the same `enrollmentTransactionReference` within 15 minutes only the last one will successfully work. For the first ones the user will not be able to finish them, they will get a final state of `EXPIRED`.
+|:----------|
+
 **HTTP Request Method:** `POST`<br>
 **REST URL (US)**: `https://netverify.com/api/authentication/v1/web/initiate`<br>
 **REST URL (EU)**: `https://lon.netverify.com/api/authentication/v1/web/initiate`<br>
@@ -104,7 +110,6 @@ The body of your **initiate** API request allows you to
 |successUrl<sup>1</sup>               |string |2047        |Redirects to this URL after a successful transaction.<br>Overrides [Success URL](#callback-error-and-success-urls) in the Customer Portal.		|
 |errorUrl<sup>1</sup>                 |string |255        |Redirects to this URL after an unsuccessful transaction.<br>Overrides [Error URL](#callback-error-and-success-urls) in the Customer Portal.		|
 |userReference<sup>2</sup>|string |100        |Your internal reference for the user.|
-|tokenLifetimeInMinutes  |number 	|Max. value: 86400 |Time in minutes until the authorization token expires. (minimum: 5, maximum: 86400)<br>Overrides [Authorization token lifetime](#authorization-token-lifetime) in the Customer Portal.		|
 |locale                   |string |5          |Renders content in the specified language.<br>Overrides [Default locale](#default-locale) in the Customer Portal.<br>See [supported locale values](#supported-locale-values).		|
 
 <sup>1</sup> See URL constraints for [Callback, Error, and Success URLs](#callback-error-and-success-urls).<br>

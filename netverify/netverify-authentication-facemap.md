@@ -279,7 +279,6 @@ The following fields are required in the header section of your request:<br>
 |successUrl<sup>1</sup>         |Redirects to this URL after a successful transaction.<br>Overrides [Success URL](/netverify/portal-settings.md#callback-error-and-success-urls) in the Customer Portal.		|
 |errorUrl<sup>1</sup>                |Redirects to this URL after an unsuccessful transaction.<br>Overrides [Error URL](/netverify/portal-settings.md#callback-error-and-success-urls) in the Customer Portal.		|
 |userReference<sup>2</sup> |Your internal reference for the user.|
-|tokenLifetimeInMinutes  |Time in minutes until the authorization token expires. (minimum: 5, maximum: 86400)<br>Overrides in the Customer Portal.		|
 |locale                 |Renders content in the specified language.<br>Overrides [Default locale](#default-locale) in the Customer Portal.<br>See [supported locale values](/netverify/netverify-authentication.md#supported-locale-values).		|
 
 <sup>1</sup> See URL constraints for [Callback, Error, and Success URLs](/netverify/portal-settings.md#callback-error-and-success-urls).<br>
