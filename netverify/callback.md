@@ -92,7 +92,7 @@ The following parameters are posted to your callback URL for Netverify Web, perf
 |**idCheckDataPositions**   |   |•	OK if verificationStatus = APPROVED\_VERIFIED<br> •	otherwise N/A | |
 |**idCheckDocumentValidation**   |   |•	OK if verificationStatus = APPROVED\_VERIFIED<br> •	otherwise N/A  | |
 |**idCheckHologram**   |   |•	OK if verificationStatus = APPROVED\_VERIFIED<br> •	otherwise N/A | |
-|**idCheckMRZcode**  |   |•	OK for passports and supported ID cards if verificationStatus = APPROVED\_VERIFIED and MRZ check is enabled<br> •	otherwise N/A  |not returned for NLD, DEU, KOR if NV masking is enabled <sup>4</sup>|
+|**idCheckMRZcode**  |   |•	OK for passports and supported ID cards if verificationStatus = APPROVED\_VERIFIED and MRZ check is enabled<br> •	otherwise N/A  |not returned for DEU, HKG, JPN, NLD, SGP, KOR if NV masking is enabled <sup>4</sup>|
 |**idCheckMicroprint** |   |•	OK if verificationStatus = APPROVED\_VERIFIED<br> •	otherwise N/A | |
 |**idCheckSecurityFeatures**   |   |•	OK if verificationStatus = APPROVED\_VERIFIED<br> •	otherwise N/A  | |
 |**idCheckSignature**  |   |•	OK if verificationStatus = APPROVED\_VERIFIED<br> •	otherwise N/A | |
@@ -127,8 +127,8 @@ The following parameters are posted to your callback URL for Netverify Web, perf
 |presetCountry   | 3  |Possible countries:<br />•	[ISO 3166-1 alpha-3](http://en.wikipedia.org/wiki/ISO_3166-1_alpha-3) country code <br /> • XKX (Kosovo)| |
 |presetIdType   |    |Possible ID types: PASSPORT, DRIVING\_LICENSE, ID\_CARD| |
 |dlCarPermission|255 |Only available if:<br/> •Extraction supported for specific country<br/>•verificationStatus = APPROVED\_VERIFIED<br/><br/>Possible values:<br /> • YES<br /> • NO<br /> • NOT\_READABLE|activation required|
-|dlCategories   | JSON object  |Driver license categories as JSON object, see table below <br /><br />Supported Countries:<br />• Austria<br />• Belgium<br />• Bulgaria<br />• France<br />• Germany<br />• Great Britain<br />• Italy<br />• Latvia<br />• Lithuania<br />• Netherlands<br />• Romania<br />• Spain<br />• Taiwan|activation required |
-|nationality |3| Supported for Philippines driving licenses and idType = VISA and additional extraction for Visa enabled. <br><br> Possible countries: <br>• [ISO 3166-1 alpha-3](http://en.wikipedia.org/wiki/ISO_3166-1_alpha-3) country code <br />• XKX (Kosovo)|activation required |
+|dlCategories   | JSON object  |Driver license categories as JSON object, see table below <br /><br />Supported countries:<br />• Austria<br />• Belgium<br />• Bulgaria<br />• France<br />• Germany<br />• Great Britain<br />• Italy<br />• Latvia<br />• Lithuania<br />• Netherlands<br />• Romania<br />• Spain<br />• Taiwan|activation required |
+|nationality |3| Supported countries: <br />• Bahrain (PP, DL, ID card)<br />• Philippines (DL)|activation required |
 |passportNumber|255|Passport number if idType = VISA and additional extraction for Visa enabled|activation required |
 |durationOfStay|255|Duration of stay if idType = VISA and additional extraction for Visa enabled|activation required |
 |numberOfEntries|255|Number of entries if idType = VISA and additional extraction for Visa enabled|activation required |
@@ -146,6 +146,7 @@ The following parameters are posted to your callback URL for Netverify Web, perf
 |mothersName|255|Name of the document holder's mother |activation required |
 |fathersName|255|Name of the document holder's father |activation required |
 |personalIdentificationNumber|255|Personal identification number as available on the ID if idCountry = GEO and idSubtype = PASSPORT |activation required |
+|rgNumber|255|"General Registration" number for idCountry = BRA |activation required|
 
 <sup>1</sup> Transaction is declined as unsupported if the ID is not supported by Jumio, or not marked as accepted in your customer portal settings.<br/>
 <sup>2</sup> For ID types that are configured to support a separate scan of the front side and back side, there is a separate image of the front side (idScanImage) and the back side (idScanImageBackside). If Identity Verification is enabled, there is also a picture of the face (idScanImageFace).<br>
@@ -289,9 +290,15 @@ When masking is enabled for these countries, certain fields cannot be extracted 
 |:---|:---|:---|
 Germany|Passport|idCheckMRZcode, idNumber|
 Germany|ID card|idCheckMRZcode, idNumber|
+Hong Kong|Passport|idCheckMRZcode, idNumber|
+Hong Kong|ID card|idNumber|
+Japan|ID card|idNumber|
 Netherlands|Passport|idCheckMRZcode, personalNumber|
 Netherlands|ID card|idCheckMRZcode, personalNumber|
 Netherlands|Driver license|image is masked, no extracted data fields are affected|
+Singapore|Passport|idCheckMRZcode,idNumber|
+Singapore|Driver license|idNumber|
+Singapore|ID card|idNumber|
 South Korea|Passport|idCheckMRZcode, personalNumber|
 South Korea|ID card|idNumber, idDob|
 South Korea|Driver license|idDob|

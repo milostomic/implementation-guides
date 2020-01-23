@@ -335,6 +335,7 @@ Successful requests will return HTTP status code `200 OK` along with a JSON obje
 |mothersName|string|255|Name of the document holder's mother <br> (if extraction is enabled)|
 |fathersName|string|255|Name of the document holder's father <br> (if extraction is enabled)|
 |personalIdentificationNumber|string|255|National personal identification number of the document <br> (if extraction is enabled) |
+|rgNumber|string|255|"General Registration" number of Brazilian documents <br> (if extraction is enabled) |
 
 #### US address format
 
