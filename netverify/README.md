@@ -20,6 +20,7 @@ The Jumio Knowledge Base also contains a wealth of information regarding our ser
 
 | Date           | Description       |
 |:---------------|:------------------|
+| 2020-02-26  |Added Arabic and Hebrew localizations for Netverify Web|
 | 2020-01-22  |Added callback parameter "rgNumber"|
 | 2019-12-12  |Added new error code 9822 for Netverify Web|
 | 2019-12-02  |Added callback parameter "personalIdentificationNumber"|

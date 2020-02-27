@@ -219,6 +219,7 @@ Hyphenated combination of [ISO 639-1:2002 alpha-2](https://en.wikipedia.org/wiki
 
 |Value  |Locale|
 |:--------------|:--------------|
+|ar|Arabic|
 |bg|Bulgarian|
 |cs|Czech|
 |da|Danish|
@@ -231,6 +232,7 @@ Hyphenated combination of [ISO 639-1:2002 alpha-2](https://en.wikipedia.org/wiki
 |et|Estonian|
 |fi|Finnish|
 |fr|French|
+|he|Hebrew|
 |hu|Hungarian|
 |hy|Armenian|
 |id|Indonesian|
