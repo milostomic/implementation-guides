@@ -128,17 +128,17 @@ The following parameters are posted to your callback URL for Netverify Web, perf
 |presetIdType   |    |Possible ID types: PASSPORT, DRIVING\_LICENSE, ID\_CARD| |
 |dlCarPermission|255 |Only available if:<br/> •Extraction supported for specific country<br/>•verificationStatus = APPROVED\_VERIFIED<br/><br/>Possible values:<br /> • YES<br /> • NO<br /> • NOT\_READABLE|activation required|
 |dlCategories   | JSON object  |Driver license categories as JSON object, see table below <br /><br />Supported countries:<br />• Austria<br />• Belgium<br />• Bulgaria<br />• France<br />• Germany<br />• Great Britain<br />• Italy<br />• Latvia<br />• Lithuania<br />• Netherlands<br />• Romania<br />• Spain<br />• Taiwan|activation required |
-|nationality |3| Supported countries: <br />• Bahrain (PP, DL, ID card)<br />• Philippines (DL)|activation required |
+|nationality |3| • if idCountry = BHR, PHL |activation required |
 |passportNumber|255|Passport number if idType = VISA and additional extraction for Visa enabled|activation required |
 |durationOfStay|255|Duration of stay if idType = VISA and additional extraction for Visa enabled|activation required |
 |numberOfEntries|255|Number of entries if idType = VISA and additional extraction for Visa enabled|activation required |
 |visaCategory|255|Visa category if idType = VISA and additional extraction for Visa enabled|activation required |
 |originDob|10|Original format of date of birth if idCountry = IND <br/>Possible values e.g.: <br />• Year/Month/Day: 1990/12/09 <br />• Year only: 1990// <br />• Year/Month: 1990/12/ <br />• Year/Day: 1990//09|<br /> |
-|issuingAuthority|50|Issuing authority of the document (if issuing authority extraction is enabled) <br>• if idCountry = ITA|activation required |
+|issuingAuthority|50|Issuing authority of the document (if issuing authority extraction is enabled) <br>• if idCountry = COL, ITA |activation required |
 |issuingDate|10|Issuing date of the document (if issuing date extraction enabled) |activation required |
-|issuingPlace|50|Issuing place of the document (if issuing place extraction is enabled)<br>• if idCountry = ITA |activation required |
+|issuingPlace|50|Issuing place of the document (if issuing place extraction is enabled)<br>• if idCountry = COL, ITA |activation required |
 |livenessImages| |URLs to the liveness images of the transaction (JPEG or PNG) if available <sup>5</sup> | |
-|placeOfBirth|256|Place of birth of document holder<br>• if idCountry = FRA, HKG, IDN, ITA, or SGP | |
+|placeOfBirth|256|Place of birth of document holder<br>• if idCountry = AUS, BEL, BRA, DEU, ESP, FRA, GBR, HKG, HUN, IDN, IND, IRL, ITA, NGA, NLD, PAK, POL, PRT, ROU, RUS, SGP, TUR, UKR, USA| |
 |facemap|255|URL to the facemap of the transaction if available |activation required |
 |taxNumber|255|Tax number of the document<br>• if idCountry = ITA and idType = HEALTH\_ID or TAX\_ID |activation required |
 |cpf|255|CPF number of the document|activation required |
@@ -175,6 +175,7 @@ The TLS protocol is required during the TLS handshake (see [Supported cipher sui
 |Indonesia|Yes|No|No|Raw|
 |Ireland|No|Yes|No|Raw|
 |Malaysia|Yes|No|No|Raw|
+|Malta|Yes|Yes|No|Raw|
 |Mexico|Yes|No|No|US|
 |Romania|Yes|No|No|Raw|
 |Singapore|Yes|No|No|Raw|

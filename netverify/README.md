@@ -21,7 +21,10 @@ The Jumio Knowledge Base also contains a wealth of information regarding our ser
 | Date           | Description       |
 |:---------------|:------------------|
 | 2020-02-26  |Added Arabic and Hebrew localizations for Netverify Web|
+| 2020-02-12  |Added place of birth extractioin for AUS, BEL, BRA, DEU, ESP, FRA, GBR, HKG, HUN, IDN, IND, IRL, ITA, NGA, NLD, PAK, POL, PRT, ROU, RUS, SGP, TUR, UKR, USA|
+| 2020-02-11  |Added issuing place extraction for Colombia|
 | 2020-01-22  |Added callback parameter "rgNumber"|
+| 2019-12-31  |Added address extraction for Malta ID cards driver licenses |
 | 2019-12-12  |Added new error code 9822 for Netverify Web|
 | 2019-12-02  |Added callback parameter "personalIdentificationNumber"|
 | 2019-11-25  |Added callback parameter "similarityDecision", "similarityScore" to "identityVerification"|
