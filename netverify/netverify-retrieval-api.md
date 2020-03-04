@@ -575,7 +575,7 @@ Successful requests will return HTTP status code `200 OK` along with a JSON obje
 
 |Name |  Type    | Description|
 |:-------------------------------|:---------|:---------------|
-|status   | enum | Possible value: <br />• DONE |
+|status   | enum | Possible values: <br />• DONE<br />• PENDING<br />• ERROR |
 |findings   | String/JSON array | Possible values:<br />• No findings: parameter not returned<br />• Single finding: String of the transaction reference<br />• Multiple findings: Array of transaction references |
 
 <br>
