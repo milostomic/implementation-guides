@@ -9,6 +9,8 @@ This guide describes how to implement the Netverify Retrieval API.
 
 | Date    | Description|
 |:--------|:------------|
+| 2020-03-03   |Added "faceSearchFindings" to "additionalChecks" |
+| 2020-01-27   |Added "addressValidation" and "proofOfResidency" to "additionalChecks" |
 | 2019-07-23   |Added response parameter "facemap" for Netverify |
 | 2019-05-28   |Added Retrieval API for Authentication|
 | 2019-04-17   |Formatting and corrections|
@@ -501,6 +503,7 @@ Successful requests will return HTTP status code `200 OK` along with a JSON obje
 |mrzCheck|string||Possible values:<br>• OK<br>• NOT\_AVAILABLE|
 |rejectReason|object||Reject reason, see tables below|
 |identityVerification|object||Identity verification, see table below|
+|additionalChecks|object||Additional checks, see table below|
 
 <!-- |additionalChecks|object||Additional checks, see watchlistScreening guide|-->
 
@@ -538,6 +541,45 @@ Successful requests will return HTTP status code `200 OK` along with a JSON obje
 
 <br>
 
+#### Parameter `additionalChecks`
+
+
+|Name |  Type    | Description|Notes|
+|:-------------------------------|:---------|:---------------|:------------|
+|addressValidation   | JSON | Result of Address Validation<br>see table below |activation required|
+|proofOfResidency | JSON | Result of Proof of Residency check<br>• if idCountry = BRA<br>see table below |activation required|
+|watchlistScreening | JSON | Result of Jumio Screening (see [ID Verification & ComplyAdvantage Screening Implementation Guide](netverify/netverify-screening.md)) |activation required|
+|faceSearchFindings | JSON | Result of 1:n face search on previous transactions<br>see table below|activation required|
+
+<br>
+
+##### Parameter `addressValidation`
+
+|Name |  Type    | Description|
+|:-------------------------------|:---------|:---------------|
+|searchResults   | enum | If verificationStatus = APPROVED_VERIFIED possible values: <br />• POSITIVE_RESULT<br />• PARTIAL_RESULT<br />• NEGATIVE_RESULT<br />else<br>• CHECK_NOT_DONE (see `searchResponse`)|
+|searchResponse   | enum | Possible values: <br />• UNSUPPORTED_COUNTRY<br />• NOT_ENOUGH_DATA<br />• TECHNICAL_ERROR |
+
+<br>
+
+##### Parameter `proofOfResidency`
+
+|Name |  Type    | Description|
+|:-------------------------------|:---------|:---------------|
+|searchResults   | enum | If verificationStatus = APPROVED_VERIFIED possible values: <br />• POSITIVE_RESULT<br />• PARTIAL_RESULT<br />• NEGATIVE_RESULT<br />else<br>• CHECK_NOT_DONE (see `searchResponse`)|
+|searchResponse   | enum | Possible values: <br />• UNSUPPORTED_COUNTRY<br />• NOT_ENOUGH_DATA<br />• TECHNICAL_ERROR |
+
+<br>
+
+##### Parameter `faceSearchFindings`
+
+|Name |  Type    | Description|
+|:-------------------------------|:---------|:---------------|
+|status   | enum | Possible value: <br />• DONE |
+|findings   | String/JSON array | Possible values:<br />• No findings: parameter not returned<br />• Single finding: String of the transaction reference<br />• Multiple findings: Array of transaction references |
+
+<br>
+
 ## Examples
 ### Sample request
 
@@ -557,7 +599,19 @@ Authorization: Basic xxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
 ```
 {
-    "identityVerification": {
+	"additionalChecks": {
+		"addressValidation": {
+			"searchResults": "POSITIVE_RESULT"
+		}
+		"proofOfResidency": {
+			"searchResults": "PARTIAL_RESULT"
+		}
+		"faceSearchFindings": {
+			"status": "DONE",
+			"findings": ["xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx","xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"]
+		}
+	},
+	"identityVerification": {
         "similarity": "MATCH",
         "validity": "true"
     },
