@@ -35,7 +35,7 @@ Information about changes to features and improvements documented in each releas
 
 **performNetverify** offers a Restful ID verification API without Jumio-hosted user interface. Simply send an HTTP POST including the customer's ID image to the URL below. You will immediately receive a JSON response with a Jumio scan reference and a timestamp. A callback will be sent after the verification is complete (see [Callback](/netverify/callback.md)).
 
-|⚠️ NOTE: Passports (MRZ) have the highest success rate among ID types. It is recommended for best conversion rates and better data extraction to suggest that your users to upload passports when using this submission channel.
+|⚠️ NOTE: Passports (MRZ) have the highest success rate among ID types. It is recommended for best conversion rates and better data extraction to suggest that your users upload passports when using this submission channel.
 |:----------|
 
 **HTTP Request Method:** `POST`<br>
