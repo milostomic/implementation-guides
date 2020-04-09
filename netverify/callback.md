@@ -36,7 +36,7 @@ Whitelist these IP addresses for callbacks, and use them to verify that the call
 52.53.95.123<br>
 54.67.101.173<br>
 
-Use the hostname `callback.jumio.com` to look up the most current IP addresses.<p>
+Use the hostname `callback.jumio.com` to look up the most current IP addresses.<br>
 
 **EU data center:**</br>
 
@@ -47,7 +47,15 @@ Use the hostname `callback.jumio.com` to look up the most current IP addresses.<
 52.58.113.86<br>
 52.209.180.134<br>
 
-Use the hostname `callback.lon.jumio.com` to look up the most current IP addresses.<p>
+Use the hostname `callback.lon.jumio.com` to look up the most current IP addresses.<br>
+
+**SGP data center:**</br>
+
+3.0.109.121<br>
+52.76.184.73<br>
+52.77.102.92<br>
+
+Use the hostname `callback.core-sgp.jumio.com` to look up the most current IP addresses.<br>
 
 ## Callback for Netverify
 
@@ -96,8 +104,8 @@ The following parameters are posted to your callback URL for Netverify Web, perf
 |**idCheckMicroprint** |   |•	OK if verificationStatus = APPROVED\_VERIFIED<br> •	otherwise N/A | |
 |**idCheckSecurityFeatures**   |   |•	OK if verificationStatus = APPROVED\_VERIFIED<br> •	otherwise N/A  | |
 |**idCheckSignature**  |   |•	OK if verificationStatus = APPROVED\_VERIFIED<br> •	otherwise N/A | |
-|**transactionDate**   |   |Timestamp (UTC) of the transaction creation<br>format: YYYY-MM-DDThh:mm:ss.SSSZ | |
-|**callbackDate** |   |Timestamp  (UTC) of the callback creation <br>format: YYYY-MM-DDThh:mm:ss.SSSZ | |
+|**transactionDate**   |   |Timestamp (UTC) of the transaction creation<br>format: [YYYY-MM-DDThh:mm:ss.SSSZ](#timestamp-format) | |
+|**callbackDate** |   |Timestamp  (UTC) of the callback creation <br>format: [YYYY-MM-DDThh:mm:ss.SSSZ](#timestamp-format) | |
 |identityVerification   |   |Identity verification as JSON object, <br /> **ONLY** if verificationStatus = APPROVED\_VERIFIED <br/><br/> see table [Identity Verification](#identity-verification) below|activation required |
 |idType   |   |Possible types:<br/>•	PASSPORT<br/>•	DRIVING\_LICENSE<br/>•	ID\_CARD<br>•	VISA *<br/><br/>* Currently, Jumio only supports US and China visas in certain cases. Visas from other countries will be rejected as unsupported with idType = VISA | |
 |idSubtype   |255  |Possible subtypes if idType = ID\_CARD<br/>•	NATIONAL\_ID<br/>•	CONSULAR\_ID<br/>•	ELECTORAL\_ID<br/>•	RESIDENT\_PERMIT\_ID<br/>•	TAX\_ID <br/>•	STUDENT\_ID <br/>•	PASSPORT\_CARD\_ID <br/>•	MILITARY\_ID <br/>•	PUBLIC\_SAFETY\_ID <br/>•	HEALTH\_ID <br/>• OTHER\_ID<br/>•	VISA <br/>•	UNKNOWN<br/><br/>Possible subtypes if idType = DRIVING\_LICENSE<br/>•	LEARNING\_DRIVING\_LICENSE <br/><br/>Possible subtypes if idType = PASSPORT<br/>•	E\_PASSPORT (only for mobile) | |
@@ -118,7 +126,7 @@ The following parameters are posted to your callback URL for Netverify Web, perf
 |merchantReportingCriteria   |100  |Your reporting criteria for each transaction | |
 |customerId   |100  |ID of the customer as provided | |
 |clientIp   |   |IP address of the client in the format xxx.xxx.xxx.xxx | |
-|firstAttemptDate   |  |Timestamp (UTC) of the first transaction attempt <br>format: YYYY-MM-DDThh:mm:ss.SSSZ | |
+|firstAttemptDate   |  |Timestamp (UTC) of the first transaction attempt <br>format: [YYYY-MM-DDThh:mm:ss.SSSZ](#timestamp-format) | |
 |optionalData1   |255  |Optional field of MRZ line 1 | not returned for NLD ID if NV masking is enabled <sup>4</sup>|
 |optionalData2   |255  |Optional field of MRZ line 2 | |
 |dni   |255  |DNI as available on the ID if idCountry = ESP and idSubtype = NATIONAL\_ID  | |
@@ -161,7 +169,18 @@ Use HTTP **GET** with **Basic Authorization** using your API token and secret as
 - `User-Agent: YOURCOMPANYNAME YOURAPPLICATIONNAME/VERSION`<br /><br />
 The value for **User-Agent** must contain a reference to your business or entity for Jumio to be able to identify your requests. (e.g. YourCompanyName YourAppName/1.0.0). Without a proper User-Agent header, Jumio will take longer to diagnose API issues.<br>
 
-The TLS protocol is required during the TLS handshake (see [Supported cipher suites](/netverify/supported-cipher-suites.md)) and we strongly recommend using the latest version.<br/><br>
+The TLS protocol is required during the TLS handshake (see [Supported cipher suites](/netverify/supported-cipher-suites.md)) and we strongly recommend using the latest version.
+
+#### Timestamp format
+
+Timestamp are sent in format: `YYYY-MM-DDThh:mm:ss.SSSZ` with constraint that SSS (milliseconds) can either be
+- Not included: `YYYY-MM-DDThh:mm:ssZ`
+- 1 digit: `YYYY-MM-DDThh:mm:ss.SZ`
+- 2 digits:  `YYYY-MM-DDThh:mm:ss.SSZ`
+- 3 digits: `YYYY-MM-DDThh:mm:ss.SSSZ`
+
+We encourage to use a standard library to convert the timestamp received from Jumio as the timeformat is valid with and without the SSS milliseconds. <br/><br>
+
 
 ### Supported documents for address extraction
 
@@ -337,10 +356,10 @@ A callback URL can also be specified per transaction in our [Android](https://gi
 
 |Parameter       | Type    | Max. Length|  Description|
 |:---------------|:--------|:----------: |:------------|
-|**callbackDate**| string  |  | Timestamp of the callback in the format: <br>YYYY-MM-DDThh:mm:ss.SSSZ|
+|**callbackDate**| string  |  | Timestamp of the callback in the format: <br>[YYYY-MM-DDThh:mm:ss.SSSZ](#timestamp-format-1)|
 |**transactionReference**| string  |36 |Jumio’s reference number for the Authentication transaction|
 |**transactionResult**| string  | |Possible values:<br>•	PASSED<br>•	FAILED<br>•	INVALID<br>•	EXPIRED|
-|**transactionDate**| string  |  |Timestamp of the transaction in the format: <br>YYYY-MM-DDThh:mm:ss.SSSZ|
+|**transactionDate**| string  |  |Timestamp of the transaction in the format: <br>[YYYY-MM-DDThh:mm:ss.SSSZ](#timestamp-format-1)|
 |**scanSource**|string||Possible values:<br>•	SDK<br>•	WEB|
 |**callBackType**|string ||NETVERIFY_AUTHENTICATION|
 |idScanImageFace | JSON array/object | |URL to retrieve the face image of the transaction (JPEG or PNG) <sup>1</sup> |
@@ -357,7 +376,17 @@ Use HTTP **GET** with **Basic Authorization** using your API token and secret, a
 - `User-Agent: YOURCOMPANYNAME YOURAPPLICATIONNAME/VERSION`<br /><br />
 The value for **User-Agent** must contain a reference to your business or entity for Jumio to be able to identify your requests. (e.g. YourCompanyName YourAppName/1.0.0). Without a proper User-Agent header, Jumio will take longer to diagnose API issues.<br>
 
-The TLS protocol is required during the TLS handshake (see [Supported cipher suites](/netverify/supported-cipher-suites.md)) and we strongly recommend using the latest version.<br/><br>
+The TLS protocol is required during the TLS handshake (see [Supported cipher suites](/netverify/supported-cipher-suites.md)) and we strongly recommend using the latest version.
+
+#### Timestamp format
+
+Timestamp are sent in format: `YYYY-MM-DDThh:mm:ss.SSSZ` with constraint that SSS (milliseconds) can either be
+- Not included: `YYYY-MM-DDThh:mm:ssZ`
+- 1 digit: `YYYY-MM-DDThh:mm:ss.SZ`
+- 2 digits:  `YYYY-MM-DDThh:mm:ss.SSZ`
+- 3 digits: `YYYY-MM-DDThh:mm:ss.SSSZ`
+
+We encourage to use a standard library to convert the timestamp received from Jumio as the timeformat is valid with and without the SSS milliseconds. <br/><br>
 
 ### Sample Callback
 
@@ -381,7 +410,7 @@ The following parameters are posted to your callback URL for Document Verificati
 |Parameter       | Type    | Max. Length|  Description|
 |:---------------|:--------|:----------: |:------------|
 |**scanReference**| String  |36 |Jumio's reference number for each transaction|
-|**timestamp**| String  |  |Timestamp (UTC) of the response <br>format: YYYY-MM-DDThh:mm:ss.SSSZ|
+|**timestamp**| String  |  |Timestamp (UTC) of the response <br>format: [YYYY-MM-DDThh:mm:ss.SSSZ](#timestamp-format-2)|
 |**transaction**| JSON object  |  |Transaction related data, see table below|
 |document   | JSON object  |       |Document related data if transaction status = DONE, see table |
 
@@ -391,7 +420,7 @@ The following parameters are posted to your callback URL for Document Verificati
 
 |Parameter `transaction`       | Type    | Max. Length|  Description|
 |:---------------|:--------|:----------:|:------------|
-|**date**    					        | String  |    |Timestamp (UTC) of the transaction creation<br>format: YYYY-MM-DDThh:mm:ss.SSSZ|
+|**date**    					        | String  |    |Timestamp (UTC) of the transaction creation<br>format: [YYYY-MM-DDThh:mm:ss.SSSZ](#timestamp-format-2)|
 |**status**   | String  |    |Possible states:<br>•	DONE<br>•	FAILED (if initialized acquisition is not successfully finalized within 5 minutes after creation/last update)|
 |**source**      							| String  |    |Possible values: <br>• DOC\_UPLOAD (Document Verification)<br>• DOC\_API (Document Verification API)<br>• DOC\_SDK (Document Verification Mobile)|
 |**merchantScanReference** 	| String  |255 |Your reference for each transaction |
@@ -424,7 +453,17 @@ Use HTTP **GET** with **Basic Authorization** using your API token and secret, a
 - `User-Agent: YOURCOMPANYNAME YOURAPPLICATIONNAME/VERSION`<br /><br />
 The value for **User-Agent** must contain a reference to your business or entity for Jumio to be able to identify your requests. (e.g. YourCompanyName YourAppName/1.0.0). Without a proper User-Agent header, Jumio will take longer to diagnose API issues.<br>
 
-The TLS protocol is required during the TLS handshake (see [Supported cipher suites](/netverify/supported-cipher-suites.md)) and we strongly recommend using the latest version.<br/><br>
+The TLS protocol is required during the TLS handshake (see [Supported cipher suites](/netverify/supported-cipher-suites.md)) and we strongly recommend using the latest version.
+
+#### Timestamp format
+
+Timestamp are sent in format: `YYYY-MM-DDThh:mm:ss.SSSZ` with constraint that SSS (milliseconds) can either be
+- Not included: `YYYY-MM-DDThh:mm:ssZ`
+- 1 digit: `YYYY-MM-DDThh:mm:ss.SZ`
+- 2 digits:  `YYYY-MM-DDThh:mm:ss.SSZ`
+- 3 digits: `YYYY-MM-DDThh:mm:ss.SSSZ`
+
+We encourage to use a standard library to convert the timestamp received from Jumio as the timeformat is valid with and without the SSS milliseconds. <br/><br>
 
 ### Extracted Data
 

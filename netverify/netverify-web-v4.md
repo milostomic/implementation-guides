@@ -42,10 +42,16 @@ Information about changes to features and improvements documented in each releas
 		- [Example HTML](#example-html)
 		- [Optional iFrame Logging](#optional-iframe-logging)
 			- [Example iFrame logging code](#example-iframe-logging-code)
+	- [Using Netverify in a native WebView](#using-netverify-in-a-native-webview)
+		- [Android](#android)
+		- [iOS](#ios)
 - [After the user journey](#after-the-user-journey)
 	- [Sample success redirect](#sample-success-redirect)
 	- [Sample error redirect](#sample-error-redirect)
-- [Supported browsers](#supported-browsers) 		
+- [Supported environments](#supported-environments)
+	- [Desktop](#desktop)
+	- [Mobile](#mobile)
+	- [Native WebView](#native-webview)
 
 
 
@@ -553,7 +559,7 @@ All data is encoded with [UTF-8](https://tools.ietf.org/html/rfc3629).
 <br>
 <sup>1</sup> This functionality is not available for instances of Netverify running in a standalone window or tab.<br>
 
-### `event.data` object
+#### `event.data` object
 
 **Required items appear in bold type.**  
 
@@ -570,7 +576,7 @@ All data is encoded with [UTF-8](https://tools.ietf.org/html/rfc3629).
 
 <br>
 
-### `event.data.payload` object
+#### `event.data.payload` object
 
 **Required items appear in bold type.**  
 
@@ -581,7 +587,7 @@ All data is encoded with [UTF-8](https://tools.ietf.org/html/rfc3629).
 
 <br>
 
-### `event.data.payload.metainfo` object
+#### `event.data.payload.metainfo` object
 
 **Required items appear in bold type.**
 
@@ -590,7 +596,7 @@ All data is encoded with [UTF-8](https://tools.ietf.org/html/rfc3629).
 |**code**|integer|[see **errorCode** values](#after-the-user-journey)|
 <br>
 
-### Example iFrame logging code
+#### Example iFrame logging code
 ~~~javascript
 function receiveMessage(event) {
 	var data = window.JSON.parse(event.data);
@@ -605,6 +611,288 @@ function receiveMessage(event) {
 }
 window.addEventListener("message", receiveMessage, false);
 ~~~
+
+<br>
+
+## Using Netverify in a native WebView
+
+Netverify Web can be embedded within a native WebView in your native mobile application.
+
+See [Supported Environments > Native WebView](#native-webview) for information about support on Android and iOS.
+
+### Android
+
+The following sections explain the steps needed to embed Netverify Web in a native Android WebView.
+
+Please also refer to the sample code beneath.
+
+#### Persmissions and Settings
+
+Make sure that the required permissions are granted.
+
+- `android.permission.INTERNET` - _for remote resources access_
+- `android.permission.CAMERA` - _for camera capture_
+- `android.permission.READ_EXTERNAL_STORAGE` - _for upload functionality_
+
+The following settings are required for the native WebView for Android.
+
+- Enable [`javaScriptEnabled`](https://developer.android.com/reference/kotlin/android/webkit/WebSettings#setjavascriptenabled) - _tells the WebView to enable JavaScript execution_
+- Allow [`allowFileAccess`](https://developer.android.com/reference/kotlin/android/webkit/WebSettings#setallowfileaccess) - _enables file access within WebView_
+- Allow [`allowFileAccessFromFileUrls`](https://developer.android.com/reference/kotlin/android/webkit/WebSettings#setallowfileaccessfromfileurls) - _sets whether JavaScript running in the context of a file scheme URL should be allowed to access content from other file scheme URLs_
+- Allow [`allowUniversalAccessFromFileUrls`](https://developer.android.com/reference/kotlin/android/webkit/WebSettings#setallowuniversalaccessfromfileurls) - _sets whether JavaScript running in the context of a file scheme URL should be allowed to access content from any origin_
+- Allow [`allowContentAccess`](https://developer.android.com/reference/kotlin/android/webkit/WebSettings#setallowcontentaccess) - _enables content URL access within WebView_
+- Allow [`javaScriptCanOpenWindowsAutomatically`](https://developer.android.com/reference/kotlin/android/webkit/WebSettings#setjavascriptcanopenwindowsautomatically) - _tells JavaScript to open windows automatically_
+- Enable [`domStorageEnabled`](https://developer.android.com/reference/kotlin/android/webkit/WebSettings#setdomstorageenabled) - _sets whether the DOM storage API is enabled_
+- **Do not** allow [`mediaPlaybackRequiresUserGesture`](https://developer.android.com/reference/kotlin/android/webkit/WebSettings#setmediaplaybackrequiresusergesture) - _sets whether the WebView requires a user gesture to play media_
+
+#### Embedding required script
+
+To allow Jumio to identify the user runtime environment you will need to interact with the webview window object by embedding a required script. This script sets flag `__NVW_WEBVIEW__` to `true`.
+
+#### Optional postMessage communication
+
+You can handle messages from the Netverify Web Client using the same method as described in [Optional iFrame Logging](#optional-iframe-logging).
+
+You will need to register a postMessage handler and put the relevant code sections in the `PostMessageHandler` class as in the example mentioned below.
+
+#### Sample code
+
+**_AndroidManifest.xml_ example**
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+        package="com.jumio.nvw4">
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    ...
+</manifest>
+```
+
+**_build.gradle_ example**
+```kotlin
+dependencies {
+    implementation 'androidx.appcompat:appcompat:1.2.0-beta01'
+    implementation 'androidx.webkit:webkit:1.2.0'
+    ...
+}
+```
+
+**_WebViewFragment.kt_ example**
+```kotlin
+class WebViewFragment : Fragment() {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState);
+​
+        webview.settings.javaScriptEnabled = true;
+        webview.settings.allowFileAccessFromFileURLs = true;
+        webview.settings.allowFileAccess = true;
+        webview.settings.allowContentAccess = true;
+        webview.settings.allowUniversalAccessFromFileURLs = true;
+        webview.settings.javaScriptCanOpenWindowsAutomatically = true;
+        webview.settings.mediaPlaybackRequiresUserGesture = false;
+        webview.settings.domStorageEnabled = true;
+​
+        /**
+         *  Registering handler for postMessage communication (iFrame logging equivalent - optional)
+         */
+        webview.addJavascriptInterface(new PostMessageHandler(), "__NVW_WEBVIEW_HANDLER__");
+​
+        /**
+         *  Embedding necessary script execution fragment, before NVW4 initialize (important)
+         */
+        webview.webViewClient = object : WebViewClient() {
+            override fun onPageStarted(view: WebView?, url: String?, favicon: Bitmap?) {
+                webview.loadUrl("javascript:(function() { window['__NVW_WEBVIEW__']=true})")
+            }
+        }
+​
+        /**
+         * Handling permissions request
+         */
+				 webview.webChromeClient = object : WebChromeClient() {
+             // Grant permissions for cam
+             @TargetApi(Build.VERSION_CODES.M)
+             override fun onPermissionRequest(request: PermissionRequest) {
+                 activity?.runOnUiThread {
+                     if ("android.webkit.resource.VIDEO_CAPTURE" == request.resources[0]) {
+                         if (ContextCompat.checkSelfPermission(
+                                 activity!!,
+                                 Manifest.permission.CAMERA
+                             ) == PackageManager.PERMISSION_GRANTED
+                         ) {
+                             Log.d(
+                                 TAG,
+                                 String.format(
+                                     "PERMISSION REQUEST %s GRANTED",
+                                     request.origin.toString()
+                                 )
+                             )
+                             request.grant(request.resources)
+                         } else {
+                             ActivityCompat.requestPermissions(
+                                 activity!!,
+                                 arrayOf(
+                                     Manifest.permission.CAMERA,
+                                     Manifest.permission.READ_EXTERNAL_STORAGE
+                                 ),
+                                 PERMISSION_REQUEST_CODE
+                             )
+                         }
+                     }
+                 }
+             }
+
+		   // For Lollipop 5.0+ Devices
+             @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+             override fun onShowFileChooser(
+                 mWebView: WebView?,
+                 filePathCallback: ValueCallback<Array<Uri>>?,
+                 fileChooserParams: FileChooserParams
+             )Boolean {
+                 if (uploadMessage != null) {
+                     uploadMessage!!.onReceiveValue(null)
+                     uploadMessage = null
+                 }
+                 try {
+                     uploadMessage = filePathCallback
+                     val intent = fileChooserParams.createIntent()
+                     intent.type = "image/*"
+                     try {
+                         startActivityForResult(intent, REQUEST_SELECT_FILE)
+                     } catch (e: ActivityNotFoundException) {
+                         uploadMessage = null
+                         Toast.makeText(
+                             activity?.applicationContext,
+                             "Cannot Open File Chooser",
+                             Toast.LENGTH_LONG
+                         ).show()
+                         return false
+                     }
+                     return true
+                 } catch (e: ActivityNotFoundException) {
+                     uploadMessage = null
+                     Toast.makeText(
+                         activity?.applicationContext,
+                         "Cannot Open File Chooser",
+                         Toast.LENGTH_LONG
+                     ).show()
+                     return false
+                 }
+             }
+
+             protected fun openFileChooser(uploadMsg: ValueCallback<Uri?>) {
+                 mUploadMessage = uploadMsg
+                 val i = Intent(Intent.ACTION_GET_CONTENT)
+                 i.addCategory(Intent.CATEGORY_OPENABLE)
+                 i.type = "image/*"
+                 startActivityForResult(
+                     Intent.createChooser(i, "File Chooser"),
+                     FILECHOOSER_RESULTCODE
+                 )
+             }
+
+             override fun onConsoleMessage(consoleMessage: ConsoleMessage): Boolean {
+                 Log.d(TAG, consoleMessage.message())
+                 return true
+             }
+
+             override fun getDefaultVideoPoster(): Bitmap {
+                 return Bitmap.createBitmap(10, 10, Bitmap.Config.ARGB_8888)
+             }
+
+	webview.loadUrl("<<NVW4 SCAN REF LINK>>")
+    }
+​
+    /**
+     *  PostMessage handler for iframe logging equivalent (optional)
+     */
+    class PostMessageHandler {
+        @JavascriptInterface
+        public boolean postMessage(String json, String transferList) {
+            /*
+				*  See iFrame logging:
+	*  https://github.com/Jumio/implementation-guides/blob/master/netverify/netverify-web-v4.md#optional-iframe-logging
+            */
+            return true;
+        }
+    }
+}
+```
+
+
+### iOS
+
+The following sections explain the steps needed to embed Netverify Web in a native iOS WebView.
+
+Please also refer to the sample code beneath.
+
+#### Permissions and Settings
+
+No specific permissions are needed as we cannot access the camera due to native WebView limitations for iOS.
+
+#### Embedding required script
+
+To allow Jumio to identify the user runtime environment you will need to interact with the webview window object by embedding a required script. This script sets flag `__NVW_WEBVIEW__` to `true`.
+
+#### Optional postMessage communication
+
+You can handle messages from the Netverify Web Client using the same method as described in [Optional iFrame Logging](#optional-iframe-logging).
+
+Please register a postMessage handler and put the relevant code sections in the `userContentController` function as mentioned below.
+
+#### Sample code
+
+**_ViewController.swift_ example**
+
+```swift
+class ViewController: UIViewController {
+    @IBOutlet weak var webView: WKWebView!
+​
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        webView.navigationDelegate = self;
+​
+        /**
+         *  Registering handler for postMessage communication (iFrame logging equivalent - optional)
+         */
+        webView.configuration.userContentController.add(self, name: "__NVW_WEBVIEW_HANDLER__")
+​
+        webView.load( URLRequest("<<NVW4 SCAN REF LINK>>"));
+    }
+}
+​
+extension ViewController: WKNavigationDelegate {
+    /**
+     *  Embedding script at very beginning, before NVW4 initialize (important)
+     */
+    func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
+        /**
+         *  Necesssary integration step - embedding script
+         */
+        self.webView?.evaluteJavaScript("(function() { window['__NVW_WEBVIEW__'] = true })()") { _, error in
+            if let error = error {
+                print("ERROR while evalutaing javascript \(error)") // error handling whenever executing script fails
+            }
+            print("executed injected javascript")
+        };
+    }
+}
+​
+extension ViewController: WKScriptMessageHandler {
+    /**
+     *  PostMessage handler for iframe logging equivalent (optional)
+     */
+    func userContentController(_ userController: WKUserContentController, didReceive message: WKScriptMessage) {
+        if message.name == "__NVW_WEBVIEW_HANDLER__", let messageBody = message.body as? String {
+            /*
+	*  See iFrame logging:
+	*  https://github.com/Jumio/implementation-guides/blob/master/netverify/netverify-web-v4.md#optional-iframe-logging
+            */
+        }
+    }
+}
+```
 
 <br>
 
@@ -642,13 +930,13 @@ https://www.yourcompany.com/error/?transactionStatus=ERROR&customerInternalRefer
 
 
 ---
-## Supported browsers
+## Supported environments
 
 Jumio offers guaranteed support for Netverify on the following browsers and the latest major version of each operating system.
 
 
 
-### Desktop
+### Desktop browsers
 
 |Browser|Major version|Operating system |Supports<br>image upload |Supports<br>camera capture|Supports<br>3D Liveness|
 |:---|:---|:---|:---:|:---:|:---:|
@@ -658,9 +946,7 @@ Jumio offers guaranteed support for Netverify on the following browsers and the 
 |Microsoft Internet Explorer|current|Windows|X| | |
 |Microsoft Edge|current|Windows|X|X|X|
 
-### Mobile
-
-Netverify Web v4 does not support WebViews.
+### Mobile browers
 
 |Browser name|Major browser version|Operating system |Supports<br>image upload |Supports<br>camera capture|Supports<br>3D Liveness|
 |:---|:---|:---|:---:|:---:|:---:|
@@ -670,6 +956,14 @@ Netverify Web v4 does not support WebViews.
 
 <sup>1</sup>Fullscreen functionality during capture only supported for iPads. iPhone process works, but fullscreen is limited and capture may be less accurate.
 
+### Native WebView
+
+|Operating system |Major version|Supports<br>image upload |Supports<br>camera capture|Supports<br>3D Liveness|
+|:---|:---|:---:|:---:|:---:|
+|Android|current +<br>1 previous|X|X|X|
+|iOS|current +<br>1 previous|X| | |
+
+If you are using a native WebView for iOS you will need to enable image upload to allow the end user to finish the user journey.
 
 ---
 &copy; Jumio Corp. 268 Lambert Avenue, Palo Alto, CA 94306
