@@ -438,11 +438,10 @@ Successful requests will return HTTP status code `200 OK` along with a JSON obje
 
 ## Multi-page upload: adding a page
 
-Call the RESTful API POST endpoint **/pages** with a newly-created or recently updated scan reference and page number to add a JPEG, PNG, or single page PDF file with a maximum size of 10 MB and a maximum image resolution of 8000 x 8000.
-<br>
+Call the RESTful API POST endpoint **/pages** with a newly-created or recently updated scan reference and page number to add a JPEG, PNG, or single page PDF file with a maximum size of 10 MB and a maximum image resolution of 8000 x 8000.<br>
 |⚠️ Adding a multi-page PDF file to the "adding a page" API call will end up in a HTTP status code `400 Bad Request`. Please use "adding a document" instead.
 |:----------|
-<br>
+
 **HTTP request method:** `POST`<br>
 **REST URL (US):** `https://acquisition.netverify.com/api/netverify/v2/acquisitions/<scanReference>/document/pages/<page>`<br>
 **REST URL (EU):** `https://acquisition.lon.netverify.com/api/netverify/v2/acquisitions/<scanReference>/document/pages/<page>`<br>

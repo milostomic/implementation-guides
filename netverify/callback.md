@@ -108,7 +108,7 @@ The following parameters are posted to your callback URL for Netverify Web, perf
 |**callbackDate** |   |Timestamp  (UTC) of the callback creation <br>format: [YYYY-MM-DDThh:mm:ss.SSSZ](#timestamp-format) | |
 |identityVerification   |   |Identity verification as JSON object, <br /> **ONLY** if verificationStatus = APPROVED\_VERIFIED <br/><br/> see table [Identity Verification](#identity-verification) below|activation required |
 |idType   |   |Possible types:<br/>•	PASSPORT<br/>•	DRIVING\_LICENSE<br/>•	ID\_CARD<br>•	VISA *<br/><br/>* Currently, Jumio only supports US and China visas in certain cases. Visas from other countries will be rejected as unsupported with idType = VISA | |
-|idSubtype   |255  |Possible subtypes if idType = ID\_CARD<br/>•	NATIONAL\_ID<br/>•	CONSULAR\_ID<br/>•	ELECTORAL\_ID<br/>•	RESIDENT\_PERMIT\_ID<br/>•	TAX\_ID <br/>•	STUDENT\_ID <br/>•	PASSPORT\_CARD\_ID <br/>•	MILITARY\_ID <br/>•	PUBLIC\_SAFETY\_ID <br/>•	HEALTH\_ID <br/>• OTHER\_ID<br/>•	VISA <br/>•	UNKNOWN<br/><br/>Possible subtypes if idType = DRIVING\_LICENSE<br/>•	LEARNING\_DRIVING\_LICENSE <br/><br/>Possible subtypes if idType = PASSPORT<br/>•	E\_PASSPORT (only for mobile) | |
+|idSubtype   |255  |Possible subtypes if idType = ID\_CARD<br/>•	NATIONAL\_ID<br/>•	CONSULAR\_ID<br/>•	ELECTORAL\_ID<br/>•	RESIDENT\_PERMIT\_ID<br/>•	TAX\_ID <br/>•	STUDENT\_ID <br/>•	PASSPORT\_CARD\_ID <br/>•	MILITARY\_ID <br/>•	PUBLIC\_SAFETY\_ID <br/>•	HEALTH\_ID <br/>• OTHER\_ID<br/>•	VISA <br/>•	UNKNOWN<br/><br/>Possible subtypes if idType = DRIVING\_LICENSE<br/>•	REGULAR\_DRIVING\_LICENSE<br/>•	LEARNING\_DRIVING\_LICENSE <br/><br/>Possible subtypes if idType = PASSPORT<br/>•	E\_PASSPORT (only for mobile) | |
 |idCountry   |3  |Possible countries:<br/>•	[ISO 3166-1 alpha-3](http://en.wikipedia.org/wiki/ISO_3166-1_alpha-3) country code<br/>•	XKX (Kosovo)| |
 |rejectReason   |   |Reject reason as JSON object if verificationStatus = DENIED\_FRAUD or ERROR\_NOT\_READABLE\_ID, see tables below  | |
 |idScanImage   |255  |URL to retrieve the image of the transaction (JPEG or PNG) if available <sup>2</sup> | |
@@ -131,7 +131,7 @@ The following parameters are posted to your callback URL for Netverify Web, perf
 |optionalData2   |255  |Optional field of MRZ line 2 | |
 |dni   |255  |DNI as available on the ID if idCountry = ESP and idSubtype = NATIONAL\_ID  | |
 |curp   |255  |CURP is available if idCountry = MEX and idType = PASSPORT, DRIVING\_LICENSE, or ID\_CARD and idSubtype = ELECTORAL\_ID  |activation required |
-|gender   |2  |Possible values: M, F<br>• if idCountry = FRA,HKG and idSubtype = NATIONAL\_ID (MRZ type CNIS)<br> •	if idCountry = BHR,SGP and idType = PASSPORT, ID\_CARD, DRIVING\_LICENSE <br>• if idCountry = PHL and idType = DRIVING\_LICENSE <br>• if idType = VISA and additional extraction for Visa enabled | |
+|gender   |2  |Possible values: M, F<br>• if idCountry = FRA,HKG and idSubtype = NATIONAL\_ID (MRZ type CNIS)<br> •	if idCountry = BHR,SGP and idType = PASSPORT, ID\_CARD, DRIVING\_LICENSE <br>• if idCountry = PHL and idType = DRIVING\_LICENSE <br>• if idType = VISA and additional extraction for Visa enabled <br>• if readable: best effort| |
 |presetCountry   | 3  |Possible countries:<br />•	[ISO 3166-1 alpha-3](http://en.wikipedia.org/wiki/ISO_3166-1_alpha-3) country code <br /> • XKX (Kosovo)| |
 |presetIdType   |    |Possible ID types: PASSPORT, DRIVING\_LICENSE, ID\_CARD| |
 |dlCarPermission|255 |Only available if:<br/> •Extraction supported for specific country<br/>•verificationStatus = APPROVED\_VERIFIED<br/><br/>Possible values:<br /> • YES<br /> • NO<br /> • NOT\_READABLE|activation required|
@@ -153,7 +153,7 @@ The following parameters are posted to your callback URL for Netverify Web, perf
 |registrationNumber|255|Registration number of the document |activation required |
 |mothersName|255|Name of the document holder's mother |activation required |
 |fathersName|255|Name of the document holder's father |activation required |
-|personalIdentificationNumber|255|Personal identification number as available on the ID if idCountry = GEO and idSubtype = PASSPORT |activation required |
+|personalIdentificationNumber|255|Personal identification number as available on the ID<br>• if idCountry = GEO and idSubtype = PASSPORT<br>• if idCountry = COL and idSubtype = ID\_CARD |activation required |
 |rgNumber|255|"General Registration" number for idCountry = BRA |activation required|
 
 <sup>1</sup> Transaction is declined as unsupported if the ID is not supported by Jumio, or not marked as accepted in your customer portal settings.<br/>
