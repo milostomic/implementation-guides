@@ -242,7 +242,7 @@ We encourage to use a standard library to convert the timestamp received from Ju
 |country   |3  |Possible countries:<br/>•	[ISO 3166-1 alpha-3](http://en.wikipedia.org/wiki/ISO_3166-1_alpha-3) country code<br/>•	XKX (Kosovo)  |
 |postalCode   |15  |Postal code |
 |city   |64  |City |
-|subdivision   |100  |Subdevision (Region, State, Province, Emirate, Department, ...) |
+|subdivision   |100  |Subdivision (Region, State, Province, Emirate, Department, ...) |
 
 ### Reject reason
 
