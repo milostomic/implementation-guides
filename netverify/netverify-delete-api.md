@@ -78,6 +78,7 @@ Use the HTTP `DELETE` method to call the RESTful API endpoint below. Specify the
 **HTTP Request Method:** `DELETE`<br>
 **REST URL (US)**: `https://netverify.com/api/netverify/v2/scans/<transactionReference>`<br>
 **REST URL (EU)**: `https://lon.netverify.com/api/netverify/v2/scans/<transactionReference>`<br>
+**REST URL (SGP)**: `https://core-sgp.jumio.com/api/netverify/v2/scans/<transactionReference>`<br>
 <br>
 
 ## Request body
@@ -120,6 +121,7 @@ Use the HTTP `DELETE` method to call the RESTful API endpoint below. Specify the
 **HTTP Request Method:** `DELETE`<br>
 **REST URL (US)**: `https://netverify.com/api/netverify/v2/authentications/<transactionReference>`<br>
 **REST URL (EU)**: `https://lon.netverify.com/api/netverify/v2/authentications/<transactionReference>`<br>
+**REST URL (SGP)**: `https://core-sgp.jumio.com/api/netverify/v2/authentications/<transactionReference>`<br>
 <br>
 
 ## Request body
@@ -162,6 +164,7 @@ Use the HTTP `DELETE` method to call the RESTful API endpoint below. Specify the
 **HTTP Request Method:** `DELETE`<br>
 **REST URL (US)**: `https://retrieval.netverify.com/api/netverify/v2/documents/<transactionReference>`<br>
 **REST URL (EU)**: `https://retrieval.lon.netverify.com/api/netverify/v2/documents/<transactionReference>`<br>
+**REST URL (SGP)**: `https://retrieval.core-sgp.jumio.com/api/netverify/v2/documents/<transactionReference>`<br>
 <br>
 
 ## Request body

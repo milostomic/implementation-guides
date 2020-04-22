@@ -93,6 +93,7 @@ Call the RESTful API POST endpoint **/initiateAuthentication** with a JSON objec
  **HTTP Request Method:** `POST`<br>
  **REST URL (US)**: `https://netverify.com/api/authentication/v1/facemap/initiate`<br>
  **REST URL (EU)**: `https://lon.netverify.com/api/authentication/v1/facemap/initiate`<br>
+ **REST URL (SGP)**: `https://core-sgp.jumio.com/api/authentication/v1/facemap/initiate`<br>
 
 
 |⚠️ A new transaction will be created and the facemap will be temporarily stored until the transaction reaches a final state (max. 15 minutes).
@@ -218,6 +219,7 @@ Call the RESTful API POST endpoint **/initiateAuthentication** with a JSON objec
  **HTTP Request Method:** `POST`<br>
  **REST URL (US)**: `https://netverify.com/api/authentication/v1/facemap/initiate`<br>
  **REST URL (EU)**: `https://lon.netverify.com/api/authentication/v1/facemap/initiate`<br>
+ **REST URL (SGP)**: `https://core-sgp.jumio.com/api/authentication/v1/facemap/initiate`<br>
 
 
 |⚠️ A new transaction will be created and the facemap will be temporarily stored until the transaction reaches a final state (max. 15 minutes).

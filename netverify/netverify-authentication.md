@@ -60,6 +60,7 @@ Call the RESTful API POST endpoint **/initiate** with a JSON object containing t
 **HTTP Request Method:** `POST`<br>
 **REST URL (US)**: `https://netverify.com/api/authentication/v1/web/initiate`<br>
 **REST URL (EU)**: `https://lon.netverify.com/api/authentication/v1/web/initiate`<br>
+**REST URL (SGP)**: `https://core-sgp.jumio.com/api/authentication/v1/web/initiate`<br>
 
 <br>
 

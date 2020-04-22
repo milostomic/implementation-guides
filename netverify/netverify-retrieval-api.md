@@ -132,6 +132,7 @@ Call the RESTful API GET endpoint below to retrieve the status of a Netverify tr
 **HTTP request method:** `GET`<br>
 **REST URL (US)**: `https://netverify.com/api/netverify/v2/scans/<scanReference>`<br>
 **REST URL (EU)**: `https://lon.netverify.com/api/netverify/v2/scans/<scanReference>`<br>
+**REST URL (SGP):** `https://core-sgp.jumio.com/api/netverify/v2/scans/<scanReference>`<br>
 
 <br>
 
@@ -184,6 +185,7 @@ Call the RESTful API GET endpoint below to retrieve document, transaction, and v
 **HTTP request method:** `GET`<br>
 **REST URL (US)**: `https://netverify.com/api/netverify/v2/scans/<scanReference>/data`<br>
 **REST URL (EU)**: `https://lon.netverify.com/api/netverify/v2/scans/<scanReference>/data`<br>
+**REST URL (SGP):** `https://core-sgp.jumio.com/api/netverify/v2/scans/<scanReference>/data`<br>
 
 <br>
 
@@ -296,6 +298,7 @@ Call the RESTful API GET endpoint below to retrieve document data by specifying 
 **HTTP request method:** `GET`<br>
 **REST URL (US)**: `https://netverify.com/api/netverify/v2/scans/<scanReference>/data/document`<br>
 **REST URL (EU)**: `https://lon.netverify.com/api/netverify/v2/scans/<scanReference>/data/document`<br>
+**REST URL (SGP):** `https://core-sgp.jumio.com/api/netverify/v2/scans/<scanReference>/data/document`<br>
 
 <br>
 
@@ -422,6 +425,7 @@ Call the RESTful API GET endpoint below to retrieve transaction metadata by spec
 **HTTP request method:** `GET`<br>
 **REST URL (US)**: `https://netverify.com/api/netverify/v2/scans/<scanReference>/data/transaction`<br>
 **REST URL (EU)**: `https://lon.netverify.com/api/netverify/v2/scans/<scanReference>/data/transaction`<br>
+**REST URL (SGP):** `https://core-sgp.jumio.com/api/netverify/v2/scans/<scanReference>/data/transaction`<br>
 
 <br>
 
@@ -485,6 +489,7 @@ Call the RESTful API GET endpoint below to retrieve verification data by specify
 **HTTP request method:** `GET`<br>
 **REST URL (US)**: `https://netverify.com/api/netverify/v2/scans/<scanReference>/data/verification`<br>
 **REST URL (EU)**: `https://lon.netverify.com/api/netverify/v2/scans/<scanReference>/data/verification`<br>
+**REST URL (SGP):** `https://core-sgp.jumio.com/api/netverify/v2/scans/<scanReference>/data/verification`<br>
 
 <br>
 
@@ -644,6 +649,7 @@ Call the RESTful API GET endpoint below to retrieve a list of the available imag
 **HTTP request method:** `GET`<br>
 **REST URL (US)**: `https://netverify.com/api/netverify/v2/scans/<scanReference>/images`<br>
 **REST URL (EU)**: `https://lon.netverify.com/api/netverify/v2/scans/<scanReference>/images`<br>
+**REST URL (SGP):** `https://core-sgp.jumio.com/api/netverify/v2/scans/<scanReference>/images`<br>
 
 <br>
 
@@ -730,6 +736,7 @@ Call the RESTful GET API endpoint below to retrieve a specific image from a tran
 **HTTP request method:** `GET`<br>
 **REST URL (US)**: `https://netverify.com/api/netverify/v2/scans/<scanReference>/images/<classifier>`<br>
 **REST URL (EU)**: `https://lon.netverify.com/api/netverify/v2/scans/<scanReference>/images/<classifier>`<br>
+**REST URL (SGP):** `https://core-sgp.jumio.com/api/netverify/v2/scans/<scanReference>/images/<classifier>`<br>
 
 
 ### Request path parameters
@@ -771,6 +778,7 @@ Call the RESTful API GET endpoint below to retrieve liveness images from a trans
 **HTTP request method:** `GET`<br>
 **REST URL (US)**: `https://netverify.com/api/netverify/v2/scans/<scanReference>/images/liveness/<livenessNumber>`<br>
 **REST URL (EU)**: `https://lon.netverify.com/api/netverify/v2/scans/<scanReference>/images/liveness/<livenessNumber>`<br>
+**REST URL (SGP):** `https://core-sgp.jumio.com/api/netverify/v2/scans/<scanReference>/images/liveness/<livenessNumber>`<br>
 
 
 ### Request path parameters
@@ -818,6 +826,7 @@ Call the RESTful API GET endpoint below to retrieve the details of an Authentica
 **HTTP request method:** `GET`<br>
 **REST URL (US)**: `https://netverify.com/api/netverify/v2/authentications/<transactionReference>`<br>
 **REST URL (EU)**: `https://lon.netverify.com/api/netverify/v2/authentications/<transactionReference>`<br>
+**REST URL (SGP):** `https://core-sgp.jumio.com/api/netverify/v2/authentications/<transactionReference>`<br>
 
 <br>
 
@@ -904,6 +913,7 @@ Call the RESTful API GET endpoint below to retrieve the face image from an Authe
 **HTTP request method:** `GET`<br>
 **REST URL (US)**: `https://netverify.com/api/netverify/v2/authentications/<transactionReference>/images/<classifier>`<br>
 **REST URL (EU)**: `https://lon.netverify.com/api/netverify/v2/authentications/<transactionReference>/images/<classifier>`<br>
+**REST URL (SGP):** `https://core-sgp.jumio.com/api/netverify/v2/authentications/<transactionReference>/images/<classifier>`<br>
 
 
 ### Request path parameters
@@ -948,6 +958,7 @@ Call the RESTful API GET endpoint below to retrieve liveness images from an Auth
 **HTTP request method:** `GET`<br>
 **REST URL (US)**: `https://netverify.com/api/netverify/v2/authentications/<transactionReference>/images/liveness/<livenessNumber>`<br>
 **REST URL (EU)**: `https://lon.netverify.com/api/netverify/v2/authentications/<transactionReference>/images/liveness/<livenessNumber>`<br>
+**REST URL (SGP):** `https://core-sgp.jumio.com/api/netverify/v2/authentications/<transactionReference>/images/liveness/<livenessNumber>`<br>
 
 
 ### Request path parameters
@@ -995,6 +1006,7 @@ Call the RESTful API GET endpoint below to retrieve the status of a Document Ver
 **HTTP request method:** `GET`<br>
 **REST URL (US)**: `https://retrieval.netverify.com/api/netverify/v2/documents/<scanReference>`<br>
 **REST URL (EU)**: `https://retrieval.lon.netverify.com/api/netverify/v2/documents/<scanReference>`<br>
+**REST URL (SGP):** `https://retrieval.core-sgp.jumio.com/api/netverify/v2/documents/<scanReference>`<br>
 
 <br>
 
@@ -1043,6 +1055,7 @@ Call the RESTful API GET endpoint below to retrieve the document and transaction
 **HTTP request method:** `GET`<br>
 **REST URL (US)**: `https://retrieval.netverify.com/api/netverify/v2/documents/<scanReference>/data`<br>
 **REST URL (EU)**: `https://retrieval.lon.netverify.com/api/netverify/v2/documents/<scanReference>/data`<br>
+**REST URL (SGP):** `https://retrieval.core-sgp.jumio.com/api/netverify/v2/documents/<scanReference>/data`<br>
 
 <br>
 
@@ -1163,6 +1176,7 @@ Call the RESTful API GET endpoint below to retrieve the document data of a Docum
 **HTTP request method:** `GET`<br>
 **REST URL (US)**: `https://retrieval.netverify.com/api/netverify/v2/documents/<scanReference>/data/document`<br>
 **REST URL (EU)**: `https://retrieval.lon.netverify.com/api/netverify/v2/documents/<scanReference>/data/document`<br>
+**REST URL (SGP):** `https://retrieval.core-sgp.jumio.com/api/netverify/v2/documents/<scanReference>/data/document`<br>
 
 <br>
 
@@ -1294,6 +1308,7 @@ Call the RESTful API GET endpoint below to retrieve the transaction metadata of 
 **HTTP request method:** `GET`<br>
 **REST URL (US)**: `https://retrieval.netverify.com/api/netverify/v2/documents/<scanReference>/data/transaction`<br>
 **REST URL (EU)**: `https://retrieval.lon.netverify.com/api/netverify/v2/documents/<scanReference>/data/transaction`<br>
+**REST URL (SGP):** `https://retrieval.core-sgp.jumio.com/api/netverify/v2/documents/<scanReference>/data/transaction`<br>
 
 <br>
 
@@ -1350,6 +1365,7 @@ Call the RESTful API GET endpoint below to retrieve a list of the available imag
 **HTTP request method:** `GET`<br>
 **REST URL (US)**: `https://retrieval.netverify.com/api/netverify/v2/documents/<scanReference>/pages`<br>
 **REST URL (EU)**: `https://retrieval.lon.netverify.com/api/netverify/v2/documents/<scanReference>/pages`<br>
+**REST URL (SGP):** `https://retrieval.core-sgp.jumio.com/api/netverify/v2/documents/<scanReference>/pages`<br>
 
 <br>
 
@@ -1440,6 +1456,7 @@ If you are unsure about the PCI DSS ramifications of retrieving unmasked credit 
 **HTTP request method:** `GET`<br>
 **REST URL (US)**: `https://retrieval.netverify.com/api/netverify/v2/documents/<scanReference>/pages/<page_number>`<br>
 **REST URL (EU)**: `https://retrieval.lon.netverify.com/api/netverify/v2/documents/<scanReference>/pages/<page_number>`<br>
+**REST URL (SGP):** `https://retrieval.core-sgp.jumio.com/api/netverify/v2/documents/<scanReference>/pages/<page_number>`<br>
 
 ### Request path parameters
 

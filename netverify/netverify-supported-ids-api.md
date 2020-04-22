@@ -46,6 +46,7 @@ Call the RESTful HTTP GET API endpoint /**supportedIdTypes** to receive a JSON r
 **HTTP Request Method:** `GET`<br>
 **REST URL (US)**: `https://netverify.com/api/netverify/v2/supportedIdTypes`<br>
 **REST URL (EU)**: `https://lon.netverify.com/api/netverify/v2/supportedIdTypes`<br>
+**REST URL (SGP)**: `https://core-sgp.jumio.com/api/netverify/v2/supportedIdTypes`<br>
 
 <br>
 
@@ -148,6 +149,7 @@ Call the RESTful HTTP GET API endpoint /**acceptedIdTypes** to receive a JSON re
 **HTTP Request Method:** `GET`<br>
 **REST URL (US)**: `https://netverify.com/api/netverify/v2/acceptedIdTypes`<br>
 **REST URL (EU)**: `https://lon.netverify.com/api/netverify/v2/acceptedIdTypes`<br>
+**REST URL (SGP)**: `https://core-sgp.jumio.com/api/netverify/v2/acceptedIdTypes`<br>
 
 <br>
 

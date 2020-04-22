@@ -63,6 +63,7 @@ Call the RESTful API POST endpoint **/acquisitions** with a JSON object containi
 **HTTP request method:** `POST`<br>
 **REST URL (US):** `https://upload.netverify.com/api/netverify/v2/acquisitions`<br>
 **REST URL (EU):** `https://upload.lon.netverify.com/api/netverify/v2/acquisitions`<br>
+**REST URL (SGP):** `https://upload.core-sgp.jumio.com/api/netverify/v2/acquisitions`<br>
 
 <br>
 
@@ -327,6 +328,7 @@ Call the RESTful API POST endpoint **/acquisitions** with a JSON object containi
 **HTTP request method:** `POST`<br>
 **REST URL (US):** `https://acquisition.netverify.com/api/netverify/v2/acquisitions`<br>
 **REST URL (EU):** `https://acquisition.lon.netverify.com/api/netverify/v2/acquisitions`<br>
+**REST URL (SGP):** `https://acquisition.core-sgp.jumio.com/api/netverify/v2/acquisitions`<br>
 
 <br>
 
@@ -445,6 +447,7 @@ Call the RESTful API POST endpoint **/pages** with a newly-created or recently u
 **HTTP request method:** `POST`<br>
 **REST URL (US):** `https://acquisition.netverify.com/api/netverify/v2/acquisitions/<scanReference>/document/pages/<page>`<br>
 **REST URL (EU):** `https://acquisition.lon.netverify.com/api/netverify/v2/acquisitions/<scanReference>/document/pages/<page>`<br>
+**REST URL (SGP):** `https://acquisition.core-sgp.jumio.com/api/netverify/v2/acquisitions/<scanReference>/document/pages/<page>`<br>
 
 <br>
 
@@ -538,6 +541,7 @@ Call the RESTful API POST endpoint **/document** for a newly-created or recently
 **HTTP request method:** `POST`<br>
 **REST URL (US):** `https://acquisition.netverify.com/api/netverify/v2/acquisitions/<scanReference>/document`<br>
 **REST URL (EU):** `https://acquisition.lon.netverify.com/api/netverify/v2/acquisitions/<scanReference>/document`<br>
+**REST URL (SGP):** `https://acquisition.core-sgp.jumio.com/api/netverify/v2/acquisitions/<scanReference>/document`<br>
 
 <br>
 
@@ -634,6 +638,7 @@ Call the RESTful API PUT endpoint **/acquisitions** with a specified scan refere
 **HTTP request method:** `PUT`<br>
 **REST URL (US):** `https://acquisition.netverify.com/api/netverify/v2/acquisitions/<scanReference>`<br>
 **REST URL (EU):** `https://acquisition.lon.netverify.com/api/netverify/v2/acquisitions/<scanReference>`<br>
+**REST URL (SGP):** `https://acquisition.core-sgp.jumio.com/api/netverify/v2/acquisitions/<scanReference>`<br>
 
 <br>
 
@@ -708,6 +713,7 @@ Call the RESTful API POST endpoint **/complete** with a JSON object containing t
 **HTTP request method:** `POST`<br>
 **REST URL (US):** `https://acquisition.netverify.com/api/netverify/v2/acquisitions/complete`<br>
 **REST URL (EU):** `https://acquisition.lon.netverify.com/api/netverify/v2/acquisitions/complete`<br>
+**REST URL (SGP):** `https://acquisition.core-sgp.jumio.com/api/netverify/v2/acquisitions/complete`<br>
 
 <br>
 
@@ -889,6 +895,7 @@ Call the RESTful HTTP GET API **supportedDocumentTypes** to receive a JSON respo
 **HTTP request method:** `GET`<br>
 **REST URL (US):** `https://netverify.com/api/netverify/v2/supportedDocumentTypes`<br>
 **REST URL (EU):** `https://lon.netverify.com/api/netverify/v2/supportedDocumentTypes`<br>
+**REST URL (SGP):** `https://core-sgp.jumio.com/api/netverify/v2/supportedDocumentTypes`<br>
 
 ### Request headers
 
