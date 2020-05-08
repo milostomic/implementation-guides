@@ -540,9 +540,10 @@ Successful requests will return HTTP status code `200 OK` along with a JSON obje
 |similarity |Possible values:<br/>• MATCH<br />• NO\_MATCH<br />• NOT\_POSSIBLE|
 |validity  |Possible values:<br/>• TRUE<br />• FALSE |
 |reason   |Provided if validity = FALSE<br/>Possible values:<br />• SELFIE\_CROPPED\_FROM\_ID<br />•	ENTIRE\_ID\_USED\_AS\_SELFIE<br />•	MULTIPLE\_PEOPLE<br />•	SELFIE\_IS\_SCREEN\_PAPER\_VIDEO<br />•	SELFIE\_MANIPULATED<br />• AGE\_DIFFERENCE\_TOO\_BIG<br />•	NO\_FACE\_PRESENT<br />•	FACE\_NOT\_FULLY\_VISIBLE<br />• BAD\_QUALITY<br />• BLACK\_AND\_WHITE<br />• LIVENESS\_FAILED|
-|handwrittenNoteMatches	|Only visible if **Liveness Detection (with handwritten note)** setting is turned on within your account. For questions about this feature, please contact Jumio Support. <br/><br/>Possible values:<br/> •	TRUE<br />•	FALSE|
 |similarityDecision   |Only visible if setting is turned on within your account. For questions about this feature, please contact Jumio Support. <br/><br/>Possible values:<br/> •	MANUAL<br />•	AUTOMATED|
 |similarityScore   |Only visible if setting is turned on within your account. For questions about this feature, please contact Jumio Support. <br/><br/>Possible value:<br/> •	Range from 0 to 1|
+
+<!-- |handwrittenNoteMatches	|Only visible if **Liveness Detection (with handwritten note)** setting is turned on within your account. For questions about this feature, please contact Jumio Support. <br/><br/>Possible values:<br/> •	TRUE<br />•	FALSE| -->
 
 <br>
 

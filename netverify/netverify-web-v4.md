@@ -171,11 +171,6 @@ Identity Verification in Netverify allows you to make sure the person submitting
 
 Identity Verification can be enabled with the Face Match step only or in conjunction with a Liveness Check.
 
-There are currently two options to check for liveness:
-
-* 3D Liveness for Web
-* Liveness Detection (with handwritten note)
-
 #### 3D Liveness for Web (no preset available)
 
 Netverify's new 3D face liveness detection technology creates a three-dimensional map of your user's face, providing unprecedented accuracy for the Liveness Check, and creates an enrollment transaction for the use of the Authentication feature.
@@ -197,25 +192,6 @@ Netverify's new 3D face liveness detection technology creates a three-dimensiona
 |camera + upload|browser not supported|user asked to upload selfie
 |camera only|camera not available|error 9820
 |camera only|browser not supported|error 9820
-
-<br>
-
-#### Liveness Detection (with handwritten note): preset custom phrase
-
-In order to use this preset, Identity Verification and Liveness Detection (with handwritten note) must be enabled for your account. Jumio Support will ask you to provide a default custom phrase to be submitted by your users on a handwritten note during the Identity Verification process. After the default custom phrase has been configured for your account, this preset can be used to change the phrase for any transaction.
-
-|⚠️Enabling Liveness Detection (with handwritten note) for your account will override all other Identity Verification options.
-|:---|
-<br>
-
-**Required items appear in bold type.**
-
-|Name   |Type    |Max. length    |Description    |
-|:------------|:-------|:--------------|:--------------|
-|**index**|integer|1| must be set to `2`|
-|**phrase**<sup>1</sup>|string|30|Possible values:<br>• alpha-numeric Latin characters (upper or lower case) and spaces |
-
-<sup>1</sup> Values **must not** contain Personally Identifiable Information (PII) or other sensitive data such as email addresses.
 
 <br>
 
