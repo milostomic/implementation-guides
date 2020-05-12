@@ -184,23 +184,25 @@ We encourage to use a standard library to convert the timestamp received from Ju
 
 ### Supported documents for address extraction
 
-|Country    |ID card    |Driving license    |Passport    |Callback format |
-|:------------|:-------|:--------------|:--------------|:-------|
-|Australia|No|Yes|No|US|
-|Bahrain|No|Yes|No|Raw|
-|Canada|No|Yes|No|US|
-|France|Yes|Yes|Yes|Raw|
-|Germany|Yes|No|No|EU|
-|Indonesia|Yes|No|No|Raw|
-|Ireland|No|Yes|No|Raw|
-|Malaysia|Yes|No|No|Raw|
-|Malta|Yes|Yes|No|Raw|
-|Mexico|Yes|No|No|US|
-|Romania|Yes|No|No|Raw|
-|Singapore|Yes|No|No|Raw|
-|Spain|Yes|No|No|EU|
-|United Kingdom|No|Yes|No|Raw|
-|United States|Yes|Yes|No|US|
+|Country    |ID card    |Driving license    |Passport    |Callback format<br>(until August 15)|Callback format<br>(from August 15)<sup>1</sup>|
+|:------------|:-------|:--------------|:--------------|:-------|:-------|
+|Australia|No|Yes|No|US|Raw|
+|Bahrain|No|Yes|No|Raw|Raw|
+|Canada|No|Yes|No|US|Raw|
+|France|Yes|Yes|Yes|Raw|Raw|
+|Germany|Yes|No|No|EU|Raw|
+|Indonesia|Yes|No|No|Raw|Raw|
+|Ireland|No|Yes|No|Raw|Raw|
+|Malaysia|Yes|No|No|Raw|Raw|
+|Malta|Yes|Yes|No|Raw|Raw|
+|Mexico|Yes|No|No|US|Raw|
+|Romania|Yes|No|No|Raw|Raw|
+|Singapore|Yes|No|No|Raw|Raw|
+|Spain|Yes|No|No|EU|Raw|
+|United Kingdom|No|Yes|No|Raw|Raw|
+|United States|Yes|Yes|No|US|Raw|
+
+<sup>1</sup> see [Upcoming Address format changes](#upcoming-address-format-changes)
 
 #### US address format
 
@@ -243,6 +245,30 @@ We encourage to use a standard library to convert the timestamp received from Ju
 |postalCode   |15  |Postal code |
 |city   |64  |City |
 |subdivision   |100  |Subdivision (Region, State, Province, Emirate, Department, ...) |
+
+#### Upcoming Address format changes
+
+On August 15, 2020 onwards, Jumio is going to streamline the EU and US format into a single Raw format. In addition to that, we will also be providing a new parameter called formattedAddress which will contain  the entire address in a comma separated format.
+
+**Example**
+
+|US Address Format|Raw Address Format|
+|:------------------------|:--------|
+|"streetNumber": "150"<br>"streetDirection":"N"<br>"streetName":"Alberny"<br>"streetSuffix":"Dr"<br>"unitDesignator":"APT"<br>"unitNumber": "7"|"line1":"150 N Alberny Dr APT. 7"|
+|"city":"New Mexico"|city":"New Mexico"|
+|"stateCode":"US-AL"|"subdivision":"US-AL"|
+|"zip":"77358"<br>"zipExtension":"5555"|"postalCode":"77358-5555"|
+|"country":"USA"|"country":"USA"|
+||“formattedAddress”: “150 N Alberny Dr APT. 7, New Mexico, US-AL 77358-5555, United States”|
+
+|EU Address Format|Raw Address Format|
+|:------------------------|:--------|
+|"streetNumber":"180"<br>"streetName":"Main Street"<br>"unitDetails":"ABC"|"line1": "180 Main Street ABC"|
+|"city": "Graz"|"city": "Graz"|
+|"province": "Steiermark"|"subdivision": "Steiermark"|
+|"postalCode": "2424"|"postalCode": "2424"|
+|"country": "AUT"|"country": "AUT"|
+||“formattedAddress”: “180 Main Street ABC, Graz, Steiermark 2424, Austria”|
 
 ### Reject reason
 
