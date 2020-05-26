@@ -386,6 +386,7 @@ A callback URL can also be specified per transaction in our [Android](https://gi
 |:---------------|:--------|:----------: |:------------|
 |**callbackDate**| string  |  | Timestamp of the callback in the format: <br>[YYYY-MM-DDThh:mm:ss.SSSZ](#timestamp-format-1)|
 |**transactionReference**| string  |36 |Jumio’s reference number for the Authentication transaction|
+|**enrollmentTransactionReference**| string  |36 |Jumio’s reference number of the enrollment transaction (ID)|
 |**transactionResult**| string  | |Possible values:<br>•	PASSED<br>•	FAILED<br>•	INVALID<br>•	EXPIRED|
 |**transactionDate**| string  |  |Timestamp of the transaction in the format: <br>[YYYY-MM-DDThh:mm:ss.SSSZ](#timestamp-format-1)|
 |**scanSource**|string||Possible values:<br>•	SDK<br>•	WEB|
@@ -421,7 +422,7 @@ We encourage to use a standard library to convert the timestamp received from Ju
 #### Sample callback (URL-encoded POST): Passed
 
 ```
-scanSource=SDK&transactionReference=xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx&callBackType=NETVERIFY_AUTHENTICATION&livenessImages=%5B%22https%3A%2F%2Fnetverify.com%2Fapi%2Fnetverify%2Fv2%2Fauthentications%2Fxxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx%2Fimages%2Fliveness%2F1%22%2C%22https%3A%2F%2Fnetverify.com%2Fapi%2Fnetverify%2Fv2%2Fauthentications%2Fxxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx%2Fimages%2Fliveness%2F2%22%2C%22https%3A%2F%2Fnetverify.com%2Fapi%2Fnetverify%2Fv2%2Fauthentications%2Fxxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx%2Fimages%2Fliveness%2F3%22%2C%22https%3A%2F%2Fnetverify.com%2Fapi%2Fnetverify%2Fv2%2Fauthentications%2Fxxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx%2Fimages%2Fliveness%2F4%22%2C%22https%3A%2F%2Fnetverify.com%2Fapi%2Fnetverify%2Fv2%2Fauthentications%2Fxxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx%2Fimages%2Fliveness%2F5%22%2C%22https%3A%2F%2Fnetverify.com%2Fapi%2Fnetverify%2Fv2%2Fauthentications%2Fxxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx%2Fimages%2Fliveness%2F6%22%2C%22https%3A%2F%2Fnetverify.com%2Fapi%2Fnetverify%2Fv2%2Fauthentications%2Fxxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx%2Fimages%2Fliveness%2F7%22%5D&idScanImageFace=https%3A%2F%2Fnetverify.com%2Fapi%2Fnetverify%2Fv2%2Fauthentications%2Fxxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx%2Fimages%2Fface&callbackDate=2019-05-30T08%3A37%3A35.822Z&transactionDate=2019-05-29T08%3A37%3A24.344Z&transactionResult=PASSED
+scanSource=SDK&transactionReference=xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx&enrollmentTransactionReference=xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx&callBackType=NETVERIFY_AUTHENTICATION&livenessImages=%5B%22https%3A%2F%2Fnetverify.com%2Fapi%2Fnetverify%2Fv2%2Fauthentications%2Fxxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx%2Fimages%2Fliveness%2F1%22%2C%22https%3A%2F%2Fnetverify.com%2Fapi%2Fnetverify%2Fv2%2Fauthentications%2Fxxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx%2Fimages%2Fliveness%2F2%22%2C%22https%3A%2F%2Fnetverify.com%2Fapi%2Fnetverify%2Fv2%2Fauthentications%2Fxxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx%2Fimages%2Fliveness%2F3%22%2C%22https%3A%2F%2Fnetverify.com%2Fapi%2Fnetverify%2Fv2%2Fauthentications%2Fxxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx%2Fimages%2Fliveness%2F4%22%2C%22https%3A%2F%2Fnetverify.com%2Fapi%2Fnetverify%2Fv2%2Fauthentications%2Fxxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx%2Fimages%2Fliveness%2F5%22%2C%22https%3A%2F%2Fnetverify.com%2Fapi%2Fnetverify%2Fv2%2Fauthentications%2Fxxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx%2Fimages%2Fliveness%2F6%22%2C%22https%3A%2F%2Fnetverify.com%2Fapi%2Fnetverify%2Fv2%2Fauthentications%2Fxxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx%2Fimages%2Fliveness%2F7%22%5D&idScanImageFace=https%3A%2F%2Fnetverify.com%2Fapi%2Fnetverify%2Fv2%2Fauthentications%2Fxxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx%2Fimages%2Fface&callbackDate=2019-05-30T08%3A37%3A35.822Z&transactionDate=2019-05-29T08%3A37%3A24.344Z&transactionResult=PASSED
 ```
 
 ---
@@ -586,4 +587,4 @@ If your server was not able to receive or process the callback, you can use the 
 
 
 ---
-&copy; Jumio Corp. 268 Lambert Avenue, Palo Alto, CA 94306
+&copy; Jumio Corporation, 395 Page Mill Road, Suite 150 Palo Alto, CA 94306

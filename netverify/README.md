@@ -163,4 +163,4 @@ The Jumio Knowledge Base also contains a wealth of information regarding our ser
 
 --->
 ---
-&copy; Jumio Corp. 268 Lambert Avenue, Palo Alto, CA 94306
+&copy; Jumio Corporation, 395 Page Mill Road, Suite 150 Palo Alto, CA 94306

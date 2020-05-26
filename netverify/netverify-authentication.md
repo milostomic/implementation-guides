@@ -503,4 +503,4 @@ Authentication does not support WebViews.
 
 
 ---
-&copy; Jumio Corp. 268 Lambert Avenue, Palo Alto, CA 94306
+&copy; Jumio Corporation, 395 Page Mill Road, Suite 150 Palo Alto, CA 94306

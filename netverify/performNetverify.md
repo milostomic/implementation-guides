@@ -186,4 +186,4 @@ Define a **Callback URL** to receive verification results and extracted user dat
 
 
 ---
-&copy; Jumio Corp. 268 Lambert Avenue, Palo Alto, CA 94306
+&copy; Jumio Corporation, 395 Page Mill Road, Suite 150 Palo Alto, CA 94306

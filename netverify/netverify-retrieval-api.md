@@ -9,6 +9,7 @@ This guide describes how to implement the Netverify Retrieval API.
 
 | Date    | Description|
 |:--------|:------------|
+| 2020-05-26   |Added "enrollmentTransactionReference" to Authentication retrieval |
 | 2020-03-03   |Added "faceSearchFindings" to "additionalChecks" |
 | 2020-01-27   |Added "addressValidation" and "proofOfResidency" to "additionalChecks" |
 | 2019-07-23   |Added response parameter "facemap" for Netverify |
@@ -845,6 +846,7 @@ Successful requests will return HTTP status code `200 OK` along with a JSON obje
 |Name|Type|Max. length|Description|
 |:---------------|:--------|:------------|:------------|
 |**transactionReference** |string|36|Jumio’s reference number for the Authentication transaction|
+|**enrollmentTransactionReference** |string|36|Jumio’s reference number of the enrollment transaction (ID)|
 |**transactionResult** |string||Possible values:<br>• CREATED<br>• STARTED<br>• PASSED<br>• FAILED<br>• INVALID<br>• EXPIRED|
 |**transactionDate** |string||Timestamp of the transaction in the format YYYY-MM-DDThh:mm:ss.SSSZ|
 |**scanSource** |string||Possible value:<br>• SDK|
@@ -885,6 +887,7 @@ timestamp will be added with the next release to be consistent with the other AP
 ```
 {
 	"transactionReference": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
+	"enrollmentTransactionReference": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
 	"transactionResult": "PASSED",
     "scanSource": "SDK",
     "transactionDate": "2019-05-23T14:32:27.534",
@@ -1494,4 +1497,4 @@ Authorization: Basic xxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
 
 ---
-&copy; Jumio Corp. 268 Lambert Avenue, Palo Alto, CA 94306
+&copy; Jumio Corporation, 395 Page Mill Road, Suite 150 Palo Alto, CA 94306

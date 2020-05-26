@@ -57,4 +57,4 @@ BAM Checkout enables your mobile customers with the easiest and most friction-fr
 - [Plugin for React Native](https://github.com/Jumio/mobile-react)
 - [Plugin for Xamarin](https://github.com/Jumio/mobile-xamarin)
 ---
-&copy; Jumio Corp. 268 Lambert Avenue, Palo Alto, CA 94306
+&copy; Jumio Corporation, 395 Page Mill Road, Suite 150 Palo Alto, CA 94306

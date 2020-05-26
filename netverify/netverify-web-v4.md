@@ -171,7 +171,7 @@ Identity Verification in Netverify allows you to make sure the person submitting
 
 Identity Verification can be enabled with the Face Match step only or in conjunction with a Liveness Check.
 
-#### 3D Liveness for Web (no preset available)
+#### 3D Liveness for Web
 
 Netverify's new 3D face liveness detection technology creates a three-dimensional map of your user's face, providing unprecedented accuracy for the Liveness Check, and creates an enrollment transaction for the use of the Authentication feature.
 
@@ -943,4 +943,4 @@ Jumio offers guaranteed support for Netverify on the following browsers and the 
 If you are using a native WebView for iOS you will need to enable image upload to allow the end user to finish the user journey.
 
 ---
-&copy; Jumio Corp. 268 Lambert Avenue, Palo Alto, CA 94306
+&copy; Jumio Corporation, 395 Page Mill Road, Suite 150 Palo Alto, CA 94306

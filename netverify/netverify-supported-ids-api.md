@@ -240,4 +240,4 @@ Call the RESTful HTTP GET API endpoint /**acceptedIdTypes** to receive a JSON re
 
 
 ---
-&copy; Jumio Corp. 268 Lambert Avenue, Palo Alto, CA 94306
+&copy; Jumio Corporation, 395 Page Mill Road, Suite 150 Palo Alto, CA 94306

@@ -287,7 +287,7 @@ The next step is for specifying supported Salesforce objects and adjust the Ligh
 # Edit Page Layouts
 This section is for adding the Netverify component to your Salesforce pages. The suported Objects for this section are Contact, Lead, Account, Case and Opportunity. This guide will go through the Lead setup, repeat the process for other objects which you've selected within the setup.
 
-## Add Netverify Component to a Lightning Record Page 
+## Add Netverify Component to a Lightning Record Page
 This is the step-by-step setup to add the Netverify component to a Lightning page using the Lightning setup.
 
 - Navigate to a **Lead** page in your org
@@ -425,14 +425,14 @@ This part is to create a Lookup Relationship with Lead to Verification. This is 
 
 ![Jumio](/images/nvsfimages/14_lookup2.jpeg)
 
-- select **Lookup Relationship** 
+- select **Lookup Relationship**
 	- select **Next**
 
 ![Jumio](/images/nvsfimages/14_lookup3.jpeg)
 
 - Select **Verification**
 	- click **Next**
- 
+
 ![Jumio](/images/nvsfimages/14_lookup4.jpeg)
 
 
@@ -442,7 +442,7 @@ This part is to create a Lookup Relationship with Lead to Verification. This is 
 
 - Search “**Process Builder**” in the Quick Find
 - Select **New**
-	- Enter in a Process Name - We name ours, **Create a Customer Object (Lead) for Orphaned Verification** 
+	- Enter in a Process Name - We name ours, **Create a Customer Object (Lead) for Orphaned Verification**
 		- The API Name should automatically populate when selecting in the field
 	- Select the process starts when - **a record changes**
 	- Select **Save**
@@ -483,7 +483,7 @@ This part is to create a Lookup Relationship with Lead to Verification. This is 
 
 ![Jumio](/images/nvsfimages/15_process4.jpeg)
 
-- Select **Activate** 
+- Select **Activate**
 - Select **Confirm**
 
 ### Process 2 - Check if a new Lead should link up to a Verification
@@ -509,9 +509,9 @@ This process will be to see if there is an "orphaned" Verification for the new L
 	- Enter a Criteria Name - **Is new Lead with Verification?**
 	- Select Criteria for Executing Actions - **Conditions are met**
 	- Set Conditions (Field, Operator, Type, Value):
-		- Field - **Verification** (custom Lookup field that would need to be created on Lead that looks up to Verification) 
-		- Operator - **Does not equal** 
-		- Type - **Global Constant** 
+		- Field - **Verification** (custom Lookup field that would need to be created on Lead that looks up to Verification)
+		- Operator - **Does not equal**
+		- Type - **Global Constant**
 		- Value - **$GlobalConstant.Null**
 	- Select Conditions - **All of the conditions are met (AND)**
 	- Select **Save**
@@ -521,11 +521,11 @@ This process will be to see if there is an "orphaned" Verification for the new L
 - Select **Add Action**
 	- Select the Action Type - **Update Records**
 	- Enter an Action Name - **Populate Salesforce Customer Id with Lead Id**
-	- Select a Record Type to Update - Check “**Select a record related to the Lead**” - 
+	- Select a Record Type to Update - Check “**Select a record related to the Lead**” -
 		- Select **Verification**
 	- Criteria for Updating Records - **No criteria - just update the records!**
 Set new field values for the records you update (Field, Type, Value):
-		- Field - **Salesforce Customer Id** 
+		- Field - **Salesforce Customer Id**
 		- Type - **Field Reference**
 		- Value - **Lead Id**
 	- Select **Save**
@@ -566,7 +566,7 @@ To run Reports using the packaged "Orphaned Verifications Reporting" Report Type
 - Then **Save** the report
 - Enter Report Name - **Orphaned Verifications**
 	- Report Unique Name will automatically populate
-- Report Description - **Verifications where the Salesforce Customer Id is null** 
+- Report Description - **Verifications where the Salesforce Customer Id is null**
 - Report Folder - **Unfiled Public Reports**
 	- Create a new Folder or select a different location
 
@@ -589,4 +589,6 @@ This Process Builder sample shows how to automate an Email to a System Admin whe
 
 If you perform this step, you will want to create a new Custom Object tab for the Error Log object. And if the User is the System Admin receiving the email alert and viewing the Error Log Salesforce record, go to the the Netverify Setup User Permission Set in Object Settings under Error Logs, make the Tab Visible and Available.
 
-
+
+---
+&copy; Jumio Corporation, 395 Page Mill Road, Suite 150 Palo Alto, CA 94306

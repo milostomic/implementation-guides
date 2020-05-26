@@ -306,4 +306,4 @@ If you have **Ongoing Monitoring** included in your contract, you have to turn o
 When monitoring is turned on, the transactions which have monitoring will be searched against the database and list each night. If a new entry is found, the admin users from the ComplyAdvantage portal will be notified through email.
 
 ---
-&copy; Jumio Corp. 268 Lambert Avenue, Palo Alto, CA 94306
+&copy; Jumio Corporation, 395 Page Mill Road, Suite 150 Palo Alto, CA 94306
