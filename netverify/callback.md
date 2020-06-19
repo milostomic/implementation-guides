@@ -284,7 +284,7 @@ On August 15, 2020 onwards, Jumio is going to streamline the EU and US format in
 |Parameter `rejectReasonDetails` |  Type    | Max. Length    | Description|
 |:-------------------------------|:---------|:---------------|:------------|
 |detailsCode   |String | 5 | see below |
-|detailsDescription|String|32| Possible codes and descriptions for rejectReasonCode = 100:<br/>1001	PHOTO<br/>1002	DOCUMENT\_NUMBER<br>1003	EXPIRY<br/>1004	DOB<br/>1005	NAME<br/>1006	ADDRESS<br/>1007	SECURITY\_CHECKS<br/>1008	SIGNATURE<br>1009	PERSONAL\_NUMBER<br>10011 PLACE_OF_BIRTH<br><br>Possible codes and descriptions for rejectReasonCode = 200:<br/>2001	BLURRED<br/>2002	BAD\_QUALITY<br/>2003	MISSING\_PART\_DOCUMENT<br/>2004	HIDDEN\_PART\_DOCUMENT<br/>2005	DAMAGED\_DOCUMENT |
+|detailsDescription|String|32| Possible codes and descriptions for rejectReasonCode = 100:<br/>1001	PHOTO<br/>1002	DOCUMENT\_NUMBER<br>1003	EXPIRY<br/>1004	DOB<br/>1005	NAME<br/>1006	ADDRESS<br/>1007	SECURITY\_CHECKS<br/>1008	SIGNATURE<br>1009	PERSONAL\_NUMBER<br>10011 PLACE_OF_BIRTH<br><br>Possible codes and descriptions for rejectReasonCode = 200:<br/>2001	BLURRED<br/>2002	BAD\_QUALITY<br/>2003	MISSING\_PART\_DOCUMENT<br/>2004	HIDDEN\_PART\_DOCUMENT<br/>2005	DAMAGED\_DOCUMENT<br/>2006 GLARE |
 
 
 ### Identity Verification

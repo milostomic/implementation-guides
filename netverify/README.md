@@ -20,6 +20,7 @@ The Jumio Knowledge Base also contains a wealth of information regarding our ser
 
 | Date           | Description       |
 |:---------------|:------------------|
+| 2020-06-19  |Added Croatian localization for Netverify Web<br>Added support for Safari WebView for Netverify Web<br>Added new callback value for "Not readable document" (GLARE)|
 | 2020-04-17  |Added callback value "REGULAR\_DRIVING\_LICENSE" to parameter "idSubtype"|
 | 2020-04-09  |Added support for native WebViews for Netverify Web|
 | 2020-02-26  |Added Arabic and Hebrew localizations for Netverify Web|

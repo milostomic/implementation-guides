@@ -216,6 +216,7 @@ Hyphenated combination of [ISO 639-1:2002 alpha-2](https://en.wikipedia.org/wiki
 |fi|Finnish|
 |fr|French|
 |he|Hebrew|
+|hr|Croatian|
 |hu|Hungarian|
 |hy|Armenian|
 |id|Indonesian|
@@ -593,7 +594,7 @@ window.addEventListener("message", receiveMessage, false);
 
 ## Using Netverify in a native WebView
 
-Netverify Web can be embedded within a native WebView in your native mobile application.
+Netverify Web can be embedded within a WebView in your native mobile application.
 
 See [Supported Environments > Native WebView](#native-webview) for information about support on Android and iOS.
 
@@ -603,7 +604,7 @@ The following sections explain the steps needed to embed Netverify Web in a nati
 
 Please also refer to the sample code beneath.
 
-#### Persmissions and Settings
+#### Permissions and Settings
 
 Make sure that the required permissions are granted.
 
@@ -796,31 +797,108 @@ class WebViewFragment : Fragment() {
     }
 }
 ```
+**Sample App**
 
+Check out our [Sample App for the Native Android WebView](https://github.com/Jumio/mobile-webview/tree/master/android)
 
 ### iOS
+
+Jumio supports two types of webview for iOS, you can choose either of these:
+
+* **Safari WebView**
+
+|Pros |Cons|
+|:---|:---|
+|Access to the camera during ID and Identity|No optional postMessage communication|
+|Fewer integration steps|Fewer options for troubleshooting|
+
+* **Native iOS WebView**
+
+|Pros |Cons|
+|:---|:---|
+|Optional postMessage communication|Image upload only (no access to the camera)|
+|Better options for troubleshooting|More integration steps|
+
+#### Safari WebView
+
+The following sections explain the steps needed to embed Netverify Web in a Safari View Controller.
+
+Please also refer to the sample code beneath.
+
+##### Permissions and Settings
+
+Make sure that camera permissions are granted.
+
+##### Sample code
+
+##### **_ViewController.swift_ example**
+
+```swift
+import AVFoundation
+import SafariServices
+import UIKit
+​
+class ViewController: UIViewController {
+
+    @IBAction func loadButton(_ sender: Any) {
+        checkCameraPermission()
+        let url: String = "https://www.jumio.com/"
+        showSafariVC(inputText)
+    }
+
+    // present SFSafariViewController
+    private func showSafariVC(_ stringURL: String) {
+        guard let URL = URL(string: stringURL) else {
+            return
+        }
+​
+        let safariVC = SFSafariViewController(url: URL)
+        present(safariVC, animated: true)
+    }
+
+    func safariViewControllerDidFinish(_ safariVC: SFSafariViewController) {
+        safariVC.dismiss(animated: true, completion: nil)
+    }
+
+    // ask for camera permissions
+    func checkCameraPermission() {
+        AVCaptureDevice.requestAccess(for: .video) { (granted) in
+            if !granted {
+                print("Camera permission denied")
+            }
+        }
+    }
+}
+
+```
+
+##### **Sample App**
+
+Check out our [Sample App for the iOS Safari WebView](https://github.com/Jumio/mobile-webview/tree/master/ios/SafariViewController-Pilot)
+
+#### Native iOS WebView
 
 The following sections explain the steps needed to embed Netverify Web in a native iOS WebView.
 
 Please also refer to the sample code beneath.
 
-#### Permissions and Settings
+##### Permissions and Settings
 
 No specific permissions are needed as we cannot access the camera due to native WebView limitations for iOS.
 
-#### Embedding required script
+##### Embedding required script
 
 To allow Jumio to identify the user runtime environment you will need to interact with the webview window object by embedding a required script. This script sets flag `__NVW_WEBVIEW__` to `true`.
 
-#### Optional postMessage communication
+##### Optional postMessage communication
 
 You can handle messages from the Netverify Web Client using the same method as described in [Optional iFrame Logging](#optional-iframe-logging).
 
 Please register a postMessage handler and put the relevant code sections in the `userContentController` function as mentioned below.
 
-#### Sample code
+##### Sample code
 
-**_ViewController.swift_ example**
+##### **_ViewController.swift_ example**
 
 ```swift
 class ViewController: UIViewController {
@@ -870,6 +948,9 @@ extension ViewController: WKScriptMessageHandler {
     }
 }
 ```
+##### **Sample App**
+
+Check out our [Sample App for the Native iOS WebView](https://github.com/Jumio/mobile-webview/tree/master/ios/WebView-Pilot)
 
 <br>
 
@@ -923,7 +1004,7 @@ Jumio offers guaranteed support for Netverify on the following browsers and the 
 |Microsoft Internet Explorer|current|Windows|X| | |
 |Microsoft Edge|current|Windows|X|X|X|
 
-### Mobile browers
+### Mobile browsers
 
 |Browser name|Major browser version|Operating system |Supports<br>image upload |Supports<br>camera capture|Supports<br>3D Liveness|
 |:---|:---|:---|:---:|:---:|:---:|
@@ -937,10 +1018,11 @@ Jumio offers guaranteed support for Netverify on the following browsers and the 
 
 |Operating system |Major version|Supports<br>image upload |Supports<br>camera capture|Supports<br>3D Liveness|
 |:---|:---|:---:|:---:|:---:|
-|Android|current +<br>1 previous|X|X|X|
-|iOS|current +<br>1 previous|X| | |
+|Native Android WebView|current +<br>1 previous|X|X|X|
+|Native iOS WebView<sup>1</sup>|current +<br>1 previous|X| | |
+|iOS Safari WebView|current +<br>1 previous|X|X|X|
 
-If you are using a native WebView for iOS you will need to enable image upload to allow the end user to finish the user journey.
+<sup>1</sup>If you are using a native WebView for iOS you will need to enable image upload to allow the end user to finish the user journey.
 
 ---
 &copy; Jumio Corporation, 395 Page Mill Road, Suite 150 Palo Alto, CA 94306
