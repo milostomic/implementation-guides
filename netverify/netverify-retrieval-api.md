@@ -554,7 +554,7 @@ Successful requests will return HTTP status code `200 OK` along with a JSON obje
 |Name |  Type    | Description|Notes|
 |:-------------------------------|:---------|:---------------|:------------|
 |addressValidation   | JSON | Result of Address Validation<br>see table below |activation required|
-|proofOfResidency | JSON | Result of Proof of Residency check<br>• if idCountry = BRA<br>see table below |activation required|
+|proofOfResidency | JSON | Result of Proof of Residency check<br>• if idCountry = BRA, <br>see table below |activation required|
 |watchlistScreening | JSON | Result of Jumio Screening (see [ID Verification & ComplyAdvantage Screening Implementation Guide](netverify/netverify-screening.md)) |activation required|
 |faceSearchFindings | JSON | Result of 1:n face search on previous transactions<br>see table below|activation required|
 
