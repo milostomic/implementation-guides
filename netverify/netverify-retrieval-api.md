@@ -554,7 +554,7 @@ Successful requests will return HTTP status code `200 OK` along with a JSON obje
 |Name |  Type    | Description|Notes|
 |:-------------------------------|:---------|:---------------|:------------|
 |addressValidation   | JSON | Result of Address Validation<br>see table below |activation required|
-|proofOfResidency | JSON | Result of Proof of Residency check<br>• if idCountry = BRA, <br>see table below |activation required|
+|proofOfResidency | JSON | Result of Proof of Residency check<br>• if idCountry = BRA,DEU,<br>see table below |activation required|
 |watchlistScreening | JSON | Result of Jumio Screening (see [ID Verification & ComplyAdvantage Screening Implementation Guide](netverify/netverify-screening.md)) |activation required|
 |faceSearchFindings | JSON | Result of 1:n face search on previous transactions<br>see table below|activation required|
 
@@ -564,8 +564,8 @@ Successful requests will return HTTP status code `200 OK` along with a JSON obje
 
 |Name |  Type    | Description|
 |:-------------------------------|:---------|:---------------|
-|searchResults   | enum | If verificationStatus = APPROVED_VERIFIED possible values: <br />• POSITIVE_RESULT<br />• PARTIAL_RESULT<br />• NEGATIVE_RESULT<br />else<br>• CHECK_NOT_DONE (see `searchResponse`)|
-|searchResponse   | enum | Possible values: <br />• UNSUPPORTED_COUNTRY<br />• NOT_ENOUGH_DATA<br />• TECHNICAL_ERROR |
+|searchResults   | enum | If verificationStatus = APPROVED\_VERIFIED possible values: <br />• POSITIVE\_RESULT<br />• PARTIAL\_RESULT<br />• NEGATIVE\_RESULT<br />else<br>• CHECK\_NOT\_DONE (see `searchResponse`)|
+|searchResponse   | enum | Possible values: <br />• UNSUPPORTED\_COUNTRY<br />• NOT\_ENOUGH\_DATA<br />• TECHNICAL\_ERROR |
 
 <br>
 
@@ -573,8 +573,8 @@ Successful requests will return HTTP status code `200 OK` along with a JSON obje
 
 |Name |  Type    | Description|
 |:-------------------------------|:---------|:---------------|
-|searchResults   | enum | If verificationStatus = APPROVED_VERIFIED possible values: <br />• POSITIVE_RESULT<br />• PARTIAL_RESULT<br />• NEGATIVE_RESULT<br />else<br>• CHECK_NOT_DONE (see `searchResponse`)|
-|searchResponse   | enum | Possible values: <br />• UNSUPPORTED_COUNTRY<br />• NOT_ENOUGH_DATA<br />• TECHNICAL_ERROR |
+|searchResults   | enum | If verificationStatus = APPROVED\_VERIFIED possible values: <br />• POSITIVE\_RESULT<br />• PARTIAL\_RESULT<br />• NEGATIVE\_RESULT<br />else<br>• CHECK\_NOT\_DONE (see `searchResponse`)|
+|searchResponse   | enum | Possible values: <br />• UNSUPPORTED\_COUNTRY<br />• NOT\_ENOUGH\_DATA<br />• TECHNICAL\_ERROR |
 
 <br>
 
