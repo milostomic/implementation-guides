@@ -196,6 +196,7 @@ We encourage to use a standard library to convert the timestamp received from Ju
 |Malaysia|Yes|No|No|Raw|Raw|
 |Malta|Yes|Yes|No|Raw|Raw|
 |Mexico|Yes|No|No|US|Raw|
+|Perú|
 |Romania|Yes|No|No|Raw|Raw|
 |Singapore|Yes|No|No|Raw|Raw|
 |Spain|Yes|No|No|EU|Raw|
