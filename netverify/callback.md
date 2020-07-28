@@ -136,13 +136,13 @@ The following parameters are posted to your callback URL for Netverify Web, perf
 |presetIdType   |    |Possible ID types: PASSPORT, DRIVING\_LICENSE, ID\_CARD| |
 |dlCarPermission|255 |Only available if:<br/> •Extraction supported for specific country<br/>•verificationStatus = APPROVED\_VERIFIED<br/><br/>Possible values:<br /> • YES<br /> • NO<br /> • NOT\_READABLE|activation required|
 |dlCategories   | JSON object  |Driver license categories as JSON object, see table below <br /><br />Supported countries:<br />• Austria<br />• Belgium<br />• Bulgaria<br />• France<br />• Germany<br />• Great Britain<br />• Italy<br />• Latvia<br />• Lithuania<br />• Netherlands<br />• Romania<br />• Spain<br />• Taiwan|activation required |
-|nationality |3| • if idCountry = BHR, PHL |activation required |
+|nationality |3| • if idCountry = BHR, HKG, MYS, PHL, SGP |activation required |
 |passportNumber|255|Passport number if idType = VISA and additional extraction for Visa enabled|activation required |
 |durationOfStay|255|Duration of stay if idType = VISA and additional extraction for Visa enabled|activation required |
 |numberOfEntries|255|Number of entries if idType = VISA and additional extraction for Visa enabled|activation required |
 |visaCategory|255|Visa category if idType = VISA and additional extraction for Visa enabled|activation required |
 |originDob|10|Original format of date of birth if idCountry = IND <br/>Possible values e.g.: <br />• Year/Month/Day: 1990/12/09 <br />• Year only: 1990// <br />• Year/Month: 1990/12/ <br />• Year/Day: 1990//09|<br /> |
-|issuingAuthority|50|Issuing authority of the document (if issuing authority extraction is enabled) <br>• if idCountry = COL, ITA |activation required |
+|issuingAuthority|50|Issuing authority of the document (if issuing authority extraction is enabled) <br>• if idCountry = ITA |activation required |
 |issuingDate|10|Issuing date of the document (if issuing date extraction enabled) |activation required |
 |issuingPlace|50|Issuing place of the document (if issuing place extraction is enabled)<br>• if idCountry = COL, ITA |activation required |
 |livenessImages| |URLs to the liveness images of the transaction (JPEG or PNG) if available <sup>5</sup> | |
@@ -196,7 +196,7 @@ We encourage to use a standard library to convert the timestamp received from Ju
 |Malaysia|Yes|No|No|Raw|Raw|
 |Malta|Yes|Yes|No|Raw|Raw|
 |Mexico|Yes|No|No|US|Raw|
-|Perú|
+|Peru|Yes|Yes|No|Raw|Raw|
 |Romania|Yes|No|No|Raw|Raw|
 |Singapore|Yes|No|No|Raw|Raw|
 |Spain|Yes|No|No|EU|Raw|
@@ -298,7 +298,7 @@ On August 15, 2020 onwards, Jumio is going to streamline the EU and US format in
 |**validity** <sup>2</sup>   |  |Possible values:<br/> •	TRUE<br />•	FALSE |
 |reason   |  |Provided if validity = FALSE<br/>Possible values:<br />• SELFIE\_CROPPED\_FROM\_ID<br />•	ENTIRE\_ID\_USED\_AS\_SELFIE<br />•	MULTIPLE\_PEOPLE<br />•	SELFIE\_IS\_SCREEN\_PAPER\_VIDEO<br />•	SELFIE\_MANIPULATED<br />• AGE\_DIFFERENCE\_TOO\_BIG<br />•	NO\_FACE\_PRESENT<br />•	FACE\_NOT\_FULLY\_VISIBLE<br />•	BAD\_QUALITY<br />•	BLACK\_AND\_WHITE<br />•	LIVENESS\_FAILED <sup>3</sup>|
 |similarityDecision   |  |Only visible if setting is turned on within your account. For questions about this feature, please contact your Support. <br/><br/>Possible values:<br/> •	MANUAL<br />•	AUTOMATED|
-|similarityScore   |  |Only visible if setting is turned on within your account. For questions about this feature, please contact your Support. <br/><br/>Possible value:<br/> •	Range from 0 to 1|
+|similarityScore   |  |Only visible if setting is turned on within your account. For questions about this feature, please contact your Support.|
 
 <!--- |handwrittenNoteMatches	|	|Only visible if setting is turned on within your account. For questions about this feature, please contact your Support. <br/><br/>Possible values:<br/> •	TRUE<br />•	FALSE| --->
 

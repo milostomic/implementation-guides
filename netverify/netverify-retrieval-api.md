@@ -542,7 +542,7 @@ Successful requests will return HTTP status code `200 OK` along with a JSON obje
 |validity  |Possible values:<br/>• TRUE<br />• FALSE |
 |reason   |Provided if validity = FALSE<br/>Possible values:<br />• SELFIE\_CROPPED\_FROM\_ID<br />•	ENTIRE\_ID\_USED\_AS\_SELFIE<br />•	MULTIPLE\_PEOPLE<br />•	SELFIE\_IS\_SCREEN\_PAPER\_VIDEO<br />•	SELFIE\_MANIPULATED<br />• AGE\_DIFFERENCE\_TOO\_BIG<br />•	NO\_FACE\_PRESENT<br />•	FACE\_NOT\_FULLY\_VISIBLE<br />• BAD\_QUALITY<br />• BLACK\_AND\_WHITE<br />• LIVENESS\_FAILED|
 |similarityDecision   |Only visible if setting is turned on within your account. For questions about this feature, please contact Jumio Support. <br/><br/>Possible values:<br/> •	MANUAL<br />•	AUTOMATED|
-|similarityScore   |Only visible if setting is turned on within your account. For questions about this feature, please contact Jumio Support. <br/><br/>Possible value:<br/> •	Range from 0 to 1|
+|similarityScore   |Only visible if setting is turned on within your account. For questions about this feature, please contact Jumio Support.|
 
 <!-- |handwrittenNoteMatches	|Only visible if **Liveness Detection (with handwritten note)** setting is turned on within your account. For questions about this feature, please contact Jumio Support. <br/><br/>Possible values:<br/> •	TRUE<br />•	FALSE| -->
 
@@ -554,8 +554,8 @@ Successful requests will return HTTP status code `200 OK` along with a JSON obje
 |Name |  Type    | Description|Notes|
 |:-------------------------------|:---------|:---------------|:------------|
 |addressValidation   | JSON | Result of Address Validation<br>see table below |activation required|
-|proofOfResidency | JSON | Result of Proof of Residency check<br>• if idCountry = BRA,DEU,<br>see table below |activation required|
-|watchlistScreening | JSON | Result of Jumio Screening (see [ID Verification & ComplyAdvantage Screening Implementation Guide](netverify/netverify-screening.md)) |activation required|
+|proofOfResidency | JSON | Result of Proof of Residency check<br>• if idCountry = AUS, BRA, CAN, DEU, ESP, GBR, MEX, <br>see table below |activation required|
+|watchlistScreening | JSON | Result of Jumio Screening (see [ID Verification & ComplyAdvantage Screening Implementation Guide](netverify-screening.md)) |activation required|
 |faceSearchFindings | JSON | Result of 1:n face search on previous transactions<br>see table below|activation required|
 
 <br>
