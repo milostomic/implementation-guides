@@ -4,6 +4,9 @@
 
 Jumio provides you with the following set of test IDs for Netverify. Please only send these images one at a time and don’t mix them with any actual document images.
 
+|⚠️ Currently these Test Cards are under development, it may produce unexpected results.
+|:----------|
+
 Verification status `DENIED_FRAUD`, reject reason `106 FAKE`:<br><br>
 ![Jumio Well Known Fake](/images/well_known_fake.png)
 
