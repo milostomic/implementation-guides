@@ -184,7 +184,7 @@ We encourage to use a standard library to convert the timestamp received from Ju
 
 ### Supported documents for address extraction
 
-|Country    |ID card    |Driving license    |Passport    |Callback format<br>(until August 15)|Callback format<br>(from August 15)<sup>1</sup>|
+|Country    |ID card    |Driving license    |Passport    |Callback format<br>(until August 17)|Callback format<br>(from August 17)<sup>1</sup>|
 |:------------|:-------|:--------------|:--------------|:-------|:-------|
 |Australia|No|Yes|No|US|Raw|
 |Bahrain|No|Yes|No|Raw|Raw|
@@ -249,7 +249,7 @@ We encourage to use a standard library to convert the timestamp received from Ju
 
 #### Upcoming Address format changes
 
-On August 15, 2020 onwards, Jumio is going to streamline the EU and US format into a single Raw format. In addition to that, we will also be providing a new parameter called formattedAddress which will contain  the entire address in a comma separated format.
+On August 17, 2020 onwards, Jumio is going to streamline the EU and US format into a single Raw format. In addition to that, we will also be providing a new parameter called formattedAddress which will contain  the entire address in a comma separated format.
 
 **Example**
 
