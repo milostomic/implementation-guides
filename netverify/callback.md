@@ -10,7 +10,7 @@ Information about changes to features and improvements documented in each releas
 
 ## Table of contents
 
-- [Jumio Callback IP List](#jumio-callback-ip-List)
+- [Jumio Callback IP List](#jumio-callback-ip-list)
 - [Callback for Netverify](#callback-for-netverify)
   - [Supported Documents for Address Extraction](#supported-documents-for-address-extraction)
   - [Netverify masking](#netverify-masking)
@@ -184,7 +184,7 @@ We encourage to use a standard library to convert the timestamp received from Ju
 
 ### Supported documents for address extraction
 
-|Country    |ID card    |Driving license    |Passport    |Callback format<br>(until August 17)|Callback format<br>(from August 17)<sup>1</sup>|
+|Country    |ID card    |Driving license    |Passport    |Callback format<br>(until August 15)|Callback format<br>(from August 15)<sup>1</sup>|
 |:------------|:-------|:--------------|:--------------|:-------|:-------|
 |Australia|No|Yes|No|US|Raw|
 |Bahrain|No|Yes|No|Raw|Raw|
@@ -305,6 +305,7 @@ On August 17, 2020 onwards, Jumio is going to streamline the EU and US format in
 <sup>1</sup> Is the person on the selfie the same as the one on the document?<br>
 <sup>2</sup> Is it a live person?<br>
 <sup>3</sup> Potential reasons `LIVENESS_FAILED`:
+
 - User tries to spoof the system
 - User does not want to show his face at all but wants to complete the onboarding
 - User does not look straight into the camera
@@ -487,7 +488,8 @@ The TLS protocol is required during the TLS handshake (see [Supported cipher sui
 
 #### Timestamp format
 
-Timestamp are sent in format: `YYYY-MM-DDThh:mm:ss.SSSZ` with constraint that SSS (milliseconds) can either be
+Timestamp are sent in format: `YYYY-MM-DDThh:mm:ss.SSSZ` with constraint that SSS (milliseconds) can either be:
+
 - Not included: `YYYY-MM-DDThh:mm:ssZ`
 - 1 digit: `YYYY-MM-DDThh:mm:ss.SZ`
 - 2 digits:  `YYYY-MM-DDThh:mm:ss.SSZ`
