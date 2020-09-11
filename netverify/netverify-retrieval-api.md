@@ -329,7 +329,7 @@ Successful requests will return HTTP status code `200 OK` along with a JSON obje
 |personalNumber|string|255|Personal number of the document|
 |optionalData1|string|255|Optional field of MRZ line 1|
 |optionalData2|string|255|Optional field of MRZ line 2|
-|address|object||Address in US, EU or Raw format, see tables below|
+|address|object||Address in RAW format, see table below|
 |issuingAuthority|string|50|Issuing authority of the document (if issuing authority extraction is enabled)|
 |issuingPlace|string|50|Issuing place of the document (if issuing place extraction is enabled)|
 |curp|string|18|CURP (if CURP extraction is enabled)|
@@ -343,35 +343,8 @@ Successful requests will return HTTP status code `200 OK` along with a JSON obje
 |personalIdentificationNumber|string|255|National personal identification number of the document <br> (if extraction is enabled) |
 |rgNumber|string|255|"General Registration" number of Brazilian documents <br> (if extraction is enabled) |
 
-#### US address format
 
-|Name      | Type    | Max. Length| Description|
-|:---------------|:--------|:------------|:------------|
-|city| string|255 |City|
-|stateCode| string|6 |[ISO 3166-2](http://en.wikipedia.org/wiki/ISO_3166-2) state code|
-|streetName| string|255 |Street name|
-|streetSuffix|string|255 |Street suffix abbreviation<br>Examples: [US](http://www.gis.co.clay.mn.us/USPS.htm#suffix), [Canada](http://www.canadapost.ca/tools/pg/manual/PGaddress-e.asp#1423617), [Australia](https://auspost.com.au/media/documents/australia-post-addressing-standards-1999.pdf)|
-|streetDirection| string|255 |Street direction abbreviation<br>Examples: US (E=EAST, W=WEST, N=NORTH, S=SOUTH), [Canada](http://www.canadapost.ca/tools/pg/manual/PGaddress-e.asp#1403220), [Australia](https://auspost.com.au/media/documents/australia-post-addressing-standards-1999.pdf)|
-|streetNumber| string|255 |Street number|
-|unitDesignator| string|255 |Unit designator abbreviation<br>Examples: [US](http://www.gis.co.clay.mn.us/USPS.htm#secunitdesig), [Canada](http://www.canadapost.ca/tools/pg/manual/PGaddress-e.asp#1380473), [Australia](https://auspost.com.au/media/documents/australia-post-addressing-standards-1999.pdf)|
-|unitNumber| string|255 |Unit number|
-|zip| string|255 |Zip code|
-|zipExtension| string|255 |Zip extension|
-|country| string|3 |Possible countries:<br>• [ISO 3166-1 alpha-3](http://en.wikipedia.org/wiki/ISO_3166-1_alpha-3) country code<br>• XKX (Kosovo)|
-
-#### EU address format
-
-|Name     | Type    | Max. Length| Description|
-|:---------------|:--------|:------------|:------------|
-|city| string|255 |City|
-|province| string|255 |Province|
-|streetName| string|255 |Street name|
-|streetNumber| string|255 |Street number|
-|unitDetails| string|255 |Unit details|
-|postalCode| string|255 |Postal code|
-|country| string|3 |Possible countries:<br>- [ISO 3166-1 alpha-3](http://en.wikipedia.org/wiki/ISO_3166-1_alpha-3) country code<br>- XKX (Kosovo)|
-
-#### Raw address format
+#### RAW address format
 
 |Name      | Type    | Max. Length| Description|
 |:---------------|:--------|:------------|:------------|
@@ -383,6 +356,7 @@ Successful requests will return HTTP status code `200 OK` along with a JSON obje
 |country|string|3|Possible countries:<br>• [ISO 3166-1 alpha-3](http://en.wikipedia.org/wiki/ISO_3166-1_alpha-3) country code<br>• XKX (Kosovo)|
 |postalCode|string|255|Postal code|
 |city|string|255|City|
+|formattedAddress|string||Complete address in a formatted way|
 
 <br>
 

@@ -121,7 +121,7 @@ The following parameters are posted to your callback URL for Netverify Web, perf
 |idExpiry   |10  |Date of expiry in the format YYYY-MM-DD as available on the ID if enabled, otherwise if provided | |
 |idUsState   |255  |Possible values if idType = PASSPORT or ID\_CARD:<br/>•	Last two characters of [ISO 3166-2:US](http://en.wikipedia.org/wiki/ISO_3166-2:US) state code<br/>•	Last 2-3 characters of [ISO 3166-2:AU](http://en.wikipedia.org/wiki/ISO_3166-2:AU) state code<br/>•	Last two characters of [ISO 3166-2:CA](http://en.wikipedia.org/wiki/ISO_3166-2:CA) state code<br/>• [ISO 3166-1](http://en.wikipedia.org/wiki/ISO_3166-1_alpha-3) country name<br/>• XKX (Kosovo)<br/>• Free text - if it can't be mapped to a state/country code<br/><br/>If idType = DRIVING\_LICENSE:<br/>•	Last two characters of [ISO 3166-2:US](http://en.wikipedia.org/wiki/ISO_3166-2:US) state code<br/>•	Last 2-3 characters of [ISO 3166-2:AU](http://en.wikipedia.org/wiki/ISO_3166-2:AU) state code<br/>•	Last two characters of [ISO 3166-2:CA](http://en.wikipedia.org/wiki/ISO_3166-2:CA) state code| |
 |personalNumber   |14  |Personal number of the document • if idType = PASSPORT and if data available on the document |not returned for NLD, DEU, KOR if NV masking is enabled <sup>4</sup> |
-|idAddress   |   |Address as JSON object in US, EU or raw format, see tables below <sup>3</sup> |activation required |
+|idAddress   |   |Address as JSON object in RAW format, see tables below <sup>3</sup> |activation required |
 |merchantIdScanReference   |100  |Your reference for each transaction | |
 |merchantReportingCriteria   |100  |Your reporting criteria for each transaction | |
 |customerId   |100  |ID of the customer as provided | |
@@ -158,7 +158,7 @@ The following parameters are posted to your callback URL for Netverify Web, perf
 
 <sup>1</sup> Transaction is declined as unsupported if the ID is not supported by Jumio, or not marked as accepted in your customer portal settings.<br/>
 <sup>2</sup> For ID types that are configured to support a separate scan of the front side and back side, there is a separate image of the front side (idScanImage) and the back side (idScanImageBackside). If Identity Verification is enabled, there is also a picture of the face (idScanImageFace).<br>
-<sup>3</sup> Address recognition is performed for supported IDs, if enabled. Please note, there are three different address formats (US, EU, Raw). Please check [Supported documents for Address Extraction](#supported-documents-for-address-extraction) to see which format applies to specific IDs. The different address parameters are a part of the JSON object, if they are available on the ID.<br>
+<sup>3</sup> Address recognition is performed for supported IDs, if enabled. Please check [Supported documents for Address Extraction](#supported-documents-for-address-extraction) to see which supported documents. The address parameters are a part of the JSON object, if they are available on the ID.<br>
 <sup>4</sup> Fields containing certain kinds of personally identifying information are not returned if NV masking is enabled for the Netherlands, Germany, or South Korea. See [Netverify masking](#netverify-masking) for more information.<br>
 <sup>5</sup> Liveness images are returned only for transactions containing Identity Verification submitted via the Android and iOS SDKs. The number of images can vary and may not be returned in chronological order.
 
@@ -184,56 +184,26 @@ We encourage to use a standard library to convert the timestamp received from Ju
 
 ### Supported documents for address extraction
 
-|Country    |ID card    |Driving license    |Passport    |Callback format<br>(until August 15)|Callback format<br>(from August 15)<sup>1</sup>|
-|:------------|:-------|:--------------|:--------------|:-------|:-------|
-|Australia|No|Yes|No|US|Raw|
-|Bahrain|No|Yes|No|Raw|Raw|
-|Canada|No|Yes|No|US|Raw|
-|France|Yes|Yes|Yes|Raw|Raw|
-|Germany|Yes|No|No|EU|Raw|
-|Indonesia|Yes|No|No|Raw|Raw|
-|Ireland|No|Yes|No|Raw|Raw|
-|Malaysia|Yes|No|No|Raw|Raw|
-|Malta|Yes|Yes|No|Raw|Raw|
-|Mexico|Yes|No|No|US|Raw|
-|Peru|Yes|Yes|No|Raw|Raw|
-|Romania|Yes|No|No|Raw|Raw|
-|Singapore|Yes|No|No|Raw|Raw|
-|Spain|Yes|No|No|EU|Raw|
-|United Kingdom|No|Yes|No|Raw|Raw|
-|United States|Yes|Yes|No|US|Raw|
+|Country    |ID card    |Driving license    |Passport    |Callback format|
+|:------------|:-------|:--------------|:--------------|:-------|
+|Australia|No|Yes|No|RAW|
+|Bahrain|No|Yes|No|RAW|
+|Canada|No|Yes|No|RAW|
+|France|Yes|Yes|Yes|RAW|
+|Germany|Yes|No|No|RAW|
+|Indonesia|Yes|No|No|RAW|
+|Ireland|No|Yes|No|RAW|
+|Malaysia|Yes|No|No|RAW|
+|Malta|Yes|Yes|No|RAW|
+|Mexico|Yes|No|No|RAW|
+|Peru|Yes|Yes|No|RAW|
+|Romania|Yes|No|No|RAW|
+|Singapore|Yes|No|No|RAW|
+|Spain|Yes|No|No|RAW|
+|United Kingdom|No|Yes|No|RAW|
+|United States|Yes|Yes|No|RAW|
 
-<sup>1</sup> see [Upcoming Address format changes](#upcoming-address-format-changes)
-
-#### US address format
-
-|Parameter `idAddress`       | Max. Length    | Description|
-|:---------------|:--------|:------------|
-|city   |64  |City |
-|stateCode   |6  |[ISO 3166-2](http://en.wikipedia.org/wiki/ISO_3166-2) state code |
-|streetName   |64  |Street name |
-|streetSuffix   |14  |Street suffix abbreviation<br/>Examples: [US](http://www.gis.co.clay.mn.us/USPS.htm#suffix), [Canada](http://www.canadapost.ca/tools/pg/manual/PGaddress-e.asp#1423617), [Australia](https://auspost.com.au/media/documents/australia-post-addressing-standards-1999.pdf) |
-|streetDirection   |255  |Street direction abbreviation<br/>Examples: US (E=EAST, W=WEST, N=NORTH, S=SOUTH), [Canada](http://www.canadapost.ca/tools/pg/manual/PGaddress-e.asp#1403220), [Australia](https://auspost.com.au/media/documents/australia-post-addressing-standards-1999.pdf) |
-|streetNumber   |14  |Street number |
-|unitDesignator   |14  |Unit designator abbreviation<br/>Examples: [US](http://www.gis.co.clay.mn.us/USPS.htm#secunitdesig), [Canada](http://www.canadapost.ca/tools/pg/manual/PGaddress-e.asp#1380473), [Australia](https://auspost.com.au/media/documents/australia-post-addressing-standards-1999.pdf) |
-|unitNumber   |14  |Unit number |
-|zip   |14  |Zip code |
-|zipExtension   |20  |Zip extension |
-|country   |3  |Possible countries:<br/>•	[ISO 3166-1 alpha-3](http://en.wikipedia.org/wiki/ISO_3166-1_alpha-3) country code<br/>•	XKX (Kosovo) |
-
-#### EU address format
-
-|Parameter `idAddress`       | Max. Length    | Description|
-|:---------------|:--------|:------------|
-|city   |64  |City |
-|province   |64  |Province |
-|streetName   |64  |Street name |
-|streetNumber   |15  |Street number |
-|unitDetails   |64  |Unit details |
-|postalCode   |15  |Postal code |
-|country   |3  |Possible countries:<br/>•	[ISO 3166-1 alpha-3](http://en.wikipedia.org/wiki/ISO_3166-1_alpha-3) country code<br/>•	XKX (Kosovo) |
-
-#### Raw address format
+#### RAW address format
 
 |Parameter `idAddress`      | Max. Length    | Description|
 |:---------------|:--------|:------------|
@@ -246,30 +216,8 @@ We encourage to use a standard library to convert the timestamp received from Ju
 |postalCode   |15  |Postal code |
 |city   |64  |City |
 |subdivision   |100  |Subdivision (Region, State, Province, Emirate, Department, ...) |
+|formattedAddress||Complete address in a formatted way|
 
-#### Upcoming Address format changes
-
-On August 17, 2020 onwards, Jumio is going to streamline the EU and US format into a single Raw format. In addition to that, we will also be providing a new parameter called formattedAddress which will contain  the entire address in a comma separated format.
-
-**Example**
-
-|US Address Format|Raw Address Format|
-|:------------------------|:--------|
-|"streetNumber": "150"<br>"streetDirection":"N"<br>"streetName":"Alberny"<br>"streetSuffix":"Dr"<br>"unitDesignator":"APT"<br>"unitNumber": "7"|"line1":"150 N Alberny Dr APT. 7"|
-|"city":"New Mexico"|city":"New Mexico"|
-|"stateCode":"US-AL"|"subdivision":"US-AL"|
-|"zip":"77358"<br>"zipExtension":"5555"|"postalCode":"77358-5555"|
-|"country":"USA"|"country":"USA"|
-||“formattedAddress”: “150 N Alberny Dr APT. 7, New Mexico, US-AL 77358-5555, United States”|
-
-|EU Address Format|Raw Address Format|
-|:------------------------|:--------|
-|"streetNumber":"180"<br>"streetName":"Main Street"<br>"unitDetails":"ABC"|"line1": "180 Main Street ABC"|
-|"city": "Graz"|"city": "Graz"|
-|"province": "Steiermark"|"subdivision": "Steiermark"|
-|"postalCode": "2424"|"postalCode": "2424"|
-|"country": "AUT"|"country": "AUT"|
-||“formattedAddress”: “180 Main Street ABC, Graz, Steiermark 2424, Austria”|
 
 ### Reject reason
 
@@ -511,9 +459,9 @@ We encourage to use a standard library to convert the timestamp received from Ju
 |ssn   | String  |255 |Social security number if readable|
 |signatureAvailable  | String  |   |`true` if signature available, otherwise `false`|
 |swiftCode	| String  | 20  | BIC/SWIFT code |
-|address	| JSON object  |  | Address as JSON object in raw format if status = EXTRACTED, see table below |
+|address	| JSON object  |  | Address as JSON object in RAW format if status = EXTRACTED, see table below |
 
-### Raw address format
+### RAW address format
 
 |Parameter `address`      | Max. Length|  Description|
 |:---------------|:----------:|:------------|
@@ -526,6 +474,7 @@ We encourage to use a standard library to convert the timestamp received from Ju
 |postalCode |15 |Postal code|
 |city |64 |City |
 |subdivision |50 |Name of subdivision |
+|formattedAddress||Complete address in a formatted way|
 
 ### Supported documents for data extraction
 
