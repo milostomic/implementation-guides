@@ -9,6 +9,7 @@ This guide describes how to implement the Netverify Retrieval API.
 
 | Date    | Description|
 |:--------|:------------|
+| 2020-08-15   |Removed EU and US address format |
 | 2020-05-26   |Added "enrollmentTransactionReference" to Authentication retrieval |
 | 2020-03-03   |Added "faceSearchFindings" to "additionalChecks" |
 | 2020-01-27   |Added "addressValidation" and "proofOfResidency" to "additionalChecks" |
@@ -358,7 +359,7 @@ Successful requests will return HTTP status code `200 OK` along with a JSON obje
 |city|string|255|City|
 |formattedAddress|string||Complete address in a formatted way|
 
-<br>
+Note: On 2020-08-15 we removed old address formats (EU, US). Retrieving document data for transactions older than 2020-08-15 which were initially returned in EU or US format will be now returned in RAW format.
 
 ## Examples
 ### Sample request

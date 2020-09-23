@@ -20,6 +20,9 @@ The Jumio Knowledge Base also contains a wealth of information regarding our ser
 
 | Date           | Description       |
 |:---------------|:------------------|
+| 2020-04-09  |Added personal number extraction for Turkey ID cards and driver licenses ("personalIdentificationNumber")|
+| 2020-08-05  |Added gender extraction for Chile ID<br>Added nationality extraction for Chile ID |
+| 2020-07-17  |Added personal number extraction for Lithuania driver licenses ("personalIdentificationNumber")|
 | 2020-06-19  |Added Croatian localization for Netverify Web<br>Added support for Safari WebView for Netverify Web<br>Added new callback value for "Not readable document" (GLARE)|
 | 2020-04-17  |Added callback value "REGULAR\_DRIVING\_LICENSE" to parameter "idSubtype"|
 | 2020-04-09  |Added support for native WebViews for Netverify Web|
@@ -27,7 +30,7 @@ The Jumio Knowledge Base also contains a wealth of information regarding our ser
 | 2020-02-12  |Added place of birth extractioin for AUS, BEL, BRA, DEU, ESP, FRA, GBR, HKG, HUN, IDN,<br>IND, IRL, ITA, NGA, NLD, PAK, POL, PRT, ROU, RUS, SGP, TUR, UKR, USA|
 | 2020-02-11  |Added issuing place extraction for Colombia|
 | 2020-01-22  |Added callback parameter "rgNumber"|
-| 2019-12-31  |Added address extraction for Malta ID cards driver licenses |
+| 2019-12-31  |Added address extraction for Malta ID cards and driver licenses |
 | 2019-12-12  |Added new error code 9822 for Netverify Web|
 | 2019-12-02  |Added callback parameter "personalIdentificationNumber"|
 | 2019-11-25  |Added callback parameter "similarityDecision", "similarityScore" to "identityVerification"|

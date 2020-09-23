@@ -68,7 +68,7 @@ The following fields are required in the header section of your request:<br>
 |ℹ️ Jumio requires the `User-Agent` value to reflect your business or entity name for API troubleshooting.|
 |:---|
 
-**Note:** Calls with missing or suspicious headers, suspicious paramter values, or without HTTP Basic Authentication will result in HTTP status code 403 Forbidden.
+**Note:** Calls with missing or suspicious headers, suspicious parameter values, or without HTTP Basic Authentication will result in HTTP status code 403 Forbidden.
 <br>
 
 ## Request body

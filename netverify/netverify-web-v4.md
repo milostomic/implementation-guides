@@ -253,7 +253,7 @@ Successful requests will return HTTP status code `200 OK` along with a JSON obje
 |Name|Type|Max. length|Description|
 |:----|:----|:----|:----|
 |**timestamp**|String|24|Timestamp (UTC) of the response.<br>Format: *YYYY-MM-DDThh:mm:ss.SSSZ*|
-|**redirectUrl**|String|255|URL used to load the Netverify client.|
+|**redirectUrl**|String| |URL used to load the Netverify client.|
 |**transactionReference**|String|36|Jumio reference number for the transaction.|
 
 ---

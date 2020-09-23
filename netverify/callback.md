@@ -2,7 +2,7 @@
 
 # Callback
 
-The callback is the authoritative answer from Jumio. Specify a callback URL (for constraints see [Configuring Settings in the Customer Portal](/netverify/portal-settings.md#callback-error-and-success-urls)) to automatically recieve the result for each transaction.
+The callback is the authoritative answer from Jumio. Specify a callback URL (for constraints see [Configuring Settings in the Customer Portal](/netverify/portal-settings.md#callback-error-and-success-urls)) to automatically receive the result for each transaction.
 
 ### Revision history
 
@@ -10,6 +10,7 @@ Information about changes to features and improvements documented in each releas
 
 ## Table of contents
 
+- [Usage](#usage)
 - [Jumio Callback IP List](#jumio-callback-ip-list)
 - [Callback for Netverify](#callback-for-netverify)
   - [Supported Documents for Address Extraction](#supported-documents-for-address-extraction)
@@ -22,6 +23,11 @@ Information about changes to features and improvements documented in each releas
 
 
 ---
+## Usage
+
+Once Jumio has sent the callback, save it on your side and send us a response of `200 OK`.
+
+Any validation of the content should be done afterwards. In case you face any issues, please contact Jumio Technical Support at support@jumio.com with a sample.
 
 ## Jumio callback IP list
 
@@ -131,12 +137,12 @@ The following parameters are posted to your callback URL for Netverify Web, perf
 |optionalData2   |255  |Optional field of MRZ line 2 | |
 |dni   |255  |DNI as available on the ID if idCountry = ESP and idSubtype = NATIONAL\_ID  | |
 |curp   |255  |CURP is available if idCountry = MEX and idType = PASSPORT, DRIVING\_LICENSE, or ID\_CARD and idSubtype = ELECTORAL\_ID  |activation required |
-|gender   |2  |Possible values: M, F<br>• if idCountry = FRA,HKG and idSubtype = NATIONAL\_ID (MRZ type CNIS)<br> •	if idCountry = BHR,SGP and idType = PASSPORT, ID\_CARD, DRIVING\_LICENSE <br>• if idCountry = PHL and idType = DRIVING\_LICENSE <br>• if idType = VISA and additional extraction for Visa enabled <br>• if readable: best effort| |
+|gender   |2  |Possible values: M, F<br>• if idCountry = FRA,HKG and idSubtype = NATIONAL\_ID (MRZ type CNIS)<br> •	if idCountry = BHR,SGP and idType = PASSPORT, ID\_CARD, DRIVING\_LICENSE<br> •	if idCountry = CHL and idType = ID\_CARD <br>• if idCountry = PHL and idType = DRIVING\_LICENSE <br>• if idType = VISA and additional extraction for Visa enabled <br>• if readable: best effort| |  
 |presetCountry   | 3  |Possible countries:<br />•	[ISO 3166-1 alpha-3](http://en.wikipedia.org/wiki/ISO_3166-1_alpha-3) country code <br /> • XKX (Kosovo)| |
 |presetIdType   |    |Possible ID types: PASSPORT, DRIVING\_LICENSE, ID\_CARD| |
 |dlCarPermission|255 |Only available if:<br/> •Extraction supported for specific country<br/>•verificationStatus = APPROVED\_VERIFIED<br/><br/>Possible values:<br /> • YES<br /> • NO<br /> • NOT\_READABLE|activation required|
 |dlCategories   | JSON object  |Driver license categories as JSON object, see table below <br /><br />Supported countries:<br />• Austria<br />• Belgium<br />• Bulgaria<br />• France<br />• Germany<br />• Great Britain<br />• Italy<br />• Latvia<br />• Lithuania<br />• Netherlands<br />• Romania<br />• Spain<br />• Taiwan|activation required |
-|nationality |3| • if idCountry = BHR, HKG, MYS, PHL, SGP |activation required |
+|nationality |3| • if idCountry = BHR, CHL, HKG, MYS, PHL, SGP |activation required |
 |passportNumber|255|Passport number if idType = VISA and additional extraction for Visa enabled|activation required |
 |durationOfStay|255|Duration of stay if idType = VISA and additional extraction for Visa enabled|activation required |
 |numberOfEntries|255|Number of entries if idType = VISA and additional extraction for Visa enabled|activation required |
@@ -153,7 +159,7 @@ The following parameters are posted to your callback URL for Netverify Web, perf
 |registrationNumber|255|Registration number of the document |activation required |
 |mothersName|255|Name of the document holder's mother |activation required |
 |fathersName|255|Name of the document holder's father |activation required |
-|personalIdentificationNumber|255|Personal identification number as available on the ID<br>• if idCountry = GEO and idSubtype = PASSPORT<br>• if idCountry = COL and idSubtype = ID\_CARD |activation required |
+|personalIdentificationNumber|255|Personal identification number as available on the ID<br>• if idCountry = GEO and idSubtype = PASSPORT<br>• if idCountry = COL and idSubtype = ID\_CARD <br>• if idCountry = LTU and idSubtype = DRIVING\_LICENSE<br>• if idCountry = TUR and idSubtype = ID\_CARD, DRIVING\_LICENSE |activation required |
 |rgNumber|255|"General Registration" number for idCountry = BRA |activation required|
 
 <sup>1</sup> Transaction is declined as unsupported if the ID is not supported by Jumio, or not marked as accepted in your customer portal settings.<br/>
@@ -499,20 +505,19 @@ We encourage to use a standard library to convert the timestamp received from Ju
 
 -->
 
-
-**Name**, **Address**, and **Issuing Date** will be extracted for all documents printed in a Latin-script character set, provided that a minimum of two of these three data points are available for extraction. If the document does not meet these extraction criteria, only the document image will be saved — no data extraction will be performed.
-
-For the following specific document types, additional data will be extracted.
+The following data points will be extracted for all documents printed in a Latin-script character set, provided that a minimum of one of these data points are available for extraction. If the document does not meet these extraction criteria, only the document image will be saved — no data extraction will be performed.
 
 |Type | Extracted data |
 |:---------------|:----------|
 |BS (bank statement) |name, issueDate, address, accountNumber, swiftCode |
-|CC (credit card) |name, pan, expiryDate (currently returned as issueDate)|
 |UB (utility bill) |name, issueDate, address, dueDate |
 |CCS (credit card statement) |name, issueDate, address, cardNumberLastFourDigits |
-|SSC (Social Security card) <sup>1</sup> |firstName, lastName, ssn, signatureAvailable  |
+|OTHER (Other document type) |name, issueDate, address |
+|CC (credit card) <sup>1</sup>|name, pan, expiryDate (currently returned as issueDate)|
+|SSC (Social Security card) <sup>1,</sup><sup>2</sup> |firstName, lastName, ssn, signatureAvailable  |
 
-<sup>1</sup> USA only.
+<sup>1</sup> For CC and SSC all data points need to be available for extraction.<br>
+<sup>2</sup> USA only.
 
 
 
