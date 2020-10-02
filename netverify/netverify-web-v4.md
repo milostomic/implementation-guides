@@ -400,36 +400,45 @@ Select a language from the dropdown list to set your display language for Netver
 
 Choose from:<br>
 
-- English
-- English (United Kingdom)
-- German
-- Turkish
-- Finnish
-- Norwegian
-- Polish
-- Swedish
-- Russian
-- Portuguese
-- Portuguese (Brazil)
-- Spanish
-- Spanish (Mexico)
-- Italian
-- French
-- Dutch
+- Arabic
+- Armenian
 - Bulgarian
 - Chinese (China)
 - Chinese (Hong Kong)
+- Croatian
 - Czech
 - Danish
-- Greek
-- Hungarian
-- Japanese
-- Korean
-- Romanian
-- Slovak
-- Vietnamese
-- Lithuanian
+- Dutch
+- English
+- English (United Kingdom)
 - Estonian
+- Finnish
+- French
+- German
+- Georgian
+- Greek
+- Hebrew
+- Hungarian
+- Indonesian
+- Italian
+- Japanese
+- Khmer
+- Korean
+- Lithuanian
+- Malay
+- Norwegian
+- Polish
+- Portuguese
+- Portuguese (Brazil)
+- Romanian
+- Russian
+- Slovak
+- Spanish
+- Spanish (Mexico)
+- Swedish
+- Thai
+- Turkish
+- Vietnamese
 
 ---
 
