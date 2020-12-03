@@ -1,12 +1,12 @@
-![Jumio](/images/netverify.jpg)
+![Jumio](/images/Jumio-ID-Verification-Banner.png)
 
-# Netverify Test IDs
+# ID Verification Test IDs
 
 |⚠️ Currently our Test Cards are under development. We will provide them as soon as possible.
 |:----------|
 
 <!--
-Jumio provides you with the following set of test IDs for Netverify. Please only send these images one at a time and don’t mix them with any actual document images.
+Jumio provides you with the following set of test IDs for ID Verification. Please only send these images one at a time and don’t mix them with any actual document images.
 
 |⚠️ Currently these Test Cards are under development, it may produce unexpected results.
 |:----------|

@@ -1,8 +1,8 @@
-![Jumio](/images/netverify.jpg)
+![Jumio](/images/Jumio-ID-Verification-Banner.png)
 
-# Netverify Retrieval API Implementation Guide
+# ID Verification Retrieval API Implementation Guide
 
-This guide describes how to implement the Netverify Retrieval API.
+This guide describes how to implement the ID Verification Retrieval API.
 
 
 ### Revision history
@@ -13,18 +13,18 @@ This guide describes how to implement the Netverify Retrieval API.
 | 2020-05-26   |Added "enrollmentTransactionReference" to Authentication retrieval |
 | 2020-03-03   |Added "faceSearchFindings" to "additionalChecks" |
 | 2020-01-27   |Added "addressValidation" and "proofOfResidency" to "additionalChecks" |
-| 2019-07-23   |Added response parameter "facemap" for Netverify |
+| 2019-07-23   |Added response parameter "facemap" for ID Verification |
 | 2019-05-28   |Added Retrieval API for Authentication|
 | 2019-04-17   |Formatting and corrections|
 | 2019-02-15   |Added value "OTHER" to parameter "type" for Document Verification|
 | 2019-01-31   |Added new validity reason "LIVENESS\_FAILED"|
-| 2019-01-15   |Added response parameter "livenessImages" for Netverify|
+| 2019-01-15   |Added response parameter "livenessImages" for ID Verification|
 | 2018-11-12   |Added response parameter "issuingAuthority", "issuingPlace", and value "PUBLIC\_SAFETY\_ID" to <br/>parameter "idSubtype", updated idSubtype "MILITARY\_ID"|
 | 2018-10-31   |Updated usage guidelines|
 | 2018-10-02   |Add swiftCode to Parameter "extractedData" for BS, removed deprecated faceMatch percentages|
 | 2018-02-01   |Added response parameter "originalDocument" for Document Verification Retrieval <br />Retrieving document data only<br />Added Australia and Canada states to response parameter "usState" |
 | 2018-01-17   |Added new validity reason BLACK\_AND\_WHITE<br> Updated supported countries for idSubtype LEARNING\_DRIVING\_LICENSE|
-| 2017-11-23   |Added value "Visa" to response parameter "type" for Netverify Retrieval - Retrieving Document <br>Data only|
+| 2017-11-23   |Added value "Visa" to response parameter "type" for ID Verification Retrieval - Retrieving Document <br>Data only|
 | 2017-09-21   |Removed response parameter "additionalInformation"|
 | 2017-08-24   |Added response parameter "identityVerification"|
 | 2017-05-23   |Added response parameter "issuingDate" for retrieving scan details and<br />document data only|
@@ -33,10 +33,10 @@ This guide describes how to implement the Netverify Retrieval API.
 | 2016-06-21   |Removed Content-Length header for HTTP GET APIs |
 | 2016-05-18   |Added value "STUDENT\_ID" to parameter "idSubType"<br />Removed TLS\_DHE ciphers |
 | 2016-02-09   |Added reject reason code 111 for MISMATCH\_PRINTED\_BARCODE\_DATA |
-| 2015-11-17   |Added parameter "idSubtype" to Netverify Retrieval |
+| 2015-11-17   |Added parameter "idSubtype" to ID Verification Retrieval |
 | 2015-10-21   |Added ECDHE ciphers to supported cipher suites |
-| 2015-09-23   |Added parameter "country" and "customDocumentCode" for Netverify Multi Document<br/>Retrieval |
-| 2015-09-09   |Added Netverify Multi Document Retrieval<br />Added second set of API credentials for retrieving transaction data |
+| 2015-09-23   |Added parameter "country" and "customDocumentCode" for ID Verification Multi Document<br/>Retrieval |
+| 2015-09-09   |Added ID Verification Multi Document Retrieval<br />Added second set of API credentials for retrieving transaction data |
 | 2015-08-11   |Added new classifier "face" for retrieving scan images |
 | 2015-07-14   |Added value "XKX" for Kosovo to parameters "country" and "issuingCountry"<br />Added value "Kosovo" to parameter "usState" |
 | 2015-06-30   |Introduced EU data center |
@@ -53,7 +53,7 @@ This guide describes how to implement the Netverify Retrieval API.
 - [Usage](#usage)
 	- [Authentication and encryption](#authentication-and-encryption)
 	- [Request headers](#request-headers)
-- [Netverify retrieval](#netverify-retrieval)
+- [ID Verification retrieval](#id-verification-retrieval)
     - [Retrieving status](#retrieving-status)
     - [Retrieving details](#retrieving-details)
     - [Retrieving document data only](#retrieving-document-data-only)
@@ -93,7 +93,7 @@ Please contact Jumio Support at support@jumio.com to coordinate bulk requests to
   * You are also allowed to set your own definition.
 
 ## Authentication and encryption
-Netverify API calls are protected using [HTTP Basic Authentication](https://tools.ietf.org/html/rfc7617). Your Basic Auth credentials are constructed using your API token as the user-id and your API secret as the password.
+ID Verification API calls are protected using [HTTP Basic Authentication](https://tools.ietf.org/html/rfc7617). Your Basic Auth credentials are constructed using your API token as the user-id and your API secret as the password.
 <br>
 
 You can view and manage your API token and secret in the Customer Portal under **Settings** > **API credentials**. You can create a separate set of API credentials to be used specifically with the Retrieval API and [Delete API](/netverify/netverify-delete-api.md) in the Customer Portal under **Settings** > **API credentials** > **Transaction administration APIs**.
@@ -125,11 +125,11 @@ The following fields are required in the header section of your request:<br>
 
 ---
 
-# Netverify retrieval
+# ID Verification retrieval
 
 ## Retrieving status
 
-Call the RESTful API GET endpoint below to retrieve the status of a Netverify transaction by specifying the Jumio transaction reference (scan reference) of an existing transaction from your account as a path parameter.
+Call the RESTful API GET endpoint below to retrieve the status of a ID Verification transaction by specifying the Jumio transaction reference (scan reference) of an existing transaction from your account as a path parameter.
 
 **HTTP request method:** `GET`<br>
 **REST URL (US)**: `https://netverify.com/api/netverify/v2/scans/<scanReference>`<br>
@@ -316,8 +316,8 @@ Successful requests will return HTTP status code `200 OK` along with a JSON obje
 |:----|:----|:----|:----|
 |**timestamp**| string| |Timestamp of the response in the format YYYY-MM-DDThh:mm:ss.SSSZ|
 |**scanReference**| string|36|Jumio’s reference number for the transaction|
-|**status**| string| |Netverify:<br>• APPROVED\_VERIFIED<br>• DENIED\_FRAUD<br>• DENIED\_UNSUPPORTED\_ID\_TYPE<br>• DENIED\_UNSUPPORTED\_ID\_COUNTRY<br>• ERROR\_NOT\_READABLE\_ID<br>• NO\_ID\_UPLOADED |
-|type| string| |Netverify:<br>•	PASSPORT<br>• DRIVING\_LICENSE<br>• ID\_CARD<br>• VISA<br>• UNSUPPORTED |
+|**status**| string| |ID Verification:<br>• APPROVED\_VERIFIED<br>• DENIED\_FRAUD<br>• DENIED\_UNSUPPORTED\_ID\_TYPE<br>• DENIED\_UNSUPPORTED\_ID\_COUNTRY<br>• ERROR\_NOT\_READABLE\_ID<br>• NO\_ID\_UPLOADED |
+|type| string| |ID Verification:<br>•	PASSPORT<br>• DRIVING\_LICENSE<br>• ID\_CARD<br>• VISA<br>• UNSUPPORTED |
 |idSubtype| string|255|Possible subtypes if type = ID\_CARD:<br>•	NATIONAL\_ID<br>• CONSULAR\_ID<br>• ELECTORAL\_ID<br>• RESIDENT\_PERMIT\_ID<br>• TAX\_ID <br>• STUDENT\_ID <br>• PASSPORT\_CARD\_ID <br>• MILITARY\_ID <br>• PUBLIC\_SAFETY\_ID<br/>•	HEALTH\_ID <br>• OTHER\_ID<br>• VISA <br>• UNKNOWN<br><br>Possible subtypes if type = DRIVING\_LICENSE:<br>• LEARNING\_DRIVING\_LICENSE <br><br>Possible subtypes if type = PASSPORT:<br>• E\_PASSPORT (only for mobile)|
 |issuingCountry|string|3|Possible countries:<br>• [ISO 3166-1 alpha-3](http://en.wikipedia.org/wiki/ISO_3166-1_alpha-3) country code<br>- XKX (Kosovo)|
 |firstName|string|255|Customer's first name|
@@ -344,6 +344,8 @@ Successful requests will return HTTP status code `200 OK` along with a JSON obje
 |fathersName|string|255|Name of the document holder's father <br> (if extraction is enabled)|
 |personalIdentificationNumber|string|255|National personal identification number of the document <br> (if extraction is enabled) |
 |rgNumber|string|255|"General Registration" number of Brazilian documents <br> (if extraction is enabled) |
+|voterIdNumber|string|255|"Clave de elector" number for idCountry = MEX <br> (if extraction is enabled)|
+|issuingNumber|string|255|"Numero de emission" number for idCountry = MEX <br> (if extraction is enabled)|
 
 
 #### RAW address format
@@ -422,7 +424,7 @@ Successful requests will return HTTP status code `200 OK` along with a JSON obje
 |**timestamp**| string| |Timestamp of the response in the format YYYY-MM-DDThh:mm:ss.SSSZ|
 |**scanReference**| string|36 |Jumio’s reference number for the transaction|
 |**status**| string| |Possible states:<br>• PENDING<br>• DONE<br>• FAILED|
-|**source**| string| |Netverify Web embedded:<br>• WEB<br>• WEB-CAM<br>• WEB-UPLOAD<br><br>Netverify Web redirect:<br>• REDIRECT<br>• REDIRECT-CAM<br>• REDIRECT-UPLOAD<br><br>performNetverify:<br>• API<br><br>Netverify Mobile:<br>• SDK |
+|**source**| string| |ID Verification Web embedded:<br>• WEB<br>• WEB-CAM<br>• WEB-UPLOAD<br><br>ID Verification Web redirect:<br>• REDIRECT<br>• REDIRECT-CAM<br>• REDIRECT-UPLOAD<br><br>ID Verification API:<br>• API<br><br>Netverify Mobile:<br>• SDK |
 |**date**| string| |Timestamp of the scan creation in the format YYYY-MM-DDThh:mm:ss.SSSZ|
 |clientIp| string| |IP address of the client in the format xxx.xxx.xxx.xxx|
 |customerId| string|255 |Your internal reference for the user.|
@@ -657,7 +659,7 @@ Successful requests will return HTTP status code `200 OK` along with a JSON obje
 
 |Name| Type    | Description|
 |:---------------|:--------|:------------|
-|**classifier**| string| Netverify:<br/>•	front<br/>•	face<br/>•	back|
+|**classifier**| string| ID Verification:<br/>•	front<br/>•	face<br/>•	back|
 |**href** | string |REST URL to retrieve specific image (see [Retrieving a specific image](#retrieving-a-specific-image) section)|
 
 <br>
@@ -727,7 +729,7 @@ Call the RESTful GET API endpoint below to retrieve a specific image from a tran
 |Name|Type|Max. length|Description|
 |:---------------|:--------|:------------|:------------|
 |**scanReference**| string|36|Jumio’s reference number for the transaction|
-|**classifier**| string| |Netverify:<br/>•	front<br/>•	face<br/>•	back|
+|**classifier**| string| |ID Verification:<br/>•	front<br/>•	face<br/>•	back|
 
 <br>
 
@@ -828,7 +830,7 @@ Successful requests will return HTTP status code `200 OK` along with a JSON obje
 |**enrollmentTransactionReference** |string|36|Jumio’s reference number of the enrollment transaction (ID)|
 |**transactionResult** |string||Possible values:<br>• CREATED<br>• STARTED<br>• PASSED<br>• FAILED<br>• INVALID<br>• EXPIRED|
 |**transactionDate** |string||Timestamp of the transaction in the format YYYY-MM-DDThh:mm:ss.SSSZ|
-|**scanSource** |string||Possible value:<br>• SDK|
+|**scanSource** |string||Possible value:<br>• SDK<br>• WEB|
 |userReference |string||Your internal reference for the user|
 |images |JSON array/object||See table below|
 |livenessImages |JSON array||List of REST URLs to retrieve specific liveness images|

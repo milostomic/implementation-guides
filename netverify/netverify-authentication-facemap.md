@@ -1,12 +1,12 @@
-![Jumio](/images/authentication.jpg)
+![Jumio](/images/Jumio-Authentication-Banner.png)
 
 # Authentication with Facemap Storage on Customer Premise
 
 This is a reference manual and configuration guide for Jumio Authentication with facemap storage on customer premise. It describes the workflow and how to initiate an Authentication transaction.
 
-This feature allows you to use Authentication with needing to store the Netverify PII data in the Jumio infrastructure.
+This feature allows you to use Authentication with needing to store the ID Verification PII data in the Jumio infrastructure.
 
-You will retrieve the facemap (which represents the face identity of the user) using the Netverify Retrieval API or Netverify Callback. This facemap needs to be stored in your system. When you want to authenticate this user, you will send us the facemap using our server to server API to create a new Authentication transaction. You can start the user journey in your mobile app or web journey. Once the user completes the face capture process we will perform our 3D liveness checks on the face and compare it with the facemap identity you provide in the API call. Results of this transaction will let you know if the person is live and is the same person that was onboarded on your system.
+You will retrieve the facemap (which represents the face identity of the user) using the ID Verification Retrieval API or ID Verification Callback. This facemap needs to be stored in your system. When you want to authenticate this user, you will send us the facemap using our server to server API to create a new Authentication transaction. You can start the user journey in your mobile app or web journey. Once the user completes the face capture process we will perform our 3D liveness checks on the face and compare it with the facemap identity you provide in the API call. Results of this transaction will let you know if the person is live and is the same person that was onboarded on your system.
 <br>
 
 ### Revision history
@@ -21,13 +21,13 @@ Information about changes to features and improvements documented in each releas
 	- [Enable functionality](#enable-functionality)
 	- [Store facemap](#store-facemap)
 - [Initiating a transaction](#initiating-a-transaction)
-	- [Netverify Mobile](#netverify-mobile)
+	- [ID Verification Mobile](#id-verification-mobile)
 		- [Authentication and encryption](#authentication-and-encryption)
 		- [Request headers](#request-headers)
 		- [Request body](#request-body)
 		- [Response](#response)
 		- [Examples](#examples)
-	- [Netverify Web](#netverify-web)
+	- [ID Verification Web](#id-verification-web)
 		- [Authentication and encryption](#authentication-and-encryption-1)
 		- [Request headers](#request-headers-1)
 		- [Request body](#request-body-1)
@@ -47,8 +47,8 @@ Information about changes to features and improvements documented in each releas
 
 The following conditions must be met before using this feature:
 
-* The original Netverify transaction needs to be deleted
-* That Netverify transaction has to be
+* The original ID Verification transaction needs to be deleted
+* That ID Verification transaction has to be
 	* verificationStatus = APPROVED_VERIFIED
 	* similarity = MATCH
 	* validity = TRUE
@@ -63,22 +63,22 @@ If you need this function enabled or are unsure if it is enabled on your account
 
 ## Store facemap
 
-You must use either the callback or Retrieval API to get the facemap of a Netverify transaction and store this on your system.
+You must use either the callback or Retrieval API to get the facemap of a ID Verification transaction and store this on your system.
 
-|⚠️ You are responsible to store the facemap to the proper user in your system. Jumio does not check if the facemap of the person belongs to the onboarded user and will only compare the facemap which was sent in for authentication with the Netverify transaction.
+|⚠️ You are responsible to store the facemap to the proper user in your system. Jumio does not check if the facemap of the person belongs to the onboarded user and will only compare the facemap which was sent in for authentication with the ID Verification transaction.
 |:----------|
 
-### Callback for Netverify
+### Callback for ID Verification
 
 The callback parameter `facemap` contains an URL to the facemap of the transaction.
 
-See [Callback for Netverify](/netverify/callback.md#callback-for-authentication) for further information.
+See [Callback for ID Verification](/netverify/callback.md#callback-for-authentication) for further information.
 
-### Netverify Retrieval API
+### ID Verification Retrieval API
 
 The response parameter `facemap` will be returned when retrieving the details of a transaction.
 
-See the [Netverify Retrieval API Implementation Guide](/netverify/netverify-retrieval-api.md#authentication-retrieval) for further details.
+See the [ID Verification Retrieval API Implementation Guide](/netverify/netverify-retrieval-api.md#authentication-retrieval) for further details.
 
 <br>
 
@@ -86,7 +86,7 @@ See the [Netverify Retrieval API Implementation Guide](/netverify/netverify-retr
 
 # Initiating a transaction
 
-## Netverify Mobile
+## ID Verification Mobile
 
 Call the RESTful API POST endpoint **/initiateAuthentication** with a JSON object containing the properties described below to create a transaction for each user. You will receive a JSON object in the response containing a new authentication transaction reference to start authentication.
 
@@ -148,7 +148,7 @@ The following fields are required in the header section of your request:<br>
 
 |Value  |enrollmentMetadata|
 |:--------------|:--------------|
-|**enrollmentTransactionReference**|The transaction reference from the onboarding ID verification to be used for authentication. <br><br> This is the Jumio scan reference of the original Netverify transaction.|
+|**enrollmentTransactionReference**|The transaction reference from the onboarding ID verification to be used for authentication. <br><br> This is the Jumio scan reference of the original ID Verification transaction.|
 |userReference	|Your internal reference for the user.|
 |callbackUrl<sup>1</sup> 	|Sends verification result to this URL upon completion. Overrides [Callback URL](/netverify/portal-settings.md#callback-error-and-success-urls) in the Customer Portal.|
 
@@ -212,7 +212,7 @@ Content-Disposition: form-data; name="enrollmentMetadata"
 
 <br>
 
-## Netverify Web
+## ID Verification Web
 
 Call the RESTful API POST endpoint **/initiateAuthentication** with a JSON object containing the properties described below to create a transaction for each user. You will receive a JSON object in the response containing a new authentication transaction reference to start authentication.
 
@@ -275,7 +275,7 @@ The following fields are required in the header section of your request:<br>
 
 |Value  |enrollmentMetadata|
 |:--------------|:--------------|
-|**enrollmentTransactionReference**|The transaction reference from the onboarding ID verification to be used for authentication. <br><br> This is the Jumio scan reference of the original Netverify transaction.|
+|**enrollmentTransactionReference**|The transaction reference from the onboarding ID verification to be used for authentication. <br><br> This is the Jumio scan reference of the original ID Verification transaction.|
 |userReference	|Your internal reference for the user.|
 |callbackUrl<sup>1</sup> 	|Sends verification result to this URL upon completion. <br>Overrides [Callback URL](/netverify/portal-settings.md#callback-error-and-success-urls) in the Customer Portal.|
 |successUrl<sup>1</sup>         |Redirects to this URL after a successful transaction.<br>Overrides [Success URL](/netverify/portal-settings.md#callback-error-and-success-urls) in the Customer Portal.		|

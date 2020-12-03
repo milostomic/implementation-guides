@@ -1,8 +1,8 @@
-![Jumio](/images/netverify.jpg)
+![Jumio](/images/Jumio-ID-Verification-Banner.png)
 
 # Configuring Settings in the Customer Portal
 
-You can customize your settings, brand your Netverify page, and manage your API credentials in the Customer Portal. Save changes with your Customer Portal password to activate them.
+You can customize your settings, brand your ID Verification page, and manage your API credentials in the Customer Portal. Save changes with your Customer Portal password to activate them.
 
 ### Revision history
 
@@ -80,14 +80,14 @@ Choose from:
 
 ### Skip "Start ID verification" screen
 
-Select this checkbox to bypass the introductory screen in the Netverify client.
+Select this checkbox to bypass the introductory screen in the ID Verification client.
 
 ---
 ## Application Settings — Redirect
 
 ### Domain Name Prefix
 
-You can optionally define a domain name prefix (`https://example.netverfy.com`) for the URL of your Netverify page.
+You can optionally define a domain name prefix (`https://example.netverify.com`) for the URL of your ID Verification page.
 
 
 - Allowed characters are: letters `a-z`, numbers `0-9`, `-`
@@ -96,47 +96,56 @@ You can optionally define a domain name prefix (`https://example.netverfy.com`) 
 
 ### Default Locale
 
-Select a language from the dropdown list to set your display language for Netverify. If no language is selected, Netverify will be displayed in English (US).<br>
+Select a language from the dropdown list to set your display language for ID Verification. If no language is selected, ID Verification will be displayed in English (US).<br>
 
 Choose from:<br>
 
-- English
-- English (United Kingdom)
-- German
-- Turkish
-- Finnish
-- Norwegian
-- Polish
-- Swedish
-- Russian
-- Portuguese
-- Portuguese (Brazil)
-- Spanish
-- Spanish (Mexico)
-- Italian
-- French
-- Dutch
+- Arabic
+- Armenian
 - Bulgarian
 - Chinese (China)
 - Chinese (Hong Kong)
+- Croatian
 - Czech
 - Danish
-- Greek
-- Hungarian
-- Japanese
-- Korean
-- Romanian
-- Slovak
-- Vietnamese
-- Lithuanian
+- Dutch
+- English
+- English (United Kingdom)
 - Estonian
+- Finnish
+- French
+- Georgian
+- German
+- Greek
+- Hebrew
+- Hungarian
+- Indonesian
+- Italian
+- Japanese
+- Khmer
+- Korean
+- Lithuanian
+- Malay
+- Norwegian
+- Polish
+- Portuguese
+- Portuguese (Brazil)
+- Romanian
+- Russian
+- Slovak
+- Spanish
+- Spanish (Mexico)
+- Swedish
+- Thai
+- Turkish
+- Vietnamese
 
 ---
 ## Customize client
 
 ### Colors
 
-Specify primary and secondary colors for each locale to give Netverify your own look and feel.
+Specify primary and secondary colors for each locale to give ID Verification your own look and feel.
 
 Any configuration which is not set will first default to the root language (e.g. EN\_GB to EN), then to your default setup, and finally to the Jumio default.
 
@@ -145,7 +154,7 @@ You can also reset all colors to the Jumio default.
 
 ### Images
 
-Add a **Header image** for each locale to brand your Netverify page.
+Add a **Header image** for each locale to brand your ID Verification page.
 
 Add a **Success image** and **Error image** for each locale to be displayed on the Jumio default success and error pages when you do not specify your own **successUrl** and **errorUrl**.
 

@@ -1,4 +1,4 @@
-![Jumio](/images/jumio_feature_graphic.jpg)
+![Jumio](/images/Jumio-Main-Banner.png)
 
 # Callback
 
@@ -12,13 +12,13 @@ Information about changes to features and improvements documented in each releas
 
 - [Usage](#usage)
 - [Jumio Callback IP List](#jumio-callback-ip-list)
-- [Callback for Netverify](#callback-for-netverify)
+- [Callback for ID Verification](#callback-for-id-verification)
   - [Supported Documents for Address Extraction](#supported-documents-for-address-extraction)
-  - [Netverify masking](#netverify-masking)
+  - [ID Verification masking](#id-verification-masking)
 - [Callback for Authentication](#callback-for-authentication)
 - [Callback for Document Verification](#callback-for-document-verification)
   - [Supported Documents for Data Extraction](#supported-documents-for-data-extraction)
-- [Netverify Retrieval API](#netverify-retrieval-api)
+- [ID Verification Retrieval API](#id-verification-retrieval-api)
 
 
 
@@ -63,17 +63,17 @@ Use the hostname `callback.lon.jumio.com` to look up the most current IP address
 
 Use the hostname `callback.core-sgp.jumio.com` to look up the most current IP addresses.<br>
 
-## Callback for Netverify
+## Callback for ID Verification
 
 An HTTP POST request is sent to your specified callback URL containing an `application/x-www-form-urlencoded` formatted string with the transaction result.
 
 To specify a global callback URL in the Customer Portal, see [Configuring Settings in the Customer Portal](/netverify/portal-settings.md#callback-error-and-success-urls).
 
-A callback URL can also be specified per transaction. See instructions for [Netverify Web v4](/netverify/netverify-web-v4.md#request-body), [performNetverify](/netverify/performNetverify.md#request-body), and our SDK for [Android](https://github.com/Jumio/mobile-sdk-android/blob/master/docs/integration_authentication.md#callback) and [iOS](https://github.com/Jumio/mobile-sdk-ios/blob/master/docs/integration_authentication.md#configuration).
+A callback URL can also be specified per transaction. See instructions for [ID Verification Web v4](/netverify/netverify-web-v4.md#request-body), [performNetverify](/netverify/performNetverify.md#request-body), and our SDK for [Android](https://github.com/Jumio/mobile-sdk-android/blob/master/docs/integration_authentication.md#callback) and [iOS](https://github.com/Jumio/mobile-sdk-ios/blob/master/docs/integration_authentication.md#configuration).
 
 For Android/iOS: ID verification must be enabled to receive the callback.
 
-#### Netverify Web
+#### ID Verification Web
 
 |User journey state       | transaction state    | Callback|
 |:---------------|:--------|:------------|
@@ -82,7 +82,7 @@ For Android/iOS: ID verification must be enabled to receive the callback.
 |Drop off during second or third attempt  | Done  |Transaction will be finished 15 minutes after the last update<br>Callback: Verification status ERROR\_NOT\_READABLE\_ID with previous reject reason |
 |Finished       | Done  |Callback: Verification status depends on the result |
 
-#### Netverify Mobile (Android/iOS)
+#### ID Verification Mobile (Android/iOS)
 
 |User journey state       | transaction state    | Callback|
 |:---------------|:--------|:------------|
@@ -92,7 +92,7 @@ For Android/iOS: ID verification must be enabled to receive the callback.
 
 ### Parameters
 
-The following parameters are posted to your callback URL for Netverify Web, performNetverify and Netverify Mobile iOS/Android.
+The following parameters are posted to your callback URL for ID Verification Web, ID Verification API and ID Verification Mobile iOS/Android.
 
 **Required items appear in bold type.**  
 
@@ -137,12 +137,12 @@ The following parameters are posted to your callback URL for Netverify Web, perf
 |optionalData2   |255  |Optional field of MRZ line 2 | |
 |dni   |255  |DNI as available on the ID if idCountry = ESP and idSubtype = NATIONAL\_ID  | |
 |curp   |255  |CURP is available if idCountry = MEX and idType = PASSPORT, DRIVING\_LICENSE, or ID\_CARD and idSubtype = ELECTORAL\_ID  |activation required |
-|gender   |2  |Possible values: M, F<br>• if idCountry = FRA,HKG and idSubtype = NATIONAL\_ID (MRZ type CNIS)<br> •	if idCountry = BHR,SGP and idType = PASSPORT, ID\_CARD, DRIVING\_LICENSE<br> •	if idCountry = CHL and idType = ID\_CARD <br>• if idCountry = PHL and idType = DRIVING\_LICENSE <br>• if idType = VISA and additional extraction for Visa enabled <br>• if readable: best effort| |  
+|gender   |2  |Possible values: M, F<br>• if idCountry = FRA, HKG and idSubtype = NATIONAL\_ID (MRZ type CNIS)<br> •	if idCountry = BHR, SGP and idType = PASSPORT, ID\_CARD, DRIVING\_LICENSE<br> •	if idCountry = CHL and idType = ID\_CARD <br>• if idCountry = PHL and idType = DRIVING\_LICENSE <br>• if idCountry = PER and idType = PASSPORT, ID\_CARD <br>• if idType = VISA and additional extraction for Visa enabled <br>• if readable: best effort| |  
 |presetCountry   | 3  |Possible countries:<br />•	[ISO 3166-1 alpha-3](http://en.wikipedia.org/wiki/ISO_3166-1_alpha-3) country code <br /> • XKX (Kosovo)| |
 |presetIdType   |    |Possible ID types: PASSPORT, DRIVING\_LICENSE, ID\_CARD| |
 |dlCarPermission|255 |Only available if:<br/> •Extraction supported for specific country<br/>•verificationStatus = APPROVED\_VERIFIED<br/><br/>Possible values:<br /> • YES<br /> • NO<br /> • NOT\_READABLE|activation required|
 |dlCategories   | JSON object  |Driver license categories as JSON object, see table below <br /><br />Supported countries:<br />• Austria<br />• Belgium<br />• Bulgaria<br />• France<br />• Germany<br />• Great Britain<br />• Italy<br />• Latvia<br />• Lithuania<br />• Netherlands<br />• Romania<br />• Spain<br />• Taiwan|activation required |
-|nationality |3| • if idCountry = BHR, CHL, HKG, MYS, PHL, SGP |activation required |
+|nationality |3| • if idCountry = BEL, BHR, CHL, FRA, HKG, MYS, PHL, SGP |activation required |
 |passportNumber|255|Passport number if idType = VISA and additional extraction for Visa enabled|activation required |
 |durationOfStay|255|Duration of stay if idType = VISA and additional extraction for Visa enabled|activation required |
 |numberOfEntries|255|Number of entries if idType = VISA and additional extraction for Visa enabled|activation required |
@@ -159,13 +159,15 @@ The following parameters are posted to your callback URL for Netverify Web, perf
 |registrationNumber|255|Registration number of the document |activation required |
 |mothersName|255|Name of the document holder's mother |activation required |
 |fathersName|255|Name of the document holder's father |activation required |
-|personalIdentificationNumber|255|Personal identification number as available on the ID<br>• if idCountry = GEO and idSubtype = PASSPORT<br>• if idCountry = COL and idSubtype = ID\_CARD <br>• if idCountry = LTU and idSubtype = DRIVING\_LICENSE<br>• if idCountry = TUR and idSubtype = ID\_CARD, DRIVING\_LICENSE |activation required |
+|personalIdentificationNumber|255|Personal identification number as available on the ID<br>• if idCountry = GEO and idSubtype = PASSPORT<br>• if idCountry = COL and idSubtype = ID\_CARD <br>• if idCountry = LTU and idSubtype = DRIVING\_LICENSE<br>• if idCountry = TUR and idSubtype = ID\_CARD, DRIVING\_LICENSE<br>• if idCountry = ROU and idSubtype = ID\_CARD, DRIVING\_LICENSE |activation required |
 |rgNumber|255|"General Registration" number for idCountry = BRA |activation required|
+|voterIdNumber|255|"Clave de elector" number for idCountry = MEX |activation required|
+|issuingNumber|255|"Numero de emission" number for idCountry = MEX |activation required|
 
 <sup>1</sup> Transaction is declined as unsupported if the ID is not supported by Jumio, or not marked as accepted in your customer portal settings.<br/>
 <sup>2</sup> For ID types that are configured to support a separate scan of the front side and back side, there is a separate image of the front side (idScanImage) and the back side (idScanImageBackside). If Identity Verification is enabled, there is also a picture of the face (idScanImageFace).<br>
 <sup>3</sup> Address recognition is performed for supported IDs, if enabled. Please check [Supported documents for Address Extraction](#supported-documents-for-address-extraction) to see which supported documents. The address parameters are a part of the JSON object, if they are available on the ID.<br>
-<sup>4</sup> Fields containing certain kinds of personally identifying information are not returned if NV masking is enabled for the Netherlands, Germany, or South Korea. See [Netverify masking](#netverify-masking) for more information.<br>
+<sup>4</sup> Fields containing certain kinds of personally identifying information are not returned if NV masking is enabled for the Netherlands, Germany, or South Korea. See [ID Verification masking](#id-verification-masking) for more information.<br>
 <sup>5</sup> Liveness images are returned only for transactions containing Identity Verification submitted via the Android and iOS SDKs. The number of images can vary and may not be returned in chronological order.
 
 #### Retrieving images
@@ -197,6 +199,7 @@ We encourage to use a standard library to convert the timestamp received from Ju
 |Canada|No|Yes|No|RAW|
 |France|Yes|Yes|Yes|RAW|
 |Germany|Yes|No|No|RAW|
+|India|Yes|No|No|RAW|
 |Indonesia|Yes|No|No|RAW|
 |Ireland|No|Yes|No|RAW|
 |Malaysia|Yes|No|No|RAW|
@@ -230,7 +233,7 @@ We encourage to use a standard library to convert the timestamp received from Ju
 |Parameter `rejectReason` | Type   | Max. Length    | Description|
 |:------------------------|:--------|:--------|:------------|
 |rejectReasonCode |String| 5  |see below |
-|rejectReasonDescription |String |64  |Possible codes and descriptions for verification status DENIED\_FRAUD:<br>100	MANIPULATED\_DOCUMENT<br/>105	FRAUDSTER<br/>106	FAKE<br/>107	PHOTO\_MISMATCH<br/>108	MRZ\_CHECK\_FAILED<br/>109	PUNCHED\_DOCUMENT<br/>110	CHIP\_DATA\_MANIPULATED (only available for ePassport)<br/>111	MISMATCH\_PRINTED\_BARCODE_DATA<br><br>Possible codes and descriptions for verificationStatus = ERROR\_NOT\_READABLE\_ID:<br/>102	PHOTOCOPY\_BLACK\_WHITE<br/>103	PHOTOCOPY\_COLOR (for sources WEB\_CAM and REDIRECT\_CAM)<br/>104	DIGITAL\_COPY<br/>200	NOT\_READABLE\_DOCUMENT<br/>201	NO\_DOCUMENT<br/>202	SAMPLE\_DOCUMENT<br/>206	MISSING\_BACK<br/>207	WRONG\_DOCUMENT\_PAGE<br/>209	MISSING\_SIGNATURE<br/>210	CAMERA\_BLACK\_WHITE<br/>211	DIFFERENT\_PERSONS\_SHOWN (documents of multiple people in one image)<br/>300	MANUAL\_REJECTION|
+|rejectReasonDescription |String |64  |Possible codes and descriptions for verification status DENIED\_FRAUD:<br>100	MANIPULATED\_DOCUMENT<br/>105	FRAUDSTER<br/>106	FAKE<br/>107	PHOTO\_MISMATCH<br/>108	MRZ\_CHECK\_FAILED<br/>109	PUNCHED\_DOCUMENT<br/>110	CHIP\_DATA\_MANIPULATED (only available for ePassport)<br/>111	MISMATCH\_PRINTED\_BARCODE_DATA<br><br>Possible codes and descriptions for verificationStatus = ERROR\_NOT\_READABLE\_ID:<br/>102	PHOTOCOPY\_BLACK\_WHITE<br/>103	PHOTOCOPY\_COLOR (for sources WEB\_CAM and REDIRECT\_CAM)<br/>104	DIGITAL\_COPY<br/>200	NOT\_READABLE\_DOCUMENT<br/>201	NO\_DOCUMENT<br/>202	SAMPLE\_DOCUMENT<br/>206	MISSING\_BACK<br/>207	WRONG\_DOCUMENT\_PAGE<br/>209	MISSING\_SIGNATURE<br/>210	CAMERA\_BLACK\_WHITE<br/>211	DIFFERENT\_PERSONS\_SHOWN (documents of multiple people in one image)<br/>213 INVALID\_WATERMARK<br/>300	MANUAL\_REJECTION|
 |rejectReasonDetails |Object  |   |Reject reason details as JSON array containing JSON objects if rejectReasonCode = 100 or 200, see table below |
 
 
@@ -284,9 +287,9 @@ We encourage to use a standard library to convert the timestamp received from Ju
 |availability   |  |Possible values:<br>• yes<br />• no<br />• not readable|
 
 
-## Netverify Masking
+## ID Verification Masking
 
-Extracting certain sensitive information from identity documents in the Netherlands, Germany, and South Korea is prohibited by law for customers with a business presence in those countries. These customers can elect to enable Netverify masking to protect this sensitive data.
+Extracting certain sensitive information from identity documents in the Netherlands, Germany, and South Korea is prohibited by law for customers with a business presence in those countries. These customers can elect to enable ID Verification masking to protect this sensitive data.
 
 When masking is enabled for these countries, certain fields cannot be extracted and returned in the callback. The information contained in these fields is masked before the user's image is stored.
 
@@ -304,8 +307,8 @@ Singapore|Passport|idCheckMRZcode,idNumber|
 Singapore|Driver license|idNumber|
 Singapore|ID card|idNumber|
 South Korea|Passport|idCheckMRZcode, personalNumber|
-South Korea|ID card|idNumber, idDob|
-South Korea|Driver license|idDob|
+South Korea|ID card|idNumber|
+South Korea|Driver license|idNumber|
 
 ### Sample Callbacks
 
@@ -347,7 +350,7 @@ A callback URL can also be specified per transaction in our [Android](https://gi
 |**transactionDate**| string  |  |Timestamp of the transaction in the format: <br>[YYYY-MM-DDThh:mm:ss.SSSZ](#timestamp-format-1)|
 |**scanSource**|string||Possible values:<br>•	SDK<br>•	WEB|
 |**callBackType**|string ||NETVERIFY_AUTHENTICATION|
-|idScanImageFace | JSON array/object | |URL to retrieve the face image of the transaction (JPEG or PNG) <sup>1</sup> |
+|idScanImageFace | string | |URL to retrieve the face image of the transaction (JPEG or PNG) <sup>1</sup> |
 |livenessImages| JSON array  |  | URLs to the liveness images of the transaction (JPEG or PNG) <sup>1</sup> <sup>2</sup>|
 |userReference |string  |  |Your internal reference for the user. |
 
@@ -384,7 +387,6 @@ scanSource=SDK&transactionReference=xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx&enrollm
 ---
 
 ## Callback for Document Verification
-(formerly Netverify Multi Document)
 
 ### Parameters
 
@@ -406,7 +408,7 @@ The following parameters are posted to your callback URL for Document Verificati
 |Parameter `transaction`       | Type    | Max. Length|  Description|
 |:---------------|:--------|:----------:|:------------|
 |**date**    					        | String  |    |Timestamp (UTC) of the transaction creation<br>format: [YYYY-MM-DDThh:mm:ss.SSSZ](#timestamp-format-2)|
-|**status**   | String  |    |Possible states:<br>•	DONE<br>•	FAILED (if initialized acquisition is not successfully finalized within 5 minutes after creation/last update)|
+|**status**   | String  |    |Possible states:<br>•	DONE<br>•	FAILED (if initialized acquisition is not successfully finalized within 15 minutes after creation/last update)|
 |**source**      							| String  |    |Possible values: <br>• DOC\_UPLOAD (Document Verification)<br>• DOC\_API (Document Verification API)<br>• DOC\_SDK (Document Verification Mobile)|
 |**merchantScanReference** 	| String  |255 |Your reference for each transaction |
 |**customerId**       				| String  |255 |ID of the customer|
@@ -539,7 +541,7 @@ timestamp=2017-06-06T12%3A06%3A49.016Z&scanReference=xxxxxxxx-xxxx-xxxx-xxxx-xxx
 ```
 
 ---
-## Netverify Retrieval API
+## ID Verification Retrieval API
 If your server was not able to receive or process the callback, you can use the [Retrieval API](/netverify/netverify-retrieval-api.md) to retrieve the results of your transaction.
 
 

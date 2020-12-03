@@ -1,6 +1,6 @@
-![Jumio](/images/netverify.jpg)
+![Jumio](/images/Jumio-ID-Verification-Banner.png)
 
-# Global Netverify APIs
+# Global ID Verification APIs
 
 ## Table of contents
 - [Supported and accepted ID documents](#supported-and-accepted-id-documents)
@@ -16,7 +16,7 @@ Call the RESTful API GET endpoints described below to request a list of the ID d
 <br>
 
 ## Authentication and encryption
-Netverify API calls are protected using [HTTP Basic Authentication](https://tools.ietf.org/html/rfc7617). Your Basic Auth credentials are constructed using your API token as the user-id and your API secret as the password. You can view and manage your API token and secret in the Customer Portal under **Settings** > **API credentials**.
+ID Verification API calls are protected using [HTTP Basic Authentication](https://tools.ietf.org/html/rfc7617). Your Basic Auth credentials are constructed using your API token as the user-id and your API secret as the password. You can view and manage your API token and secret in the Customer Portal under **Settings** > **API credentials**.
 <br>
 
 |⚠️ Never share your API token, API secret, or Basic Auth credentials with *anyone* — not even Jumio Support.

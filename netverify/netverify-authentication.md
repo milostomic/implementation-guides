@@ -1,6 +1,6 @@
-![Jumio](/images/authentication.jpg)
+![Jumio](/images/Jumio-Authentication-Banner.png)
 
-# Authentication for Web (Pilot)
+# Authentication for Web
 
 This is a reference manual and configuration guide for Jumio Authentication for Web. It describes how to initiate a transaction, how to customize your settings and branding, and how to display Authentication to your users.
 <br><br>
@@ -112,6 +112,7 @@ The body of your **initiate** API request allows you to
 |errorUrl<sup>1</sup>                 |string |255        |Redirects to this URL after an unsuccessful transaction.<br>Overrides [Error URL](#callback-error-and-success-urls) in the Customer Portal.		|
 |userReference<sup>2</sup>|string |100        |Your internal reference for the user.|
 |locale                   |string |5          |Renders content in the specified language.<br>Overrides [Default locale](#default-locale) in the Customer Portal.<br>See [supported locale values](#supported-locale-values).		|
+|tokenLifetimeInMinutes                   |number |Max. value: 86400          |Time in minutes until the authorization token expires. (minimum: 5, maximum: 86400)<br>Overrides [Authorization token lifetime](#authorization-token-lifetime) in the Customer Portal.|
 
 <sup>1</sup> See URL constraints for [Callback, Error, and Success URLs](#callback-error-and-success-urls).<br>
 <sup>2</sup> Values **must not** contain Personally Identifiable Information (PII) or other sensitive data such as email addresses.<br>
@@ -427,7 +428,7 @@ All data is encoded with [UTF-8](https://tools.ietf.org/html/rfc3629).
 ~~~javascript
 function receiveMessage(event) {
 	var data = window.JSON.parse(event.data);
-	console.log('Netverify Web was loaded in an iframe.');
+	console.log('ID Verification Web was loaded in an iframe.');
 	console.log('auth token:', data.authorizationToken);
 	console.log('transaction reference:', data.transactionReference);
 	console.log('event type:', data.eventType);

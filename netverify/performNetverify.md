@@ -1,8 +1,8 @@
-![Jumio](/images/netverify.jpg)
+![Jumio](/images/Jumio-ID-Verification-Banner.png)
 
 # performNetverify Implementation Guide
 
-This is a reference manual and configuration guide for the performNetverify product. It illustrates how to implement the performNetverify API.
+This is a reference manual and configuration guide for the ID Verification API product. It illustrates how to implement the ID Verification API.
 
 ---
 ## Revision history
@@ -45,7 +45,7 @@ Information about changes to features and improvements documented in each releas
 
 ## Authentication and encryption
 
-Netverify API calls are protected using [HTTP Basic Authentication](https://tools.ietf.org/html/rfc7617). Your Basic Auth credentials are constructed using your API token as the user-id and your API secret as the password. You can view and manage your API token and secret in the Customer Portal under **Settings > API credentials**.
+ID Verification API calls are protected using [HTTP Basic Authentication](https://tools.ietf.org/html/rfc7617). Your Basic Auth credentials are constructed using your API token as the user-id and your API secret as the password. You can view and manage your API token and secret in the Customer Portal under **Settings > API credentials**.
 <br>
 
 |⚠️ Never share your API token, API secret, or Basic Auth credentials with *anyone* — not even Jumio Support.
@@ -81,13 +81,13 @@ The following fields are required in the header section of your request:<br>
 |Parameter|Type|Max. length|Description|
 |:---|:---|:---|:---|
 |**merchantIdScanReference** \*|String|100|Your reference for each scan must not contain sensitive data like PII (Personally Identifiable Information) or account login|
-|**frontsideImage** \*|String|Max. 15MB & <8000 pixels per side|Base64 encoded image of ID front side|
-|**faceImage** \*|String|Max. 15MB & <8000 pixels per side|Base64 encoded image of face<br> **\*Mandatory if Face match enabled**|
+|**frontsideImage** \*|String|Max. 15MB & <8000 pixels per side & longest side >300 pixels|Base64 encoded image of ID front side|
+|**faceImage** \*|String|Max. 15MB & <8000 pixels per side & longest side >300 pixels|Base64 encoded image of face<br> **\*Mandatory if Face match enabled**|
 |**country** \*|String|3|Possible countries:<br>• [ISO 3166-1 alpha-3](http://en.wikipedia.org/wiki/ISO_3166-1_alpha-3) country code<br>• XKX (Kosovo)|
 |**idType** \*|String|255|PASSPORT, DRIVING\_LICENSE, ID\_CARD, VISA|
 |frontsideImageMimeType|String||Mime type of front side image<br>Possible values: image/jpeg (default), image/png|
 |faceImageMimeType|String||Mime type of face image<br>Possible values: image/jpeg (default), image/png|
-|backsideImage|String|Max. 15MB & <8000 pixels per side|Base64 encoded image of ID back side |
+|backsideImage|String|Max. 15MB & <8000 pixels per side & longest side >300 pixels|Base64 encoded image of ID back side |
 |backsideImageMimeType|String||Mime type of back side image<br>Possible values: image/jpeg (default), image/png|
 |enabledFields|String|100|Defines fields which will be extracted during the ID verification. If a field is not listed in this parameter, it will not be processed for this transaction, regardless of customer portal settings.<br> **Note:** Face match and Address extraction will not be processed unless enabled for your account. If you want to enable them, please contact your Customer Success Manager, or reach out to Jumio Support.<br>See [supported documents for address extraction](#supported-documents-for-address-extraction).<br>Possible values:<br>"idNumber,idFirstName,idLastName,idDob, idExpiry,idUsState,idPersonalNumber,idFaceMatch,idAddress"|
 |merchantReportingCriteria|String|100|Your reporting criteria for each scan|
@@ -105,19 +105,24 @@ The following fields are required in the header section of your request:<br>
 
 ### Supported documents for address extraction
 
-|Country    |ID card    |Driving license    |Passport    |Callback format |
+|Country    |ID card    |Driving license    |Passport    |Callback format|
 |:------------|:-------|:--------------|:--------------|:-------|
-|Australia|No|Yes|No|US|
-|Canada|No|Yes|No|US|
-|France|Yes|Yes|Yes|Raw|
-|Germany|Yes|No|No|EU|
-|Ireland|No|Yes|No|Raw|
-|Mexico|Yes|No|No|US|
-|Romania|Yes|No|No|Raw|
-|Singapore|Yes|No|No|Raw|
-|Spain|Yes|No|No|EU|
-|United Kingdom|No|Yes|No|Raw|
-|United States|No|Yes|No|US|
+|Australia|No|Yes|No|RAW|
+|Bahrain|No|Yes|No|RAW|
+|Canada|No|Yes|No|RAW|
+|France|Yes|Yes|Yes|RAW|
+|Germany|Yes|No|No|RAW|
+|Indonesia|Yes|No|No|RAW|
+|Ireland|No|Yes|No|RAW|
+|Malaysia|Yes|No|No|RAW|
+|Malta|Yes|Yes|No|RAW|
+|Mexico|Yes|No|No|RAW|
+|Peru|Yes|Yes|No|RAW|
+|Romania|Yes|No|No|RAW|
+|Singapore|Yes|No|No|RAW|
+|Spain|Yes|No|No|RAW|
+|United Kingdom|No|Yes|No|RAW|
+|United States|Yes|Yes|No|RAW|
 ---
 ## Response
 
@@ -160,7 +165,7 @@ Authorization: Basic xxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 ---
 # Configuring settings in the Customer Portal
 
-In the **Settings** screen of the Customer Portal you can customize your settings and brand your Netverify page. <br>Save changes using your Customer Portal password to activate them.
+In the **Settings** screen of the Customer Portal you can customize your settings and brand your ID Verification page. <br>Save changes using your Customer Portal password to activate them.
 <br>
 
 |ℹ️ Values set in your API request will override the corresponding settings configured in the Customer Portal.

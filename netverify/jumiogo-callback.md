@@ -1,4 +1,4 @@
-![Jumio](/images/jumio_feature_graphic.jpg)
+![Jumio](/images/Jumio-Go-Banner.png)
 
 # Jumio Go - Callback
 
@@ -11,7 +11,7 @@ The callback is the authorative answer from Jumio. Specify a callback URL (see [
   - [Supported Documents for Address Extraction](#supported-documents-for-address-extraction)
 - [Callback for Authentication](#callback-for-authentication)
   - [Supported Documents for Data Extraction](#supported-documents-for-data-extraction)
-- [Netverify Retrieval API](#netverify-retrieval-api)
+- [ID Verification Retrieval API](#id-verification-retrieval-api)
 
 ___
 
@@ -51,7 +51,7 @@ An HTTP POST request is sent to your specified callback URL containing an `appli
 
 To specify a global callback URL in the Customer Portal, see [Configuring Settings in the Customer Portal](/netverify/portal-settings.md#callback-error-and-success-urls).
 
-A callback URL can also be specified per transaction. See instructions for  [Netverify Web v4](/netverify/netverify-web-v4.md#request-body), [performNetverify](/netverify/performNetverify.md#request-body), and our SDK for [Android](https://github.com/Jumio/mobile-sdk-android/blob/master/docs/integration_authentication.md#callback) and [iOS](https://github.com/Jumio/mobile-sdk-ios/blob/master/docs/integration_authentication.md#configuration).
+A callback URL can also be specified per transaction. See instructions for  [ID Verification Web v4](/netverify/netverify-web-v4.md#request-body), [ID Verification API](/netverify/performNetverify.md#request-body), and our SDK for [Android](https://github.com/Jumio/mobile-sdk-android/blob/master/docs/integration_authentication.md#callback) and [iOS](https://github.com/Jumio/mobile-sdk-ios/blob/master/docs/integration_authentication.md#configuration).
 
 For Android/iOS: ID Verification must be enabled to receive the callback.
 
@@ -73,7 +73,7 @@ For Android/iOS: ID Verification must be enabled to receive the callback.
 
 ### Parameters
 
-The following parameters are posted to your callback URL for Netverify Web, performNetverify and Netverify Mobile iOS/Android.
+The following parameters are posted to your callback URL for ID Verification Web, ID Verification API, and ID Verification Mobile iOS/Android.
 
 Required items appear in bold type.
 
@@ -344,7 +344,7 @@ scanSource=SDK&transactionReference=xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx&enrollm
 ```
 ---
 
-## Netverify Retrieval API
+## ID Verification Retrieval API
 If your server was not able to receive or process the callback, you can use the [Retrieval API](/netverify/netverify-retrieval-api.md) to retrieve the results of your transaction.
 
 

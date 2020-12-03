@@ -1,4 +1,4 @@
-![Jumio](/images/fastfill.png)
+![Jumio](/images/Jumio-Fastfill-Banner.png)
 
 # Fastfill API Implementation Guide
 
@@ -167,7 +167,7 @@ Content-Type: image/jpeg
 
 The Fastfill API supports:
 
-- All Netverify supported passports
+- All ID Verification supported passports
 
 - ID cards from the following countries: Albania, Argentina, Austria, Belgium, Bosnia & Herzegovina, Bulgaria, Canada, Cameroon, Chile, Czech Republic, Denmark, Dominican Republic, Ecuador, El Salvador, Estonia, Finland, France, Georgia, Germany, Guatemala, Hungary, Italy, Kazakhstan, Kenya, Latvia, Liechtenstein, Macedonia, Malta, Mexico, Moldova, Montenegro, Netherlands, Pakistan, Paraguay, Peru, Poland, Portugal, Romania, Serbia, Slovakia, Slovenia, Spain, Sweden, Switzerland, Turkey, United Arab Emirates, United Kingdom.
 

@@ -1,8 +1,8 @@
-![Jumio](/images/netverify.jpg)
+![Jumio](/images/Jumio-ID-Verification-Banner.png)
 
-# Netverify Delete API Implementation Guide
+# ID Verification Delete API Implementation Guide
 
-This guide illustrates how to implement the Netverify Delete API.
+This guide illustrates how to implement the ID Verification Delete API.
 
 ### Revision history
 
@@ -21,7 +21,7 @@ This guide illustrates how to implement the Netverify Delete API.
 - [Usage](#usage)
 	- [Authentication and encryption](#authentication-and-encryption)
 	- [Request headers](#request-headers)
-- [Delete API for Netverify](#delete-api-for-netverify)
+- [Delete API for ID Verification](#delete-api-for-id-verification)
 	- [Request body](#request-body)
 	- [Response](#response)
 	- [Example](#example)
@@ -46,7 +46,7 @@ If you do not wish to store sensitive customer data after a verification has bee
 <br>
 
 ## Authentication and encryption
-Netverify API calls are protected using [HTTP Basic Authentication](https://tools.ietf.org/html/rfc7617). Your Basic Auth credentials are constructed using your API token as the user-id and your API secret as the password. You can view and manage your API token and secret in the Customer Portal under **Settings > API credentials**.
+ID Verification API calls are protected using [HTTP Basic Authentication](https://tools.ietf.org/html/rfc7617). Your Basic Auth credentials are constructed using your API token as the user-id and your API secret as the password. You can view and manage your API token and secret in the Customer Portal under **Settings > API credentials**.
 
 You can generate a separate set of API credentials in the Customer Portal to use when retrieving or deleting transaction data under **Settings > API credentials > Transaction administration APIs**.
 <br>
@@ -71,9 +71,9 @@ The following fields are required in the header section of your request:<br>
 
 ---
 
-# Delete API for Netverify
+# Delete API for ID Verification
 
-Use the HTTP `DELETE` method to call the RESTful API endpoint below. Specify the Netverify transaction reference you want to delete as a path parameter.
+Use the HTTP `DELETE` method to call the RESTful API endpoint below. Specify the ID Verification transaction reference you want to delete as a path parameter.
 
 **HTTP Request Method:** `DELETE`<br>
 **REST URL (US)**: `https://netverify.com/api/netverify/v2/scans/<transactionReference>`<br>
@@ -87,7 +87,7 @@ Use the HTTP `DELETE` method to call the RESTful API endpoint below. Specify the
 
 |Name       | Type    | Max. Length| Description|
 |:---------------|:--------|:------------|:------------|
-|**transactionReference**| String|36|Jumio reference number for an existing Netverify transaction in your account.|
+|**transactionReference**| String|36|Jumio reference number for an existing ID Verification transaction in your account.|
 <br>
 
 ## Response
@@ -98,7 +98,7 @@ Successful requests will return HTTP status code `200 OK` as confirmation that y
 <br>
 
 ## Example
-### Sample Netverify delete request
+### Sample ID Verification delete request
 
 ~~~
 DELETE https://netverify.com/api/netverify/v2/scans/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/ HTTP/1.1

@@ -1,4 +1,4 @@
-![Jumio](/images/document_verification.jpg)
+![Jumio](/images/Jumio-Doc-Verification-Banner.png)
 
 # Document Verification implementation guide
 
@@ -9,7 +9,7 @@ This is a reference manual and configuration guide for the Document Verification
 Information about changes to features and improvements documented in each release is available in our [Revision history](/netverify/README.md).
 
 ## Table of contents
-- [Global Netverify settings](#global-netverify-settings)
+- [Global ID Verification settings](#global-id-verification-settings)
 - [Authentication and encryption](#authentication-and-encryption)
 - [Using the Document Verification web client](#using-the-document-verification-web-client)
     - [Initiating the transaction](#initiating-the-transaction)
@@ -28,7 +28,7 @@ Information about changes to features and improvements documented in each releas
 
 ----
 
-# Global Netverify Settings
+# Global ID Verification Settings
 
 Configuration settings are located in the Jumio Customer Portal. The description of each of the settings are available via the link below.
 

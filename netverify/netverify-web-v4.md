@@ -1,4 +1,4 @@
-![Jumio](/images/netverify.jpg)
+![Jumio](/images/Jumio-ID-Verification-Banner.png)
 
 # Netverify Web v4 Implementation Guide
 

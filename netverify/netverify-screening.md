@@ -1,8 +1,8 @@
-![Jumio](/images/screening/netverify_comply.png)
+![Jumio](/images/screening/Jumio-Screening-Banner.png)
 
-# Netverify & ComplyAdvantage Screening Implementation Guide
+# ID Verification & ComplyAdvantage Screening Implementation Guide
 
-This is a reference manual and configuration guide for the ComplyAdvantage PEPs/Sanctions Screening integration with Netverify. It describes how to request a ComplyAdvantage account through Jumio, creating API keys through the ComplyAdvantage portal, setting up screening in the Netverify portal, and changes to the Netverify APIs to include screening.
+This is a reference manual and configuration guide for the ComplyAdvantage PEPs/Sanctions Screening integration with ID Verification. It describes how to request a ComplyAdvantage account through Jumio, creating API keys through the ComplyAdvantage portal, setting up screening in the customer portal, and changes to the ID Verification APIs to include screening.
 
 ## Table of contents
 
@@ -10,12 +10,12 @@ This is a reference manual and configuration guide for the ComplyAdvantage PEPs/
 - [ComplyAdvantage portal setup](#ComplyAdvantage-portal-setup)
 	- [Creating API keys](#Creating-API-keys)
 	- [Creating a screening profile](#Creating-a-screening-profile)
-- [Netverify portal setup](#Netverify-portal-setup)
-- [Include screening in Netverify API](#Include-screening-in-Netverify-API)
+- [Customer portal setup](#customer-portal-setup)
+- [Include screening in ID Verification API](#Include-screening-in-id-verification-API)
 	- [Web screening](#Web-screening)
 	- [API screening](#API-screening)
-	- [Android SDK screening](https://github.com/Jumio/mobile-sdk-android/blob/master/docs/integration_netverify-fastfill.md#watchlist-screening)
-	- [iOS SDK screening](https://github.com/Jumio/mobile-sdk-ios/blob/master/docs/integration_netverify-fastfill.md#jumio-screening)
+	- [Android SDK screening](https://github.com/Jumio/mobile-sdk-android/blob/master/docs/integration_id-verification-fastfill.md#jumio-watchlist-screening)
+	- [iOS SDK screening](https://github.com/Jumio/mobile-sdk-ios/blob/master/docs/integration_id-verification-fastfill.md#jumio-watchlist-screening)
 - [How to review results](#How-to-review-results)
 	- [Callback with screening](#Callback-with-screening)
 	- [Retrieval API with screening](#Retrieval-API-with-screening)
@@ -25,7 +25,7 @@ ____
 
 # Requesting a Jumio Screening Account
 
-If you are interested in including PEPs/Sanctions screening with your Netverify package, please contact your Jumio Account Manager.
+If you are interested in including PEPs/Sanctions screening with your ID Verification package, please contact your Jumio Account Manager.
 
 When your discussions have concluded, your Account Manager will have your ComplyAdvantage account created.
 
@@ -65,9 +65,9 @@ On this page, you will be asked to
 - Select source list by type and/or location
 - Select group
 
-## Creating Netverify Tag
+## Creating ID Verification Tag
 
-For full functionality, you will want to enable the Netverify tags. To do so, you will have to create a tag within the ComplyAdvantage portal.
+For full functionality, you will want to enable the ID Verification tags. To do so, you will have to create a tag within the ComplyAdvantage portal.
 
 From the main portal, you will need to navigate to Tags, under Settings on the left menu bar.
 
@@ -75,11 +75,11 @@ Enter "netverify-link" as the name of the tag and select "Tag: Name combination"
 
 Save the new tag.
 
-# Netverify portal setup
+# Customer portal setup
 
-After you finished setting up your ComplyAdvantage portal, you will need to setup your Netverify portal for screening also.
+After you finished setting up your ComplyAdvantage portal, you will need to setup your ID Verification portal for screening also.
 
-After logging into your Netverify portal, go to **Settings**.
+After logging into your ID Verification portal, go to **Settings**.
 
 Under **Data settings**, click on the **Watchlist Screening** tab. If this tab is not visible, please contact Jumio Support.
 
@@ -95,9 +95,9 @@ If you do not define the profile to screen against within the API call, transact
 
 Finally, you will want to turn on
 
-# Include screening in Netverify API
+# Include screening in ID Verification API
 
-Finally, depending on which integrations you use, you will need to update your Netverify APIs for all or select transactions which you want screening to occur.
+Finally, depending on which integrations you use, you will need to update your ID Verification APIs for all or select transactions which you want screening to occur.
 
 If you've set your screening to search **if approved by default** within the portal, you do not have to make any changes to the API if you want all *Approved/Verified* transactions to be screened.
 
@@ -105,12 +105,12 @@ However, the portal setting can be overwritten in the API calls by including add
 
 ## Web screening
 
-The `additionalChecks` field must be included within the `presets` of the **Netverify Web v4** API call with the following, under `watchlistScreening`.
+The `additionalChecks` field must be included within the `presets` of the **ID Verification Web v4** API call with the following, under `watchlistScreening`.
 
-Additionally, `userReference` will be used to associate Jumio Screening with Netverify transactions and **must be included and populated** in API calls.
+Additionally, `userReference` will be used to associate Jumio Screening with ID Verification transactions and **must be included and populated** in API calls.
 
-More information regarding the Netverify Web v4 can be found here:
-[Netverify Web v4 Implementation Guide](https://github.com/Jumio/implementation-guides/blob/master/netverify/netverify-web-v4.md)
+More information regarding the ID Verification Web v4 can be found here:
+[ID Verification Web Implementation Guide](https://github.com/Jumio/implementation-guides/blob/master/netverify/netverify-web-v4.md)
 
 |Field Name		| Values	|
 |:--				|:--		|
@@ -146,9 +146,9 @@ More information regarding the Netverify Web v4 can be found here:
 
 The `additionalChecks` field must be included within the body of the **performNetverify** API call with the following, under `watchlistScreening`.
 
-Additionally, `customerId` will be used to associate Jumio Screening to Netverify transactions and **must be included and populated** in API calls.
+Additionally, `customerId` will be used to associate Jumio Screening to ID Verification transactions and **must be included and populated** in API calls.
 
-More information regarding the performNetverify API can be found here:
+More information regarding the ID Verification API can be found here:
 [performNetverify Implementation Guide](https://github.com/Jumio/implementation-guides/blob/master/netverify/performNetverify.md)
 
 

@@ -1,4 +1,4 @@
-![Jumio](/images/netverify.jpg)
+![Jumio](/images/Jumio-ID-Verification-Banner.png)
 
 # Supported Cipher Suites
 
