@@ -1,6 +1,6 @@
 ![Jumio](/images/Jumio-ID-Verification-Banner.png)
 
-# Netverify Web v4 Implementation Guide
+# ID Verification Web Implementation Guide
 
 This is a reference manual and configuration guide for the new Netverify Web client. It describes how to initiate a transaction, how to customize your settings and branding, and how to display Netverify to your users.
 <br>
