@@ -2,7 +2,7 @@
 
 # ID Verification Web Implementation Guide
 
-This is a reference manual and configuration guide for the new Netverify Web client. It describes how to initiate a transaction, how to customize your settings and branding, and how to display Netverify to your users.
+This is a reference manual and configuration guide for the new ID Verification Web client. It describes how to initiate a transaction, how to customize your settings and branding, and how to display ID Verification to your users.
 <br>
 ### Revision history
 
@@ -11,7 +11,7 @@ Information about changes to features and improvements documented in each releas
 
 ## Table of contents
 
-- [Initiating a Netverify transaction](#initiating-a-netverify-transaction)
+- [Initiating a ID Verification transaction](#initiating-a-id-verification-transaction)
 	- [Authentication and encryption](#authentication-and-encryption)
 	- [Request headers](#request-headers)
 	- [Request body](#request-body)
@@ -36,21 +36,21 @@ Information about changes to features and improvements documented in each releas
 	- [Customize client](#customize-client)
 		- [Colors](#colors)
 		- [Images](#images)
-- [Displaying Netverify](#displaying-netverify)
-	- [Using Netverify in an iFrame](#using-netverify-in-an-iframe)
+- [Displaying ID Verification](#displaying-id-verification)
+	- [Using ID Verification in an iFrame](#using-id-verification-in-an-iframe)
 		- [Width and height](#width-and-height)
 		- [Example HTML](#example-html)
 		- [Optional iFrame Logging](#optional-iframe-logging)
 			- [Example iFrame logging code](#example-iframe-logging-code)
-	- [Using Netverify in a native WebView](#using-netverify-in-a-native-webview)
+	- [Using ID Verification in a native WebView](#using-id-verification-in-a-native-webview)
 		- [Android](#android)
 		- [iOS](#ios)
 - [After the user journey](#after-the-user-journey)
 	- [Sample success redirect](#sample-success-redirect)
 	- [Sample error redirect](#sample-error-redirect)
 - [Supported environments](#supported-environments)
-	- [Desktop](#desktop)
-	- [Mobile](#mobile)
+	- [Desktop](#desktop-browsers)
+	- [Mobile](#mobile-browsers)
 	- [Native WebView](#native-webview)
 
 
@@ -58,9 +58,9 @@ Information about changes to features and improvements documented in each releas
 <br>
 
 ---
-# Initiating a Netverify transaction
+# Initiating a ID Verification transaction
 
-Call the RESTful API POST endpoint **/initiate** with a JSON object containing the properties described below to create a transaction for each user. You will receive a JSON object in the response containing a timestamp, Jumio transaction reference (scan reference), and a URL which you can use to present Netverify to your user.
+Call the RESTful API POST endpoint **/initiate** with a JSON object containing the properties described below to create a transaction for each user. You will receive a JSON object in the response containing a timestamp, Jumio transaction reference (scan reference), and a URL which you can use to present ID Verification to your user.
 
 **HTTP Request Method:** `POST`<br>
 **REST URL (US)**: `https://netverify.com/api/v4/initiate`<br>
@@ -70,7 +70,7 @@ Call the RESTful API POST endpoint **/initiate** with a JSON object containing t
 <br>
 
 ## Authentication and encryption
-Netverify API calls are protected using [HTTP Basic Authentication](https://tools.ietf.org/html/rfc7617). Your Basic Auth credentials are constructed using your API token as the user-id and your API secret as the password. You can view and manage your API token and secret in the Customer Portal under **Settings > API credentials**.
+ID Verification API calls are protected using [HTTP Basic Authentication](https://tools.ietf.org/html/rfc7617). Your Basic Auth credentials are constructed using your API token as the user-id and your API secret as the password. You can view and manage your API token and secret in the Customer Portal under **Settings > API credentials**.
 <br>
 
 |⚠️ Never share your API token, API secret, or Basic Auth credentials with *anyone* — not even Jumio Support.
@@ -167,13 +167,13 @@ Preset the country and document type to bypass the selection screen.
 
 ### Identity Verification presets
 
-Identity Verification in Netverify allows you to make sure the person submitting the ID for verification is the same person in the ID photo. This comprises two steps: the **Face Match** step and the optional **Liveness Check** step. The Face Match step allows us to compare the face in the ID photo with the face of the person submitting the transaction for similarity, and the additional Liveness Check ensures that person is present during the transaction.
+Identity Verification in ID Verification allows you to make sure the person submitting the ID for verification is the same person in the ID photo. This comprises two steps: the **Face Match** step and the optional **Liveness Check** step. The Face Match step allows us to compare the face in the ID photo with the face of the person submitting the transaction for similarity, and the additional Liveness Check ensures that person is present during the transaction.
 
 Identity Verification can be enabled with the Face Match step only or in conjunction with a Liveness Check.
 
 #### 3D Liveness for Web
 
-Netverify's new 3D face liveness detection technology creates a three-dimensional map of your user's face, providing unprecedented accuracy for the Liveness Check, and creates an enrollment transaction for the use of the Authentication feature.
+ID Verification's new 3D face liveness detection technology creates a three-dimensional map of your user's face, providing unprecedented accuracy for the Liveness Check, and creates an enrollment transaction for the use of the Authentication feature.
 
 |ℹ️ To use 3D Liveness, Identity Verification and 3D Liveness must be enabled for your account by Jumio Support.
 |:----------|
@@ -181,7 +181,7 @@ Netverify's new 3D face liveness detection technology creates a three-dimensiona
 3D Liveness requires that the user has access to a camera. In order to ensure that 3D Liveness is always used for the Liveness Check, your users must be restricted to using their camera either for the entire transaction, or for the Identity Verification step. This can be accomplished by:
 
 * changing your **Capture method** in the **Settings** area of the [Customer Portal](/netverify/portal-settings.md) to **Webcam only** for the entire transaction.
-* including [workflowId 201](#supported-workflowid-values) to specify "ID + Identity, camera only" in the API request when you initate a Netverify transaction.
+* including [workflowId 201](#supported-workflowid-values) to specify "ID + Identity, camera only" in the API request when you initate a ID Verification transaction.
 * asking Jumio Support to enable **Force Camera for Identity** to allow upload of the ID image, but force the user to use a camera for the Identity Verification step.
 
 |capture method|when|result|
@@ -253,7 +253,7 @@ Successful requests will return HTTP status code `200 OK` along with a JSON obje
 |Name|Type|Max. length|Description|
 |:----|:----|:----|:----|
 |**timestamp**|String|24|Timestamp (UTC) of the response.<br>Format: *YYYY-MM-DDThh:mm:ss.SSSZ*|
-|**redirectUrl**|String| |URL used to load the Netverify client.|
+|**redirectUrl**|String| |URL used to load the ID Verification client.|
 |**transactionReference**|String|36|Jumio reference number for the transaction.|
 
 ---
@@ -310,7 +310,7 @@ Authorization: Basic xxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 ---
 # Configuring settings in the Customer Portal
 
-In the **Settings** screen of the Customer Portal you can customize your settings and brand your Netverify page. <br>Save changes using your Customer Portal password to activate them.
+In the **Settings** screen of the Customer Portal you can customize your settings and brand your ID Verification page. <br>Save changes using your Customer Portal password to activate them.
 <br>
 
 |ℹ️ Values set in your API request will override the corresponding settings configured in the Customer Portal.
@@ -371,7 +371,7 @@ Choose from:
 
 ### Skip "Start ID verification" screen
 
-Select this checkbox to bypass the introductory screen in the Netverify Web client.
+Select this checkbox to bypass the introductory screen in the ID Verification Web client.
 
 <br>
 
@@ -385,7 +385,7 @@ Specify the duration of time for which your `redirectUrl` will remain valid. Ent
 
 ### Domain name prefix
 
-You can optionally define a domain name prefix (`https://yourcompany.netverify.com`) for the URL of your Netverify page.
+You can optionally define a domain name prefix (`https://yourcompany.netverify.com`) for the URL of your ID Verification page.
 
 
 - Allowed characters are letters `a-z`, numbers `0-9`, `-`
@@ -396,7 +396,7 @@ You can optionally define a domain name prefix (`https://yourcompany.netverify.c
 
 ### Default locale
 
-Select a language from the dropdown list to set your display language for Netverify. If no language is selected, Netverify will be displayed in **English (US)**.<br>
+Select a language from the dropdown list to set your display language for ID Verification. If no language is selected, ID Verification will be displayed in **English (US)**.<br>
 
 Choose from:<br>
 
@@ -448,7 +448,7 @@ Choose from:<br>
 
 ### Colors
 
-Specify primary and secondary colors for each locale to give Netverify your own look and feel.
+Specify primary and secondary colors for each locale to give ID Verification your own look and feel.
 
 Any locale which is not configured will first default to the root language (e.g. EN\_GB to EN), then to your default configuration, and finally to the Jumio default.
 
@@ -457,7 +457,7 @@ You can also reset all colors to the Jumio default.
 
 ### Images
 
-Add a **Header image** for each locale to brand your Netverify page.
+Add a **Header image** for each locale to brand your ID Verification page.
 
 Add a **Success image** and **Error image** for each locale to be displayed on the Jumio default success and error pages when you do not specify your own [Success URL](#callback-error-and-success-urls) and [Error URL](#callback-error-and-success-urls).
 
@@ -469,16 +469,16 @@ All images must be formatted as [JPG](https://jpeg.org/jpeg/) or [PNG](https://e
 
 <br>
 
-# Displaying Netverify
+# Displaying ID Verification
 
-The **redirectUrl** returned in the response to your **initate** API call, which loads your customized Netverify page, can be used in several ways:
+The **redirectUrl** returned in the response to your **initate** API call, which loads your customized ID Verification page, can be used in several ways:
 
 * within an iFrame on your web page
 * as a link on your web page
 * as a link shared securely with a user
 
-## Using Netverify in an iFrame
-If you want to embed Netverify on a web page, place the iFrame tag in your HTML code where you want the client to appear. Use the `redirectUrl` as value of the `src` attribute.
+## Using ID Verification in an iFrame
+If you want to embed ID Verification on a web page, place the iFrame tag in your HTML code where you want the client to appear. Use the `redirectUrl` as value of the `src` attribute.
 
 |⚠️ The `allow="camera"` attribute must be included to enable the camera for image capture in [supported browsers](#supported-browsers).
 |:----------|
@@ -498,7 +498,7 @@ We recommend adhering to the responsive breaking points in the table below.
 
 Note: When specifying the width and height of your iFrame you may prefer to use percentage values so that the iFrame behaves responsively on your page.
 
-|⚠️The Netverify Web client itself will responsively fill the iFrame that it is loaded into.
+|⚠️The ID Verification Web client itself will responsively fill the iFrame that it is loaded into.
 |:----------|
 
 ### 3D Liveness
@@ -537,14 +537,14 @@ You can create a transaction manually in the Customer Portal under the "Create v
 
 ### Optional iFrame logging
 
-When the Netverify client is embedded in an iFrame<sup>1</sup>, it will communicate with the containing page using the JavaScript [`window.postMessage()`](https://developer.mozilla.org/en-US/docs/Web/API/Window/postMessage) method to send events containing pre-defined data. This allows the containing page to react to events as they occur (e.g., by directing to a new page once the `success` event is received). Events include data that allows the containing page to identify which Netverify transaction triggered the event. Events are generated in a stateless way, so that each event contains general contextual information about the transaction (e.g., transaction reference, authorization token, etc.) in addition to data about the specific event that occurred.
+When the ID Verification client is embedded in an iFrame<sup>1</sup>, it will communicate with the containing page using the JavaScript [`window.postMessage()`](https://developer.mozilla.org/en-US/docs/Web/API/Window/postMessage) method to send events containing pre-defined data. This allows the containing page to react to events as they occur (e.g., by directing to a new page once the `success` event is received). Events include data that allows the containing page to identify which ID Verification transaction triggered the event. Events are generated in a stateless way, so that each event contains general contextual information about the transaction (e.g., transaction reference, authorization token, etc.) in addition to data about the specific event that occurred.
 
-Using JavaScript, the containing page can receive the notification and consume the data it contains by listening for the `message` event on the global `window` object and reacting to it as needed. The data passed by the Netverify Web client in this notification is represented as JSON in the `data` string property of the listener method's `event` argument. Parsing this JSON string results in an object with the properties described below.
+Using JavaScript, the containing page can receive the notification and consume the data it contains by listening for the `message` event on the global `window` object and reacting to it as needed. The data passed by the ID Verification Web client in this notification is represented as JSON in the `data` string property of the listener method's `event` argument. Parsing this JSON string results in an object with the properties described below.
 
 All data is encoded with [UTF-8](https://tools.ietf.org/html/rfc3629).
 <br>
 <br>
-<sup>1</sup> This functionality is not available for instances of Netverify running in a standalone window or tab.<br>
+<sup>1</sup> This functionality is not available for instances of ID Verification running in a standalone window or tab.<br>
 
 #### `event.data` object
 
@@ -569,7 +569,7 @@ All data is encoded with [UTF-8](https://tools.ietf.org/html/rfc3629).
 
 |Name|Type|Description|
 |:-------|:---|:----------|
-|**value**|string|Possible values:<br>• `loaded` (Netverify loaded in the user's browser.)<br>• `success` (Images were accepted for verification.)<br>• `error` (Verification could not be completed due to an error.)|
+|**value**|string|Possible values:<br>• `loaded` (ID Verification loaded in the user's browser.)<br>• `success` (Images were accepted for verification.)<br>• `error` (Verification could not be completed due to an error.)|
 |metainfo|JSON object|Additional meta-information for error events. <br>(see [`metainfo` object](#metainfo-object))|
 
 <br>
@@ -601,15 +601,15 @@ window.addEventListener("message", receiveMessage, false);
 
 <br>
 
-## Using Netverify in a native WebView
+## Using ID Verification in a native WebView
 
-Netverify Web can be embedded within a WebView in your native mobile application.
+ID Verification Web can be embedded within a WebView in your native mobile application.
 
 See [Supported Environments > Native WebView](#native-webview) for information about support on Android and iOS.
 
 ### Android
 
-The following sections explain the steps needed to embed Netverify Web in a native Android WebView.
+The following sections explain the steps needed to embed ID Verification Web in a native Android WebView.
 
 Please also refer to the sample code beneath.
 
@@ -638,7 +638,7 @@ To allow Jumio to identify the user runtime environment you will need to interac
 
 #### Optional postMessage communication
 
-You can handle messages from the Netverify Web Client using the same method as described in [Optional iFrame Logging](#optional-iframe-logging).
+You can handle messages from the ID Verification Web Client using the same method as described in [Optional iFrame Logging](#optional-iframe-logging).
 
 You will need to register a postMessage handler and put the relevant code sections in the `PostMessageHandler` class as in the example mentioned below.
 
@@ -830,7 +830,7 @@ Jumio supports two types of webview for iOS, you can choose either of these:
 
 #### Safari WebView
 
-The following sections explain the steps needed to embed Netverify Web in a Safari View Controller.
+The following sections explain the steps needed to embed ID Verification Web in a Safari View Controller.
 
 Please also refer to the sample code beneath.
 
@@ -887,7 +887,7 @@ Check out our [Sample App for the iOS Safari WebView](https://github.com/Jumio/m
 
 #### Native iOS WebView
 
-The following sections explain the steps needed to embed Netverify Web in a native iOS WebView.
+The following sections explain the steps needed to embed ID Verification Web in a native iOS WebView.
 
 Please also refer to the sample code beneath.
 
@@ -901,7 +901,7 @@ To allow Jumio to identify the user runtime environment you will need to interac
 
 ##### Optional postMessage communication
 
-You can handle messages from the Netverify Web Client using the same method as described in [Optional iFrame Logging](#optional-iframe-logging).
+You can handle messages from the ID Verification Web Client using the same method as described in [Optional iFrame Logging](#optional-iframe-logging).
 
 Please register a postMessage handler and put the relevant code sections in the `userContentController` function as mentioned below.
 
@@ -999,7 +999,7 @@ https://www.yourcompany.com/error/?transactionStatus=ERROR&customerInternalRefer
 ---
 ## Supported environments
 
-Jumio offers guaranteed support for Netverify on the following browsers and the latest major version of each operating system.
+Jumio offers guaranteed support for ID Verification on the following browsers and the latest major version of each operating system.
 
 
 

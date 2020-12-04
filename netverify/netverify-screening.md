@@ -149,7 +149,7 @@ The `additionalChecks` field must be included within the body of the **performNe
 Additionally, `customerId` will be used to associate Jumio Screening to ID Verification transactions and **must be included and populated** in API calls.
 
 More information regarding the ID Verification API can be found here:
-[performNetverify Implementation Guide](https://github.com/Jumio/implementation-guides/blob/master/netverify/performNetverify.md)
+[ID Verification API Implementation Guide](https://github.com/Jumio/implementation-guides/blob/master/netverify/performNetverify.md)
 
 
 |Field Name		| Values	|

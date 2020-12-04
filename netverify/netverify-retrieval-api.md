@@ -86,7 +86,7 @@ Please contact Jumio Support at support@jumio.com to coordinate bulk requests to
 
 - You must use the [status retrieval](/netverify/netverify-retrieval-api.md#retrieving-status) for all requests until the transaction is no longer in PENDING status.
 - If the transaction status is DONE or FAILED (not pending), retrieve details and image(s) once.
--  Maximum of 10 consecutive retrieval attempts after successful image acquisition <br />(SDK/Web: User journey finshed; API: after performNetverify API call)<br />
+-  Maximum of 10 consecutive retrieval attempts after successful image acquisition <br />(SDK/Web: User journey finshed; API: after ID Verification API call)<br />
   * If a final result is not available after 10 attempts, you are allowed to perform an additional retrieval call once per day.
 - Request timings recommendation:
   * 40, 60, 100, 160, 240, 340, 460, 600, 760, 940 seconds
@@ -424,7 +424,7 @@ Successful requests will return HTTP status code `200 OK` along with a JSON obje
 |**timestamp**| string| |Timestamp of the response in the format YYYY-MM-DDThh:mm:ss.SSSZ|
 |**scanReference**| string|36 |Jumio’s reference number for the transaction|
 |**status**| string| |Possible states:<br>• PENDING<br>• DONE<br>• FAILED|
-|**source**| string| |ID Verification Web embedded:<br>• WEB<br>• WEB-CAM<br>• WEB-UPLOAD<br><br>ID Verification Web redirect:<br>• REDIRECT<br>• REDIRECT-CAM<br>• REDIRECT-UPLOAD<br><br>ID Verification API:<br>• API<br><br>Netverify Mobile:<br>• SDK |
+|**source**| string| |ID Verification Web embedded:<br>• WEB<br>• WEB-CAM<br>• WEB-UPLOAD<br><br>ID Verification Web redirect:<br>• REDIRECT<br>• REDIRECT-CAM<br>• REDIRECT-UPLOAD<br><br>ID Verification API:<br>• API<br><br>ID Verification Mobile:<br>• SDK |
 |**date**| string| |Timestamp of the scan creation in the format YYYY-MM-DDThh:mm:ss.SSSZ|
 |clientIp| string| |IP address of the client in the format xxx.xxx.xxx.xxx|
 |customerId| string|255 |Your internal reference for the user.|
