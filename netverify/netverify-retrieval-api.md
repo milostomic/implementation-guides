@@ -511,7 +511,7 @@ Successful requests will return HTTP status code `200 OK` along with a JSON obje
 |Name |  Type    | Max. Length    | Description|
 |:-------------------------------|:---------|:---------------|:------------|
 |detailsCode   |string | 5 | see below |
-|detailsDescription|string|255| Possible codes and description details for rejectReasonCode = 100:<br/>1001	PHOTO<br/>1002	DOCUMENT\_NUMBER<br>1003	EXPIRY<br/>1004	DOB<br/>1005	NAME<br/>1006	ADDRESS<br/>1007	SECURITY\_CHECKS<br/>1008	SIGNATURE<br>1009	PERSONAL\_NUMBER<br><br>Possible codes and description details for rejectReasonCode = 200:<br/>2001	BLURRED<br/>2002	BAD\_QUALITY<br/>2003	MISSING\_PART\_DOCUMENT<br/>2004	HIDDEN\_PART\_DOCUMENT<br/>2005	DAMAGED\_DOCUMENT |
+|detailsDescription|string|255| Possible codes and description details for rejectReasonCode = 100:<br/>1001	PHOTO<br/>1002	DOCUMENT\_NUMBER<br>1003	EXPIRY<br/>1004	DOB<br/>1005	NAME<br/>1006	ADDRESS<br/>1007	SECURITY\_CHECKS<br/>1008	SIGNATURE<br>1009	PERSONAL\_NUMBER<br>10011	PLACE\_OF\_BIRTH<br><br>Possible codes and description details for rejectReasonCode = 200:<br/>2001	BLURRED<br/>2002	BAD\_QUALITY<br/>2003	MISSING\_PART\_DOCUMENT<br/>2004	HIDDEN\_PART\_DOCUMENT<br/>2005	DAMAGED\_DOCUMENT |
 
 <br>
 
@@ -524,7 +524,7 @@ Successful requests will return HTTP status code `200 OK` along with a JSON obje
 |reason   |Provided if validity = FALSE<br/>Possible values:<br />• SELFIE\_CROPPED\_FROM\_ID<br />•	ENTIRE\_ID\_USED\_AS\_SELFIE<br />•	MULTIPLE\_PEOPLE<br />•	SELFIE\_IS\_SCREEN\_PAPER\_VIDEO<br />•	SELFIE\_MANIPULATED<br />• AGE\_DIFFERENCE\_TOO\_BIG<br />•	NO\_FACE\_PRESENT<br />•	FACE\_NOT\_FULLY\_VISIBLE<br />• BAD\_QUALITY<br />• BLACK\_AND\_WHITE<br />• LIVENESS\_FAILED|
 |similarityScore   |Only visible if setting is turned on within your account. For questions about this feature, please contact Jumio Support.|
 
-<!-- |similarityDecision   |Only visible if setting is turned on within your account. For questions about this feature, please contact Jumio Support. <br/><br/>Possible values:<br/> •	MANUAL<br />•	AUTOMATED|--> 
+<!-- |similarityDecision   |Only visible if setting is turned on within your account. For questions about this feature, please contact Jumio Support. <br/><br/>Possible values:<br/> •	MANUAL<br />•	AUTOMATED|-->
 <!-- |handwrittenNoteMatches	|Only visible if **Liveness Detection (with handwritten note)** setting is turned on within your account. For questions about this feature, please contact Jumio Support. <br/><br/>Possible values:<br/> •	TRUE<br />•	FALSE| -->
 
 <br>
