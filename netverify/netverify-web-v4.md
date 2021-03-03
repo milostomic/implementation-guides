@@ -505,7 +505,7 @@ Note: When specifying the width and height of your iFrame you may prefer to use 
 
 For a better user experience when creating a three-dimensional map of your user's face, you must allow full screen mode. This will address the positioning and distance between the capture interface and the camera.
 
-|⚠️ The `allow="camera;fullscreen" allowfullscreen` attributes must be included to enable the camera for image capture in [supported browsers](#supported-browsers) in full screen mode.
+|⚠️ The `allow="camera;fullscreen;accelerometer;gyroscope;magnetometer" allowfullscreen` attributes must be included to enable the camera for image capture in [supported browsers](#supported-browsers) in full screen mode.
 |:----------|
 
 ### Example HTML
@@ -522,7 +522,7 @@ For a better user experience when creating a three-dimensional map of your user'
 
 #### 3D Liveness example
 ```
-<iframe src="https://yourcompany.netverify.com/web/v4/app?locale=en-GB&authorizationToken=xxx" width="70%" height="80%" allow="camera;fullscreen" allowfullscreen></iframe>
+<iframe src="https://yourcompany.netverify.com/web/v4/app?locale=en-GB&authorizationToken=xxx" width="70%" height="80%" allow="camera;fullscreen;accelerometer;gyroscope;magnetometer" allowfullscreen></iframe>
 ```
 
 
