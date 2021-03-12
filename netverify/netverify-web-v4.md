@@ -277,16 +277,23 @@ Authorization: Basic xxxxxxxxxxxxxxxxxxxxxxxxxxxxx
   "workflowId" : 200,
   "presets" :
     [
-      {
-        "index"   : 1,
-        "country" : "AUT",
-        "type"    : "PASSPORT"
-      },{      
-        "index"   : 2,
-        "phrase" : "MY CUSTOM PHRASE"     
-      }
-    ],
-  "locale" : "en-GB"
+		{
+"customerInternalReference" : "transaction_1234",
+"userReference" : "user_1234",
+"successUrl" : "https://www.yourcompany.com/success",
+"errorUrl" : "https://www.yourcompany.com/error",
+"callbackUrl" : "https://www.yourcompany.com/callback",
+"reportingCriteria" : "myReport1234",
+"workflowId" : 200,
+"presets" :
+	[
+		{
+			"index"   : 1,
+			"country" : "AUT",
+			"type"    : "PASSPORT"
+		}
+	],
+"locale" : "en-GB"
 }
 
 ~~~
