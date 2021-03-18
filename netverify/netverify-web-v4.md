@@ -267,17 +267,8 @@ Content-Type: application/json
 Content-Length: 1234
 User-Agent: Example Corp SampleApp/1.0.1
 Authorization: Basic xxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
 {
-  "customerInternalReference" : "transaction_1234",
-  "userReference" : "user_1234",
-  "successUrl" : "https://www.yourcompany.com/success",
-  "errorUrl" : "https://www.yourcompany.com/error",
-  "callbackUrl" : "https://www.yourcompany.com/callback",
-  "reportingCriteria" : "myReport1234",
-  "workflowId" : 200,
-  "presets" :
-    [
-		{
 "customerInternalReference" : "transaction_1234",
 "userReference" : "user_1234",
 "successUrl" : "https://www.yourcompany.com/success",
