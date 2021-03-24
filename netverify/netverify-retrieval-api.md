@@ -564,9 +564,9 @@ Successful requests will return HTTP status code `200 OK` along with a JSON obje
 |Name |  Type    | Description|
 |:-------------------------------|:---------|:---------------|
 |status   | enum | Possible values: <br />• DONE<br />• PENDING<br />• ERROR |
-|findings   | String/JSON array | Possible values:<br />• No findings: parameter not returned<br />• Single finding: String of the transaction reference<br />• Multiple findings: Array of transaction references |
+|findings   | String/JSON array |A face (on the ID or Selfie) is matching with another face (on the ID or Selfie) from a previous transaction<br><br>Possible values:<br />• No findings: parameter not returned<br />• Single finding: String of the transaction reference<br />• Multiple findings: Array of transaction references |
 
-<br>
+See [1:n Best Practice](netverify-one-to-many.md) for further details.
 
 ## Examples
 ### Sample request
