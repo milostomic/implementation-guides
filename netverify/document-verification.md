@@ -113,7 +113,7 @@ The body of your **acquisitions** API request allows you to
 |**country**<sup>1</sup>|string|3|Possible values:<br>• [ISO 3166-1 alpha-3](http://en.wikipedia.org/wiki/ISO_3166-1_alpha-3) country code<br>•	XKX (Kosovo)|
 |**merchantScanReference**<sup>2</sup>|string |100       |Your internal reference for the transaction.                                                               |
 |**customerId**<sup>2</sup>           |string |100        |Your internal reference for the user.                                                                   |
-|merchantReportingCriteria        |string |255        |Your reporting criteria for the transaction.                                                                      |
+|merchantReportingCriteria        |string |100        |Your reporting criteria for the transaction.                                                                      |
 |successUrl<sup>3</sup>               |string |255        |Redirects to this URL after a successful transaction.<br>Overrides [Success URL](/netverify/portal-settings.md#callback-error-and-success-urls) in the Customer Portal.|
 |errorUrl<sup>3</sup>                 |string |255        |Redirects to this URL after an unsuccessful transaction.<br>Overrides [Error URL](/netverify/portal-settings.md#callback-error-and-success-urls) in the Customer Portal.|
 |callbackUrl<sup>3</sup>              |string |255        |Sends confirmation and any extracted data to this URL upon completion.<br>Overrides [Callback URL](/netverify/portal-settings.md#callback-error-and-success-urls) in the Customer Portal.|
