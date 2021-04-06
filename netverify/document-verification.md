@@ -870,7 +870,7 @@ You can also create your own [custom document types](/netverify/portal-settings.
 
 ## Data extraction
 
-**Name**, **Address**, and **Issuing Date** will be extracted for all documents printed in a Latin-script character set, provided that a minimum of two of these three data points are available for extraction. If the document does not meet these extraction criteria, only the document image will be saved — no data extraction will be performed.
+**Name**, **Address**, and **Issuing Date** will be extracted for all documents printed in a Latin-script character set, provided that a minimum of one of these three data points are available for extraction. If the document does not meet these extraction criteria, only the document image will be saved — no data extraction will be performed.
 
 For the following specific document types, additional data will be extracted.
 
