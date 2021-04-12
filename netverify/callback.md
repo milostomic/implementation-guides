@@ -102,7 +102,7 @@ The following parameters are posted to your callback URL for ID Verification Web
 |**jumioIdScanReference**   |36  |Jumio’s reference number for each transaction | |
 |**verificationStatus**   |   |Possible states:<br/>•	APPROVED\_VERIFIED<br/> •	DENIED\_FRAUD<br/>•	DENIED\_UNSUPPORTED\_ID\_TYPE <sup>1</sup><br/> •	DENIED\_UNSUPPORTED\_ID\_COUNTRY <sup>1</sup><br/>•	ERROR\_NOT\_READABLE\_ID<br/> •	NO\_ID\_UPLOADED | |
 |**idScanStatus**  |   |SUCCESS if verificationStatus = APPROVED\_VERIFIED, otherwise ERROR | |
-|**idScanSource**  |   |Possible values:<br>•	WEB (NVW3 / NVW4 before capture method is selected)<br>•	WEB\_CAM (NVW3 / NVW4 with camera capture)<br>•	WEB\_UPLOAD (NVW3 / NVW4 with file upload)<br>•	REDIRECT (NVW3 redirect before capture method is selected)<br>•	REDIRECT\_CAM (NVW3 redirect with camera capture)<br>•	REDIRECT\_UPLOAD (NVW3 redirect with file upload)<br>•	API (performNetverify)<br>• SDK (mobile) | |
+|**idScanSource**  |   |Possible values:<br>•	WEB ( NVW4 before capture method is selected)<br>•	WEB\_CAM ( NVW4 with camera capture)<br>•	WEB\_UPLOAD ( NVW4 with file upload)<br>•	API (performNetverify)<br>• SDK (mobile) | |
 |**idCheckDataPositions**   |   |•	OK if verificationStatus = APPROVED\_VERIFIED<br> •	otherwise N/A | |
 |**idCheckDocumentValidation**   |   |•	OK if verificationStatus = APPROVED\_VERIFIED<br> •	otherwise N/A  | |
 |**idCheckHologram**   |   |•	OK if verificationStatus = APPROVED\_VERIFIED<br> •	otherwise N/A | |
@@ -152,7 +152,7 @@ The following parameters are posted to your callback URL for ID Verification Web
 |issuingDate|10|Issuing date of the document (if issuing date extraction enabled) |activation required |
 |issuingPlace|50|Issuing place of the document (if issuing place extraction is enabled)<br>• if idCountry = COL, ITA |activation required |
 |livenessImages| |URLs to the liveness images of the transaction (JPEG or PNG) if available <sup>5</sup> | |
-|placeOfBirth|256|Place of birth of document holder<br>• if idCountry = AFG, AGO, AIA, ALB, AND, ARE, ARM, ATG, AUS, AUT, AZE, BDI, BEL, BEN, BFA, BGD, BGR, BHR, BHS, BIH, BLR, BLZ, BMU, BOL, BRA, BRB, BRN, BTN, BWA, CAF, CAN, DEU, ESP, FRA, GBR, HKG, HUN, IDN, IND, IRL, ITA, NGA, NLD, PAK, PHL, POL, PRT, ROU, SGP, RUS, TUR, UKR, USA| |
+|placeOfBirth|256|Place of birth of document holder<br>• if idCountry = AFG, AGO, AIA, ALB, AND, ARE, ARM, ATG, AUS, AUT, AZE, BDI, BEL, BEN, BFA, BGD, BGR, BHR, BHS, BIH, BLR, BLZ, BMU, BOL, BRA, BRB, BRN, BTN, BWA, CAF, CAN, DEU, ESP, FRA, GBR, HKG, HUN, IDN, IND, IRL, ITA, NGA, NLD, PAK, PHL, POL, PRT, ROU, SGP, RUS, TUR, UKR, USA|activation required |
 |facemap|255|URL to the facemap of the transaction if available |activation required |
 |taxNumber|255|Tax number of the document<br>• if idCountry = ITA and idType = HEALTH\_ID or TAX\_ID |activation required |
 |cpf|255|CPF number of the document|activation required |
