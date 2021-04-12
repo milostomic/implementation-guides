@@ -152,7 +152,7 @@ The following parameters are posted to your callback URL for ID Verification Web
 |issuingDate|10|Issuing date of the document (if issuing date extraction enabled) |activation required |
 |issuingPlace|50|Issuing place of the document (if issuing place extraction is enabled)<br>• if idCountry = COL, ITA |activation required |
 |livenessImages| |URLs to the liveness images of the transaction (JPEG or PNG) if available <sup>5</sup> | |
-|placeOfBirth|256|Place of birth of document holder<br>• if idCountry = AFG, AGO, AIA, ALB, AND, ARE, ARM, ATG, AUS, AUT, AZE, BDI, BEL, BEN, BFA, BGD, BGR, BHR, BHS, BIH, BLR, BLZ, BMU, BOL, BRA, BRB, BRN, BTN, BWA, CAF, CAN, DEU, ESP, FRA, GBR, HKG, HUN, IDN, IND, IRL, ITA, NGA, NLD, PAK, PHL, POL, PRT, ROU, SGP, RUS, TUR, UKR, USA| |
+|placeOfBirth|256|Place of birth of document holder<br>• if idCountry = AFG, AGO, AIA, ALB, AND, ARE, ARM, ATG, AUS, AUT, AZE, BDI, BEL, BEN, BFA, BGD, BGR, BHR, BHS, BIH, BLR, BLZ, BMU, BOL, BRA, BRB, BRN, BTN, BWA, CAF, CAN, DEU, ESP, FRA, GBR, HKG, HUN, IDN, IND, IRL, ITA, NGA, NLD, PAK, PHL, POL, PRT, ROU, SGP, RUS, TUR, UKR, USA|activation required |
 |facemap|255|URL to the facemap of the transaction if available |activation required |
 |taxNumber|255|Tax number of the document<br>• if idCountry = ITA and idType = HEALTH\_ID or TAX\_ID |activation required |
 |cpf|255|CPF number of the document|activation required |
