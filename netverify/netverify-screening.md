@@ -85,7 +85,7 @@ Under **Data settings**, click on the **Watchlist Screening** tab. If this tab i
 
 You will be required to enter your **API Key** and have the option to define a **default search profile**.
 
-![Jumio](/images/screening/screening_06.jpeg)
+![Jumio](/images/screening/screening_06.jpg)
 
 Another optional setting is the **Search enabled for approved IDs**.
 
