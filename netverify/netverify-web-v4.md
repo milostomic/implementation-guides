@@ -484,6 +484,12 @@ If you want to embed ID Verification on a web page, place the iFrame tag in your
 |⚠️ In case you are nesting the iFrame in another iFrame the `allow="camera"` attribute must be added to every iFrame.
 |:----------|
 
+Note: Due to security reasons the `authorizationToken` is automatically removed from the `redirectUrl` once the client is loaded in the browser and stored in a session instead. It will look like this:
+
+``
+https://yourcompany.netverify.com/web/v4/app?locale=en-GB
+``
+
 ### Width and height
 We recommend adhering to the responsive breaking points in the table below.
 
@@ -976,7 +982,7 @@ To display relevant information on your success or error page, you can use the f
 |**transactionStatus**|Possible values:<br>• `SUCCESS` for successful submissions. <br> • `ERROR`for errors and failure after 3 attempts.|
 |**customerInternalReference**<sup>2</sup>|Your internal reference for the transaction.|
 |**transactionReference**|Jumio reference number for the transaction.|
-|errorCode|Displayed when `transactionStatus` is `ERROR`.<br>Possible values: <br>• `9100` (Error occurred on our server.)<br>• `9200` (Authorization token missing, invalid, or expired.)<br>• `9210` (Session expired after the user journey started.)<br>• `9300` (Error occurred transmitting image to our server.)<br>• `9400` (Error occurred during verification step.)<br>• `9800` (User has no network connection.)<br>• `9801` (Unexpected error occurred in the client.)<br>• `9810` (Problem while communicating with our server.)<br>• `9820` (File upload not enabled and camera unavailable.)<br>• `9821` (The 3D liveness face capture process failed after 3 attempts.)<br>• `9822` (Browser does not support camera.)<br>• `9835` (No acceptable submission in 3 attempts.)|
+|errorCode|Displayed when `transactionStatus` is `ERROR`.<br>Possible values: <br>• `9100` (Error occurred on our server.)<br>• `9200` (Authorization token missing, invalid, or expired.)<br>• `9210` (Session expired after the user journey started.)<br>• `9300` (Error occurred transmitting image to our server.)<br>• `9400` (Error occurred during verification step.)<br>• `9800` (User has no network connection.)<br>• `9801` (Unexpected error occurred in the client.)<br>• `9810` (Problem while communicating with our server.)<br>• `9820` (File upload not enabled and camera unavailable.)<br>• `9821` (The 3D liveness face capture process failed, e.g. issue with iProov)<br>• `9822` (Browser does not support camera.)<br>• `9835` (No acceptable submission in 3 attempts.)|
 
 <sup>1</sup> Because HTTP `GET` parameters can be manipulated on the client side, they may be used for display purposes only.<br>
 <sup>2</sup> Values **must not** contain Personally Identifiable Information (PII) or other sensitive data such as email addresses.
