@@ -877,12 +877,14 @@ For the following specific document types, additional data will be extracted.
 |Type | Extracted data |
 |:---------------|:----------|
 |BS (bank statement) |name, issueDate, address, accountNumber, swiftCode |
-|CC (credit card) |name, pan, expiryDate |
+|CC (credit card) <sup>1</sup>|name, pan, expiryDate (currently returned as issueDate)|
 |UB (utility bill) |name, issueDate, address, dueDate |
+|OTHER (Other document type) |name, issueDate, address |
 |CCS (credit card statement) |name, issueDate, address, cardNumberLastFourDigits |
-|SSC (Social Security card)<sup>1</sup> |firstName, lastName, ssn, signatureAvailable  |
+|SSC (Social Security card) <sup>1,</sup><sup>2</sup> |firstName, lastName, ssn, signatureAvailable  |
 
-<sup>1</sup> USA only
+<sup>1</sup> For CC and SSC all data points need to be available for extraction.<br>
+<sup>2</sup> USA only.
 
 ### Disabling data extraction
 
