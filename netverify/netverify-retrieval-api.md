@@ -9,6 +9,7 @@ This guide describes how to implement the ID Verification Retrieval API.
 
 | Date    | Description|
 |:--------|:------------|
+| 2021-05-21   |Added "personalNumberValidation" to "additionalChecks" |
 | 2020-08-15   |Removed EU and US address format |
 | 2020-05-26   |Added "enrollmentTransactionReference" to Authentication retrieval |
 | 2020-03-03   |Added "faceSearchFindings" to "additionalChecks" |
@@ -538,6 +539,7 @@ Successful requests will return HTTP status code `200 OK` along with a JSON obje
 |proofOfResidency | JSON | Result of Proof of Residency check<br>• if idCountry = AUS, BRA, CAN, DEU, ESP, GBR, MEX, <br>see table below |activation required|
 |watchlistScreening | JSON | Result of Jumio Screening (see [ID Verification & ComplyAdvantage Screening Implementation Guide](netverify-screening.md)) |activation required|
 |faceSearchFindings | JSON | Result of 1:n face search on previous transactions<br>see table below|activation required|
+|personalNumberValidation | JSON | Result of validation for CPF number<br>see table below|activation required|
 
 <br>
 
@@ -567,6 +569,13 @@ Successful requests will return HTTP status code `200 OK` along with a JSON obje
 |findings   | String/JSON array |A face (on the ID or Selfie) is matching with another face (on the ID or Selfie) from a previous transaction<br><br>Possible values:<br />• No findings: parameter not returned<br />• Single finding: String of the transaction reference<br />• Multiple findings: Array of transaction references |
 
 See [1:n Best Practice](https://support.jumio.com/hc/en-us/articles/1260803713790) for further details.
+
+##### Parameter `personalNumberValidation`
+
+|Name |  Type    | Description|
+|:-------------------------------|:---------|:---------------|
+|searchResults   | enum | If verificationStatus = APPROVED\_VERIFIED possible values: <br />• POSITIVE\_RESULT<br />• NEGATIVE\_RESULT<br />else<br>• CHECK\_NOT\_DONE (see `searchResponse`)|
+|searchReason   | enum |Possible values: <br />• NOT\_ENOUGH\_DATA<br />• TECHNICAL\_ERROR |
 
 ## Examples
 ### Sample request
@@ -598,6 +607,9 @@ Authorization: Basic xxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 			"status": "DONE",
 			"findings": ["xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx","xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"]
 		}
+		"personalNumberValidation": {
+      	"searchResults": "POSITIVE_RESULT"
+    	}
 	},
 	"identityVerification": {
         "similarity": "MATCH",
