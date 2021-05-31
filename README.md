@@ -12,7 +12,7 @@ If you have any questions regarding our implementation guides, please contact Ju
 ---
 ## ID Verification
 
-Jumio's Netverify ID Verification lets customers easily and securely capture and submit their government-issued ID documents. It performs real-time ID verification using machine learning, helping you deter fraud and meet regulatory requirements.
+Jumio's ID Verification let customers easily and securely capture and submit their government-issued ID documents. It performs real-time ID verification using machine learning, helping you deter fraud and meet regulatory requirements.
 
 - [ID Verification Web v4](/netverify/netverify-web-v4.md)
 - [performNetverify](/netverify/performNetverify.md)
@@ -40,14 +40,6 @@ Fastfill turns a customer's mobile device into an ID data extraction and populat
 - [Fastfill API](/netverify/fastfill-api.md)
 - [Fastfill Mobile iOS](https://github.com/Jumio/mobile-sdk-ios)
 - [Fastfill Mobile Android](https://github.com/Jumio/mobile-sdk-android)
-
-## BAM Checkout
-
-BAM Checkout enables your mobile customers with the easiest and most friction-free way to make purchases in your mobile app.
-
-- [BAM Checkout Mobile iOS](https://github.com/Jumio/mobile-sdk-ios)
-- [BAM Checkout Mobile Android](https://github.com/Jumio/mobile-sdk-android)
-- [Credit Card Retrieval API](/bam-checkout/credit-card-retrieval-api.md)
 
 ## Jumio Mobile SDK Plugins
 
