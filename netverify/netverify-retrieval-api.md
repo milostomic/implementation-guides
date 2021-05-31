@@ -9,6 +9,7 @@ This guide describes how to implement the ID Verification Retrieval API.
 
 | Date    | Description|
 |:--------|:------------|
+| 2021-05-21   |Added "personalNumberValidation" to "additionalChecks" |
 | 2020-08-15   |Removed EU and US address format |
 | 2020-05-26   |Added "enrollmentTransactionReference" to Authentication retrieval |
 | 2020-03-03   |Added "faceSearchFindings" to "additionalChecks" |
@@ -318,7 +319,7 @@ Successful requests will return HTTP status code `200 OK` along with a JSON obje
 |**scanReference**| string|36|Jumio’s reference number for the transaction|
 |**status**| string| |ID Verification:<br>• APPROVED\_VERIFIED<br>• DENIED\_FRAUD<br>• DENIED\_UNSUPPORTED\_ID\_TYPE<br>• DENIED\_UNSUPPORTED\_ID\_COUNTRY<br>• ERROR\_NOT\_READABLE\_ID<br>• NO\_ID\_UPLOADED |
 |type| string| |ID Verification:<br>•	PASSPORT<br>• DRIVING\_LICENSE<br>• ID\_CARD<br>• VISA<br>• UNSUPPORTED |
-|idSubtype| string|255|Possible subtypes if type = ID\_CARD:<br>•	NATIONAL\_ID<br>• CONSULAR\_ID<br>• ELECTORAL\_ID<br>• RESIDENT\_PERMIT\_ID<br>• TAX\_ID <br>• STUDENT\_ID <br>• PASSPORT\_CARD\_ID <br>• MILITARY\_ID <br>• PUBLIC\_SAFETY\_ID<br/>•	HEALTH\_ID <br>• OTHER\_ID<br>• VISA <br>• UNKNOWN<br><br>Possible subtypes if type = DRIVING\_LICENSE:<br>• LEARNING\_DRIVING\_LICENSE <br><br>Possible subtypes if type = PASSPORT:<br>• E\_PASSPORT (only for mobile)|
+|idSubtype| string|255|Possible subtypes if type = ID\_CARD:<br>•	NATIONAL\_ID<br>• CONSULAR\_ID<br>• ELECTORAL\_ID<br>• RESIDENT\_PERMIT\_ID<br>• TAX\_ID <br>• STUDENT\_ID <br>• PASSPORT\_CARD\_ID <br>• MILITARY\_ID <br>• PUBLIC\_SAFETY\_ID<br/>•	HEALTH\_ID <br>• OTHER\_ID<br>• VISA <br>• UNKNOWN<br><br>Possible subtypes if idType = DRIVING\_LICENSE<br/>•	REGULAR\_DRIVING\_LICENSE<br/>•	LEARNING\_DRIVING\_LICENSE <br/><br/>Possible subtypes if idType = PASSPORT<br/>•	E\_PASSPORT (only for mobile) |
 |issuingCountry|string|3|Possible countries:<br>• [ISO 3166-1 alpha-3](http://en.wikipedia.org/wiki/ISO_3166-1_alpha-3) country code<br>- XKX (Kosovo)|
 |firstName|string|255|Customer's first name|
 |lastName|string|255|Customer's last name|
@@ -538,6 +539,7 @@ Successful requests will return HTTP status code `200 OK` along with a JSON obje
 |proofOfResidency | JSON | Result of Proof of Residency check<br>• if idCountry = AUS, BRA, CAN, DEU, ESP, GBR, MEX, <br>see table below |activation required|
 |watchlistScreening | JSON | Result of Jumio Screening (see [ID Verification & ComplyAdvantage Screening Implementation Guide](netverify-screening.md)) |activation required|
 |faceSearchFindings | JSON | Result of 1:n face search on previous transactions<br>see table below|activation required|
+|personalNumberValidation | JSON | Result of validation for CPF number<br>see table below|activation required|
 
 <br>
 
@@ -567,6 +569,13 @@ Successful requests will return HTTP status code `200 OK` along with a JSON obje
 |findings   | String/JSON array |A face (on the ID or Selfie) is matching with another face (on the ID or Selfie) from a previous transaction<br><br>Possible values:<br />• No findings: parameter not returned<br />• Single finding: String of the transaction reference<br />• Multiple findings: Array of transaction references |
 
 See [1:n Best Practice](https://support.jumio.com/hc/en-us/articles/1260803713790) for further details.
+
+##### Parameter `personalNumberValidation`
+
+|Name |  Type    | Description|
+|:-------------------------------|:---------|:---------------|
+|searchResults   | enum | If verificationStatus = APPROVED\_VERIFIED possible values: <br />• POSITIVE\_RESULT<br />• NEGATIVE\_RESULT<br />else<br>• CHECK\_NOT\_DONE (see `searchResponse`)|
+|searchReason   | enum |Possible values: <br />• NOT\_ENOUGH\_DATA<br />• TECHNICAL\_ERROR |
 
 ## Examples
 ### Sample request
@@ -598,6 +607,9 @@ Authorization: Basic xxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 			"status": "DONE",
 			"findings": ["xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx","xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"]
 		}
+		"personalNumberValidation": {
+      	"searchResults": "POSITIVE_RESULT"
+    	}
 	},
 	"identityVerification": {
         "similarity": "MATCH",
