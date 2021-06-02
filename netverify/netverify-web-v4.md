@@ -1021,7 +1021,7 @@ Jumio offers guaranteed support for ID Verification on the following browsers an
 
 |Browser name|Major browser version|Operating system |Supports<br>image upload |Supports<br>camera capture|Supports<br>3D Liveness|
 |:---|:---|:---|:---:|:---:|:---:|
-|Google Chrome |current |Android|X|X|X|
+|Google Chrome |current |Android + iOS|X|X|X|
 |Samsung Internet |current |Android|X|X|X|
 |Apple Safari |current |iOS|X|X|X<sup>1</sup>|
 
